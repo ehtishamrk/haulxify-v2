@@ -1,0 +1,252 @@
+/* =================================================================
+   HAULXIFY — NAV CSS
+   Desktop + Mobile Navigation
+   ================================================================= */
+
+/* =================================================================
+   MAIN NAV
+   ================================================================= */
+.nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 1240px;
+  height: 68px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9000;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    0 4px 24px rgba(13, 25, 41, 0.06),
+    0 1px 4px rgba(13, 25, 41, 0.04),
+    inset 0 -1px 0 rgba(255,255,255,0.95);
+  transition: all 0.4s var(--ease-out);
+}
+
+.nav.scrolled {
+  top: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 8px 32px rgba(13, 25, 41, 0.10),
+    0 2px 8px rgba(13, 25, 41, 0.05);
+}
+
+/* =================================================================
+   LOGO
+   ================================================================= */
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brand-navy);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.nav-logo:hover {
+  opacity: 0.82;
+}
+
+.nav-logo span {
+  color: var(--brand-orange);
+}
+
+/* =================================================================
+   DESKTOP LINKS
+   ================================================================= */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-body);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--brand-navy);
+  background: var(--navy-muted);
+}
+
+.nav-link.active {
+  color: var(--brand-navy);
+  font-weight: 600;
+}
+
+/* Hauler App CTA in nav */
+.nav-hauler {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  background: var(--brand-navy);
+  padding: 9px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+.nav-hauler:hover {
+  background: var(--mid-navy);
+  transform: translateY(-1px);
+}
+
+.nav-hauler-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-orange);
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.7); }
+}
+
+/* =================================================================
+   HAMBURGER (mobile)
+   ================================================================= */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.nav-hamburger:hover {
+  background: var(--navy-muted);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--brand-navy);
+  border-radius: 2px;
+  transition: all 0.3s var(--ease-out);
+  transform-origin: center;
+}
+
+.nav-hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =================================================================
+   MOBILE MENU
+   ================================================================= */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+  z-index: 8999;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 32px 48px;
+  transform: translateX(100%);
+  transition: transform 0.45s var(--ease-out);
+  overflow-y: auto;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+  flex: 1;
+}
+
+.mobile-menu-link {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  display: block;
+  letter-spacing: -0.02em;
+  transition: color 0.2s, padding-left 0.3s;
+}
+
+.mobile-menu-link:hover {
+  color: var(--brand-orange);
+  padding-left: 8px;
+}
+
+.mobile-menu-cta {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-menu-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* =================================================================
+   RESPONSIVE
+   ================================================================= */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav { padding: 0 20px; }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    width: calc(100% - 24px);
+    top: 12px;
+  }
+}

@@ -1,0 +1,758 @@
+/* =================================================================
+   HAULXIFY — COMPONENTS CSS
+   Buttons · Cards · Tags · Footer · Shared UI
+   ================================================================= */
+
+/* =================================================================
+   1. BUTTONS
+   ================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  padding: 14px 28px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s var(--ease-out);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary — Orange */
+.btn-primary {
+  background: var(--brand-orange);
+  color: var(--white);
+  box-shadow: var(--shadow-orange);
+}
+
+.btn-primary:hover {
+  background: var(--orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(232, 119, 34, 0.36);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary — Navy */
+.btn-secondary {
+  background: var(--brand-navy);
+  color: var(--white);
+}
+
+.btn-secondary:hover {
+  background: var(--mid-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(13, 25, 41, 0.2);
+}
+
+/* Ghost — outlined */
+.btn-ghost {
+  background: transparent;
+  color: var(--brand-navy);
+  border: 1.5px solid var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--brand-navy);
+  background: var(--navy-muted);
+  transform: translateY(-1px);
+}
+
+.btn-ghost-white {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-ghost-white:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Sizes */
+.btn-sm {
+  font-size: 0.8125rem;
+  padding: 10px 20px;
+}
+
+.btn-lg {
+  font-size: 1.0625rem;
+  padding: 18px 40px;
+  border-radius: 14px;
+}
+
+/* Arrow icon in button */
+.btn-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* =================================================================
+   2. CARDS
+   ================================================================= */
+
+/* Base card */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  transition: box-shadow 0.35s var(--ease-out), transform 0.35s var(--ease-out), border-color 0.35s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: transparent;
+}
+
+/* Card off-white fill */
+.card-fill {
+  background: var(--off-white);
+  border-color: transparent;
+}
+
+.card-fill:hover {
+  background: var(--white);
+  border-color: transparent;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Card — dark navy */
+.card-dark {
+  background: var(--mid-navy);
+  border-color: rgba(255,255,255,0.06);
+  color: var(--white);
+}
+
+.card-dark h3, .card-dark h4 {
+  color: var(--white);
+}
+
+.card-dark p {
+  color: rgba(255,255,255,0.65);
+}
+
+/* Service icon card */
+.service-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--orange-glow);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+
+.service-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--brand-orange);
+}
+
+.card:hover .service-icon {
+  background: var(--brand-orange);
+}
+
+.card:hover .service-icon svg {
+  color: var(--white);
+}
+
+/* =================================================================
+   3. TAGS / BADGES
+   ================================================================= */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tag-orange {
+  background: var(--orange-glow);
+  color: var(--brand-orange);
+}
+
+.tag-navy {
+  background: rgba(13, 25, 41, 0.07);
+  color: var(--brand-navy);
+}
+
+.tag-white {
+  background: rgba(255,255,255,0.12);
+  color: var(--white);
+}
+
+/* =================================================================
+   4. STAT BLOCKS
+   ================================================================= */
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--brand-orange);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* =================================================================
+   5. DIVIDERS
+   ================================================================= */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.divider-dark {
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* =================================================================
+   6. SECTION HEADERS (reusable)
+   ================================================================= */
+.section-header {
+  max-width: 640px;
+  margin-bottom: var(--space-16);
+}
+
+.section-header.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.section-header.centered .eyebrow {
+  justify-content: center;
+}
+
+.section-header.centered p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-header h2 {
+  margin-bottom: var(--space-4);
+}
+
+.section-header p {
+  font-size: 1.0625rem;
+  color: var(--text-body);
+  line-height: 1.75;
+}
+
+/* Dark variant */
+.section-header.dark h2 {
+  color: var(--white);
+}
+
+.section-header.dark p {
+  color: rgba(255,255,255,0.65);
+}
+
+/* =================================================================
+   7. TRUST BAR (logos/partners)
+   ================================================================= */
+.trust-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.trust-logo {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.trust-logo:hover {
+  opacity: 1;
+}
+
+/* =================================================================
+   8. TESTIMONIALS
+   ================================================================= */
+.testimonial-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  position: relative;
+  transition: box-shadow 0.35s, transform 0.35s;
+}
+
+.testimonial-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.testimonial-quote {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-dark);
+  margin-bottom: var(--space-6);
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--off-white);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--brand-navy);
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text-dark);
+  letter-spacing: -0.01em;
+}
+
+.testimonial-role {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.testimonial-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: var(--space-4);
+}
+
+.star {
+  width: 14px;
+  height: 14px;
+  color: var(--brand-orange);
+}
+
+/* =================================================================
+   9. FOOTER
+   ================================================================= */
+.footer {
+  background: var(--brand-navy);
+  color: var(--white);
+  padding: 80px 0 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 64px;
+}
+
+.footer-brand p {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  margin-top: 20px;
+  max-width: 280px;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.footer-logo span {
+  color: var(--brand-orange);
+}
+
+.footer-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.footer-tagline-flag {
+  font-size: 1rem;
+}
+
+.footer-col-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.footer-link {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: var(--white);
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 16px;
+}
+
+.footer-contact-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--brand-orange);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.footer-social {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.footer-social:hover {
+  background: var(--brand-orange);
+  color: var(--white);
+  border-color: var(--brand-orange);
+}
+
+.footer-social svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Footer bottom bar */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom-text {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-bottom-link {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-bottom-link:hover {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Employee portal link in footer */
+.footer-portal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-portal-link:hover {
+  opacity: 0.8;
+}
+
+/* Pakistan badge */
+.pakistan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232, 119, 34, 0.12);
+  border: 1px solid rgba(232, 119, 34, 0.25);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand-orange);
+  letter-spacing: 0.04em;
+  margin-top: 20px;
+}
+
+/* =================================================================
+   10. CTA BANNER
+   ================================================================= */
+.cta-banner {
+  background: var(--brand-navy);
+  border-radius: var(--radius-xl);
+  padding: 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(232,119,34,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -40%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(30, 58, 95, 0.8) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-banner h2 {
+  color: var(--white);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+
+.cta-banner p {
+  color: rgba(255,255,255,0.65);
+  font-size: 1.125rem;
+  margin: 0 auto 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-banner-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* =================================================================
+   11. FORM ELEMENTS
+   ================================================================= */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  letter-spacing: -0.01em;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--text-dark);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--brand-orange);
+  box-shadow: 0 0 0 3px rgba(232, 119, 34, 0.1);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* =================================================================
+   12. PROCESS / STEPS
+   ================================================================= */
+.process-step {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--off-white);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: var(--brand-navy);
+  flex-shrink: 0;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.process-step:hover .step-number {
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+  color: var(--white);
+}
+
+.step-content h4 {
+  margin-bottom: 6px;
+}
+
+/* =================================================================
+   RESPONSIVE
+   ================================================================= */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .cta-banner {
+    padding: 60px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .cta-banner {
+    padding: 48px 28px;
+    border-radius: var(--radius-lg);
+  }
+}
