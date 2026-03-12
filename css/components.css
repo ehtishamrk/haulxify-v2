@@ -562,21 +562,6 @@
   opacity: 0.8;
 }
 
-/* Pakistan badge */
-.pakistan-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(232, 119, 34, 0.12);
-  border: 1px solid rgba(232, 119, 34, 0.25);
-  border-radius: var(--radius-full);
-  padding: 6px 14px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--brand-orange);
-  letter-spacing: 0.04em;
-  margin-top: 20px;
-}
 
 /* =================================================================
    10. CTA BANNER
@@ -785,31 +770,6 @@
 .footer-col ul li a:hover {
   color: var(--white);
 }
-
-/* =================================================================
-   FOOTER BADGE (Pakistan badge)
-   ================================================================= */
-.footer-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 20px;
-  padding: 7px 12px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.02em;
-}
-.footer-badge svg {
-  width: 14px;
-  height: 14px;
-  color: var(--brand-orange);
-  flex-shrink: 0;
-}
-
 /* =================================================================
    FOOTER LEGAL LINKS
    ================================================================= */
