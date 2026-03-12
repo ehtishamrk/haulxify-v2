@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Back Office Services for Every Transport Business | Haulxify</title>
+  <meta name="description" content="Haulxify provides specialized back office support for 12+ transport industries — from trucking to NEMT, tow truck to limo. Real solutions for your industry's real pain points.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+  <style>
+    .services-intro { max-width: 680px; }
+    .services-intro p { font-size: 1.125rem; color: rgba(255,255,255,0.65); line-height: 1.75; }
+    .services-filter-bar {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .filter-btn {
+      padding: 8px 20px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--brand-navy);
+      border-color: var(--brand-navy);
+      color: var(--white);
+    }
+    .services-note {
+      background: var(--brand-navy);
+      border-radius: var(--radius-xl);
+      padding: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 80px;
+    }
+    .services-note h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .services-note h2 span { color: var(--brand-orange); }
+    .services-note p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .services-note-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .sn-stat { border-top: 2px solid rgba(232,119,34,0.3); padding-top: 16px; }
+    .sn-num {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 800;
+      color: var(--brand-orange);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .sn-label { font-size: 0.8rem; color: rgba(255,255,255,0.55); font-weight: 500; }
+    @media (max-width: 768px) {
+      .services-note { grid-template-columns: 1fr; gap: 32px; padding: 40px 24px; }
+      .services-note-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader" id="preloader">
+    <div class="preloader-logo">Haulxify</div>
+  </div>
+
+  <nav class="nav" id="mainNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Haulxify</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="hauler.html" class="nav-hauler">
+        <span class="hauler-dot"></span>
+        Hauler App
+      </a>
+      <button class="nav-hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <ul class="nav-mobile-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="hauler.html">Hauler App</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner services-intro">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span class="breadcrumb-current">Services</span>
+        </div>
+        <div class="page-hero-tag">12 Industries Served</div>
+        <h1>Your industry.<br><span>Your pain points.</span><br>Our fix.</h1>
+        <p>Generic back office support doesn't cut it. Every industry has its own billing headaches, compliance traps, and dispatch nightmares. We built specialized support for each one.</p>
+        <div class="page-hero-actions">
+          <a href="contact.html" class="btn-primary">Get a Custom Quote</a>
+          <a href="pricing.html" class="btn-ghost-white">View Pricing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section class="section" style="background: var(--off-white);">
+    <div class="container">
+      <div class="section-header centered" style="margin-bottom: 48px;">
+        <span class="eyebrow">Full Coverage</span>
+        <h2>Pick your industry</h2>
+        <p>Specialized back office solutions built around what actually slows your business down.</p>
+      </div>
+
+      <div class="services-page-grid reveal">
+
+        <!-- 1. Trucking -->
+        <a href="services/trucking-companies.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <h3>Trucking Companies</h3>
+          <p>Owner-operators and small fleets drowning in compliance, IFTA, BOL paperwork and cash flow gaps. We handle the office so you handle the road.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Dispatch</span>
+            <span class="service-page-tag">IFTA</span>
+            <span class="service-page-tag">BOL/POD</span>
+            <span class="service-page-tag">Factoring</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 2. Tow Truck -->
+        <a href="services/tow-truck.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17H1V7l5-4h8l3 4v10h-2"/><circle cx="5" cy="17" r="2"/><path d="M15 8h5l2 3v6h-1.5M18 17h-3"/>
+            </svg>
+          </div>
+          <h3>Tow Truck Companies</h3>
+          <p>Motor clubs underpay, insurance companies dispute, and calls don't stop at midnight. We run your dispatch and billing so you stay profitable around the clock.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">24/7 Dispatch</span>
+            <span class="service-page-tag">Insurance Billing</span>
+            <span class="service-page-tag">Motor Club Mgmt</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 3. Car Hauler -->
+        <a href="services/car-hauler.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17H1V7h16l2 4v6H17"/><circle cx="5" cy="17" r="2"/><circle cx="15" cy="17" r="2"/><path d="M9 7V5M12 7V5M15 7V5"/>
+            </svg>
+          </div>
+          <h3>Car Haulers</h3>
+          <p>BOL complexity, vehicle condition reports, OEM vs. dealer vs. auction billing — auto transport paperwork is a beast. We tame it.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">eBOL</span>
+            <span class="service-page-tag">Damage Reports</span>
+            <span class="service-page-tag">Route Planning</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 4. Animal Hauler -->
+        <a href="services/animal-hauler.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 11l5-7h8l5 7v6H3z"/><path d="M8 18v3M16 18v3M3 14h18"/><circle cx="9" cy="8" r="1.5"/><circle cx="15" cy="8" r="1.5"/>
+            </svg>
+          </div>
+          <h3>Animal Haulers</h3>
+          <p>USDA permits, live cargo DOT compliance, specialized driver credentials — hauling animals means a compliance stack most operators drown in. We simplify it.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">USDA Compliance</span>
+            <span class="service-page-tag">Driver Credentialing</span>
+            <span class="service-page-tag">Dispatch</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 5. Dump Truck -->
+        <a href="services/dump-truck.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 17V7h12l4 10H1z"/><path d="M17 17h4v-6l-4-4"/><circle cx="5" cy="17" r="2"/><circle cx="15" cy="17" r="2"/>
+            </svg>
+          </div>
+          <h3>Dump Truck Companies</h3>
+          <p>Over 90% of dump truck operators still run on paper tickets. Billing per load, per ton, per hour — with subcontractors in the mix. We digitize the chaos.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Ticket Management</span>
+            <span class="service-page-tag">Job Billing</span>
+            <span class="service-page-tag">Subcontractor Pay</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 6. Sprinter/Cargo Van -->
+        <a href="services/sprinter-cargo-van.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="5" width="18" height="12" rx="2"/><path d="M19 9h2l2 4v4h-4"/><circle cx="5" cy="17" r="2"/><circle cx="15" cy="17" r="2"/>
+            </svg>
+          </div>
+          <h3>Sprinter & Cargo Van</h3>
+          <p>Feast-or-famine freight, rate negotiation against brokers, and no CDL means fierce competition. You need consistent loads and professional back-office to compete.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Load Finding</span>
+            <span class="service-page-tag">Rate Negotiation</span>
+            <span class="service-page-tag">Carrier Onboarding</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 7. Moving Truck -->
+        <a href="services/moving-truck.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 16V8a2 2 0 012-2h14a2 2 0 012 2v8"/><circle cx="5" cy="16" r="2"/><circle cx="15" cy="16" r="2"/><path d="M8 6V4M12 6V4"/>
+            </svg>
+          </div>
+          <h3>Moving Companies</h3>
+          <p>66% of movers struggle with staffing. 60% report daily operational inefficiency. Double-bookings, crew chaos, and seasonal swings eat your margins alive.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Crew Scheduling</span>
+            <span class="service-page-tag">Customer Service</span>
+            <span class="service-page-tag">Billing</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 8. After Hours -->
+        <a href="services/after-hours-dispatch.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3>After-Hours Dispatch</h3>
+          <p>Your drivers don't stop at 5pm. Your customers call at midnight. Every unanswered call is revenue walking out the door. We answer, we dispatch, 24/7.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">24/7 Coverage</span>
+            <span class="service-page-tag">Night Dispatch</span>
+            <span class="service-page-tag">Emergency Routing</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 9. Freight Brokers -->
+        <a href="services/freight-brokers.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3>Freight Brokers</h3>
+          <p>260 hours a year lost to back-office. 50% miss PODs entirely. Carrier vetting, rate cons, check calls, document chasing — we run your ops team at a fraction of US cost.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Carrier Vetting</span>
+            <span class="service-page-tag">POD Tracking</span>
+            <span class="service-page-tag">Rate Con Processing</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 10. NEMT -->
+        <a href="services/nemt.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <h3>NEMT Providers</h3>
+          <p>Medicaid billing varies across 50 states. Claim denials are your #1 revenue killer. HIPAA documentation is a full-time job. We handle the complexity so you handle the patients.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Medicaid Billing</span>
+            <span class="service-page-tag">HIPAA Docs</span>
+            <span class="service-page-tag">Trip Verification</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 11. Taxi -->
+        <a href="services/taxi.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h1l2-3h10l2 3h1a2 2 0 012 2v6a2 2 0 01-2 2h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+            </svg>
+          </div>
+          <h3>Taxi Companies</h3>
+          <p>Rideshare apps took your casual riders. What remains is corporate accounts, airport contracts, and regulated routes — all requiring precise dispatch and billing that isn't cheap.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">Dispatch</span>
+            <span class="service-page-tag">Driver Scheduling</span>
+            <span class="service-page-tag">Accounting</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <!-- 12. Limousine -->
+        <a href="services/limousine.html" class="service-page-card">
+          <div class="service-page-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 9h18l2 4v5H1V9z"/><circle cx="5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 9V7a1 1 0 011-1h4a1 1 0 011 1v2"/>
+            </svg>
+          </div>
+          <h3>Limousine Companies</h3>
+          <p>Your brand lives and dies by every pickup. 20% delayed trips. 10% billing errors monthly. Corporate clients have zero tolerance. We make sure your back office matches your service level.</p>
+          <div class="service-page-tags">
+            <span class="service-page-tag">24/7 Dispatch</span>
+            <span class="service-page-tag">Corporate Billing</span>
+            <span class="service-page-tag">Flight Tracking</span>
+          </div>
+          <div class="service-page-arrow">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Bottom note -->
+      <div class="services-note reveal">
+        <div>
+          <h2>Not sure which<br>plan fits your<br><span>operation?</span></h2>
+          <p>Every business is different. Tell us about your fleet size, current challenges, and monthly volume — we'll put together a custom quote within 24 hours.</p>
+          <a href="contact.html" class="btn-primary">Get a Custom Quote</a>
+        </div>
+        <div class="services-note-stats">
+          <div class="sn-stat">
+            <div class="sn-num">75%</div>
+            <div class="sn-label">Cost reduction vs. US back office staff</div>
+          </div>
+          <div class="sn-stat">
+            <div class="sn-num">$3.50</div>
+            <div class="sn-label">Per vehicle starting price</div>
+          </div>
+          <div class="sn-stat">
+            <div class="sn-num">24hr</div>
+            <div class="sn-label">Average time to onboard and go live</div>
+          </div>
+          <div class="sn-stat">
+            <div class="sn-num">12+</div>
+            <div class="sn-label">Industries we specialize in</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="background: var(--white); padding: 80px 0;">
+    <div class="container" style="text-align: center;">
+      <span class="eyebrow" style="display: block; margin: 0 auto 16px;">Ready to Start</span>
+      <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; margin-bottom: 16px; max-width: 520px; margin-left: auto; margin-right: auto;">Your industry. Your rules. Our team.</h2>
+      <p style="color: var(--text-body); font-size: 1rem; max-width: 480px; margin: 0 auto 32px; line-height: 1.7;">No 6-month contracts. No hidden fees. Start with one vehicle, scale as you grow.</p>
+      <a href="contact.html" class="btn-primary btn-lg">Talk to Our Team</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">Haulxify</div>
+          <p class="footer-tagline">The back office for transport businesses that move the world.</p>
+          <div class="footer-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Pakistan — 3rd Largest English-Speaking Workforce
+          </div>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services/trucking-companies.html">Trucking Companies</a></li>
+            <li><a href="services/freight-brokers.html">Freight Brokers</a></li>
+            <li><a href="services/nemt.html">NEMT Providers</a></li>
+            <li><a href="services/tow-truck.html">Tow Truck</a></li>
+            <li><a href="services/limousine.html">Limousine</a></li>
+            <li><a href="services.html">View All Industries</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Haulxify</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="https://portal.haulxify.com">Employee Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Started</h4>
+          <ul>
+            <li><a href="contact.html">Contact Sales</a></li>
+            <li><a href="hauler.html">Hauler App</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Haulxify. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
