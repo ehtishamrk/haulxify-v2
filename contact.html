@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Haulxify — Get a Free Back Office Assessment</title>
+  <meta name="description" content="Tell us about your fleet, your industry, and your biggest back office challenge. We'll assess your operation and show you exactly what we can take off your plate.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+  <style>
+    .contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: flex-start; }
+    .contact-info { position: sticky; top: 100px; }
+    .contact-info h2 { font-size: clamp(1.75rem,3vw,2.25rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px; }
+    .contact-info h2 span { color: var(--brand-orange); }
+    .contact-info p { color: var(--text-body); font-size: 1rem; line-height: 1.7; margin-bottom: 40px; }
+    .contact-facts { display: flex; flex-direction: column; gap: 20px; }
+    .contact-fact { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-fact-icon { width: 40px; height: 40px; background: var(--orange-glow); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-fact-icon svg { width: 18px; height: 18px; color: var(--brand-orange); }
+    .contact-fact h4 { font-size: 0.875rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 2px; }
+    .contact-fact p { font-size: 0.8125rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+    .contact-form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 48px 44px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-full { grid-column: 1 / -1; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-navy); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 13px 16px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 0.9rem; color: var(--brand-navy);
+      background: var(--white); transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(232,119,34,0.1); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D1929' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+    .form-submit { margin-top: 8px; }
+    .form-submit-btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius-sm); background: var(--brand-orange); color: var(--white); font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; transition: background 0.25s; }
+    .form-submit-btn:hover { background: #cf6a1e; }
+    .form-disclaimer { margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; }
+    @media (max-width: 1024px) { .contact-layout { grid-template-columns: 1fr; gap: 48px; } .contact-info { position: static; } }
+    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .contact-form-card { padding: 32px 24px; } }
+  </style>
+</head>
+<body>
+  <div class="preloader" id="preloader"><div class="preloader-logo">Haulxify</div></div>
+
+  <nav class="nav" id="mainNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Haulxify</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <a href="hauler.html" class="nav-hauler"><span class="hauler-dot"></span>Hauler App</a>
+      <button class="nav-hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <ul class="nav-mobile-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="hauler.html">Hauler App</a></li></ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Contact</span></div>
+        <div class="page-hero-tag">Get in Touch</div>
+        <h1>Get a free<br><span>back office assessment.</span></h1>
+        <p>Tell us about your fleet, your industry, and your current pain points. We'll respond within 24 hours with a clear picture of what we can take off your plate and what it costs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--off-white);">
+    <div class="container">
+      <div class="contact-layout">
+
+        <!-- LEFT: INFO -->
+        <div class="contact-info reveal">
+          <h2>Let's talk about your <span>operation.</span></h2>
+          <p>No sales pitch. Just a direct conversation about what's slowing you down and how we fix it. Most operators walk away from the first call knowing exactly what they need.</p>
+          <div class="contact-facts">
+            <div class="contact-fact">
+              <div class="contact-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+              <div><h4>Response within 24 hours</h4><p>Every inquiry gets a direct response from our sales team — not an automated sequence.</p></div>
+            </div>
+            <div class="contact-fact">
+              <div class="contact-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+              <div><h4>No-commitment quote</h4><p>We'll put together a full pricing quote for your fleet size and service needs. No pressure to sign.</p></div>
+            </div>
+            <div class="contact-fact">
+              <div class="contact-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/></svg></div>
+              <div><h4>Available by call or WhatsApp</h4><p>Prefer to talk? Book a call directly or reach us on WhatsApp for faster responses.</p></div>
+            </div>
+            <div class="contact-fact">
+              <div class="contact-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div><h4>Live in 24 hours</h4><p>Once you decide to proceed, most clients are fully onboarded and operational within one business day.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: FORM -->
+        <div class="contact-form-card reveal delay-2">
+          <form id="contactForm" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" target="hidden_iframe">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="entry.FIRST_NAME_ID" required placeholder="Marcus">
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="entry.LAST_NAME_ID" required placeholder="Thompson">
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="entry.EMAIL_ID" required placeholder="marcus@trucking.com">
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone / WhatsApp *</label>
+                <input type="tel" id="phone" name="entry.PHONE_ID" required placeholder="+1 555 000 0000">
+              </div>
+              <div class="form-group form-full">
+                <label for="company">Company Name</label>
+                <input type="text" id="company" name="entry.COMPANY_ID" placeholder="Thompson Transport LLC">
+              </div>
+              <div class="form-group">
+                <label for="industry">Industry *</label>
+                <select id="industry" name="entry.INDUSTRY_ID" required>
+                  <option value="" disabled selected>Select your industry</option>
+                  <option>Trucking Company</option>
+                  <option>Freight Broker</option>
+                  <option>Tow Truck</option>
+                  <option>Car Hauler</option>
+                  <option>Animal Hauler</option>
+                  <option>Dump Truck</option>
+                  <option>Sprinter / Cargo Van</option>
+                  <option>Moving Company</option>
+                  <option>After-Hours Dispatch</option>
+                  <option>NEMT Provider</option>
+                  <option>Taxi Company</option>
+                  <option>Limousine Company</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="vehicles">Number of Vehicles *</label>
+                <select id="vehicles" name="entry.VEHICLES_ID" required>
+                  <option value="" disabled selected>Select range</option>
+                  <option>1 vehicle</option>
+                  <option>2–5 vehicles</option>
+                  <option>6–15 vehicles</option>
+                  <option>16–50 vehicles</option>
+                  <option>50+ vehicles</option>
+                </select>
+              </div>
+              <div class="form-group form-full">
+                <label for="challenge">Biggest Back Office Challenge *</label>
+                <textarea id="challenge" name="entry.CHALLENGE_ID" required placeholder="What's slowing you down the most? (e.g. dispatch, billing, compliance, hiring, after-hours coverage…)"></textarea>
+              </div>
+              <div class="form-group form-full">
+                <label for="source">How Did You Hear About Us?</label>
+                <select id="source" name="entry.SOURCE_ID">
+                  <option value="" disabled selected>Select one</option>
+                  <option>Google Search</option>
+                  <option>Social Media</option>
+                  <option>Referral</option>
+                  <option>Industry Forum / Community</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-submit">
+              <button type="submit" class="form-submit-btn">Send My Free Assessment Request →</button>
+            </div>
+            <p class="form-disclaimer">By submitting this form, you agree to be contacted about Haulxify services. We do not sell or share your information. You can opt out at any time.</p>
+          </form>
+          <iframe name="hidden_iframe" style="display:none;"></iframe>
+          <div id="formSuccess" style="display:none; text-align:center; padding: 40px 0;">
+            <div style="width:60px; height:60px; background:var(--orange-glow); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 style="font-size:1.25rem; font-weight:800; color:var(--brand-navy); margin-bottom:8px;">Request received!</h3>
+            <p style="color:var(--text-body); font-size:0.9rem; line-height:1.6;">We'll review your information and reach out within 24 hours with a tailored assessment and pricing quote.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="footer-logo">Haulxify</div><p class="footer-tagline">The back office for transport businesses that move the world.</p></div>
+        <div class="footer-col"><h4>Services</h4><ul><li><a href="services/trucking-companies.html">Trucking Companies</a></li><li><a href="services/freight-brokers.html">Freight Brokers</a></li><li><a href="services.html">View All</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 Haulxify. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function() {
+      setTimeout(function() {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      }, 500);
+    });
+  </script>
+</body>
+</html>
