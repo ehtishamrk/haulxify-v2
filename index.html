@@ -68,16 +68,15 @@
 <!-- ================================================================
      NAVIGATION
      ================================================================ -->
+
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
-
   <ul class="nav-links" role="list">
     <li><a href="index.html" class="nav-link">Home</a></li>
     <li><a href="services.html" class="nav-link">Services</a></li>
     <li><a href="about.html" class="nav-link">About</a></li>
     <li><a href="contact.html" class="nav-link">Contact</a></li>
   </ul>
-
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
     <a href="hauler.html" class="nav-hauler">
@@ -91,8 +90,29 @@
     </button>
   </div>
 </nav>
-
 <!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="mobile-menu-links">
+    <li><a href="index.html" class="mobile-menu-link">Home</a></li>
+    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
+    <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
+    <li><a href="about.html" class="mobile-menu-link">About</a></li>
+    <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
+    <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
+    <a href="contact.html" class="btn btn-primary">Get Started</a>
+  </div>
+  <div class="mobile-menu-footer">
+    Pakistan's logistics talent — serving the world's transport industry.
+  </div>
+</div>
+
+  <div class="mobile-menu-footer">
+    Pakistan's logistics talent — serving the world's transport industry.
+  </div>
+</div><!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
   <ul class="mobile-menu-links">
     <li><a href="index.html" class="mobile-menu-link">Home</a></li>
@@ -807,6 +827,7 @@
 <!-- ================================================================
      FOOTER
      ================================================================ -->
+
 <footer class="footer" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
@@ -899,22 +920,11 @@
 <!-- ================================================================
      JS
      ================================================================ -->
-<script src="js/main.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
 <script src="js/animations.js"></script>
 
 <!-- Show pricing in nav on scroll past hero -->
 <script>
   const pricingBtn = document.getElementById('nav-pricing-btn');
   if (pricingBtn) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > window.innerHeight * 0.6) {
-        pricingBtn.style.display = 'inline-flex';
-      } else {
-        pricingBtn.style.display = 'none';
-      }
-    });
-  }
-</script>
-
-</body>
-</html>
+    window.addE
