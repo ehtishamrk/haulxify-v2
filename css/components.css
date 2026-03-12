@@ -756,3 +756,99 @@
     border-radius: var(--radius-lg);
   }
 }
+
+/* =================================================================
+   FOOTER COLUMN (service page footers)
+   ================================================================= */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+.footer-col ul li a {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover {
+  color: var(--white);
+}
+
+/* =================================================================
+   FOOTER BADGE (Pakistan badge)
+   ================================================================= */
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.02em;
+}
+.footer-badge svg {
+  width: 14px;
+  height: 14px;
+  color: var(--brand-orange);
+  flex-shrink: 0;
+}
+
+/* =================================================================
+   FOOTER LEGAL LINKS
+   ================================================================= */
+.footer-legal {
+  display: flex;
+  gap: 20px;
+}
+.footer-legal a {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-legal a:hover {
+  color: rgba(255,255,255,0.7);
+}
+
+/* =================================================================
+   BUTTON BASE — ensure variants work standalone
+   ================================================================= */
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+.btn-ghost-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-out);
+  white-space: nowrap;
+  border: none;
+}

@@ -250,3 +250,15 @@
     top: 12px;
   }
 }
+
+/* =================================================================
+   NAV CONTAINER (compatibility alias)
+   The nav itself is flex — nav-container fills and mirrors that layout
+   ================================================================= */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4px;
+}
