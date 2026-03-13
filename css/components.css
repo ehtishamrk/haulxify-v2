@@ -59,13 +59,13 @@
 .btn-ghost {
   background: transparent;
   color: var(--brand-navy);
-  border: 1.5px solid var(--border);
+  border: 1.5px solid rgba(13,25,41,0.4);
 }
 
 .btn-ghost:hover {
   border-color: var(--brand-navy);
-  background: var(--navy-muted);
-  transform: translateY(-1px);
+  background: rgba(13,25,41,0.05);
+  transform: translateY(-2px);
 }
 
 .btn-ghost-white {
