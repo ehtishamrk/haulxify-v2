@@ -7,8 +7,8 @@
    1. PAGE HERO (used across all service + inner pages)
    ================================================================= */
 .page-hero {
-  padding: 160px 0 100px;
-  background: var(--brand-navy);
+padding: 100px 0 80px;
+   background: var(--brand-navy);
   position: relative;
   overflow: hidden;
 }
