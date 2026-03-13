@@ -793,9 +793,7 @@
    BUTTON BASE — ensure variants work standalone
    ================================================================= */
 .btn-primary,
-.btn-secondary,
-.btn-ghost,
-.btn-ghost-white {
+.btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -809,5 +807,4 @@
   cursor: pointer;
   transition: all var(--duration-base) var(--ease-out);
   white-space: nowrap;
-  border: none;
 }
