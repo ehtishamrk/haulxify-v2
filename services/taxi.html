@@ -5,11 +5,22 @@
   <title>Back Office for Taxi Companies | Haulxify</title>
   <meta name="description" content="Rideshare took your casual rides. What remains are corporate accounts, airport contracts, and regulated routes — all requiring precise dispatch and billing. Haulxify runs your taxi back office.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/base.css"><link rel="stylesheet" href="../css/nav.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/services.css">
 </head>
 <body>
-  <div class="preloader" id="preloader"><div class="preloader-logo">Haulxify</div></div>
+<!-- ================================================================
+     PRELOADER
+     ================================================================ -->
+<div id="preloader" role="status" aria-label="Loading">
+  <div class="preloader-logo-mark">
+    <div class="preloader-word">Haul<span>xify</span></div>
+  </div>
+  <div class="preloader-bar-wrap">
+    <div class="preloader-bar-fill"></div>
+  </div>
+</div>
   
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <a href="../index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
@@ -26,13 +37,11 @@
       Hauler App
     </a>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
-<!-- Mobile Menu -->
+
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
   <ul class="mobile-menu-links">
     <li><a href="../index.html" class="mobile-menu-link">Home</a></li>
@@ -46,12 +55,7 @@
     <a href="../hauler.html" class="btn btn-secondary">Hauler App</a>
     <a href="../contact.html" class="btn btn-primary">Get Started</a>
   </div>
-  <div class="mobile-menu-footer">
-    Pakistan's logistics talent — serving the world's transport industry.
-  </div>
-</div>
-
-  <div class="mobile-menu-footer">
+  <div class="mobile-menu-">
     Pakistan's logistics talent — serving the world's transport industry.
   </div>
 </div><section class="page-hero">
@@ -127,27 +131,24 @@
   <section class="section" style="background: var(--white); padding: 80px 0;"><div class="container" style="text-align: center; max-width: 640px; margin: 0 auto;"><h2 style="font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight:800; color:var(--brand-navy); letter-spacing:-0.03em; margin-bottom:16px;">Corporate accounts are won and kept by precision. We deliver both.</h2><p style="color: var(--text-body); line-height: 1.7; margin-bottom: 32px;">Tell us your vehicle count, current corporate account base, and biggest administrative challenge. We'll put together a plan that keeps your best clients and wins new ones.</p><div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;"><a href="../contact.html" class="btn btn-primary btn-lg">Get a Free Assessment</a><a href="../pricing.html" class="btn btn-secondary">View Pricing</a></div></div></section>
 
   
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
 <footer class="footer" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
 
       <!-- Brand -->
       <div class="footer-brand">
-        <a href="../index.html" class="footer-logo">Haul<span>xify</span></a>
+        <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
         <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
-        <div class="pakistan-badge">
-          Proudly operating from Pakistan
-        </div>
-        <div class="footer-socials">
-          <a href="#" class="footer-social" aria-label="LinkedIn">
-            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="Facebook">
-            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="Instagram">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg>
-          </a>
+         <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/haulxify" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
         </div>
       </div>
 
@@ -155,13 +156,13 @@
       <div>
         <div class="footer-col-title">Services</div>
         <ul class="footer-links">
-          <li><a href="../services/trucking-companies.html" class="footer-link">Trucking Companies</a></li>
-          <li><a href="../services/freight-brokers.html" class="footer-link">Freight Brokers</a></li>
-          <li><a href="../services/nemt.html" class="footer-link">NEMT Providers</a></li>
-          <li><a href="../services/tow-truck.html" class="footer-link">Tow Truck Operators</a></li>
-          <li><a href="../services/car-hauler.html" class="footer-link">Car Haulers</a></li>
-          <li><a href="../services/after-hours-dispatch.html" class="footer-link">After-Hours Dispatch</a></li>
-          <li><a href="../services.html" class="footer-link">View All Services</a></li>
+          <li><a href="services/trucking-companies.html" class="footer-link">Trucking Companies</a></li>
+          <li><a href="services/freight-brokers.html" class="footer-link">Freight Brokers</a></li>
+          <li><a href="services/nemt.html" class="footer-link">NEMT Providers</a></li>
+          <li><a href="services/tow-truck.html" class="footer-link">Tow Truck Operators</a></li>
+          <li><a href="services/car-hauler.html" class="footer-link">Car Haulers</a></li>
+          <li><a href="services/after-hours-dispatch.html" class="footer-link">After-Hours Dispatch</a></li>
+          <li><a href="services.html" class="footer-link">View All Services</a></li>
         </ul>
       </div>
 
@@ -169,13 +170,13 @@
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
-          <li><a href="../about.html" class="footer-link">About Haulxify</a></li>
-          <li><a href="../pricing.html" class="footer-link">Pricing</a></li>
-          <li><a href="../blog.html" class="footer-link">Blog &amp; Resources</a></li>
-          <li><a href="../careers.html" class="footer-link">Careers</a></li>
-          <li><a href="../faq.html" class="footer-link">FAQ</a></li>
-          <li><a href="../contact.html" class="footer-link">Contact Us</a></li>
-          <li><a href="../hauler.html" class="footer-link">Hauler App</a></li>
+          <li><a href="about.html" class="footer-link">About Haulxify</a></li>
+          <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="blog.html" class="footer-link">Blog &amp; Resources</a></li>
+          <li><a href="careers.html" class="footer-link">Careers</a></li>
+          <li><a href="faq.html" class="footer-link">FAQ</a></li>
+          <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          <li><a href="hauler.html" class="footer-link">Hauler App</a></li>
         </ul>
       </div>
 
@@ -183,10 +184,10 @@
       <div>
         <div class="footer-col-title">Legal &amp; Contact</div>
         <ul class="footer-links">
-          <li><a href="../privacy-policy.html" class="footer-link">Privacy Policy</a></li>
-          <li><a href="../terms.html" class="footer-link">Terms of Service</a></li>
-          <li><a href="../terms.html#cookies" class="footer-link">Cookie Policy</a></li>
-          <li><a href="../terms.html#disclaimer" class="footer-link">Disclaimer</a></li>
+          <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+          <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+          <li><a href="terms.html#cookies" class="footer-link">Cookie Policy</a></li>
+          <li><a href="terms.html#disclaimer" class="footer-link">Disclaimer</a></li>
         </ul>
         <div style="margin-top:24px;">
           <a href="https://portal.haulxify.com" class="footer-portal-link" target="_blank" rel="noopener">
@@ -196,7 +197,7 @@
         </div>
         <div style="margin-top:20px;">
           <a href="mailto:hello@haulxify.com" class="footer-link" style="display:block;margin-bottom:8px;">hello@haulxify.com</a>
-          <a href="../contact.html" class="footer-link">Book a Call</a>
+          <a href="contact.html" class="footer-link">Book a Call</a>
         </div>
       </div>
 
@@ -207,9 +208,9 @@
     <div class="footer-bottom">
       <p class="footer-bottom-text">&copy; 2025 Haulxify. All rights reserved. Proudly built in Pakistan.</p>
       <ul class="footer-bottom-links">
-        <li><a href="../privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
-        <li><a href="../terms.html" class="footer-bottom-link">Terms</a></li>
-        <li><a href="../terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
+        <li><a href="privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
+        <li><a href="terms.html" class="footer-bottom-link">Terms</a></li>
+        <li><a href="terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
       </ul>
     </div>
   </div>

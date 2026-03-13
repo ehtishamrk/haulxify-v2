@@ -7,6 +7,7 @@
   <meta name="description" content="Haulxify provides specialized back office support for 12+ transport industries — from trucking to NEMT, tow truck to limo. Real solutions for your industry's real pain points.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/nav.css">
@@ -82,19 +83,29 @@
   </style>
 </head>
 <body>
-  <div class="preloader" id="preloader">
-    <div class="preloader-logo">Haulxify</div>
+ <!-- ================================================================
+     PRELOADER
+     ================================================================ -->
+<div id="preloader" role="status" aria-label="Loading">
+  <div class="preloader-logo-mark">
+    <div class="preloader-word">Haul<span>xify</span></div>
   </div>
+  <div class="preloader-bar-wrap">
+    <div class="preloader-bar-fill"></div>
+  </div>
+</div>
 
-  
-<nav class="nav" role="navigation" aria-label="Main navigation">
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
+
   <ul class="nav-links" role="list">
     <li><a href="index.html" class="nav-link">Home</a></li>
     <li><a href="services.html" class="nav-link">Services</a></li>
     <li><a href="about.html" class="nav-link">About</a></li>
     <li><a href="contact.html" class="nav-link">Contact</a></li>
   </ul>
+
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
     <a href="hauler.html" class="nav-hauler">
@@ -108,6 +119,7 @@
     </button>
   </div>
 </nav>
+
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
   <ul class="mobile-menu-links">
@@ -127,10 +139,8 @@
   </div>
 </div>
 
-  <div class="mobile-menu-footer">
-    Pakistan's logistics talent — serving the world's transport industry.
-  </div>
-</div><!-- PAGE HERO -->
+
+  <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="container">
       <div class="page-hero-inner services-intro">
@@ -143,8 +153,8 @@
         <h1>Your industry.<br><span>Your pain points.</span><br>Our fix.</h1>
         <p>Generic back office support doesn't cut it. Every industry has its own billing headaches, compliance traps, and dispatch nightmares. We built specialized support for each one.</p>
         <div class="page-hero-actions">
-          <a href="contact.html" class="btn btn-primary">Get a Custom Quote</a>
-          <a href="pricing.html" class="btn btn-ghost-white">View Pricing</a>
+          <a href="contact.html" class="btn-primary">Get a Custom Quote</a>
+          <a href="pricing.html" class="btn-ghost-white">View Pricing</a>
         </div>
       </div>
     </div>
@@ -409,7 +419,7 @@
         <div>
           <h2>Not sure which<br>plan fits your<br><span>operation?</span></h2>
           <p>Every business is different. Tell us about your fleet size, current challenges, and monthly volume — we'll put together a custom quote within 24 hours.</p>
-          <a href="contact.html" class="btn btn-primary">Get a Custom Quote</a>
+          <a href="contact.html" class="btn-primary">Get a Custom Quote</a>
         </div>
         <div class="services-note-stats">
           <div class="sn-stat">
@@ -439,12 +449,13 @@
       <span class="eyebrow" style="display: block; margin: 0 auto 16px;">Ready to Start</span>
       <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; margin-bottom: 16px; max-width: 520px; margin-left: auto; margin-right: auto;">Your industry. Your rules. Our team.</h2>
       <p style="color: var(--text-body); font-size: 1rem; max-width: 480px; margin: 0 auto 32px; line-height: 1.7;">No 6-month contracts. No hidden fees. Start with one vehicle, scale as you grow.</p>
-      <a href="contact.html" class="btn btn-primary btn-lg">Talk to Our Team</a>
+      <a href="contact.html" class="btn-primary btn-lg">Talk to Our Team</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  
+  <!-- ================================================================
+     FOOTER
+     ================================================================ -->
 <footer class="footer" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
@@ -453,19 +464,13 @@
       <div class="footer-brand">
         <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
         <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
-        <div class="pakistan-badge">
-          Proudly operating from Pakistan
-        </div>
-        <div class="footer-socials">
-          <a href="#" class="footer-social" aria-label="LinkedIn">
-            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="Facebook">
-            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="Instagram">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg>
-          </a>
+         <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/haulxify" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
         </div>
       </div>
 
