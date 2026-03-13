@@ -69,14 +69,14 @@
 }
 
 .btn-ghost-white {
-  background: transparent;
+  border: 1px solid rgba(255,255,255,0.5); /* was transparent */
   color: var(--white);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-ghost-white:hover {
-  border-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--brand-navy); /* text flips dark on white fill */
 }
 
 /* Sizes */
