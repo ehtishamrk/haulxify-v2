@@ -48,16 +48,32 @@
     .team-note { background: var(--brand-navy); border-radius: var(--radius-xl); padding: 64px; text-align: center; }
     .team-note h2 { font-size: clamp(1.75rem,3vw,2.25rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 16px; }
     .team-note p { color: rgba(255,255,255,0.6); font-size: 1rem; line-height: 1.75; max-width: 600px; margin: 0 auto 40px; }
+    .team-section { padding: 96px 0; background: var(--brand-navy); }
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+    .team-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: var(--radius-lg); padding: 36px 32px; transition: background 0.3s, border-color 0.3s; }
+    .team-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(232,119,34,0.3); }
+    .team-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.375rem; font-weight: 800; color: var(--white); margin-bottom: 20px; letter-spacing: -0.02em; }
+    .team-name { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--white); letter-spacing: -0.01em; margin-bottom: 4px; }
+    .team-role { font-size: 0.8125rem; font-weight: 600; color: var(--brand-orange); margin-bottom: 14px; letter-spacing: 0.02em; }
+    .team-years { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .team-bio { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.75; margin: 0; }
+    .team-row-centered { display: flex; justify-content: center; gap: 24px; margin-top: 24px; }
+    .team-row-centered .team-card { flex: 0 0 calc(33.333% - 16px); }
     @media (max-width: 900px) {
       .about-stats { grid-template-columns: repeat(2,1fr); }
       .about-layout { grid-template-columns: 1fr; gap: 40px; }
       .about-layout.flip { direction: ltr; }
       .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .team-row-centered { flex-wrap: wrap; }
+      .team-row-centered .team-card { flex: 0 0 calc(50% - 12px); }
       .team-note { padding: 40px 24px; }
     }
     @media (max-width: 600px) {
       .values-grid { grid-template-columns: 1fr; }
       .about-stats { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .team-row-centered .team-card { flex: 0 0 100%; }
     }
   </style>
 </head>
@@ -269,6 +285,124 @@
   </div>
 </section>
 
+<!-- TEAM -->
+<section class="team-section">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="eyebrow eyebrow-white">The People Behind It</span>
+      <h2 style="color:var(--white);">Meet the leadership team</h2>
+      <p style="color:rgba(255,255,255,0.55);">Logistics professionals who've spent years inside the industry — building the back office they wished they had.</p>
+    </div>
+
+    <!-- Row 1: Founders -->
+    <div class="team-grid">
+      <div class="team-card reveal delay-1">
+        <div class="team-avatar">ER</div>
+        <div class="team-name">Ehtisham Rana Khan</div>
+        <div class="team-role">Founder & CEO</div>
+        <p class="team-bio">9+ years in logistics with deep expertise in American markets and multi-industry operations. Built Haulxify after watching too many good transport businesses fail not from the road — but from the back office.</p>
+      </div>
+      <div class="team-card reveal delay-2">
+        <div class="team-avatar">ZR</div>
+        <div class="team-name">Zaighaum Rana Khan</div>
+        <div class="team-role">Co-Founder & COO</div>
+        <p class="team-bio">Former dispatcher who has managed 50+ fleets across different transportation sectors. Zaighaum oversees operations and ensures every client account runs to the standard he'd demand if it were his own fleet.</p>
+      </div>
+      <div class="team-card reveal delay-3">
+        <div class="team-avatar">RN</div>
+        <div class="team-name">Rana Nouman Ahmed</div>
+        <div class="team-role">Head of Dispatch</div>
+        <p class="team-bio">Leads Haulxify's dispatch operations with a direct, results-first approach. Nouman sets the standards our dispatch team is trained to, and personally oversees quality control across client accounts.</p>
+      </div>
+    </div>
+
+    <!-- Row 2: Department heads (centered) -->
+    <div class="team-row-centered">
+      <div class="team-card reveal delay-1">
+        <div class="team-avatar">FQ</div>
+        <div class="team-name">Farwa Qamar Ch</div>
+        <div class="team-role">Head of Human Resources</div>
+        <p class="team-bio">Drives Haulxify's hiring, training, and people operations. Farwa is responsible for the talent standards that define what clients experience — from initial onboarding to long-term team performance.</p>
+      </div>
+      <div class="team-card reveal delay-2">
+        <div class="team-avatar">ST</div>
+        <div class="team-name">Syed Turab Raza Rizvi</div>
+        <div class="team-role">Head of Finance</div>
+        <p class="team-bio">Oversees financial operations, client billing, and internal reporting. Turab ensures the numbers are always clean — for Haulxify and for every client whose books we manage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="eyebrow" style="color:rgba(255,255,255,0.45);border-color:rgba(255,255,255,0.1);">The People Behind It</span>
+      <h2 style="color:var(--white);">Meet the team</h2>
+      <p style="color:rgba(255,255,255,0.5);">Built by operators, not outsiders. Every leader at Haulxify has hands-on experience in the industries we serve.</p>
+    </div>
+
+    <!-- Row 1: founders -->
+    <div class="team-grid">
+      <div class="team-card reveal delay-1">
+        <div class="team-avatar">ER</div>
+        <div class="team-name">Ehtisham Rana Khan</div>
+        <div class="team-role">Founder &amp; CEO</div>
+        <span class="team-years">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          9+ years in logistics
+        </span>
+        <p class="team-bio">Deep expertise in American freight markets and multi-industry transport operations. Built Haulxify from the ground up to solve the back office crisis facing independent operators globally.</p>
+      </div>
+      <div class="team-card reveal delay-2">
+        <div class="team-avatar">ZR</div>
+        <div class="team-name">Zaighaum Rana Khan</div>
+        <div class="team-role">Co-Founder &amp; COO</div>
+        <span class="team-years">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          50+ fleets managed
+        </span>
+        <p class="team-bio">Former dispatcher who scaled from managing single-truck accounts to overseeing 50+ fleet operations across trucking, NEMT, towing, and specialty freight sectors. Architects Haulxify's operations framework.</p>
+      </div>
+      <div class="team-card reveal delay-3">
+        <div class="team-avatar">RN</div>
+        <div class="team-name">Rana Nouman Ahmed</div>
+        <div class="team-role">Head of Dispatch</div>
+        <span class="team-years">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Dispatch Operations
+        </span>
+        <p class="team-bio">Leads Haulxify's dispatch division with an operator-first mindset — building systems that maximise load efficiency, minimise deadhead miles, and keep drivers moving profitably around the clock.</p>
+      </div>
+    </div>
+
+    <!-- Row 2: department heads, centred -->
+    <div class="team-row-centered">
+      <div class="team-card reveal delay-1">
+        <div class="team-avatar" style="background:var(--mid-navy);">FQ</div>
+        <div class="team-name">Farwa Qamar Ch</div>
+        <div class="team-role">Head of Human Resources</div>
+        <span class="team-years">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          People &amp; Culture
+        </span>
+        <p class="team-bio">Owns the talent pipeline that makes Haulxify's quality promise possible — from sourcing and vetting logistics-trained candidates to onboarding programmes that get team members client-ready in days, not months.</p>
+      </div>
+      <div class="team-card reveal delay-2">
+        <div class="team-avatar" style="background:var(--mid-navy);">ST</div>
+        <div class="team-name">Syed Turab Raza Rizvi</div>
+        <div class="team-role">Head of Finance</div>
+        <span class="team-years">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Finance &amp; Compliance
+        </span>
+        <p class="team-bio">Oversees financial operations, client billing integrity, and bookkeeping service delivery. Brings structured financial discipline to an industry that has historically run on gut feel and spreadsheets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section style="padding: 80px 0; background: var(--off-white);">
   <div class="container">
@@ -335,7 +469,7 @@
           </a>
         </div>
         <div style="margin-top:20px;">
-          <a href="mailto:hello@haulxify.com" class="footer-link" style="display:block;margin-bottom:8px;">hello@haulxify.com</a>
+          <a href="/cdn-cgi/l/email-protection#d2bab7bebebd92bab3a7beaabbb4abfcb1bdbf" class="footer-link" style="display:block;margin-bottom:8px;"><span class="__cf_email__" data-cfemail="0d65686161624d656c786175646b74236e6260">[email&#160;protected]</span></a>
           <a href="contact.html" class="footer-link">Book a Call</a>
         </div>
       </div>
@@ -346,12 +480,4 @@
       <ul class="footer-bottom-links">
         <li><a href="privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
         <li><a href="terms.html" class="footer-bottom-link">Terms</a></li>
-        <li><a href="terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
-      </ul>
-    </div>
-  </div>
-</footer>
-
-<script src="js/main.js"></script>
-</body>
-</html>
+        <li><a href="terms.html#disclaimer" class="f
