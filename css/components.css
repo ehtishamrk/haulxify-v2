@@ -484,6 +484,7 @@
 
 .footer-social {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-top: 20px;
 }
