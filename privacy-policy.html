@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Haulxify</title>
+  <meta name="description" content="Haulxify's privacy policy — how we collect, use, and protect your personal and business data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .legal-hero { background: var(--brand-navy); padding: 140px 0 64px; }
+    .legal-hero h1 { font-size: clamp(2rem,4vw,2.75rem); font-weight: 800; color: var(--white); letter-spacing: -0.04em; margin-bottom: 12px; }
+    .legal-hero p { color: rgba(255,255,255,0.5); font-size: 0.9375rem; }
+    .legal-body { padding: 80px 0 100px; }
+    .legal-layout { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: flex-start; }
+    .legal-nav { position: sticky; top: 100px; }
+    .legal-nav-title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .legal-nav a { display: block; font-size: 0.8125rem; color: var(--text-body); text-decoration: none; padding: 7px 12px; border-radius: 6px; margin-bottom: 2px; transition: all 0.2s; border-left: 2px solid transparent; }
+    .legal-nav a:hover { color: var(--brand-navy); background: var(--off-white); border-left-color: var(--brand-orange); }
+    .legal-content h2 { font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin: 48px 0 16px; padding-top: 48px; border-top: 1px solid var(--border); }
+    .legal-content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .legal-content h3 { font-size: 1rem; font-weight: 700; color: var(--brand-navy); margin: 28px 0 10px; }
+    .legal-content p { font-size: 0.9375rem; color: var(--text-body); line-height: 1.8; margin-bottom: 16px; }
+    .legal-content ul { margin: 0 0 16px 20px; }
+    .legal-content ul li { font-size: 0.9375rem; color: var(--text-body); line-height: 1.8; margin-bottom: 6px; }
+    .legal-content a { color: var(--brand-orange); text-decoration: none; }
+    .legal-content a:hover { text-decoration: underline; }
+    .legal-last-updated { display: inline-flex; align-items: center; gap: 8px; background: var(--off-white); border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 40px; }
+    @media (max-width: 900px) {
+      .legal-layout { grid-template-columns: 1fr; }
+      .legal-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="preloader" id="preloader"><div class="preloader-logo">Haulxify</div></div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="services.html" class="nav-link">Services</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
+    <a href="hauler.html" class="nav-hauler"><span class="nav-hauler-dot"></span>Hauler App</a>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="mobile-menu-links">
+    <li><a href="index.html" class="mobile-menu-link">Home</a></li>
+    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
+    <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
+    <li><a href="about.html" class="mobile-menu-link">About</a></li>
+    <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
+    <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
+    <a href="contact.html" class="btn btn-primary">Get Started</a>
+  </div>
+  <div class="mobile-menu-footer">Pakistan's logistics talent — serving the world's transport industry.</div>
+</div>
+
+<section class="legal-hero">
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: January 2025</p>
+  </div>
+</section>
+
+<section class="legal-body">
+  <div class="container">
+    <div class="legal-layout">
+      <nav class="legal-nav">
+        <div class="legal-nav-title">Contents</div>
+        <a href="#information">Information We Collect</a>
+        <a href="#use">How We Use It</a>
+        <a href="#sharing">Sharing Your Data</a>
+        <a href="#storage">Data Storage</a>
+        <a href="#cookies">Cookies</a>
+        <a href="#rights">Your Rights</a>
+        <a href="#security">Security</a>
+        <a href="#children">Children</a>
+        <a href="#changes">Changes</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="legal-content">
+        <div class="legal-last-updated">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated: January 2025
+        </div>
+
+        <p>Haulxify ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our back office services.</p>
+
+        <h2 id="information">1. Information We Collect</h2>
+        <h3>Information you provide directly</h3>
+        <ul>
+          <li>Contact information (name, email address, phone number)</li>
+          <li>Business information (company name, fleet size, industry type)</li>
+          <li>Service-related information you share during onboarding</li>
+          <li>Communications you send to us via email, contact forms, or messaging</li>
+        </ul>
+        <h3>Information collected automatically</h3>
+        <ul>
+          <li>IP address and general location data</li>
+          <li>Browser type and device information</li>
+          <li>Pages visited and time spent on our website</li>
+          <li>Referring website addresses</li>
+        </ul>
+        <h3>Information from your business operations</h3>
+        <p>When providing back office services, we may process operational data on your behalf — including freight documents, driver records, financial records, and compliance documents. This data is processed as a service provider under your instruction and is subject to our Data Processing Agreement.</p>
+
+        <h2 id="use">2. How We Use Your Information</h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+          <li>Provide, operate, and improve our back office services</li>
+          <li>Respond to enquiries and communicate with you about your account</li>
+          <li>Send service-related notices and updates</li>
+          <li>Process billing and payments</li>
+          <li>Ensure the security and integrity of our systems</li>
+          <li>Comply with legal obligations</li>
+          <li>Improve our website and understand how visitors use it</li>
+        </ul>
+        <p>We do not use your data for advertising purposes, and we do not sell your personal information to third parties.</p>
+
+        <h2 id="sharing">3. Sharing Your Data</h2>
+        <p>We do not sell, trade, or rent your personal information. We may share data in the following limited circumstances:</p>
+        <ul>
+          <li><strong>Service providers:</strong> Third-party tools we use to operate our business (e.g. cloud storage, communication platforms) that are contractually bound to protect your data.</li>
+          <li><strong>Legal requirements:</strong> If required by law, court order, or government authority.</li>
+          <li><strong>Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, your data may be transferred as part of that transaction.</li>
+          <li><strong>With your consent:</strong> Any other sharing requires your explicit approval.</li>
+        </ul>
+        <p>Team members assigned to your account only access data relevant to delivering your services. We do not co-assign staff across competing businesses.</p>
+
+        <h2 id="storage">4. Data Storage and Retention</h2>
+        <p>Your data is stored on secure cloud infrastructure. We retain personal and operational data for as long as your account is active and for a reasonable period afterward to meet legal and accounting obligations.</p>
+        <p>Upon termination of services, we return all operational data to you in organised form and delete our copies within 30 days. You may request deletion of your personal data at any time.</p>
+
+        <h2 id="cookies">5. Cookies</h2>
+        <p>Our website uses cookies to improve your browsing experience. We use:</p>
+        <ul>
+          <li><strong>Essential cookies:</strong> Required for the website to function. Cannot be disabled.</li>
+          <li><strong>Analytics cookies:</strong> Help us understand how visitors use our site. You can opt out via your browser settings.</li>
+        </ul>
+        <p>You can control cookie settings through your browser. Disabling cookies may affect some website functionality.</p>
+
+        <h2 id="rights">6. Your Rights</h2>
+        <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+        <ul>
+          <li>Right to access the personal data we hold about you</li>
+          <li>Right to correct inaccurate or incomplete data</li>
+          <li>Right to request deletion of your data</li>
+          <li>Right to restrict or object to processing</li>
+          <li>Right to data portability</li>
+        </ul>
+        <p>To exercise any of these rights, contact us at <a href="mailto:privacy@haulxify.com">privacy@haulxify.com</a>. We will respond within 30 days.</p>
+
+        <h2 id="security">7. Security</h2>
+        <p>We implement appropriate technical and organisational measures to protect your data against unauthorised access, loss, or misuse. These include access controls, NDAs for all staff, encrypted data transmission, and regular security reviews.</p>
+        <p>However, no method of internet transmission is 100% secure. While we do everything reasonably possible to protect your information, we cannot guarantee absolute security.</p>
+
+        <h2 id="children">8. Children's Privacy</h2>
+        <p>Our services are intended for businesses and professionals. We do not knowingly collect personal information from anyone under the age of 18. If we become aware that we have collected data from a minor, we will delete it immediately.</p>
+
+        <h2 id="changes">9. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. When we do, we will update the "last updated" date at the top of this page. For significant changes, we will notify active clients by email. Continued use of our services after changes constitutes acceptance of the updated policy.</p>
+
+        <h2 id="contact">10. Contact Us</h2>
+        <p>If you have questions about this Privacy Policy or how we handle your data, contact us:</p>
+        <ul>
+          <li>Email: <a href="mailto:privacy@haulxify.com">privacy@haulxify.com</a></li>
+          <li>General: <a href="mailto:hello@haulxify.com">hello@haulxify.com</a></li>
+          <li>Website: <a href="contact.html">haulxify.com/contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
+        <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
+        <div class="pakistan-badge">Proudly operating from Pakistan</div>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Instagram"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="services/trucking-companies.html" class="footer-link">Trucking Companies</a></li>
+          <li><a href="services/freight-brokers.html" class="footer-link">Freight Brokers</a></li>
+          <li><a href="services/nemt.html" class="footer-link">NEMT Providers</a></li>
+          <li><a href="services/tow-truck.html" class="footer-link">Tow Truck Operators</a></li>
+          <li><a href="services/car-hauler.html" class="footer-link">Car Haulers</a></li>
+          <li><a href="services/after-hours-dispatch.html" class="footer-link">After-Hours Dispatch</a></li>
+          <li><a href="services.html" class="footer-link">View All Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html" class="footer-link">About Haulxify</a></li>
+          <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="blog.html" class="footer-link">Blog &amp; Resources</a></li>
+          <li><a href="careers.html" class="footer-link">Careers</a></li>
+          <li><a href="faq.html" class="footer-link">FAQ</a></li>
+          <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          <li><a href="hauler.html" class="footer-link">Hauler App</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+          <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+          <li><a href="terms.html#cookies" class="footer-link">Cookie Policy</a></li>
+          <li><a href="terms.html#disclaimer" class="footer-link">Disclaimer</a></li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="https://portal.haulxify.com" class="footer-portal-link" target="_blank" rel="noopener">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            Employee Portal
+          </a>
+        </div>
+        <div style="margin-top:20px;">
+          <a href="mailto:hello@haulxify.com" class="footer-link" style="display:block;margin-bottom:8px;">hello@haulxify.com</a>
+          <a href="contact.html" class="footer-link">Book a Call</a>
+        </div>
+      </div>
+    </div>
+    <hr class="divider divider-dark" />
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">&copy; 2025 Haulxify. All rights reserved. Proudly built in Pakistan.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
+        <li><a href="terms.html" class="footer-bottom-link">Terms</a></li>
+        <li><a href="terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

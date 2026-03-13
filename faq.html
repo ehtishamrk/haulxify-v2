@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Haulxify Back Office Support</title>
+  <meta name="description" content="Answers to the most common questions about Haulxify's back office support services — pricing, onboarding, what we handle, data security, and how we work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+  <style>
+    .faq-page-hero { background: var(--brand-navy); padding: 140px 0 80px; text-align: center; }
+    .faq-page-hero h1 { font-size: clamp(2.25rem,4.5vw,3.25rem); font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; }
+    .faq-page-hero h1 span { color: var(--brand-orange); }
+    .faq-page-hero p { color: rgba(255,255,255,0.6); font-size: 1.0625rem; max-width: 520px; margin: 0 auto; line-height: 1.75; }
+    .faq-page { padding: 80px 0 100px; }
+    .faq-page-layout { display: grid; grid-template-columns: 240px 1fr; gap: 64px; align-items: flex-start; }
+    .faq-nav { position: sticky; top: 100px; }
+    .faq-nav-title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+    .faq-nav-link { display: block; font-size: 0.875rem; color: var(--text-body); text-decoration: none; padding: 8px 12px; border-radius: 8px; margin-bottom: 4px; transition: all 0.2s; border-left: 2px solid transparent; }
+    .faq-nav-link:hover, .faq-nav-link.active { color: var(--brand-navy); background: var(--off-white); border-left-color: var(--brand-orange); }
+    .faq-category { margin-bottom: 64px; }
+    .faq-category-title { font-size: 1.25rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+    @media (max-width: 900px) {
+      .faq-page-layout { grid-template-columns: 1fr; }
+      .faq-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="preloader" id="preloader"><div class="preloader-logo">Haulxify</div></div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="services.html" class="nav-link">Services</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
+    <a href="hauler.html" class="nav-hauler"><span class="nav-hauler-dot"></span>Hauler App</a>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="mobile-menu-links">
+    <li><a href="index.html" class="mobile-menu-link">Home</a></li>
+    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
+    <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
+    <li><a href="about.html" class="mobile-menu-link">About</a></li>
+    <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
+    <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
+    <a href="contact.html" class="btn btn-primary">Get Started</a>
+  </div>
+  <div class="mobile-menu-footer">Pakistan's logistics talent — serving the world's transport industry.</div>
+</div>
+
+<section class="faq-page-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow-white" style="margin-bottom:20px;display:inline-flex;">Frequently Asked Questions</span>
+    <h1>Everything you need to<br><span>know about Haulxify.</span></h1>
+    <p>Can't find your answer here? Contact us directly — we respond within a few hours.</p>
+  </div>
+</section>
+
+<section class="faq-page">
+  <div class="container">
+    <div class="faq-page-layout">
+
+      <!-- Sidebar nav -->
+      <nav class="faq-nav" aria-label="FAQ categories">
+        <div class="faq-nav-title">Categories</div>
+        <a href="#general" class="faq-nav-link active">General</a>
+        <a href="#pricing" class="faq-nav-link">Pricing</a>
+        <a href="#onboarding" class="faq-nav-link">Onboarding</a>
+        <a href="#operations" class="faq-nav-link">Operations</a>
+        <a href="#security" class="faq-nav-link">Security & Data</a>
+        <a href="#industries" class="faq-nav-link">Industries</a>
+      </nav>
+
+      <!-- FAQ content -->
+      <div>
+
+        <!-- GENERAL -->
+        <div class="faq-category" id="general">
+          <div class="faq-category-title">General</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">What exactly is Haulxify?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Haulxify is a back office operations service for transport and logistics businesses. We handle everything that isn't driving — dispatching, BOL and POD processing, invoicing, factoring coordination, driver hiring, IFTA compliance, bookkeeping, and more. Our teams are based in Pakistan and serve clients across North America, Europe, and beyond.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Who is Haulxify built for?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">We serve any transport or logistics business that has back office work they'd rather not do themselves. Our core clients are owner-operators, small fleets (1–50 vehicles), freight brokers, NEMT providers, tow truck companies, car haulers, dump truck operators, moving companies, sprinter/cargo van operators, limousine companies, and taxi fleets. If you move things or people and you have paperwork, billing, or admin — we can help.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Is Haulxify a staffing agency or an outsourcing company?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Neither, exactly. We're a managed service provider. You don't hire individuals from us — we assign a dedicated back office team to your account. We manage the hiring, training, scheduling, quality control, and performance monitoring. You just work with your team and tell us what you need done.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Do you work with businesses outside North America?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Yes. While our deepest expertise is in US and Canadian transport regulations and workflows, we serve clients in the UK, Europe, and Australia as well. During onboarding we assess the specific regulatory and operational requirements of your market and configure our processes accordingly.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="faq-category" id="pricing">
+          <div class="faq-category-title">Pricing</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">How does your pricing work?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">We price by vehicle per day. The first vehicle starts at $5/day. From the second vehicle onward, the rate drops to $3.50/vehicle/day. This means a 10-truck fleet pays $5 + (9 × $3.50) = $36.50/day, or roughly $1,095/month. Billing is monthly. There are no setup fees, no long-term contracts, and no hidden charges.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">What does the price include?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">The base price includes your full back office coverage — dispatching, document processing, invoicing, and standard compliance support. Specialist services like bookkeeping, payroll, and driver recruiting are available as add-ons. The exact scope is agreed during onboarding based on what you actually need.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Are there any long-term contracts?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">No. We operate on a month-to-month basis. You can scale up, scale down, or cancel with 30 days notice. We don't believe in locking clients into contracts — we'd rather earn your business every month through results.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Do you charge per task or per hour?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Neither. You pay a flat monthly rate based on your vehicle count. Whether it's a slow week or a busy week, the price stays the same. No surprise invoices, no task overages.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Is there a free trial?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">We offer a free assessment call before you commit — we'll review your current operation, identify what you need, and give you a clear picture of what we'd do and what it would cost. From there, we offer a 30-day pilot period so you can see the results before committing to a longer arrangement.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ONBOARDING -->
+        <div class="faq-category" id="onboarding">
+          <div class="faq-category-title">Onboarding</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">How long does onboarding take?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Most clients are live within 24 hours of completing the onboarding call. The call itself takes 30–60 minutes. We use it to understand your operation, access your systems, assign your team, and configure our workflows to match your standards. You don't need to prepare anything special — just be ready to walk us through a typical day.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">What information do you need to get started?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Fleet size, operating states or regions, current software and platforms (TMS, load boards, accounting software), factoring company if applicable, and the specific services you need. We'll also need read/write access to your relevant platforms — we'll walk you through exactly what access is needed and why during the onboarding call.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Do I need to change my existing software?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">No. We adapt to your existing tools. Whether you use DAT, Truckstop, ITS Dispatch, McLeod, TruckLogics, QuickBooks, or a custom spreadsheet system — we work within whatever you already have. If you have no systems, we can recommend and help set up the right ones as part of onboarding.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPERATIONS -->
+        <div class="faq-category" id="operations">
+          <div class="faq-category-title">Operations</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">What hours does your team work?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Standard coverage is during your local business hours. We configure shift timing during onboarding based on your timezone and operational needs. After-hours coverage (overnight, weekends) is available as an add-on — and it's one of our most popular services for tow truck and NEMT operators.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">How do I communicate with my team?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">However you prefer. Most clients use WhatsApp, Slack, or email for daily communication. We adapt to your preferred channel. You'll have a dedicated point of contact, not a generic support inbox.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">What happens if a team member makes an error?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">We own it. We document the error, identify the root cause, correct the issue immediately, and update our SOPs to prevent recurrence. We don't hide mistakes — we tell you about them first and fix them fast. If an error causes a financial loss, we work with you to make it right.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Can I request a specific team member to be replaced?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Yes. If a team member isn't working well with your operation for any reason, we'll reassign and replace without question. Client satisfaction is the priority.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="faq-category" id="security">
+          <div class="faq-category-title">Security & Data</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">How do you protect my business data?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">All team members sign NDAs before starting any client work. We use role-based access controls — team members only access the systems and data they need for their specific tasks. We don't store client data on personal devices. All work is done through company-managed systems with audit logging.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Will my competitors ever see my data?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Never. Team members assigned to your account work exclusively on your account during their shift. We do not co-assign team members across competing businesses in the same market. Confidentiality is a core operating principle, not an afterthought.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">What happens to my data if I cancel?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">We return all your data in organised form during the offboarding process and permanently delete our copies. All system access is revoked immediately upon cancellation. You own your data — we never hold it hostage.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INDUSTRIES -->
+        <div class="faq-category" id="industries">
+          <div class="faq-category-title">Industries</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">Do you specialise in one type of transport or all of them?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">We serve 12+ transport and logistics categories. Each has its own specific workflows, documentation requirements, and regulatory landscape — and we train our teams accordingly. We don't use a one-size-fits-all process. A NEMT operation's back office looks completely different from a dump truck company's, and we build those processes separately.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Can you handle NEMT Medicaid billing?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Yes. NEMT billing — including Medicaid and broker portal submissions — is one of our specialist service areas. We handle trip documentation, mileage verification, claim preparation, submission tracking, and denial follow-up. We're familiar with the requirements across multiple state Medicaid systems.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Can you dispatch 24/7 for tow truck operators?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">Yes. After-hours and 24/7 dispatch coverage is available for tow truck and roadside assistance operators. This is one of our most requested services — an in-house overnight dispatcher costs $48,000–$72,000 per year. Our after-hours coverage costs a fraction of that.</div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">My operation is small — am I too small for Haulxify?
+                <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
+              <div class="faq-answer"><div class="faq-answer-inner">No minimum. Single-vehicle operators are among our most common clients. If you have a one-truck operation and you're spending 3 hours a day on paperwork instead of driving, you're our ideal client. We scale pricing to your size, so a solo operator pays proportionally less than a 50-truck fleet.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="background: var(--off-white); border-radius: var(--radius-xl); padding: 48px 40px; text-align: center; margin-top: 16px;">
+          <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin-bottom: 12px;">Still have questions?</h3>
+          <p style="color: var(--text-body); margin-bottom: 28px; line-height: 1.7;">We're happy to answer anything on a quick call — no sales pressure, just straight answers.</p>
+          <a href="contact.html" class="btn btn-primary">Talk to Our Team</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
+        <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
+        <div class="pakistan-badge">Proudly operating from Pakistan</div>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Instagram"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="services/trucking-companies.html" class="footer-link">Trucking Companies</a></li>
+          <li><a href="services/freight-brokers.html" class="footer-link">Freight Brokers</a></li>
+          <li><a href="services/nemt.html" class="footer-link">NEMT Providers</a></li>
+          <li><a href="services/tow-truck.html" class="footer-link">Tow Truck Operators</a></li>
+          <li><a href="services/car-hauler.html" class="footer-link">Car Haulers</a></li>
+          <li><a href="services/after-hours-dispatch.html" class="footer-link">After-Hours Dispatch</a></li>
+          <li><a href="services.html" class="footer-link">View All Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html" class="footer-link">About Haulxify</a></li>
+          <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="blog.html" class="footer-link">Blog &amp; Resources</a></li>
+          <li><a href="careers.html" class="footer-link">Careers</a></li>
+          <li><a href="faq.html" class="footer-link">FAQ</a></li>
+          <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          <li><a href="hauler.html" class="footer-link">Hauler App</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+          <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+          <li><a href="terms.html#cookies" class="footer-link">Cookie Policy</a></li>
+          <li><a href="terms.html#disclaimer" class="footer-link">Disclaimer</a></li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="https://portal.haulxify.com" class="footer-portal-link" target="_blank" rel="noopener">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            Employee Portal
+          </a>
+        </div>
+        <div style="margin-top:20px;">
+          <a href="mailto:hello@haulxify.com" class="footer-link" style="display:block;margin-bottom:8px;">hello@haulxify.com</a>
+          <a href="contact.html" class="footer-link">Book a Call</a>
+        </div>
+      </div>
+    </div>
+    <hr class="divider divider-dark" />
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">&copy; 2025 Haulxify. All rights reserved. Proudly built in Pakistan.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
+        <li><a href="terms.html" class="footer-bottom-link">Terms</a></li>
+        <li><a href="terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

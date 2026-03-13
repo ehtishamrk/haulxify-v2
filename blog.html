@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & Resources — Haulxify Transport Back Office</title>
+  <meta name="description" content="Practical guides, compliance updates, and industry insights for trucking companies, freight brokers, NEMT operators, and other transport businesses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+  <style>
+    .blog-hero { background: var(--brand-navy); padding: 140px 0 80px; text-align: center; }
+    .blog-hero h1 { font-size: clamp(2.25rem,4.5vw,3.25rem); font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; }
+    .blog-hero h1 span { color: var(--brand-orange); }
+    .blog-hero p { color: rgba(255,255,255,0.6); font-size: 1.0625rem; max-width: 520px; margin: 0 auto; line-height: 1.75; }
+    .blog-section { padding: 80px 0 100px; }
+    .blog-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 48px; }
+    .blog-filter { font-size: 0.875rem; font-weight: 600; padding: 8px 20px; border-radius: var(--radius-full); border: 1px solid var(--border); color: var(--text-body); background: var(--white); cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .blog-filter:hover, .blog-filter.active { background: var(--brand-navy); color: var(--white); border-color: var(--brand-navy); }
+    .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .blog-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; text-decoration: none; display: flex; flex-direction: column; }
+    .blog-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
+    .blog-card-img { height: 180px; background: var(--brand-navy); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .blog-card-img-inner { width: 64px; height: 64px; background: var(--orange-glow); border-radius: 16px; display: flex; align-items: center; justify-content: center; }
+    .blog-card-img-inner svg { width: 28px; height: 28px; color: var(--brand-orange); }
+    .blog-card-body { padding: 24px 28px 32px; flex: 1; display: flex; flex-direction: column; }
+    .blog-card-cat { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-orange); margin-bottom: 10px; }
+    .blog-card-title { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--brand-navy); line-height: 1.35; margin-bottom: 12px; letter-spacing: -0.01em; }
+    .blog-card-excerpt { font-size: 0.875rem; color: var(--text-body); line-height: 1.7; flex: 1; margin-bottom: 20px; }
+    .blog-card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.8125rem; color: var(--text-muted); }
+    .blog-card-read { font-size: 0.8125rem; font-weight: 600; color: var(--brand-orange); }
+    .blog-coming-soon { background: var(--off-white); border-radius: var(--radius-xl); padding: 64px; text-align: center; margin-top: 48px; }
+    .blog-coming-soon h3 { font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin-bottom: 12px; }
+    .blog-coming-soon p { color: var(--text-body); max-width: 480px; margin: 0 auto 32px; line-height: 1.75; }
+    @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } .blog-coming-soon { padding: 40px 24px; } }
+  </style>
+</head>
+<body>
+<div class="preloader" id="preloader"><div class="preloader-logo">Haulxify</div></div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="services.html" class="nav-link">Services</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
+    <a href="hauler.html" class="nav-hauler"><span class="nav-hauler-dot"></span>Hauler App</a>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="mobile-menu-links">
+    <li><a href="index.html" class="mobile-menu-link">Home</a></li>
+    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
+    <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
+    <li><a href="about.html" class="mobile-menu-link">About</a></li>
+    <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
+    <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
+    <a href="contact.html" class="btn btn-primary">Get Started</a>
+  </div>
+  <div class="mobile-menu-footer">Pakistan's logistics talent — serving the world's transport industry.</div>
+</div>
+
+<section class="blog-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow-white" style="margin-bottom:20px;display:inline-flex;">Blog & Resources</span>
+    <h1>Practical guides for<br><span>transport operators.</span></h1>
+    <p>No fluff. Just actionable insights on compliance, operations, billing, and back office efficiency for transport businesses.</p>
+  </div>
+</section>
+
+<section class="blog-section">
+  <div class="container">
+
+    <div class="blog-filters">
+      <a href="#" class="blog-filter active">All</a>
+      <a href="#" class="blog-filter">Compliance</a>
+      <a href="#" class="blog-filter">Dispatching</a>
+      <a href="#" class="blog-filter">Billing & Cash Flow</a>
+      <a href="#" class="blog-filter">NEMT</a>
+      <a href="#" class="blog-filter">Tow Truck</a>
+      <a href="#" class="blog-filter">Trucking</a>
+      <a href="#" class="blog-filter">Operations</a>
+    </div>
+
+    <div class="blog-grid">
+
+      <a href="#" class="blog-card reveal delay-1">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Compliance</div>
+          <div class="blog-card-title">IFTA Filing for Owner-Operators: The Complete 2025 Guide</div>
+          <div class="blog-card-excerpt">Everything you need to know about quarterly IFTA filing — tracking mileage by state, calculating fuel tax liability, and avoiding the penalties that catch most small carriers off guard.</div>
+          <div class="blog-card-meta">
+            <span>8 min read</span>
+            <span class="blog-card-read">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal delay-2">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Billing & Cash Flow</div>
+          <div class="blog-card-title">Why Your Invoices Are Getting Paid Late (And How to Fix It)</div>
+          <div class="blog-card-excerpt">85% of small trucking operations cite cash flow as their biggest problem. Most of it comes down to invoicing delays, missing PODs, and no follow-up process. Here's what to change.</div>
+          <div class="blog-card-meta">
+            <span>6 min read</span>
+            <span class="blog-card-read">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal delay-3">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Tow Truck</div>
+          <div class="blog-card-title">How Tow Truck Operators Are Losing $4,000/Month to Missed After-Hours Calls</div>
+          <div class="blog-card-excerpt">The first operator to answer gets the job. When your phone goes unanswered after 10pm, that revenue goes to a competitor. We break down the math and the solution.</div>
+          <div class="blog-card-meta">
+            <span>5 min read</span>
+            <span class="blog-card-read">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal delay-1">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">NEMT</div>
+          <div class="blog-card-title">NEMT Medicaid Billing: The 6 Denial Reasons That Kill Cash Flow</div>
+          <div class="blog-card-excerpt">Medicaid denials are the #1 revenue killer for NEMT operators. We document the six most common denial reasons, what causes each one, and the exact process to prevent them.</div>
+          <div class="blog-card-meta">
+            <span>9 min read</span>
+            <span class="blog-card-read">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal delay-2">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Dispatching</div>
+          <div class="blog-card-title">Load Board Strategies That Increase Revenue Per Mile for Small Fleets</div>
+          <div class="blog-card-excerpt">Most owner-operators take the first load they see. We walk through the load selection strategies used by profitable small fleets to cut deadhead miles and improve rate per mile.</div>
+          <div class="blog-card-meta">
+            <span>7 min read</span>
+            <span class="blog-card-read">Read →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal delay-3">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Operations</div>
+          <div class="blog-card-title">CDL Driver Hiring in 2025: What's Changed and What It Now Costs</div>
+          <div class="blog-card-excerpt">Average cost to hire one CDL driver has hit $4,700+. Background checks, MVR verifications, drug testing, onboarding — we break down every line item and where operations are wasting money.</div>
+          <div class="blog-card-meta">
+            <span>6 min read</span>
+            <span class="blog-card-read">Read →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="blog-coming-soon reveal">
+      <h3>More articles coming weekly.</h3>
+      <p>We publish practical, research-backed guides for transport operators every week. No generic business advice — only content that's relevant to running a logistics operation.</p>
+      <a href="contact.html" class="btn btn-primary">Get Notified of New Posts</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
+        <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
+        <div class="pakistan-badge">Proudly operating from Pakistan</div>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Instagram"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="services/trucking-companies.html" class="footer-link">Trucking Companies</a></li>
+          <li><a href="services/freight-brokers.html" class="footer-link">Freight Brokers</a></li>
+          <li><a href="services/nemt.html" class="footer-link">NEMT Providers</a></li>
+          <li><a href="services/tow-truck.html" class="footer-link">Tow Truck Operators</a></li>
+          <li><a href="services/car-hauler.html" class="footer-link">Car Haulers</a></li>
+          <li><a href="services/after-hours-dispatch.html" class="footer-link">After-Hours Dispatch</a></li>
+          <li><a href="services.html" class="footer-link">View All Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html" class="footer-link">About Haulxify</a></li>
+          <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="blog.html" class="footer-link">Blog &amp; Resources</a></li>
+          <li><a href="careers.html" class="footer-link">Careers</a></li>
+          <li><a href="faq.html" class="footer-link">FAQ</a></li>
+          <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          <li><a href="hauler.html" class="footer-link">Hauler App</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+          <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+          <li><a href="terms.html#cookies" class="footer-link">Cookie Policy</a></li>
+          <li><a href="terms.html#disclaimer" class="footer-link">Disclaimer</a></li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="https://portal.haulxify.com" class="footer-portal-link" target="_blank" rel="noopener">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            Employee Portal
+          </a>
+        </div>
+        <div style="margin-top:20px;">
+          <a href="mailto:hello@haulxify.com" class="footer-link" style="display:block;margin-bottom:8px;">hello@haulxify.com</a>
+          <a href="contact.html" class="footer-link">Book a Call</a>
+        </div>
+      </div>
+    </div>
+    <hr class="divider divider-dark" />
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">&copy; 2025 Haulxify. All rights reserved. Proudly built in Pakistan.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
+        <li><a href="terms.html" class="footer-bottom-link">Terms</a></li>
+        <li><a href="terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
