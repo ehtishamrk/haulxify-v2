@@ -794,6 +794,8 @@
    ================================================================= */
 .btn-primary,
 .btn-secondary,
+.btn-ghost,
+.btn-ghost-white {
   display: inline-flex;
   align-items: center;
   gap: 8px;
