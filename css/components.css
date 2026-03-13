@@ -89,7 +89,7 @@
 .btn-lg {
   font-size: 1.0625rem;
   padding: 18px 40px;
-  border-radius: 14px;
+border-radius: var(--radius-full);
 }
 
 /* Arrow icon in button */
