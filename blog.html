@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & Resources — Haulxify | Logistics Back Office Insights</title>
+  <meta name="description" content="Practical guides, compliance updates, and industry insights for trucking companies, freight brokers, NEMT operators, and other transport businesses. Real research, no fluff.">
+  <meta name="keywords" content="trucking back office, freight dispatch, NEMT billing, IFTA filing, trucking compliance, logistics outsourcing">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+  <style>
+    /* ── BLOG LIST VIEW ── */
+    .blog-hero { background: var(--brand-navy); padding: 130px 0 72px; text-align: center; }
+    .blog-hero h1 { font-size: clamp(2.25rem,4.5vw,3.25rem); font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; }
+    .blog-hero h1 span { color: var(--brand-orange); }
+    .blog-hero p { color: rgba(255,255,255,0.6); font-size: 1.0625rem; max-width: 520px; margin: 0 auto 36px; line-height: 1.75; }
+    .blog-search-wrap { max-width: 480px; margin: 0 auto; position: relative; }
+    .blog-search { width: 100%; padding: 14px 48px 14px 20px; border-radius: var(--radius-full); border: none; font-family: var(--font-body); font-size: 0.9375rem; outline: none; }
+    .blog-search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--text-muted); pointer-events: none; }
+
+    .blog-section { padding: 72px 0 100px; }
+    .blog-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
+    .blog-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .blog-filter { font-size: 0.8125rem; font-weight: 600; padding: 7px 18px; border-radius: var(--radius-full); border: 1px solid var(--border); color: var(--text-body); background: var(--white); cursor: pointer; transition: all 0.2s; text-decoration: none; white-space: nowrap; }
+    .blog-filter:hover, .blog-filter.active { background: var(--brand-navy); color: var(--white); border-color: var(--brand-navy); }
+    .blog-sort { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: var(--text-muted); }
+    .blog-sort select { font-family: var(--font-body); font-size: 0.8125rem; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; background: var(--white); color: var(--brand-navy); cursor: pointer; outline: none; }
+
+    /* FEATURED ARTICLE */
+    .blog-featured { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; margin-bottom: 40px; transition: box-shadow 0.3s; cursor: pointer; }
+    .blog-featured:hover { box-shadow: var(--shadow-xl); }
+    .blog-featured-visual { background: var(--brand-navy); display: flex; align-items: center; justify-content: center; padding: 56px; position: relative; min-height: 280px; }
+    .blog-featured-icon { width: 80px; height: 80px; background: rgba(232,119,34,0.15); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+    .blog-featured-icon svg { width: 36px; height: 36px; color: var(--brand-orange); }
+    .blog-featured-badge { position: absolute; top: 24px; left: 24px; background: var(--brand-orange); color: var(--white); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: var(--radius-full); }
+    .blog-featured-body { padding: 48px 44px; display: flex; flex-direction: column; }
+    .blog-featured-cat { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-orange); margin-bottom: 12px; }
+    .blog-featured-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--brand-navy); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .blog-featured-excerpt { font-size: 0.9375rem; color: var(--text-body); line-height: 1.75; flex: 1; margin-bottom: 28px; }
+    .blog-featured-meta { display: flex; align-items: center; justify-content: space-between; }
+    .blog-meta-info { display: flex; gap: 16px; font-size: 0.8125rem; color: var(--text-muted); }
+    .blog-read-btn { font-size: 0.875rem; font-weight: 700; color: var(--brand-orange); display: flex; align-items: center; gap: 6px; }
+    .blog-read-btn svg { width: 16px; height: 16px; transition: transform 0.2s; }
+    .blog-featured:hover .blog-read-btn svg { transform: translateX(4px); }
+
+    /* GRID CARDS */
+    .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .blog-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; display: flex; flex-direction: column; cursor: pointer; }
+    .blog-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
+    .blog-card-img { height: 160px; background: var(--brand-navy); display: flex; align-items: center; justify-content: center; position: relative; }
+    .blog-card-img-icon { width: 52px; height: 52px; background: rgba(232,119,34,0.12); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .blog-card-img-icon svg { width: 24px; height: 24px; color: var(--brand-orange); }
+    .blog-trending-badge { position: absolute; top: 12px; right: 12px; background: var(--brand-orange); color: var(--white); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+    .blog-card-body { padding: 22px 24px 28px; flex: 1; display: flex; flex-direction: column; }
+    .blog-card-cat { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--brand-orange); margin-bottom: 8px; }
+    .blog-card-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--brand-navy); line-height: 1.4; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .blog-card-excerpt { font-size: 0.8125rem; color: var(--text-body); line-height: 1.7; flex: 1; margin-bottom: 16px; }
+    .blog-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .blog-card-meta { font-size: 0.75rem; color: var(--text-muted); }
+    .blog-card-views { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+
+    /* LOADING / EMPTY */
+    .blog-loading { text-align: center; padding: 80px 0; color: var(--text-muted); }
+    .blog-spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--brand-orange); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .blog-empty { text-align: center; padding: 80px 0; }
+    .blog-empty h3 { font-size: 1.25rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 8px; }
+    .blog-empty p { color: var(--text-muted); }
+
+    /* ── ARTICLE READER ── */
+    #article-view { display: none; }
+    .article-back { display: inline-flex; align-items: center; gap: 8px; color: var(--text-body); font-size: 0.875rem; font-weight: 600; text-decoration: none; margin-bottom: 40px; padding: 10px 0; cursor: pointer; transition: color 0.2s; }
+    .article-back:hover { color: var(--brand-orange); }
+    .article-back svg { width: 16px; height: 16px; }
+    .article-hero { background: var(--brand-navy); padding: 80px 0 64px; }
+    .article-hero-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .article-cat-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-orange); margin-bottom: 16px; display: block; }
+    .article-headline { font-size: clamp(1.75rem,3.5vw,2.75rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 20px; }
+    .article-meta-bar { display: flex; align-items: center; gap: 20px; font-size: 0.875rem; color: rgba(255,255,255,0.5); flex-wrap: wrap; }
+    .article-meta-bar span { display: flex; align-items: center; gap: 6px; }
+    .article-meta-bar svg { width: 14px; height: 14px; }
+    .article-body { padding: 72px 0 100px; }
+    .article-container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .article-content { font-size: 1.0625rem; line-height: 1.85; color: var(--text-body); }
+    .article-content h2 { font-size: 1.5rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin: 48px 0 16px; }
+    .article-content h3 { font-size: 1.125rem; font-weight: 700; color: var(--brand-navy); margin: 32px 0 12px; }
+    .article-content p { margin-bottom: 20px; }
+    .article-content ul, .article-content ol { margin: 0 0 20px 24px; }
+    .article-content li { margin-bottom: 8px; line-height: 1.8; }
+    .article-content strong { color: var(--brand-navy); font-weight: 600; }
+    .article-content .callout { background: var(--off-white); border-left: 4px solid var(--brand-orange); border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 20px 24px; margin: 28px 0; }
+    .article-content .callout p { margin: 0; color: var(--brand-navy); font-weight: 500; }
+    .article-content .stat-highlight { background: var(--brand-navy); border-radius: var(--radius-lg); padding: 28px 32px; margin: 32px 0; display: flex; align-items: center; gap: 24px; }
+    .article-content .stat-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--brand-orange); letter-spacing: -0.04em; white-space: nowrap; }
+    .article-content .stat-text { font-size: 0.9375rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .article-share { border-top: 1px solid var(--border); padding-top: 40px; margin-top: 56px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .article-share-label { font-size: 0.875rem; font-weight: 700; color: var(--brand-navy); }
+    .article-share-btns { display: flex; gap: 10px; }
+    .article-share-btn { padding: 9px 20px; border-radius: var(--radius-full); border: 1px solid var(--border); font-size: 0.8125rem; font-weight: 600; color: var(--text-body); cursor: pointer; transition: all 0.2s; background: var(--white); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .article-share-btn:hover { background: var(--brand-navy); color: var(--white); border-color: var(--brand-navy); }
+    .article-cta-box { background: var(--brand-navy); border-radius: var(--radius-xl); padding: 48px; text-align: center; margin-top: 56px; }
+    .article-cta-box h3 { font-size: 1.5rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; margin-bottom: 12px; }
+    .article-cta-box p { color: rgba(255,255,255,0.6); max-width: 460px; margin: 0 auto 28px; line-height: 1.7; }
+
+    @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 800px) {
+      .blog-featured { grid-template-columns: 1fr; }
+      .blog-featured-visual { min-height: 180px; }
+    }
+    @media (max-width: 640px) {
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-controls { flex-direction: column; align-items: flex-start; }
+      .article-cta-box { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="preloader" id="preloader"><div class="preloader-logo">Haulxify</div></div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="services.html" class="nav-link">Services</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
+    <a href="hauler.html" class="nav-hauler"><span class="nav-hauler-dot"></span>Hauler App</a>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="mobile-menu-links">
+    <li><a href="index.html" class="mobile-menu-link">Home</a></li>
+    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
+    <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
+    <li><a href="about.html" class="mobile-menu-link">About</a></li>
+    <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
+    <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
+    <a href="contact.html" class="btn btn-primary">Get Started</a>
+  </div>
+  <div class="mobile-menu-footer">Pakistan's logistics talent — serving the world's transport industry.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LIST VIEW
+════════════════════════════════════════════════ -->
+<div id="list-view">
+  <section class="blog-hero">
+    <div class="container">
+      <span class="eyebrow eyebrow-white" style="margin-bottom:20px;display:inline-flex;">Blog &amp; Resources</span>
+      <h1>Practical guides for<br><span>transport operators.</span></h1>
+      <p>Real research, zero fluff. Everything you need to run a smarter, leaner logistics operation.</p>
+      <div class="blog-search-wrap">
+        <input type="text" id="search-input" class="blog-search" placeholder="Search articles…" aria-label="Search articles">
+        <svg class="blog-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-controls">
+        <div class="blog-filters" id="filter-bar">
+          <button class="blog-filter active" data-cat="all">All Articles</button>
+          <button class="blog-filter" data-cat="compliance">Compliance</button>
+          <button class="blog-filter" data-cat="dispatching">Dispatching</button>
+          <button class="blog-filter" data-cat="billing">Billing &amp; Cash Flow</button>
+          <button class="blog-filter" data-cat="nemt">NEMT</button>
+          <button class="blog-filter" data-cat="tow-truck">Tow Truck</button>
+          <button class="blog-filter" data-cat="trucking">Trucking</button>
+          <button class="blog-filter" data-cat="operations">Operations</button>
+        </div>
+        <div class="blog-sort">
+          <label for="sort-select" style="white-space:nowrap;">Sort by:</label>
+          <select id="sort-select">
+            <option value="smart">Trending &amp; New</option>
+            <option value="newest">Newest First</option>
+            <option value="popular">Most Read</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="featured-slot"></div>
+      <div id="blog-grid" class="blog-grid"></div>
+      <div id="blog-loading" class="blog-loading">
+        <div class="blog-spinner"></div>
+        <p>Loading articles…</p>
+      </div>
+      <div id="blog-empty" class="blog-empty" style="display:none;">
+        <h3>No articles found</h3>
+        <p>Try a different search or category.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ARTICLE READER (SPA)
+════════════════════════════════════════════════ -->
+<div id="article-view">
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <button class="article-back" onclick="showList()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Blog
+      </button>
+      <span class="article-cat-tag" id="art-cat"></span>
+      <h1 class="article-headline" id="art-title"></h1>
+      <div class="article-meta-bar">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="art-date"></span></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="art-views"></span> reads</span>
+        <span id="art-read-time"></span>
+      </div>
+    </div>
+  </div>
+  <div class="article-body">
+    <div class="article-container">
+      <div class="article-content" id="art-body"></div>
+      <div class="article-share">
+        <span class="article-share-label">Share this article</span>
+        <div class="article-share-btns">
+          <a id="share-linkedin" href="#" target="_blank" class="article-share-btn">LinkedIn</a>
+          <a id="share-twitter" href="#" target="_blank" class="article-share-btn">X / Twitter</a>
+          <button onclick="copyArticleLink()" class="article-share-btn" id="copy-btn">Copy Link</button>
+        </div>
+      </div>
+      <div class="article-cta-box">
+        <h3>Ready to hand off your back office?</h3>
+        <p>Get a free assessment — we'll show you exactly what we'd take off your plate and what it would cost.</p>
+        <a href="contact.html" class="btn btn-primary btn-lg">Get a Free Assessment</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
+        <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
+        <div class="pakistan-badge">Proudly operating from Pakistan</div>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Instagram"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="services/trucking-companies.html" class="footer-link">Trucking Companies</a></li>
+          <li><a href="services/freight-brokers.html" class="footer-link">Freight Brokers</a></li>
+          <li><a href="services/nemt.html" class="footer-link">NEMT Providers</a></li>
+          <li><a href="services/tow-truck.html" class="footer-link">Tow Truck Operators</a></li>
+          <li><a href="services/car-hauler.html" class="footer-link">Car Haulers</a></li>
+          <li><a href="services/after-hours-dispatch.html" class="footer-link">After-Hours Dispatch</a></li>
+          <li><a href="services.html" class="footer-link">View All Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html" class="footer-link">About Haulxify</a></li>
+          <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+          <li><a href="blog.html" class="footer-link">Blog &amp; Resources</a></li>
+          <li><a href="careers.html" class="footer-link">Careers</a></li>
+          <li><a href="faq.html" class="footer-link">FAQ</a></li>
+          <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          <li><a href="hauler.html" class="footer-link">Hauler App</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+          <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+          <li><a href="terms.html#cookies" class="footer-link">Cookie Policy</a></li>
+          <li><a href="terms.html#disclaimer" class="footer-link">Disclaimer</a></li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="https://portal.haulxify.com" class="footer-portal-link" target="_blank" rel="noopener">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            Employee Portal
+          </a>
+        </div>
+        <div style="margin-top:20px;">
+          <a href="mailto:hello@haulxify.com" class="footer-link" style="display:block;margin-bottom:8px;">hello@haulxify.com</a>
+          <a href="contact.html" class="footer-link">Book a Call</a>
+        </div>
+      </div>
+    </div>
+    <hr class="divider divider-dark" />
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">&copy; 2025 Haulxify. All rights reserved. Proudly built in Pakistan.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="privacy-policy.html" class="footer-bottom-link">Privacy</a></li>
+        <li><a href="terms.html" class="footer-bottom-link">Terms</a></li>
+        <li><a href="terms.html#disclaimer" class="footer-bottom-link">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   HAULXIFY BLOG ENGINE
+   ─────────────────────────────────────────────────────────────
+   GOOGLE SHEETS INTEGRATION
+   ─────────────────────────────────────────────────────────────
+   Replace SHEETS_API_URL below with your Apps Script Web App URL.
+   See blog-setup-guide.txt in your zip for the full setup steps.
+═══════════════════════════════════════════════════════════════ */
+
+const SHEETS_API_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+// Leave the line above as-is until you set up Google Sheets.
+// The page will use the built-in seed articles in the meantime.
+
+/* ─────────────────────────────────────────────────────────────
+   SEED ARTICLES (fully written, SEO-optimised, ready to publish)
+   These show immediately without any backend setup.
+   Once you connect Google Sheets, new articles you write there
+   will merge with and supersede these by slug.
+───────────────────────────────────────────────────────────── */
+const SEED_ARTICLES = [
+  {
+    id: 'ifta-filing-guide-2025',
+    title: 'IFTA Filing in 2025: The Complete Guide for Owner-Operators and Small Fleets',
+    category: 'compliance',
+    categoryLabel: 'Compliance',
+    date: '2025-01-14',
+    author: 'Haulxify Team',
+    readTime: '9 min read',
+    views: 1840,
+    trending: true,
+    excerpt: 'Every quarter, thousands of trucking operations pay IFTA penalties they didn\'t have to. Here\'s exactly how to file correctly, what mileage records you actually need, and how to avoid the most expensive mistakes.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+    content: `
+<p>If you're an interstate motor carrier with a qualified motor vehicle operating in two or more IFTA member jurisdictions, you're required to file quarterly. Miss a filing, under-report, or miscalculate — and you're looking at penalties, interest, and potential audit flags that can follow your MC number for years.</p>
+<p>This guide covers everything you need to file correctly in 2025, written for owner-operators and small fleets who handle their own back office.</p>
+
+<div class="stat-highlight">
+  <div class="stat-num">$500+</div>
+  <div class="stat-text">Average penalty for a first-time IFTA non-filing infraction, before interest. Repeat failures escalate to license revocation.</div>
+</div>
+
+<h2>What IFTA Actually Is (And Why It Matters More Than You Think)</h2>
+<p>The International Fuel Tax Agreement is a compact between 48 US states and 10 Canadian provinces that simplifies fuel tax reporting for commercial carriers. Instead of filing separate fuel tax returns in every state you operate in, you file one quarterly return with your base jurisdiction — and they distribute the tax to each state based on your reported mileage.</p>
+<p>IFTA applies to any power unit that has two axles and a GVW or GVWR over 26,000 lbs, or has three or more axles regardless of weight. If that's your truck, you're in.</p>
+
+<div class="callout"><p>IFTA quarters: Q1 (Jan–Mar) due April 30 | Q2 (Apr–Jun) due July 31 | Q3 (Jul–Sep) due October 31 | Q4 (Oct–Dec) due January 31. Late filings carry a $50 minimum penalty or 10% of the net tax due — whichever is greater.</p></div>
+
+<h2>The Mileage Records That IFTA Auditors Actually Want to See</h2>
+<p>IFTA requires that you can document total miles driven in each jurisdiction for each quarter. This sounds simple. In practice, it's where most small operators fall apart.</p>
+<p>Acceptable mileage documentation includes:</p>
+<ul>
+  <li><strong>ELD records</strong> — if your ELD system produces jurisdiction-level mileage breakdowns (most do), this is your cleanest source</li>
+  <li><strong>GPS trip data</strong> exported from your tracking platform with state-by-state mileage</li>
+  <li><strong>Driver trip sheets</strong> filled out at every state line crossing — old school, still valid</li>
+  <li><strong>Dispatch records cross-referenced with odometer logs</strong> — acceptable but creates more audit exposure</li>
+</ul>
+<p>What auditors specifically look for: consistency between your odometer readings and your reported mileage. If your GPS says 14,200 miles for the quarter and your odometer difference is 18,400 miles, you have a problem.</p>
+
+<h2>Fuel Records: What You Can and Can't Claim</h2>
+<p>IFTA lets you claim tax paid on fuel purchased in member jurisdictions — but only if you have the documentation. Acceptable fuel receipts must show: date, seller name and address, fuel type, number of gallons, and the unit number or vehicle plate.</p>
+<p>Card-lock receipts and fleet card statements generally meet this standard. Cash purchases at a truck stop are only creditable if you kept the receipt. "I know I bought fuel in Ohio" is not IFTA documentation.</p>
+<p>Bulk fuel purchased and stored at your yard is creditable — but requires a separate tracking log showing how much was dispensed to each vehicle. Most small operators miss this and leave money on the table every quarter.</p>
+
+<h2>How to Calculate Your Net Tax (Without the Headache)</h2>
+<p>The IFTA calculation goes like this for each jurisdiction:</p>
+<ol>
+  <li>Calculate average fleet MPG: total miles ÷ total gallons</li>
+  <li>Calculate taxable gallons for each state: state miles ÷ average MPG</li>
+  <li>Subtract gallons actually purchased in that state</li>
+  <li>Multiply the difference by that state's current fuel tax rate</li>
+  <li>A positive result = tax owed. A negative result = credit from that state.</li>
+</ol>
+<p>Net everything out across all states. If you owe, pay your base jurisdiction. If you're in credit overall, your base jurisdiction processes the refund.</p>
+
+<div class="callout"><p>Important: fuel tax rates change. Always pull current rates from your base jurisdiction's IFTA rate chart before filing. Using last quarter's rates is a common error that triggers adjustment notices.</p></div>
+
+<h2>The 5 IFTA Mistakes That Trigger Audits</h2>
+<ul>
+  <li><strong>Inconsistent MPG across quarters.</strong> If your fleet averages 6.8 MPG every quarter for two years, then suddenly reports 9.2 MPG in Q3, that's a red flag. Auditors use MPG consistency as a first-pass filter.</li>
+  <li><strong>Mileage in a state with no fuel purchases.</strong> Operating 4,000 miles in a state but claiming zero fuel purchased there is possible — but it gets flagged automatically. Have your documentation ready.</li>
+  <li><strong>Missing odometer readings.</strong> Your quarterly beginning and ending odometer must reconcile with your total miles reported. Gaps are audit bait.</li>
+  <li><strong>Late filing.</strong> Even a zero-liability quarter must be filed. A missing filing is treated as non-compliance regardless of whether you owed anything.</li>
+  <li><strong>Incorrect vehicle count.</strong> Filing for 3 trucks when you operated 4 in a quarter, even briefly, is a reportable discrepancy.</li>
+</ul>
+
+<h2>Software vs. Manual: What Small Fleets Actually Use</h2>
+<p>TruckingOffice, Axon Trucking, and most modern TMS platforms have built-in IFTA reporting that generates your quarterly return automatically if you're logging mileage correctly. This is the right approach for fleets of 3+ trucks.</p>
+<p>For owner-operators, the IFTA reporting built into most ELD apps (Samsara, KeepTruckin/Motive, BigRoad) is often sufficient. Export the quarterly report, verify the totals match your fuel receipts, and file.</p>
+<p>Manual spreadsheet filing is legal but creates the most audit risk because human error compounds quarterly. If you're doing it by hand, have someone else verify the numbers before you submit.</p>
+
+<h2>What Happens If You Get Audited</h2>
+<p>IFTA audits are conducted by your base jurisdiction and typically cover the most recent 4 years of filings. Auditors will request: all mileage records, all fuel receipts, vehicle registration documents, and driver logs.</p>
+<p>The most common audit outcome for small operators isn't fraud — it's under-documentation. If you can't prove mileage or fuel purchases, the auditor estimates using national average figures, which almost always result in additional tax owed.</p>
+<p>Responding to an IFTA audit without complete records costs the average small fleet $3,000–$8,000 in assessed back taxes, penalties, and interest. The records that prevent this cost nothing to maintain — they just require discipline.</p>
+`
+  },
+  {
+    id: 'invoicing-cash-flow-trucking',
+    title: 'Why Trucking Invoices Get Paid Late — And the Exact System to Fix It',
+    category: 'billing',
+    categoryLabel: 'Billing & Cash Flow',
+    date: '2025-01-21',
+    author: 'Haulxify Team',
+    readTime: '7 min read',
+    views: 2310,
+    trending: true,
+    excerpt: 'Cash flow is the #1 killer of viable trucking operations. The root cause isn\'t the freight market — it\'s the invoice cycle. Here\'s the system that collapses payment time from 45 days to under 10.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
+    content: `
+<p>The average payment cycle in US trucking is 32 days from delivery. For small carriers, it often stretches to 45–60 days — not because brokers are slow, but because the invoice package wasn't complete, wasn't submitted the right way, or wasn't followed up on. By the time the payment arrives, fuel, insurance, and payroll have already gone out.</p>
+<p>This is fixable. The fix isn't factoring (though factoring has its place). The fix is a disciplined invoicing system that makes it impossible for a broker or shipper to have a reason to delay payment.</p>
+
+<div class="stat-highlight">
+  <div class="stat-num">32</div>
+  <div class="stat-text">days — average payment cycle for US trucking invoices. Operators with a systematic invoicing process typically collect in 7–12 days from the same brokers.</div>
+</div>
+
+<h2>The Real Reason Invoices Get Delayed</h2>
+<p>Brokers don't delay payment because they want to. They delay payment because their accounts payable process is triggered by a complete invoice package — and most small carriers don't submit one on the first attempt.</p>
+<p>A complete invoice package for most brokers includes: signed rate confirmation, proof of delivery (signed BOL), and the invoice itself with the correct load number referenced. If any of these are missing, incorrect, or illegible, the payment clock doesn't start until the package is corrected and resubmitted.</p>
+<p>The average broker receives 60–70% of invoice packages with at least one deficiency on the first submission. For small carriers, that number is higher. Every deficiency adds 5–15 business days to your payment cycle.</p>
+
+<h2>The Documents You Need to Send (And How to Send Them)</h2>
+<h3>Rate Confirmation</h3>
+<p>Use the signed original. Not a screenshot, not a forwarded email thread — the actual signed rate confirmation as a clean PDF. Some brokers have specific file naming requirements; check their portal or carrier packet.</p>
+<h3>Bill of Lading (BOL)</h3>
+<p>The BOL must be: legible (photograph it in good light, not a dark cab), signed by the consignee at delivery (not just at pickup), and show the load number or PO number that matches the rate confirmation. An unsigned BOL or a BOL where the delivery signature is missing will stop payment automatically at most brokers.</p>
+<h3>Invoice</h3>
+<p>Your invoice must include: your MC number, your EIN, the broker's load number, pickup and delivery dates and locations, agreed rate broken down by linehaul + any accessorials, and your payment terms. Use a consistent invoice template — not a different format every time.</p>
+
+<div class="callout"><p>Submit everything in one PDF, in order: Invoice → Rate Confirmation → BOL. Brokers' AP teams process hundreds of packages daily. Making it easy to process yours is how you get paid faster.</p></div>
+
+<h2>The Invoice-to-Collection System That Works</h2>
+<p>Here's the exact workflow used by carriers who collect in under 12 days on average:</p>
+<ol>
+  <li><strong>Day 0 (delivery day):</strong> Driver photographs the signed BOL immediately at delivery. This gets uploaded to your TMS or shared drive before the truck leaves the dock.</li>
+  <li><strong>Day 0–1:</strong> Your back office compiles the full invoice package and submits via the broker's preferred method (email, QuickBooks, or broker portal) within 24 hours of delivery.</li>
+  <li><strong>Day 3:</strong> Automated or manual check-in. Confirm the broker received and accepted the package. If there's a deficiency, correct and resubmit same day.</li>
+  <li><strong>Day 7 (for quick-pay brokers) or Day 25 (for standard net-30):</strong> Follow-up call or email if payment hasn't been confirmed. Reference the load number and invoice date.</li>
+  <li><strong>Day 32+ (for standard):</strong> Escalation to broker's AP supervisor if no payment and no dispute has been raised. Document every contact.</li>
+</ol>
+
+<h2>Accessorial Charges: The Money Most Carriers Leave Behind</h2>
+<p>Detention, layover, TONU (truck ordered not used), lumper fees, and fuel surcharge true-ups are often not invoiced because the carrier doesn't have a process for capturing them. These charges can add $200–$1,200 per load.</p>
+<p>To collect accessorials you must: notify the broker in writing while the situation is happening (a text saying "truck has been sitting at shipper for 2.5 hours, detention clock started at 9am" is sufficient), get verbal acknowledgment, and add the charge to your invoice with a reference to the notification.</p>
+<p>Brokers will often push back on accessorials that weren't flagged during the load. They rarely push back on accessorials that were documented in real time.</p>
+
+<h2>When to Use Factoring vs. Fix Your Invoicing</h2>
+<p>Factoring is not a solution to poor invoicing — it's a liquidity tool for carriers with a working invoicing system who need cash faster than their customers pay. If your invoice rejection rate is high, factoring just means you're paying 2–4% of gross revenue for the privilege of having someone else deal with your broken documentation process.</p>
+<p>Fix the invoicing system first. Then evaluate factoring based purely on whether the cost of capital is lower than the opportunity cost of waiting for payment.</p>
+
+<h2>The Back Office Advantage</h2>
+<p>Carriers with dedicated back office support — whether in-house or outsourced — collect faster than owner-operators doing their own paperwork. The reason is simple: a person whose only job is to chase and process invoices does it faster, more consistently, and with fewer errors than a driver doing it between loads at 11pm.</p>
+<p>The difference in payment cycle between a carrier with dedicated back office support and one without is typically 15–20 days per invoice. On a 5-truck fleet running 3 loads per truck per week, that's a cash flow difference of $40,000–$80,000 permanently sitting in transit.</p>
+`
+  },
+  {
+    id: 'nemt-medicaid-denials',
+    title: 'The 6 NEMT Medicaid Billing Denials Killing Your Cash Flow (And How to Prevent Every One)',
+    category: 'nemt',
+    categoryLabel: 'NEMT',
+    date: '2025-01-28',
+    author: 'Haulxify Team',
+    readTime: '8 min read',
+    views: 1650,
+    trending: true,
+    excerpt: 'Medicaid denials are the primary revenue leak for NEMT operators — and most of them are preventable. We break down the six most common denial codes, what triggers each one, and the workflow changes that eliminate them.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    content: `
+<p>Non-Emergency Medical Transportation is one of the most documentation-intensive segments in transport. Medicaid reimburses for NEMT — but only when every element of the claim matches the eligibility, authorization, and trip documentation requirements exactly. A single wrong code, a missing signature, or a mileage discrepancy will trigger a denial that takes weeks to appeal.</p>
+<p>Most NEMT operators have a denial rate between 8% and 15%. Operators with systematic billing processes typically run below 3%. The difference is process, not luck.</p>
+
+<div class="stat-highlight">
+  <div class="stat-num">12%</div>
+  <div class="stat-text">Average Medicaid claim denial rate for NEMT operators without a systematic billing process. Each denial costs $45–$200 in administrative follow-up time — regardless of whether it gets reversed.</div>
+</div>
+
+<h2>Denial #1: Eligibility Not Verified at Time of Service</h2>
+<p>Medicaid eligibility is not static. A patient who was eligible when they called to schedule may not be eligible on the day of transport — coverage can lapse, switch to a different managed care plan, or change level of service. If you transport a patient whose Medicaid was inactive on the trip date, the claim is denied on eligibility grounds and typically cannot be appealed successfully.</p>
+<p><strong>The fix:</strong> Verify eligibility on the morning of the trip, not at the time of booking. Most state Medicaid systems have automated eligibility verification via EVS (Eligibility Verification System) or through your state's MMIS portal. This takes 90 seconds per patient. Make it a non-negotiable step in your dispatch checklist.</p>
+
+<h2>Denial #2: Authorization Not Obtained or Expired</h2>
+<p>Many Medicaid managed care plans and state fee-for-service programs require prior authorization for NEMT trips. Operating on an expired authorization, or on a verbal authorization that was never documented, is one of the most expensive denial categories because the claim usually can't be recovered.</p>
+<p><strong>The fix:</strong> Build authorization tracking into your scheduling system. Every trip should be linked to an authorization number with an expiry date. Flag trips 48 hours before authorization expiry for renewal. For recurring trips (dialysis, chemo), set up standing authorizations and review them monthly.</p>
+
+<h2>Denial #3: Incorrect or Missing Procedure/Service Codes</h2>
+<p>NEMT claims are submitted with procedure codes that identify the type of transport: ambulatory, wheelchair, stretcher, etc. Submitting a wheelchair transport claim with an ambulatory code — or using an outdated code that your state MCO stopped accepting — results in automatic denial.</p>
+<p>Service codes change. States update their NEMT billing guidelines, sometimes quarterly. Using a coding reference that's 18 months old is a reliable way to accumulate denials.</p>
+<p><strong>The fix:</strong> Subscribe to updates from your state Medicaid program and each MCO you bill. Review your code set every quarter. When in doubt, call the MCO's provider relations line before billing — not after.</p>
+
+<h2>Denial #4: Mileage Discrepancy</h2>
+<p>Medicaid pays for actual mileage from pickup to dropoff (and sometimes from driver's starting point). If your claimed mileage is more than 10–15% different from the MCO's reference mileage (usually calculated by their mapping system), the claim is flagged for review or automatically adjusted down. In cases of significant discrepancy, the claim is denied outright.</p>
+<p><strong>The fix:</strong> Use consistent mileage calculation. Document GPS-verified trip mileage for every run. Your GPS data should match what you bill. If you consistently run longer routes due to traffic or driver preference, you need trip records that justify the mileage — not just a number that doesn't match the MCO's map.</p>
+
+<h2>Denial #5: Missing or Incomplete Trip Documentation</h2>
+<p>At minimum, NEMT Medicaid claims require: pickup and dropoff times, addresses, patient signature (or notation of why signature couldn't be obtained), driver identification, vehicle ID, and trip purpose. Missing any of these triggers denial.</p>
+<p>The patient signature requirement is particularly common. Patients who are in significant distress, unconscious, or cognitively unable to sign — these situations require specific documented notations, not a blank signature field.</p>
+<p><strong>The fix:</strong> Use a trip manifest or electronic trip sheet that prompts drivers through every required field. Non-optional fields that can't be left blank. Train drivers that an incomplete trip sheet means the company doesn't get paid — and eventually, neither does the driver.</p>
+
+<div class="callout"><p>Electronic trip sheets that sync to your billing software dramatically reduce documentation denials because they require completion before the trip can be closed. Paper-based trip documentation has a 3–4x higher documentation denial rate than electronic.</p></div>
+
+<h2>Denial #6: Duplicate Claim</h2>
+<p>Submitting the same claim twice — either deliberately or through system error — results in automatic denial of the second submission. This is more common than it sounds: if your billing software crashes mid-submission, if you resubmit after a denial without checking whether the original actually processed, or if a staff member submits without checking submission history.</p>
+<p><strong>The fix:</strong> Every submission should be logged with date, claim number, and status. Before resubmitting any claim, check the payer's provider portal for the original submission status. Most duplicates result from impatience — the claim was processing, not denied.</p>
+
+<h2>What to Do With Denied Claims</h2>
+<p>Every denial generates a denial reason code (CARC and RARC codes on the EOB). These codes tell you exactly why the claim was denied and what the appeal path is. The appeal window varies by payer — typically 60–90 days from the denial date. Missing the appeal window means the revenue is gone.</p>
+<p>Track your denial codes monthly. If the same code appears more than 3 times, you have a systematic process failure — not a random error. Fix the process, not just the individual claims.</p>
+<p>NEMT denial management is a full-time back office task. Operators who try to manage billing, authorizations, eligibility verification, and denial appeals without dedicated administrative support typically run denial rates 2–4x higher than those with proper back office support — and collect significantly less of what they're owed.</p>
+`
+  },
+  {
+    id: 'tow-truck-after-hours-revenue',
+    title: 'The After-Hours Revenue Problem Every Tow Truck Operator Has But Won\'t Admit',
+    category: 'tow-truck',
+    categoryLabel: 'Tow Truck',
+    date: '2025-02-04',
+    author: 'Haulxify Team',
+    readTime: '6 min read',
+    views: 3120,
+    trending: true,
+    excerpt: 'Roadside assistance doesn\'t stop at 6pm. Your competitors\' phones don\'t either. Here\'s the exact revenue model showing what unanswered after-hours calls cost the average tow truck operation every year.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`,
+    content: `
+<p>Ask any tow truck operator what their biggest operational challenge is and you'll hear about insurance costs, fuel prices, and driver availability. Almost no one says after-hours call management — even though it's quietly costing most operations $3,000 to $8,000 per month in missed revenue.</p>
+<p>The math is straightforward. The solution is even more straightforward. The reason most operators haven't fixed it is that the traditional fix — hiring a night dispatcher — feels expensive. But the economics don't support that feeling.</p>
+
+<div class="stat-highlight">
+  <div class="stat-num">34%</div>
+  <div class="stat-text">of roadside assistance calls occur between 8pm and 6am. For tow operators without after-hours coverage, that's 34% of potential revenue going to whoever answers first.</div>
+</div>
+
+<h2>Why the First Answer Always Gets the Job</h2>
+<p>Roadside assistance is an emergency service. Stranded motorists call the first number that answers — not the cheapest, not the most reviewed, not the one with the best website. The first one that picks up.</p>
+<p>Motor club dispatchers (AAA, Agero, Urgently, HONK) work the same way. When they're dispatching calls to network providers, they cycle through their available provider list in order. If your line rings out or goes to voicemail, they move to the next provider. You don't get a callback — the job goes elsewhere.</p>
+<p>This means that every unanswered call between 6pm and 7am isn't just a missed job. It's a job that went to a competitor who was awake. At $250–$650 per average tow job (depending on market and distance), missing even 4–5 calls per night is a significant monthly revenue gap.</p>
+
+<h2>The Revenue Calculation Most Operators Haven't Done</h2>
+<p>Let's model a conservative scenario for a 2-truck operation in a mid-size market:</p>
+<ul>
+  <li>Average tow revenue per job: $320</li>
+  <li>After-hours calls received per night (unanswered): 3–5</li>
+  <li>Answer rate if covered: 75% (some calls will be outside your service area, scope, etc.)</li>
+  <li>Jobs captured per night with coverage: 2–3</li>
+  <li>Monthly revenue impact: 2.5 jobs × 30 nights × $320 = <strong>$24,000/month</strong></li>
+</ul>
+<p>Even if that estimate is 3x too optimistic and the real number is $8,000/month — that's $96,000 per year in revenue that currently goes to your competitor because no one answered your phone at 2am.</p>
+
+<h2>The Traditional Fix and Why It Doesn't Pencil</h2>
+<p>The obvious solution is a night dispatcher. A dedicated overnight dispatcher for a 10-hour shift (8pm–6am) at $18–$22/hour costs $65,000–$80,000 per year including payroll taxes and benefits. For a 2-truck operation, that's hard to justify before you've proven the after-hours volume.</p>
+<p>The less obvious problems: overnight dispatchers have high turnover. Finding someone reliable who will consistently work nights, stay awake, and handle motor club portals correctly is genuinely difficult. And when they quit — which they will — you're back to unanswered phones within 30 days.</p>
+
+<h2>What Effective After-Hours Dispatch Actually Requires</h2>
+<p>After-hours dispatch for a tow truck operation isn't complicated. It requires someone who can: answer the phone or motor club portal within 60 seconds, confirm service area and availability, collect caller information and pickup location, contact the on-call driver with the job details, and update the motor club or caller with an ETA.</p>
+<p>That's it. The same skill set your day dispatcher has, applied at night, at a fraction of the volume. A capable dispatcher can handle this alongside other overnight administrative tasks — it doesn't require someone whose only function is to sit by a phone waiting for it to ring.</p>
+
+<h2>The Outsourced After-Hours Model</h2>
+<p>The alternative to a full-time night hire is outsourced after-hours dispatch coverage — a service provider who covers your after-hours line and motor club portals as part of a fixed monthly arrangement. For most 1–5 truck operations, this costs $800–$1,800/month depending on call volume and coverage hours.</p>
+<p>Compare that to the $8,000–$24,000/month in missed revenue, and the math is immediate. Even accounting for the most conservative revenue estimates, the ROI on after-hours coverage is typically 5:1 within the first 90 days of implementation.</p>
+<p>The right after-hours arrangement also handles your motor club portal management — logging in to Agero, AAA, or HONK, accepting dispatched jobs, and updating ETAs — which is the other major source of missed motor club revenue for operators who aren't monitoring their portals overnight.</p>
+
+<h2>What to Look For in After-Hours Coverage</h2>
+<p>Not all after-hours dispatch is equal. Before choosing a provider, verify:</p>
+<ul>
+  <li>They have experience with motor club portals (Agero, AAA, HONK, Urgently) — not just phone answering</li>
+  <li>Average answer time under 60 seconds — motor clubs move on quickly</li>
+  <li>They have a driver notification system that wakes on-call drivers reliably</li>
+  <li>They can provide call logs and job capture reports so you can measure what you're gaining</li>
+  <li>English-language proficiency for both incoming customer calls and motor club communications</li>
+</ul>
+<p>The after-hours revenue problem is real, it's measurable, and it has a straightforward solution. The operators who fix it first in their market gain a structural advantage over everyone still sending calls to voicemail at midnight.</p>
+`
+  },
+  {
+    id: 'outsource-trucking-back-office',
+    title: 'Should You Outsource Your Trucking Back Office? The Honest Cost-Benefit Analysis',
+    category: 'operations',
+    categoryLabel: 'Operations',
+    date: '2025-02-11',
+    author: 'Haulxify Team',
+    readTime: '7 min read',
+    views: 2780,
+    trending: false,
+    excerpt: 'Outsourcing your back office sounds like a cost-cutting move. It\'s actually a strategic one. Here\'s the full financial model, what you actually give up, and what the break-even point looks like for different fleet sizes.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+    content: `
+<p>The logistics back office outsourcing conversation usually starts in the wrong place. Operators hear "outsourcing" and think call centre, language barriers, and lost control. The conversation should start with a number: $68,500.</p>
+<p>That's the all-in annual cost of one mid-level back office employee in the US — salary, payroll taxes, benefits, workers' comp, and the overhead space they occupy. For most small fleets, that one hire handles dispatch, invoicing, document processing, and compliance tracking. When they're sick, on vacation, or quit with two weeks notice, everything they do stops.</p>
+
+<div class="stat-highlight">
+  <div class="stat-num">75%</div>
+  <div class="stat-text">Typical cost reduction when replacing US-based back office staff with an outsourced logistics operations team. The work doesn't decrease — the cost does.</div>
+</div>
+
+<h2>What "Back Office" Actually Includes</h2>
+<p>Before modeling the cost comparison, it helps to be specific about what back office covers in a trucking operation:</p>
+<ul>
+  <li>Load finding and dispatch (finding loads, negotiating rates, booking)</li>
+  <li>Document processing (BOL, POD, rate confirmations, lumper receipts)</li>
+  <li>Invoicing and accounts receivable</li>
+  <li>Factoring coordination (if applicable)</li>
+  <li>IFTA tracking and filing</li>
+  <li>Driver qualification file management</li>
+  <li>Insurance certificate management</li>
+  <li>Carrier packet completions for new brokers</li>
+  <li>Bookkeeping and expense categorisation</li>
+</ul>
+<p>In a 5-truck operation, this is easily 40+ hours of work per week. In a 10-truck operation, it's closer to 70–80 hours. This work doesn't disappear when you don't have staff — it gets done badly, by drivers and owners at odd hours, or it doesn't get done at all.</p>
+
+<h2>The True Cost of In-House Back Office (The Number Most Operators Undercount)</h2>
+<p>Most operators think about back office cost as salary. The real number is 1.3–1.4x salary after taxes, benefits, and overhead.</p>
+<p>For a 5-truck fleet with one dedicated back office employee:</p>
+<ul>
+  <li>Salary: $42,000–$52,000</li>
+  <li>Payroll taxes (~8%): $3,400–$4,200</li>
+  <li>Health insurance contribution: $6,000–$9,000</li>
+  <li>Workers' comp: $800–$1,400</li>
+  <li>PTO, holidays (equivalent to ~3 weeks salary): $2,400–$3,000</li>
+  <li>Training, turnover cost (average back office turnover in logistics: 28%/year): $4,000–$8,000 amortised</li>
+  <li><strong>Total: $58,600–$77,600 per year</strong></li>
+</ul>
+<p>That same coverage from a logistics outsourcing provider for a 5-truck fleet: $15,000–$24,000 per year.</p>
+
+<h2>What You Actually Give Up</h2>
+<p>The honest answer: if you outsource to a bad provider, you give up quality, reliability, and control. Those concerns are legitimate. But they're about vendor selection, not the model itself.</p>
+<p>A properly structured outsourcing arrangement gives you:</p>
+<ul>
+  <li>A dedicated team (not a rotating pool of anonymous agents) who learn your operation</li>
+  <li>Coverage continuity — if one team member is unavailable, the operation doesn't stop</li>
+  <li>No HR burden — hiring, training, and managing performance is the provider's problem</li>
+  <li>Scalability — adding trucks doesn't require a new hire and a 3-month ramp period</li>
+</ul>
+<p>The things you genuinely give up: the ability to physically supervise the team, some flexibility in real-time direction, and the institutional knowledge that builds when an employee is embedded in your operation for years. These are real trade-offs. Whether they outweigh the cost difference depends on your operation.</p>
+
+<h2>The Break-Even Analysis by Fleet Size</h2>
+<p>For a single-truck owner-operator doing their own back office, outsourcing makes sense if the time freed up generates more than $500–$700/month in additional load revenue. One additional load per week at average linehaul rates achieves this easily.</p>
+<p>For 3–10 truck fleets, the cost comparison is unambiguous. The outsourced cost is 60–75% lower than in-house, the coverage is more consistent, and the freed management time typically generates returns that far exceed the savings.</p>
+<p>For fleets above 20 trucks, the calculus changes. You likely have enough volume to justify a dedicated in-house team, and the operational complexity warrants tighter direct control. But even at this scale, specialist functions — IFTA filing, bookkeeping, compliance management — often remain more economically outsourced than staffed internally.</p>
+
+<h2>What to Ask Before Signing With Any Back Office Provider</h2>
+<ul>
+  <li>Will I have dedicated team members, or am I in a shared pool?</li>
+  <li>What is your staff turnover rate, and what happens to my account when someone leaves?</li>
+  <li>Can I speak directly with my team, and via which channels?</li>
+  <li>What's your error correction process when something goes wrong?</li>
+  <li>What platforms and TMS systems have you worked with?</li>
+  <li>Is there a minimum contract length, and what are the exit terms?</li>
+</ul>
+<p>The right provider gives you clear, direct answers to all of these. Vague answers about "our team" and "our processes" without specifics are a warning sign.</p>
+`
+  },
+  {
+    id: 'load-board-strategy-2025',
+    title: 'Load Board Strategy in 2025: How Small Fleets Find Better Freight Than the Big Carriers',
+    category: 'dispatching',
+    categoryLabel: 'Dispatching',
+    date: '2025-02-18',
+    author: 'Haulxify Team',
+    readTime: '8 min read',
+    views: 1920,
+    trending: false,
+    excerpt: 'Most owner-operators take the first load they see. Carriers that consistently outperform the market don\'t — they work load boards like a system. Here\'s the strategy, the tools, and the specific moves that improve rate per mile.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg>`,
+    content: `
+<p>The load board is the same for everyone — DAT, Truckstop, and the broker portals are available to any carrier with an active MC. But carriers who work the board strategically consistently achieve 15–25% higher rate per mile than those who treat it like a first-available queue.</p>
+<p>The difference isn't technology. It's discipline, information, and a few specific moves that most owner-operators never learn because no one teaches them.</p>
+
+<div class="stat-highlight">
+  <div class="stat-num">23%</div>
+  <div class="stat-text">Average rate-per-mile improvement reported by carriers who implement a structured load selection and broker relationship strategy vs. reactive first-load booking.</div>
+</div>
+
+<h2>Understanding How Brokers Post (And How to Use It)</h2>
+<p>Brokers post loads when they have capacity that isn't covered by their contracted carrier network. They post early when they're uncertain about coverage, and they post again — often at higher rates — when the first post doesn't fill. Understanding this pattern is the foundation of smart load board strategy.</p>
+<p>A load posted at 8am Monday at $2.40/mile that hasn't moved by 2pm Monday will often relist at $2.65–$2.80/mile by Tuesday morning. If your schedule allows you to wait, you capture better rates on the same freight. The risk is the load fills — but loads that brokers can't move easily usually don't fill until rate goes up.</p>
+
+<h2>The Three Load Types (And Which to Prioritise)</h2>
+<p>Not all loads are equal. Categorise every load opportunity by type before deciding:</p>
+<ul>
+  <li><strong>Core loads:</strong> Regular lanes your truck runs well, strong broker relationships, consistent documentation. These are your baseline. Take them when rate is acceptable.</li>
+  <li><strong>Reposition loads:</strong> Loads that move your truck toward a better market. A below-market rate that repositions you to a high-volume corridor is often worth more than a slightly better rate that leaves you in a load-light area.</li>
+  <li><strong>Speculative loads:</strong> Unusual lanes, unknown brokers, tight delivery windows, heavy equipment. These carry more risk and should only be taken at premium rates.</li>
+</ul>
+<p>Most reactive carriers take whatever is closest to where their truck is parked. Strategic carriers think 2–3 moves ahead: what market will I be in after this load, and is that a good place to start looking for the next one?</p>
+
+<h2>Rate Benchmarking Before You Call</h2>
+<p>On DAT, the Rate View tool shows you what that lane paid in the last 15 days, 30 days, and 90 days. On Truckstop, Market Rates provides similar data. Before calling on any load, check the lane average. If the posted rate is 10% below the 30-day average for that lane, you have negotiating context. If it's 15% above average, move fast.</p>
+<p>Rate trend matters too. If a lane is trending up week-over-week (seasonal demand, regional capacity constraint), posted rates are likely to keep rising and holding for a better rate makes sense. If the trend is flat or down, take a good rate now.</p>
+
+<h2>Building Broker Relationships That Change What You're Offered</h2>
+<p>Brokers have preferred carrier lists. Carriers on the preferred list get first call on the broker's best loads — before anything hits the load board. Getting onto that list is the highest-leverage move a small carrier can make.</p>
+<p>What puts you on the preferred list: zero documentation problems, on-time pickups and deliveries, proactive communication (checking in without being chased), and not renegotiating rate after you've accepted the load.</p>
+<p>What keeps you off it: requesting rate bumps after booking, late or incomplete BOLs, unreachable drivers, and surprises that weren't communicated. Brokers aren't loyal to carriers who create work for them.</p>
+
+<h2>The Deadhead Calculation That Changes Load Decisions</h2>
+<p>A load that pays $2.80/mile for 400 miles looks better than one paying $2.45/mile for 350 miles. But if the $2.80 load requires 85 miles of deadhead and the $2.45 load is 12 miles from your current position, the $2.45 load is actually more profitable:</p>
+<ul>
+  <li>Load A: 400 revenue miles × $2.80 = $1,120 | 85 deadhead miles × ~$0.65 fuel+wear = $55.25 cost | Net: $1,064.75</li>
+  <li>Load B: 350 revenue miles × $2.45 = $857.50 | 12 deadhead miles × $0.65 = $7.80 cost | Net: $849.70</li>
+</ul>
+<p>In this case Load A still wins — but the gap is much smaller than the posted rates suggest. If Load A required 200 miles of deadhead, the calculation flips. Always run the full net calculation before comparing loads.</p>
+
+<h2>When to Use Spot vs. Contract Freight</h2>
+<p>Spot market rates are higher in tight markets and lower in soft ones. Contract rates are lower than peak spot but higher than trough spot. For small fleets with 1–5 trucks, a hybrid approach typically works best: 40–60% of weekly capacity committed to contract lanes with reliable brokers, the remainder available for spot market opportunities.</p>
+<p>The mistake most owner-operators make is running 100% spot during boom markets (leaving no time to build broker relationships) and then having no contract base when the market softens. Build relationships in good markets. You'll need them in slow ones.</p>
+`
+  }
+];
+
+/* ─────────────────────────────────────────────────────────────
+   SMART RANKING ALGORITHM
+   Score = (views × 0.35) + (recency × 0.35) + (trending × 200 × 0.30)
+   Recency score decays over 90 days (most recent = 100, 90 days old = 0)
+───────────────────────────────────────────────────────────── */
+function rankArticles(articles) {
+  const now = Date.now();
+  const MS_90_DAYS = 90 * 24 * 60 * 60 * 1000;
+  return articles.map(a => {
+    const ageMs = now - new Date(a.date).getTime();
+    const recencyScore = Math.max(0, 100 - (ageMs / MS_90_DAYS) * 100);
+    const viewScore = Math.min(a.views || 0, 5000) / 50; // normalise to 0–100
+    const trendingBoost = a.trending ? 100 : 0;
+    a._score = (viewScore * 0.35) + (recencyScore * 0.35) + (trendingBoost * 0.30);
+    return a;
+  }).sort((a, b) => b._score - a._score);
+}
+
+function sortArticles(articles, method) {
+  if (method === 'newest') return [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (method === 'popular') return [...articles].sort((a, b) => (b.views || 0) - (a.views || 0));
+  return rankArticles([...articles]);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────────────────────── */
+let allArticles = [];
+let activeCategory = 'all';
+let searchQuery = '';
+let sortMethod = 'smart';
+let currentArticle = null;
+
+/* ─────────────────────────────────────────────────────────────
+   FETCH FROM GOOGLE SHEETS (merges with seed articles)
+───────────────────────────────────────────────────────────── */
+async function fetchFromSheets() {
+  if (!SHEETS_API_URL || SHEETS_API_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return [];
+  try {
+    const res = await fetch(SHEETS_API_URL + '?action=getPosts');
+    const data = await res.json();
+    return Array.isArray(data.posts) ? data.posts : [];
+  } catch (e) {
+    console.warn('Google Sheets fetch failed, using seed articles only.', e);
+    return [];
+  }
+}
+
+async function trackView(articleId) {
+  if (!SHEETS_API_URL || SHEETS_API_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+  try {
+    await fetch(SHEETS_API_URL + '?action=incrementView&id=' + encodeURIComponent(articleId));
+  } catch (e) { /* silent */ }
+  // Also update local count
+  const a = allArticles.find(x => x.id === articleId);
+  if (a) a.views = (a.views || 0) + 1;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER
+───────────────────────────────────────────────────────────── */
+const ICONS = {
+  compliance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+  billing: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
+  nemt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  'tow-truck': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`,
+  operations: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+  dispatching: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg>`,
+  trucking: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+  default: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+};
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function formatViews(n) {
+  if (n >= 1000) return (n/1000).toFixed(1) + 'k';
+  return n.toString();
+}
+
+function getIcon(a) {
+  return a.icon || ICONS[a.category] || ICONS.default;
+}
+
+function renderFeatured(article) {
+  const slot = document.getElementById('featured-slot');
+  slot.innerHTML = `
+    <div class="blog-featured" onclick="openArticle('${article.id}')">
+      <div class="blog-featured-visual">
+        <div class="blog-featured-badge">Editor's Pick</div>
+        <div class="blog-featured-icon">${getIcon(article)}</div>
+      </div>
+      <div class="blog-featured-body">
+        <div class="blog-featured-cat">${article.categoryLabel || article.category}</div>
+        <div class="blog-featured-title">${article.title}</div>
+        <div class="blog-featured-excerpt">${article.excerpt}</div>
+        <div class="blog-featured-meta">
+          <div class="blog-meta-info">
+            <span>${formatDate(article.date)}</span>
+            <span>${article.readTime}</span>
+            <span>${formatViews(article.views)} reads</span>
+          </div>
+          <div class="blog-read-btn">Read Article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderGrid(articles) {
+  const grid = document.getElementById('blog-grid');
+  if (!articles.length) { grid.innerHTML = ''; return; }
+  grid.innerHTML = articles.map(a => `
+    <div class="blog-card" onclick="openArticle('${a.id}')">
+      <div class="blog-card-img">
+        <div class="blog-card-img-icon">${getIcon(a)}</div>
+        ${a.trending ? '<div class="blog-trending-badge">Trending</div>' : ''}
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-cat">${a.categoryLabel || a.category}</div>
+        <div class="blog-card-title">${a.title}</div>
+        <div class="blog-card-excerpt">${a.excerpt}</div>
+        <div class="blog-card-footer">
+          <div class="blog-card-meta">${formatDate(a.date)} · ${a.readTime}</div>
+          <div class="blog-card-views">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            ${formatViews(a.views)}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAll() {
+  let filtered = allArticles;
+  if (activeCategory !== 'all') filtered = filtered.filter(a => a.category === activeCategory);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(a =>
+      a.title.toLowerCase().includes(q) ||
+      a.excerpt.toLowerCase().includes(q) ||
+      (a.categoryLabel || '').toLowerCase().includes(q)
+    );
+  }
+  const sorted = sortArticles(filtered, sortMethod);
+  const empty = document.getElementById('blog-empty');
+  const feat = document.getElementById('featured-slot');
+
+  if (!sorted.length) {
+    feat.innerHTML = '';
+    renderGrid([]);
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  const [top, ...rest] = sorted;
+  renderFeatured(top);
+  renderGrid(rest);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ARTICLE READER
+───────────────────────────────────────────────────────────── */
+function openArticle(id) {
+  const article = allArticles.find(a => a.id === id);
+  if (!article) return;
+  currentArticle = article;
+
+  document.getElementById('art-cat').textContent = article.categoryLabel || article.category;
+  document.getElementById('art-title').textContent = article.title;
+  document.getElementById('art-date').textContent = formatDate(article.date);
+  document.getElementById('art-views').textContent = formatViews(article.views);
+  document.getElementById('art-read-time').textContent = article.readTime;
+  document.getElementById('art-body').innerHTML = article.content || '<p>Article content coming soon.</p>';
+
+  const encodedTitle = encodeURIComponent(article.title);
+  const encodedUrl = encodeURIComponent(window.location.href.split('#')[0] + '#' + article.id);
+  document.getElementById('share-linkedin').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+  document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`;
+
+  document.getElementById('list-view').style.display = 'none';
+  document.getElementById('article-view').style.display = 'block';
+  window.scrollTo(0, 0);
+  history.pushState({ articleId: id }, article.title, '#' + id);
+
+  // Update page meta for SEO
+  document.title = article.title + ' — Haulxify Blog';
+
+  // Track view (non-blocking)
+  trackView(id);
+}
+
+function showList() {
+  document.getElementById('list-view').style.display = 'block';
+  document.getElementById('article-view').style.display = 'none';
+  document.title = 'Blog & Resources — Haulxify';
+  history.pushState({}, '', window.location.pathname);
+  window.scrollTo(0, 0);
+}
+
+function copyArticleLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Link', 2000);
+  });
+}
+
+// Handle browser back button
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.articleId) openArticle(e.state.articleId);
+  else showList();
+});
+
+// Handle direct URL with hash
+if (window.location.hash) {
+  const id = window.location.hash.slice(1);
+  // Wait for articles to load, then open
+  window.addEventListener('articlesReady', () => openArticle(id), { once: true });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FILTERS & CONTROLS
+───────────────────────────────────────────────────────────── */
+document.getElementById('filter-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.blog-filter');
+  if (!btn) return;
+  document.querySelectorAll('.blog-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = btn.dataset.cat;
+  renderAll();
+});
+
+document.getElementById('sort-select').addEventListener('change', e => {
+  sortMethod = e.target.value;
+  renderAll();
+});
+
+let searchTimeout;
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    searchQuery = e.target.value.trim();
+    renderAll();
+  }, 250);
+});
+
+/* ─────────────────────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────────────────────── */
+async function init() {
+  const loading = document.getElementById('blog-loading');
+  loading.style.display = 'block';
+
+  // Load seed articles immediately
+  allArticles = [...SEED_ARTICLES];
+
+  // Try to merge Google Sheets articles
+  const sheetsArticles = await fetchFromSheets();
+  if (sheetsArticles.length) {
+    // Sheets articles override seed articles of the same slug/id
+    const seedIds = new Set(SEED_ARTICLES.map(a => a.id));
+    sheetsArticles.forEach(sa => {
+      const idx = allArticles.findIndex(a => a.id === sa.id);
+      if (idx > -1) allArticles[idx] = { ...SEED_ARTICLES[idx] || {}, ...sa };
+      else allArticles.push(sa);
+    });
+  }
+
+  loading.style.display = 'none';
+  renderAll();
+
+  // Dispatch ready event for hash-based direct links
+  window.dispatchEvent(new Event('articlesReady'));
+}
+
+init();
+</script>
+</body>
+</html>
