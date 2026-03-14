@@ -793,7 +793,23 @@
    BUTTON BASE — ensure variants work standalone
    ================================================================= */
 .btn-primary,
-.btn-secondary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-out);
+  white-space: nowrap;
+  border: none;
+}
+
 .btn-ghost,
 .btn-ghost-white {
   display: inline-flex;
@@ -809,6 +825,4 @@
   cursor: pointer;
   transition: all var(--duration-base) var(--ease-out);
   white-space: nowrap;
-     border: none;
-
 }
