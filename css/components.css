@@ -809,4 +809,6 @@
   cursor: pointer;
   transition: all var(--duration-base) var(--ease-out);
   white-space: nowrap;
+     border: none;
+
 }
