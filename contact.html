@@ -245,9 +245,12 @@
         <a href="index.html" class="footer-logo">Haul<span>xify</span></a>
         <p>Complete back office support for the world's logistics and transport industry — built on Pakistan's world-class talent and delivered at a fraction of Western market rates.</p>
         <p style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin:16px 0 6px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;">Newsletter</p>
-<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:6px 6px 6px 14px;display:flex;align-items:center;gap:8px;margin-bottom:20px;max-width:320px;">
-  <input type="email" placeholder="Get industry insights →" style="flex:1;background:none;border:none;outline:none;font-size:0.8125rem;color:var(--white);min-width:0;" onfocus="this.placeholder='your@email.com'" onblur="this.placeholder='Get industry insights →'">
-  <button style="background:var(--brand-orange);color:var(--white);border:none;border-radius:6px;padding:8px 12px;font-family:var(--font-display);font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;flex-shrink:0;">Stay Updated →</button>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 5px 5px 14px;display:flex;align-items:center;gap:8px;width:fit-content;">
+  <span id="nl-placeholder" style="font-size:0.8rem;color:rgba(255,255,255,0.4);cursor:text;white-space:nowrap;" onclick="this.style.display='none';document.getElementById('nl-input').style.display='block';document.getElementById('nl-input').focus();">Subscribe to our newsletter</span>
+  <input id="nl-input" type="email" placeholder="your@email.com" style="display:none;background:none;border:none;outline:none;font-size:0.8rem;color:var(--white);width:160px;" onblur="if(!this.value){this.style.display='none';document.getElementById('nl-placeholder').style.display='block';}">
+  <button style="background:var(--brand-orange);color:var(--white);border:none;border-radius:100px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
 </div>
         <div class="footer-social">
           <a href="https://www.facebook.com/haulxify" target="_blank"><i class="fab fa-facebook"></i></a>
