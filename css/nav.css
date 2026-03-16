@@ -366,3 +366,8 @@
 }
 
 .mobile-dropdown-link:hover { color: var(--white); }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-dropdown-wrap { display: none; }
+}
