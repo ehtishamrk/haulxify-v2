@@ -108,7 +108,7 @@
   <ul class="mobile-menu-links">
     <li><a href="index.html" class="mobile-menu-link">Home</a></li>
     <li class="mobile-dropdown-wrap">
-      <div class="mobile-menu-link mobile-dropdown-trigger" onclick="this.parentElement.classList.toggle('open')">
+      <div class="mobile-menu-link mobile-dropdown-trigger" onclick="event.stopPropagation();this.parentElement.classList.toggle('open')">
         Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px;vertical-align:middle;transition:transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <ul class="mobile-dropdown-list">
