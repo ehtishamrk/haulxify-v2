@@ -544,21 +544,6 @@
 .footer-bottom-link:hover {
   color: rgba(255,255,255,0.7);
 }
-
-.footer-copyright {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding: 20px 0;
-  text-align: center;
-  width: 100%;
-  display: block;
-}
-
-.footer-copyright p {
-  font-size: 0.8125rem;
-  color: rgba(255,255,255,0.35);
-  margin: 0;
-}
-
 /* Employee portal link in footer */
 .footer-portal-link {
   display: inline-flex;
