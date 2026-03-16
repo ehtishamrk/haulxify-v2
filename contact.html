@@ -60,26 +60,43 @@
   </div>
 </div>
 
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+ <nav class="nav" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo" aria-label="Haulxify home">Haul<span>xify</span></a>
-
   <ul class="nav-links" role="list">
     <li><a href="index.html" class="nav-link">Home</a></li>
-    <li><a href="services.html" class="nav-link">Services</a></li>
+    <li class="nav-dropdown-wrap">
+      <a href="services.html" class="nav-link nav-dropdown-trigger">Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:4px;vertical-align:middle;"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-grid">
+          <a href="services/trucking-companies.html" class="nav-dropdown-item">Trucking Companies</a>
+          <a href="services/freight-brokers.html" class="nav-dropdown-item">Freight Brokers</a>
+          <a href="services/nemt.html" class="nav-dropdown-item">NEMT Providers</a>
+          <a href="services/tow-truck.html" class="nav-dropdown-item">Tow Truck Operators</a>
+          <a href="services/car-hauler.html" class="nav-dropdown-item">Car Haulers</a>
+          <a href="services/animal-hauler.html" class="nav-dropdown-item">Animal Haulers</a>
+          <a href="services/dump-truck.html" class="nav-dropdown-item">Dump Truck</a>
+          <a href="services/sprinter-cargo-van.html" class="nav-dropdown-item">Sprinter / Cargo Van</a>
+          <a href="services/moving-truck.html" class="nav-dropdown-item">Moving Companies</a>
+          <a href="services/after-hours-dispatch.html" class="nav-dropdown-item">After-Hours Dispatch</a>
+          <a href="services/taxi.html" class="nav-dropdown-item">Taxi Companies</a>
+          <a href="services/limousine.html" class="nav-dropdown-item">Limousine Companies</a>
+        </div>
+        <div class="nav-dropdown-footer">
+          <a href="services.html" class="nav-dropdown-all">Explore All Services →</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
     <li><a href="about.html" class="nav-link">About</a></li>
     <li><a href="contact.html" class="nav-link">Contact</a></li>
   </ul>
-
   <div style="display:flex;align-items:center;gap:12px;">
-    <a href="pricing.html" class="btn btn-ghost btn-sm" style="display:none;" id="nav-pricing-btn">Pricing</a>
     <a href="hauler.html" class="nav-hauler">
       <span class="nav-hauler-dot"></span>
-      Hauler App
+      Haulers Social
     </a>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
@@ -88,19 +105,36 @@
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
   <ul class="mobile-menu-links">
     <li><a href="index.html" class="mobile-menu-link">Home</a></li>
-    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
+    <li class="mobile-dropdown-wrap">
+      <div class="mobile-menu-link mobile-dropdown-trigger" onclick="this.parentElement.classList.toggle('open')">
+        Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px;vertical-align:middle;transition:transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <ul class="mobile-dropdown-list">
+        <li><a href="services/trucking-companies.html" class="mobile-dropdown-link">Trucking Companies</a></li>
+        <li><a href="services/freight-brokers.html" class="mobile-dropdown-link">Freight Brokers</a></li>
+        <li><a href="services/nemt.html" class="mobile-dropdown-link">NEMT Providers</a></li>
+        <li><a href="services/tow-truck.html" class="mobile-dropdown-link">Tow Truck Operators</a></li>
+        <li><a href="services/car-hauler.html" class="mobile-dropdown-link">Car Haulers</a></li>
+        <li><a href="services/animal-hauler.html" class="mobile-dropdown-link">Animal Haulers</a></li>
+        <li><a href="services/dump-truck.html" class="mobile-dropdown-link">Dump Truck</a></li>
+        <li><a href="services/sprinter-cargo-van.html" class="mobile-dropdown-link">Sprinter / Cargo Van</a></li>
+        <li><a href="services/moving-truck.html" class="mobile-dropdown-link">Moving Companies</a></li>
+        <li><a href="services/after-hours-dispatch.html" class="mobile-dropdown-link">After-Hours Dispatch</a></li>
+        <li><a href="services/taxi.html" class="mobile-dropdown-link">Taxi Companies</a></li>
+        <li><a href="services/limousine.html" class="mobile-dropdown-link">Limousine Companies</a></li>
+        <li><a href="services.html" class="mobile-dropdown-link" style="color:var(--brand-orange);">Explore All Services →</a></li>
+      </ul>
+    </li>
     <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
     <li><a href="about.html" class="mobile-menu-link">About</a></li>
     <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
     <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
   </ul>
   <div class="mobile-menu-cta">
-    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
+    <a href="hauler.html" class="btn btn-secondary">Haulers Social</a>
     <a href="contact.html" class="btn btn-primary">Get Started</a>
   </div>
-  <div class="mobile-menu-footer">
-    Pakistan's logistics talent — serving the world's transport industry.
-  </div>
+  <div class="mobile-menu-footer">Pakistan's logistics talent — serving the world's transport industry.</div>
 </div>
 
 
