@@ -388,12 +388,12 @@
   display: block;
   padding: 8px 0;
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--text-body);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid var(--border);
 }
 
-.mobile-dropdown-link:hover { color: var(--white); }
+.mobile-dropdown-link:hover { color: var(--brand-orange); }
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
