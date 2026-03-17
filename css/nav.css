@@ -310,6 +310,9 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   padding: 20px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .nav-dropdown-wrap:hover .nav-dropdown { display: block; }
@@ -345,16 +348,15 @@
 }
 
 .nav-dropdown-item:hover {
-  background: var(--off-white);
-  color: var(--brand-orange);
+  background: var(--navy-muted);
+  color: var(--brand-navy);
   padding-left: 18px;
 }
 
 .nav-dropdown-item:hover::after {
-  color: var(--brand-orange);
+  color: var(--brand-navy);
   transform: translateX(3px);
 }
-
 .nav-dropdown-footer {
   border-top: 1px solid var(--border);
   margin-top: 12px;
