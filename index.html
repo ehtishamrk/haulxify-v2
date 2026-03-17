@@ -106,21 +106,6 @@
     <a href="contact.html" class="btn btn-primary">Get Started</a>
   </div>
 </div>
-</div><!-- Mobile Menu -->
-<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
-  <ul class="mobile-menu-links">
-    <li><a href="index.html" class="mobile-menu-link">Home</a></li>
-    <li><a href="services.html" class="mobile-menu-link">Services</a></li>
-    <li><a href="pricing.html" class="mobile-menu-link">Pricing</a></li>
-    <li><a href="about.html" class="mobile-menu-link">About</a></li>
-    <li><a href="faq.html" class="mobile-menu-link">FAQ</a></li>
-    <li><a href="contact.html" class="mobile-menu-link">Contact</a></li>
-  </ul>
-  <div class="mobile-menu-cta">
-    <a href="hauler.html" class="btn btn-secondary">Hauler App</a>
-    <a href="contact.html" class="btn btn-primary">Get Started</a>
-  </div>
-</div>
 <!-- ================================================================
      HERO
      ================================================================ -->
@@ -915,4 +900,14 @@
 <script>
   const pricingBtn = document.getElementById('nav-pricing-btn');
   if (pricingBtn) {
-    window.addE
+    window.addEventListener('scroll', function() {
+      const hero = document.getElementById('home');
+      if (hero) {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        pricingBtn.style.display = heroBottom < 0 ? 'inline-flex' : 'none';
+      }
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
