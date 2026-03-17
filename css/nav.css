@@ -420,3 +420,6 @@
   .nav-hamburger { display: flex; }
   .nav-dropdown-wrap { display: none; }
 }
+@media (max-width: 768px) {
+  .nav-hauler-desktop { display: none !important; }
+}
