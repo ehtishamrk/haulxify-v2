@@ -410,7 +410,11 @@
   border-bottom: 1px solid var(--border);
 }
 
-.mobile-dropdown-link:hover { color: var(--brand-orange); }
+.mobile-dropdown-link:hover {
+  color: var(--brand-navy);
+  background: var(--off-white);
+  border-left-color: var(--brand-orange);
+}
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
