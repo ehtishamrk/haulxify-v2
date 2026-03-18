@@ -314,25 +314,29 @@
   max-height: calc(100vh - 110px);
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .nav-dropdown-inner::-webkit-scrollbar {
-  width: 4px;
+  display: none;
 }
 
-.nav-dropdown-inner::-webkit-scrollbar-track {
-  background: transparent;
+.nav-dropdown {
+  position: relative;
 }
 
-.nav-dropdown-inner::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 99px;
-}
-
-.nav-dropdown-inner::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-orange);
+.nav-dropdown::after {
+  content: '';
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--white));
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  pointer-events: none;
+  z-index: 1;
 }
 .nav-dropdown-wrap:hover .nav-dropdown { display: block; }
 
