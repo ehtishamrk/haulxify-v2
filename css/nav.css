@@ -243,6 +243,7 @@
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav { padding: 0 20px; }
+  .nav-hauler { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -414,12 +415,4 @@
   color: var(--brand-navy);
   background: var(--off-white);
   border-left-color: var(--brand-orange);
-}
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
-  .nav-dropdown-wrap { display: none; }
-}
-@media (max-width: 768px) {
-  .nav-hauler-desktop { display: none !important; }
 }
