@@ -179,7 +179,7 @@
 
       <!-- RIGHT: FORM -->
       <div class="contact-form-card reveal delay-2">
-        <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfPpkFVf5RCggcRihkqVuqq7LaWO8mfNsBcCx2uJKiw2JcARQ/formResponse" method="POST" target="hidden_iframe">
+        <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfPpkFVf5RCggcRihkqVuqq7LaWO8mfNsBcCx2uJKiw2JcARQ/formResponse" method="POST">
           <div class="form-grid">
             <div class="form-group">
               <label for="firstName">First Name *</label>
@@ -275,7 +275,6 @@
             By submitting this form, you agree to be contacted by Haulxify regarding your inquiry. We do not sell or share your personal information with third parties. You may opt out at any time. For SMS communications, standard messaging rates may apply.
           </p>
         </form>
-        <iframe name="hidden_iframe" style="display:none;"></iframe>
         <div id="formSuccess" style="display:none; text-align:center; padding: 40px 0;">
           <div style="width:60px; height:60px; background:var(--orange-glow); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -402,11 +401,21 @@
 
 <script src="js/main.js"></script>
 <script>
-  document.getElementById('contactForm').addEventListener('submit', function() {
-    setTimeout(function() {
-      document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      mode: 'no-cors'
+    }).then(function() {
+      form.style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
-    }, 500);
+    }).catch(function() {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    });
   });
 </script>
 </body>
