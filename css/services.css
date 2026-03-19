@@ -7,7 +7,7 @@
    1. PAGE HERO (used across all service + inner pages)
    ================================================================= */
 .page-hero {
-padding: 100px 0 80px;
+padding: 100px 0 40px;
    background: var(--brand-navy);
   position: relative;
   overflow: hidden;
@@ -75,7 +75,7 @@ padding: 100px 0 80px;
   font-size: 1.125rem;
   color: rgba(255,255,255,0.65);
   line-height: 1.75;
-  margin-bottom: 40px;
+  margin-bottom: 0;
   max-width: 58ch;
 }
 
@@ -752,7 +752,7 @@ padding: 100px 0 80px;
 }
 
 @media (max-width: 768px) {
-  .page-hero { padding: 120px 0 80px; }
+  .page-hero { padding: 120px 0 40px; }
   .pain-grid { grid-template-columns: 1fr; }
   .handles-grid { grid-template-columns: repeat(2, 1fr); }
   .services-page-grid { grid-template-columns: 1fr; }
