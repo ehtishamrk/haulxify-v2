@@ -248,10 +248,32 @@
                 </select>
               </div>
             </div>
+            <!-- A2P 10DLC SMS Consent — required, unchecked by default -->
+            <div class="form-group form-full" style="margin-top:8px;">
+              <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;background:var(--off-white);border-radius:var(--radius-sm);border:1.5px solid var(--border);">
+                <input
+                  type="checkbox"
+                  id="smsConsent"
+                  name="entry.SMS_CONSENT"
+                  value="Yes"
+                  style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--brand-orange);cursor:pointer;"
+                >
+                <label for="smsConsent" style="font-family:var(--font-body);font-size:0.8125rem;color:var(--text-body);line-height:1.6;cursor:pointer;text-transform:none;letter-spacing:0;font-weight:400;">
+                  I agree to receive SMS and/or text messages from Haulxify regarding my inquiry, back office solutions, pricing updates, and follow-up support. Message frequency may vary. Msg &amp; data rates may apply. Reply STOP to opt out at any time. Reply HELP for help.
+                </label>
+              </div>
+              <p style="font-size:0.75rem;color:var(--text-muted);margin:6px 0 0;line-height:1.5;">
+                SMS consent is optional and is not required to receive our services.
+                See our <a href="privacy-policy.html" style="color:var(--brand-orange);text-decoration:none;">Privacy Policy</a> and <a href="terms.html" style="color:var(--brand-orange);text-decoration:none;">Terms of Service</a>.
+              </p>
+            </div>
+
             <div class="form-submit">
               <button type="submit" class="form-submit-btn">Send My Free Assessment Request →</button>
             </div>
-            <p class="form-disclaimer">By submitting this form, you agree to be contacted about Haulxify services. We do not sell or share your information. You can opt out at any time.</p>
+            <p class="form-disclaimer">
+              By submitting this form, you agree to be contacted by Haulxify regarding your inquiry. We do not sell or share your personal information with third parties. You may opt out at any time. For SMS communications, standard messaging rates may apply.
+            </p>
           </form>
           <iframe name="hidden_iframe" style="display:none;"></iframe>
           <div id="formSuccess" style="display:none; text-align:center; padding: 40px 0;">
