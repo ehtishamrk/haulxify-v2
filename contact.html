@@ -13,55 +13,6 @@
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/services.css">
-  <style>
-    .contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: flex-start; }
-    .contact-info { position: sticky; top: 100px; }
-    .contact-info h2 { font-size: clamp(1.75rem,3vw,2.25rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px; }
-    .contact-info h2 span { color: var(--brand-orange); }
-    .contact-info p { color: var(--text-body); font-size: 1rem; line-height: 1.7; margin-bottom: 40px; }
-    .contact-facts { display: flex; flex-direction: column; gap: 20px; }
-    .contact-fact { display: flex; gap: 16px; align-items: flex-start; }
-    .contact-fact-icon { width: 40px; height: 40px; background: var(--orange-glow); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .contact-fact-icon svg { width: 18px; height: 18px; color: var(--brand-orange); }
-    .contact-fact h4 { font-size: 0.875rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 2px; }
-    .contact-fact p { font-size: 0.8125rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
-    .contact-form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 48px 44px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .form-full { grid-column: 1 / -1; }
-    .form-group { display: flex; flex-direction: column; gap: 8px; }
-    .form-group label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-y); }
-    .form-group input, .form-group select, .form-group textarea {
-      padding: 13px 16px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-      font-family: var(--font-body); font-size: 0.9rem; color: var(--brand-navy);
-      background: var(--white); transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(232,119,34,0.1); }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D1929' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
-    .form-submit { margin-top: 8px; }
-    .form-submit-btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius-sm); background: var(--brand-orange); color: var(--white); font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; transition: background 0.25s; }
-    .form-submit-btn:hover { background: #cf6a1e; }
-    .form-disclaimer { margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; }
-    @media (max-width: 1024px) { .contact-layout { grid-template-columns: 1fr; gap: 48px; } .contact-info { position: static; } }
-    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .contact-form-card { padding: 32px 24px; } }
- @media (max-width: 768px) {
-  .page-hero .container > div[style] {
-    grid-template-columns: 1fr !important;
-  }
-  .page-hero .container > div > div:last-child {
-    display: none;
-  }
-}
-  @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-@keyframes floatB { 0%,100%{transform:translateY(-50%)} 50%{transform:translateY(calc(-50% - 4px))} }
-@keyframes floatC { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-@keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.6)} }
- @media (max-width: 768px) {
-  .page-hero .container > div[style] { grid-template-columns: 1fr !important; }
-  .page-hero .container > div > div:last-child { display: none; }
-}
-  </style>
 </head>
 <body>
 <!-- ================================================================
@@ -154,21 +105,18 @@
   </div>
 </div>
 
-<section class="page-hero" style="padding:0;position:relative;overflow:hidden;">
+<section class="page-hero">
 
-  <!-- FULL BG IMAGE -->
   <img
     src="images/hero-contact.png"
     alt="Logistics operations"
     style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"
   />
 
-  <!-- DARK GRADIENT — heavy left for text, fades right -->
   <div style="position:absolute;inset:0;background:linear-gradient(105deg,rgba(6,13,26,0.93) 0%,rgba(6,13,26,0.82) 42%,rgba(6,13,26,0.38) 68%,rgba(6,13,26,0.15) 100%);z-index:1;"></div>
 
-  <!-- CONTENT -->
-  <div class="container" style="position:relative;z-index:2;padding-top:100px;padding-bottom:40px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="page-hero-grid">
 
       <!-- LEFT: text -->
       <div class="page-hero-inner">
@@ -176,14 +124,14 @@
         <div class="page-hero-tag">Get in Touch</div>
         <h1>Get a free<br><span>back office assessment.</span></h1>
         <p>Tell us about your fleet, your industry, and your current pain points. We'll respond within 24 hours with a clear picture of what we can take off your plate and what it costs.</p>
-        <div class="page-hero-actions" style="margin-top:16px;">
+        <div class="page-hero-actions">
           <a href="#contactForm" class="btn btn-primary">Get a Custom Quote →</a>
           <a href="pricing.html" class="btn btn-secondary">View Pricing</a>
         </div>
       </div>
 
       <!-- RIGHT: floating cards -->
-      <div style="position:relative;height:320px;">
+      <div class="hero-cards-wrap">
 
         <!-- CARD 1: top right — team online -->
         <div style="position:absolute;top:0;right:0;background:rgba(6,13,26,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:14px;padding:13px 15px;border:1px solid rgba(255,255,255,0.08);min-width:158px;animation:floatA 4s ease-in-out infinite;">
