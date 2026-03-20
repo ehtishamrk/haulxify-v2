@@ -763,3 +763,33 @@ padding: 100px 0 40px;
 @media (max-width: 480px) {
   .handles-grid { grid-template-columns: 1fr; }
 }
+/* =================================================================
+   CONTACT HERO GRID + FLOATING CARDS
+   ================================================================= */
+.page-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.hero-cards-wrap {
+  position: relative;
+  height: 320px;
+}
+
+@media (max-width: 768px) {
+  .page-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .hero-cards-wrap {
+    display: none;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+  .page-hero p {
+    font-size: 0.95rem;
+  }
+}
