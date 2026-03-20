@@ -1,3 +1,18 @@
+// Detect if we're in a subfolder
+const isSubfolder = window.location.pathname.includes('/services/');
+const base = isSubfolder ? '../' : '';
+
+async function loadInclude(id, file) {
+  try {
+    const res = await fetch(base + file);
+    if (!res.ok) return;
+    const html = await res.text();
+    const el = document.getElementById(id);
+    if (el) el.outerHTML = html;
+  } catch (e) {
+    console.warn('Include failed:', file, e);
+  }
+}
 async function loadInclude(id, file) {
   try {
     const res = await fetch(file);
