@@ -432,3 +432,25 @@ p {
   :root { --section-padding: 48px; }
   .container { padding: 0 var(--space-4); }
 }
+/* =================================================================
+   FLOATING CARD ANIMATIONS (used on contact page hero)
+   ================================================================= */
+@keyframes floatA {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+@keyframes floatB {
+  0%,100% { transform: translateY(-50%); }
+  50%      { transform: translateY(calc(-50% - 4px)); }
+}
+
+@keyframes floatC {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes pulseDot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.6); }
+}
