@@ -1,3 +1,12 @@
+// ── FAVICON ──────────────────────────────────────
+(function() {
+  var base = window.location.pathname.includes('/services/') ? '../' : '';
+  var link = document.createElement('link');
+  link.rel = 'icon';
+  link.type = 'image/png';
+  link.href = base + 'images/favicon.png';
+  document.head.appendChild(link);
+})();
 // Detect if we're in a subfolder
 const isSubfolder = window.location.pathname.includes('/services/');
 const base = isSubfolder ? '../' : '';
