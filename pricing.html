@@ -3,930 +3,846 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing — Industry-Specific Back Office for Transport | Haulxify</title>
-  <meta name="description" content="$5/hr for your first vehicle, $3.50/hr from your second. Industry-specific back office pricing for trucking, NEMT, tow truck, car hauler, limo, and more. No contracts.">
+  <title>Pricing | Haulxify Back Office Support</title>
+  <meta name="description" content="Transparent, hourly pricing for back office support across 12 trucking and transport industries. No contracts. No hidden fees. Start from $2.50/hr.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/services.css">
-  <style>
-
-    /* ── WIZARD WRAPPER ─────────────────────────────── */
-    .pricing-wizard-section { background: var(--off-white); padding: 80px 0 100px; }
-
-    /* ── STEP INDICATOR ─────────────────────────────── */
-    .step-indicator { display: flex; align-items: center; justify-content: center; margin-bottom: 56px; }
-    .step-dot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .step-dot-circle {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: var(--white); border: 2px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display); font-size: 0.8125rem; font-weight: 800;
-      color: var(--text-muted); transition: all 0.3s;
-    }
-    .step-dot.active .step-dot-circle { background: var(--brand-orange); border-color: var(--brand-orange); color: var(--white); }
-    .step-dot.done .step-dot-circle { background: var(--brand-navy); border-color: var(--brand-navy); color: var(--white); }
-    .step-dot-label { font-size: 0.6875rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
-    .step-dot.active .step-dot-label, .step-dot.done .step-dot-label { color: var(--brand-navy); }
-    .step-line { width: 80px; height: 2px; background: var(--border); margin: 0 10px; margin-bottom: 22px; transition: background 0.3s; flex-shrink: 0; }
-    .step-line.done { background: var(--brand-navy); }
-
-    /* ── STEP HEADER ────────────────────────────────── */
-    .step-header { text-align: center; margin-bottom: 40px; }
-    .step-header h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; margin-bottom: 8px; }
-    .step-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 520px; margin: 0 auto; line-height: 1.6; }
-
-    /* ── INDUSTRY GRID ───────────────────────────────── */
-    .industry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .industry-card {
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 24px 16px;
-      cursor: pointer; transition: all 0.22s; text-align: center;
-      user-select: none;
-    }
-    .industry-card:hover { border-color: var(--brand-orange); box-shadow: 0 4px 20px rgba(232,119,34,0.13); transform: translateY(-2px); }
-    .industry-card.selected { border-color: var(--brand-orange); background: var(--orange-glow); }
-    .industry-icon { font-size: 1.875rem; margin-bottom: 10px; line-height: 1; display: block; }
-    .industry-name { font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); line-height: 1.35; }
-
-    /* ── BACK BUTTON ─────────────────────────────────── */
-    .back-btn {
-      background: none; border: none; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.875rem; font-weight: 600; color: var(--text-muted);
-      margin-bottom: 40px; padding: 0; transition: color 0.2s; font-family: inherit;
-    }
-    .back-btn:hover { color: var(--brand-navy); }
-
-    /* ── VEHICLE SELECTOR ───────────────────────────── */
-    .vehicle-selector { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
-    .vehicle-btn {
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 28px 36px;
-      cursor: pointer; transition: all 0.22s; text-align: center;
-      min-width: 150px; font-family: inherit;
-    }
-    .vehicle-btn:hover { border-color: var(--brand-orange); box-shadow: 0 4px 20px rgba(232,119,34,0.13); }
-    .vehicle-btn.selected { border-color: var(--brand-orange); background: var(--orange-glow); }
-    .vehicle-btn-num { font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--brand-navy); line-height: 1; margin-bottom: 6px; }
-    .vehicle-btn.selected .vehicle-btn-num { color: var(--brand-orange); }
-    .vehicle-btn-label { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); }
-    .vehicle-hint { text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: 16px; }
-
-    /* ── SUMMARY BAR ─────────────────────────────────── */
-    .pricing-summary {
-      background: var(--brand-navy); border-radius: var(--radius-lg);
-      padding: 18px 28px; margin-bottom: 40px;
-      display: flex; flex-wrap: wrap; gap: 10px 32px; align-items: center;
-    }
-    .pricing-summary-item { display: flex; flex-direction: column; gap: 2px; }
-    .ps-label { font-size: 0.6875rem; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; }
-    .ps-value { font-size: 0.9375rem; font-weight: 700; color: var(--white); }
-    .ps-value span { color: var(--brand-orange); }
-    .ps-change-btn {
-      background: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px;
-      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6);
-      padding: 5px 14px; font-family: inherit; transition: all 0.2s; margin-left: auto;
-    }
-    .ps-change-btn:hover { background: rgba(255,255,255,0.08); color: var(--white); }
-
-    /* ── PRICING CARDS ───────────────────────────────── */
-    .pricing-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
-    .p-card {
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: var(--radius-xl); padding: 36px 30px;
-      position: relative; transition: all 0.3s;
-      display: flex; flex-direction: column;
-    }
-    .p-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
-    .p-card.featured { background: var(--brand-navy); border-color: var(--brand-orange); }
-    .p-badge {
-      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-      background: var(--brand-orange); color: var(--white);
-      font-family: var(--font-display); font-size: 0.6875rem; font-weight: 800;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 4px 14px; border-radius: 100px; white-space: nowrap;
-    }
-    .p-period { font-family: var(--font-display); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
-    .p-card.featured .p-period { color: rgba(255,255,255,0.45); }
-    .p-amount { font-family: var(--font-display); font-size: 2.875rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.05em; line-height: 1; }
-    .p-amount sup { font-size: 1.25rem; vertical-align: super; letter-spacing: 0; }
-    .p-amount sub { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
-    .p-card.featured .p-amount { color: var(--brand-orange); }
-    .p-sub { font-size: 0.8125rem; color: var(--text-muted); margin: 4px 0 4px; }
-    .p-card.featured .p-sub { color: rgba(255,255,255,0.45); }
-    .p-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
-    .p-card.featured .p-billing { color: rgba(255,255,255,0.4); }
-    .p-save-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(34,197,94,0.1); color: #16a34a;
-      font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 100px;
-      margin-bottom: 20px;
-    }
-    .p-divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
-    .p-card.featured .p-divider { border-color: rgba(255,255,255,0.1); }
-    .p-lb-note {
-      display: flex; gap: 9px; align-items: flex-start;
-      padding: 9px 12px; border-radius: 8px; margin-bottom: 14px;
-      background: rgba(232,119,34,0.07); font-size: 0.79rem; color: var(--text-body); line-height: 1.5;
-    }
-    .p-card.featured .p-lb-note { background: rgba(232,119,34,0.12); color: rgba(255,255,255,0.65); }
-    .p-lb-star { color: var(--brand-orange); flex-shrink: 0; font-weight: 700; margin-top: 1px; }
-    .p-services-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
-    .p-card.featured .p-services-label { color: rgba(255,255,255,0.35); }
-    .p-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; flex: 1; }
-    .p-feature { display: flex; gap: 9px; align-items: flex-start; font-size: 0.8375rem; color: var(--text-body); line-height: 1.45; }
-    .p-card.featured .p-feature { color: rgba(255,255,255,0.72); }
-    .p-check {
-      width: 16px; height: 16px; border-radius: 50%;
-      background: var(--orange-glow); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 2px;
-    }
-    .p-card.featured .p-check { background: rgba(232,119,34,0.2); }
-    .p-check svg { width: 8px; height: 8px; color: var(--brand-orange); }
-    .p-cta-btn {
-      display: block; text-align: center; padding: 13px 20px;
-      border-radius: var(--radius-sm); font-family: var(--font-display);
-      font-size: 0.875rem; font-weight: 700; letter-spacing: 0.02em;
-      cursor: pointer; border: none; width: 100%; transition: all 0.25s;
-      text-decoration: none; margin-top: auto;
-    }
-    .cta-primary { background: var(--brand-orange); color: var(--white); }
-    .cta-primary:hover { background: #cf6a1e; }
-    .cta-secondary { background: var(--off-white); color: var(--brand-navy); border: 1.5px solid var(--border); }
-    .cta-secondary:hover { background: var(--white); border-color: var(--brand-navy); }
-    .cta-ghost { background: rgba(255,255,255,0.07); color: var(--white); border: 1px solid rgba(255,255,255,0.18); }
-    .cta-ghost:hover { background: rgba(255,255,255,0.14); }
-
-    /* ── NOTES BOX ───────────────────────────────────── */
-    .pricing-notes {
-      margin-top: 28px; background: var(--white);
-      border: 1px solid var(--border); border-radius: var(--radius-lg);
-      padding: 22px 26px;
-    }
-    .pricing-notes-title { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
-    .pricing-note-item { font-size: 0.8125rem; color: var(--text-body); line-height: 1.7; margin-bottom: 5px; }
-    .pricing-note-item:last-child { margin-bottom: 0; }
-
-    /* ── CUSTOM PRICING BOX ─────────────────────────── */
-    .custom-pricing-box {
-      background: var(--brand-navy); border-radius: var(--radius-xl);
-      padding: 56px 48px; text-align: center;
-    }
-    .custom-pricing-box h3 { font-size: clamp(1.375rem, 2.5vw, 1.875rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 14px; }
-    .custom-pricing-box p { color: rgba(255,255,255,0.6); font-size: 0.9375rem; line-height: 1.75; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
-
-    /* ── PRICING CARDS HEADER ───────────────────────── */
-    .p-cards-header { text-align: center; margin-bottom: 0; }
-    .p-cards-header h2 { font-size: clamp(1.375rem, 2.5vw, 2rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; margin-bottom: 6px; }
-    .p-cards-header p { color: var(--text-muted); font-size: 0.9rem; }
-
-    /* ── FAQ ─────────────────────────────────────────── */
-    .faq-section-pricing { background: var(--off-white); padding: var(--section-padding) 0; }
-
-    /* ── MODAL ───────────────────────────────────────── */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(10,20,40,0.65);
-      backdrop-filter: blur(6px); z-index: 9999;
-      display: flex; align-items: center; justify-content: center; padding: 20px;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: var(--white); border-radius: var(--radius-xl);
-      padding: 40px 36px; width: 100%; max-width: 520px;
-      max-height: 90vh; overflow-y: auto; position: relative;
-      transform: translateY(20px); transition: transform 0.3s;
-    }
-    .modal-overlay.open .modal-box { transform: translateY(0); }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      background: var(--off-white); border: none; cursor: pointer;
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; transition: background 0.2s;
-    }
-    .modal-close:hover { background: var(--border); }
-    .modal-title { font-family: var(--font-display); font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin-bottom: 6px; }
-    .modal-sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 26px; line-height: 1.6; }
-    .modal-form-group { margin-bottom: 16px; }
-    .modal-label { font-size: 0.8125rem; font-weight: 600; color: var(--brand-navy); margin-bottom: 5px; display: block; }
-    .modal-input, .modal-select, .modal-textarea {
-      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--brand-navy);
-      background: var(--white); transition: border-color 0.2s;
-      font-family: inherit; box-sizing: border-box;
-    }
-    .modal-input:focus, .modal-select:focus, .modal-textarea:focus { outline: none; border-color: var(--brand-orange); }
-    .modal-input[readonly] { background: var(--off-white); color: var(--text-muted); cursor: default; }
-    .modal-textarea { resize: vertical; min-height: 80px; }
-    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .modal-submit {
-      width: 100%; padding: 14px; background: var(--brand-orange); color: var(--white);
-      border: none; border-radius: var(--radius-sm); font-family: var(--font-display);
-      font-size: 0.9375rem; font-weight: 700; cursor: pointer; letter-spacing: 0.02em;
-      transition: background 0.25s; margin-top: 8px;
-    }
-    .modal-submit:hover { background: #cf6a1e; }
-    .modal-disclaimer { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 10px; line-height: 1.6; }
-    .modal-plan-preview {
-      background: var(--orange-glow); border: 1px solid rgba(232,119,34,0.2);
-      border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 20px;
-      font-size: 0.8125rem; color: var(--brand-navy); line-height: 1.6;
-    }
-    .modal-plan-preview strong { font-weight: 700; color: var(--brand-orange); }
-
-    /* ── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 1100px) {
-      .industry-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 900px) {
-      .industry-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-cards-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
-      .step-line { width: 48px; }
-    }
-    @media (max-width: 600px) {
-      .vehicle-btn { min-width: 110px; padding: 22px 24px; }
-      .modal-row { grid-template-columns: 1fr; }
-      .modal-box { padding: 28px 20px; }
-      .custom-pricing-box { padding: 40px 24px; }
-      .step-line { width: 28px; }
-    }
-    @media (max-width: 480px) {
-      .industry-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Existing site stylesheets -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <!-- Pricing page styles only -->
+  <link rel="stylesheet" href="../css/pricing.css">
 </head>
 <body>
 
 <div id="nav-include"></div>
 
-<!-- ── HERO ──────────────────────────────────────────────────── -->
-<section class="page-hero">
-  <div class="container">
-    <div class="page-hero-inner">
-      <div class="breadcrumb">
-        <a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Pricing</span>
-      </div>
-      <div class="page-hero-tag">Transparent, Industry-Specific Pricing</div>
-      <h1>Back office pricing built<br><span>for your industry.</span></h1>
-      <p>$5/hr for your first vehicle. $3.50/hr from the second. 176 billable hours a month — weekends and major holidays are on us. Pick weekly, monthly, or quarterly.</p>
-    </div>
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════════ -->
+<section class="pricing-hero">
+  <div class="pricing-hero-noise"></div>
+  <div class="pricing-hero-badge">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Simple, Honest Pricing
+  </div>
+  <h1>Pay per hour.<br><em>Keep more profit.</em></h1>
+  <p class="pricing-hero-sub">No hidden fees. No long contracts. Choose your industry, configure your setup, and see your exact rate — instantly.</p>
+
+  <div class="billing-toggle" id="billingToggle">
+    <div class="toggle-pill" id="togglePill"></div>
+    <button data-plan="hourly" class="active">Pay As You Go</button>
+    <button data-plan="monthly">Monthly <span class="p-save-tag">SAVE 15%</span></button>
+    <button data-plan="quarterly">Quarterly <span class="p-save-tag">SAVE 25%</span></button>
   </div>
 </section>
 
-<!-- ── PRICING WIZARD ─────────────────────────────────────────── -->
-<section class="pricing-wizard-section" id="pricing-wizard">
-  <div class="container">
+<!-- ═══════════════════════════════════════════════════════════════
+     INDUSTRY TABS
+════════════════════════════════════════════════════════════════ -->
+<div class="industry-tabs-wrap">
+  <div class="industry-tabs-scroll" id="industryTabs">
 
-    <!-- Step Indicator -->
-    <div class="step-indicator">
-      <div class="step-dot active" id="dot-1">
-        <div class="step-dot-circle">1</div>
-        <div class="step-dot-label">Industry</div>
-      </div>
-      <div class="step-line" id="line-1"></div>
-      <div class="step-dot" id="dot-2">
-        <div class="step-dot-circle">2</div>
-        <div class="step-dot-label">Fleet Size</div>
-      </div>
-      <div class="step-line" id="line-2"></div>
-      <div class="step-dot" id="dot-3">
-        <div class="step-dot-circle">3</div>
-        <div class="step-dot-label">Your Pricing</div>
-      </div>
-    </div>
-
-    <!-- ── STEP 1: Industry ── -->
-    <div id="step-1">
-      <div class="step-header">
-        <h2>What industry are you in?</h2>
-        <p>Select your transport sector to see services and pricing tailored to your operation.</p>
-      </div>
-      <div class="industry-grid">
-        <div class="industry-card" onclick="selectIndustry('trucking', this)"><span class="industry-icon">🚛</span><div class="industry-name">Trucking / OTR Freight</div></div>
-        <div class="industry-card" onclick="selectIndustry('freight_broker', this)"><span class="industry-icon">🤝</span><div class="industry-name">Freight Broker Support</div></div>
-        <div class="industry-card" onclick="selectIndustry('tow_truck', this)"><span class="industry-icon">🔧</span><div class="industry-name">Tow Truck & Roadside</div></div>
-        <div class="industry-card" onclick="selectIndustry('car_hauler', this)"><span class="industry-icon">🚗</span><div class="industry-name">Car Hauler Operations</div></div>
-        <div class="industry-card" onclick="selectIndustry('nemt', this)"><span class="industry-icon">🏥</span><div class="industry-name">NEMT Billing & Dispatch</div></div>
-        <div class="industry-card" onclick="selectIndustry('limo', this)"><span class="industry-icon">🚘</span><div class="industry-name">Limo & Black Car</div></div>
-        <div class="industry-card" onclick="selectIndustry('hotshot', this)"><span class="industry-icon">⚡</span><div class="industry-name">Hotshot / Expedite</div></div>
-        <div class="industry-card" onclick="selectIndustry('moving', this)"><span class="industry-icon">📦</span><div class="industry-name">Moving Companies</div></div>
-        <div class="industry-card" onclick="selectIndustry('box_truck', this)"><span class="industry-icon">📬</span><div class="industry-name">Box Truck / Last Mile</div></div>
-        <div class="industry-card" onclick="selectIndustry('tanker', this)"><span class="industry-icon">⚙️</span><div class="industry-name">Tanker / Specialized</div></div>
-        <div class="industry-card" onclick="selectIndustry('school_charter', this)"><span class="industry-icon">🚌</span><div class="industry-name">School Bus & Charter</div></div>
-        <div class="industry-card" onclick="selectIndustry('airport_shuttle', this)"><span class="industry-icon">✈️</span><div class="industry-name">Airport Shuttle & Taxi</div></div>
-      </div>
-    </div>
-
-    <!-- ── STEP 2: Vehicles ── -->
-    <div id="step-2" style="display:none;">
-      <button class="back-btn" onclick="showStep(1)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        Back to Industries
-      </button>
-      <div class="step-header">
-        <h2>How many vehicles do you operate?</h2>
-        <p>Your first vehicle is <strong>$5/hr</strong>. Your 2nd and 3rd are <strong>$3.50/hr</strong>. 4 or more gets custom bulk pricing.</p>
-      </div>
-      <div class="vehicle-selector">
-        <button class="vehicle-btn" onclick="selectVehicles(1, this)">
-          <div class="vehicle-btn-num">1</div>
-          <div class="vehicle-btn-label">Vehicle</div>
-        </button>
-        <button class="vehicle-btn" onclick="selectVehicles(2, this)">
-          <div class="vehicle-btn-num">2</div>
-          <div class="vehicle-btn-label">Vehicles</div>
-        </button>
-        <button class="vehicle-btn" onclick="selectVehicles(3, this)">
-          <div class="vehicle-btn-num">3</div>
-          <div class="vehicle-btn-label">Vehicles</div>
-        </button>
-        <button class="vehicle-btn" onclick="selectVehicles(4, this)">
-          <div class="vehicle-btn-num">4+</div>
-          <div class="vehicle-btn-label">Vehicles</div>
-        </button>
-      </div>
-      <p class="vehicle-hint">176 billable hours/month · 8 hrs/day Mon–Fri · Weekends & holidays free</p>
-    </div>
-
-    <!-- ── STEP 3: Pricing ── -->
-    <div id="step-3" style="display:none;">
-      <button class="back-btn" onclick="showStep(2)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        Change Fleet Size
-      </button>
-
-      <!-- Summary bar -->
-      <div class="pricing-summary" id="pricing-summary"></div>
-
-      <!-- Standard pricing (1–3 vehicles) -->
-      <div id="standard-pricing">
-        <div class="p-cards-header">
-          <span class="eyebrow" style="display:inline-flex;margin-bottom:8px;">Choose Your Billing Cycle</span>
-          <h2>Same services. You pick the cadence.</h2>
-          <p>All three plans cover identical services — the difference is billing frequency and the discount you unlock.</p>
-        </div>
-        <div class="pricing-cards-grid" id="pricing-cards-grid"></div>
-        <div id="pricing-notes-box"></div>
-      </div>
-
-      <!-- Custom pricing (4+ vehicles) -->
-      <div id="custom-pricing" style="display:none;">
-        <div class="custom-pricing-box">
-          <h3>Custom pricing for fleets of 4 or more.</h3>
-          <p>Large fleets get a dedicated back office team and volume rates we tailor to your operation. Tell us your numbers and we'll return a custom proposal — usually within 24 hours.</p>
-          <button class="btn btn-primary btn-lg" onclick="openModal('custom')">Request a Custom Quote →</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── FAQ ────────────────────────────────────────────────────── -->
-<section class="faq-section-pricing">
-  <div class="container">
-    <div class="section-header centered reveal">
-      <span class="eyebrow">Pricing Questions</span>
-      <h2>Common questions about how we bill</h2>
-    </div>
-    <div class="faq-list reveal">
-
-      <div class="faq-item">
-        <div class="faq-question">How are the 176 monthly hours calculated?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-answer"><div class="faq-answer-inner">We bill 8 standard hours per weekday, Monday through Friday. A typical month has 22 working days × 8 hours = 176 hours. Weekends and major US public holidays are included in your plan at no extra charge — your team is available, but you're not billed for those hours.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">How does weekly billing work?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-answer"><div class="faq-answer-inner">We work Monday through Friday. Your invoice is issued every Friday for that week's work (40 hours). Payment is due by the following Monday. If payment is not received by Monday morning, services are paused until the balance is cleared. This policy keeps things fair for the entire operation — no exceptions.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">Why do monthly and quarterly plans require advance payment?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Pre-payment is what allows us to offer the 15% and 20% discounts. When you commit upfront, we commit dedicated team slots upfront. We staff your account from day one — advance payment ensures we can do that without risk on either side. Think of it as a retainer, not a deposit.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">What does the load board fee cover?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Services like trucking dispatch, freight brokerage, hotshot, and car hauling require access to a load board (DAT, Truckstop.io, Central Dispatch, etc.) to source and post loads. If you already have a subscription, you simply share access with your Haulxify team — no extra charge. If you don't, we add $100/month or $25/week to your bill to cover it.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">What if my fleet grows or shrinks?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-answer"><div class="faq-answer-inner">Notify us and we adjust. Weekly clients: changes take effect the following week. Monthly and quarterly clients: we adjust at the next billing cycle and credit or invoice the difference. Seasonal operators scale up and down all the time — we handle it without penalties.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">Are there setup fees or long-term contracts?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-answer"><div class="faq-answer-inner">No setup fees. No long-term contracts. Weekly clients can stop with one week's notice. Monthly and quarterly plans are pre-paid for that period — when the period ends, you renew or walk away. We earn your continued business every cycle, not through contractual lock-in.</div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── BOTTOM CTA ─────────────────────────────────────────────── -->
-<section style="background: var(--brand-navy); padding: 80px 0;">
-  <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
-    <h2 style="font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight:800; color:var(--white); letter-spacing:-0.03em; margin-bottom:16px; line-height:1.15;">Not sure which plan fits?<br>Let's figure it out together.</h2>
-    <p style="color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 32px; font-size: 1rem;">Tell us your industry, fleet size, and how your operation runs. We'll recommend the right plan — or build a custom one that fits.</p>
-    <button class="btn btn-primary btn-lg" onclick="openModal('custom')">Get a Custom Quote →</button>
-  </div>
-</section>
-
-<div id="footer-include"></div>
-
-<!-- ── MODAL ──────────────────────────────────────────────────── -->
-<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
-  <div class="modal-box" id="modal-box">
-    <button class="modal-close" onclick="closeModal()" aria-label="Close">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <button class="itab active" data-industry="trucking">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Trucking Back Office
     </button>
 
-    <!-- Form -->
-    <div id="modal-form-wrap">
-      <div class="modal-title">Get Started with Haulxify</div>
-      <div class="modal-sub">Fill in your details and we'll reach out within a few hours to confirm your plan and get your team set up.</div>
+    <button class="itab" data-industry="broker">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Freight Broker Support
+    </button>
 
-      <div class="modal-plan-preview" id="modal-plan-preview"></div>
+    <button class="itab" data-industry="tow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      Tow Truck Dispatch
+    </button>
 
-      <form id="modal-form" onsubmit="handleModalSubmit(event)">
-        <!-- Hidden pre-filled fields -->
-        <input type="hidden" id="h-industry" name="entry.industry">
-        <input type="hidden" id="h-vehicles" name="entry.vehicles">
-        <input type="hidden" id="h-plan" name="entry.plan">
+    <button class="itab" data-industry="carhauler">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+      Car Hauler Operations
+    </button>
 
-        <div class="modal-row">
-          <div class="modal-form-group">
-            <label class="modal-label">First Name *</label>
-            <input type="text" class="modal-input" name="entry.firstName" placeholder="John" required>
-          </div>
-          <div class="modal-form-group">
-            <label class="modal-label">Last Name *</label>
-            <input type="text" class="modal-input" name="entry.lastName" placeholder="Smith" required>
-          </div>
-        </div>
-        <div class="modal-form-group">
-          <label class="modal-label">Email Address *</label>
-          <input type="email" class="modal-input" name="entry.email" placeholder="you@company.com" required>
-        </div>
-        <div class="modal-form-group">
-          <label class="modal-label">Phone / WhatsApp</label>
-          <input type="tel" class="modal-input" name="entry.phone" placeholder="+1 (555) 000-0000">
-        </div>
-        <div class="modal-form-group">
-          <label class="modal-label">Company Name</label>
-          <input type="text" class="modal-input" name="entry.company" placeholder="Your company name">
-        </div>
-        <div class="modal-form-group">
-          <label class="modal-label">Anything we should know?</label>
-          <textarea class="modal-textarea modal-input" name="entry.notes" placeholder="Current setup, pain points, questions — anything helps."></textarea>
-        </div>
-        <button type="submit" class="modal-submit">Submit & Get Started →</button>
-        <p class="modal-disclaimer">We'll be in touch within a few hours. No spam, ever.</p>
-      </form>
-    </div>
+    <button class="itab" data-industry="animalhauler">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+      Animal Hauler Operations
+    </button>
 
-    <!-- Success -->
-    <div id="modal-success" style="display:none; text-align:center; padding: 48px 0 32px;">
-      <div style="font-size:3rem; margin-bottom:18px;">✅</div>
-      <div style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:var(--brand-navy); margin-bottom:10px; letter-spacing:-0.02em;">You're all set!</div>
-      <p style="color:var(--text-muted); font-size:0.9375rem; line-height:1.75; max-width:360px; margin:0 auto;">We've received your details and will reach out within a few hours to confirm your plan and get your back office team ready.</p>
-    </div>
+    <button class="itab" data-industry="dump">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      Dump Truck Back Office
+    </button>
 
-    <iframe name="modal-hidden-iframe" style="display:none;"></iframe>
+    <button class="itab" data-industry="sprinter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Sprinter / Cargo Van
+    </button>
+
+    <button class="itab" data-industry="moving">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      Moving Company Support
+    </button>
+
+    <button class="itab" data-industry="afterhours">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      After-Hours Coverage
+    </button>
+
+    <button class="itab" data-industry="nemt">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      NEMT Billing &amp; Dispatch
+    </button>
+
+    <button class="itab" data-industry="taxi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a1 1 0 00-.8-.4H5.24a2 2 0 00-1.8 1.1L2 10v6h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+      Taxi Fleet Management
+    </button>
+
+    <button class="itab" data-industry="limo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+      Limo &amp; Black Car
+    </button>
+
   </div>
 </div>
 
-<!-- ── SCRIPTS ────────────────────────────────────────────────── -->
-<script src="js/includes.js"></script>
-<script src="js/main.js"></script>
+<!-- ═══════════════════════════════════════════════════════════════
+     PRICING PANELS
+════════════════════════════════════════════════════════════════ -->
+<div class="pricing-main">
+
+  <!-- 1. TRUCKING BACK OFFICE -->
+  <div class="p-panel visible" id="panel-trucking">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Trucking Back Office
+      </div>
+      <p class="p-card-sub">Full dispatch, compliance, IFTA filing, invoicing, and driver onboarding — priced per vehicle in your fleet.</p>
+      <div class="p-stepper-label">Number of Vehicles</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('trucking',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-trucking">1</div>
+        <button onclick="changeQty('trucking',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-trucking"></div>
+    <div id="bill-trucking"></div>
+  </div>
+
+  <!-- 2. FREIGHT BROKER SUPPORT -->
+  <div class="p-panel" id="panel-broker">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Freight Broker Support
+      </div>
+      <p class="p-card-sub">Carrier sourcing, rate negotiation support, load tracking, and document processing for freight brokers.</p>
+      <div class="p-note"><strong>Broker pricing:</strong> $2.50/hr per agent + 2.5% of each confirmed load amount. Vehicle count does not apply — select the number of agents below.</div>
+      <br>
+      <div class="p-stepper-label">Number of Agents</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('broker',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-broker">1</div>
+        <button onclick="changeQty('broker',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-broker"></div>
+    <div id="bill-broker"></div>
+  </div>
+
+  <!-- 3. TOW TRUCK DISPATCH -->
+  <div class="p-panel" id="panel-tow">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Tow Truck Dispatch
+      </div>
+      <p class="p-card-sub">Inbound dispatch management for tow companies — priced per active <strong>line</strong> we handle, not per truck in your fleet.</p>
+      <div class="p-note"><strong>Line 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Lines 2+:</strong> $3.50/hr each</div>
+      <br>
+      <div class="p-stepper-label">Number of Lines</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('tow',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-tow">1</div>
+        <button onclick="changeQty('tow',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-tow"></div>
+    <div id="bill-tow"></div>
+  </div>
+
+  <!-- 4. CAR HAULER OPERATIONS -->
+  <div class="p-panel" id="panel-carhauler">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+        Car Hauler Operations
+      </div>
+      <p class="p-card-sub">Load coordination, BOL processing, invoicing, and compliance management for auto transport carriers — priced per carrier unit.</p>
+      <div class="p-stepper-label">Number of Carrier Units</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('carhauler',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-carhauler">1</div>
+        <button onclick="changeQty('carhauler',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-carhauler"></div>
+    <div id="bill-carhauler"></div>
+  </div>
+
+  <!-- 5. ANIMAL HAULER OPERATIONS -->
+  <div class="p-panel" id="panel-animalhauler">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+        Animal Hauler Operations
+      </div>
+      <p class="p-card-sub">Compliance, dispatch coordination, permit tracking, and document management tailored for livestock and animal transport operators.</p>
+      <div class="p-stepper-label">Number of Vehicles</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('animalhauler',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-animalhauler">1</div>
+        <button onclick="changeQty('animalhauler',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-animalhauler"></div>
+    <div id="bill-animalhauler"></div>
+  </div>
+
+  <!-- 6. DUMP TRUCK BACK OFFICE -->
+  <div class="p-panel" id="panel-dump">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Dump Truck Back Office
+      </div>
+      <p class="p-card-sub">Job ticket management, invoicing, permit coordination, fuel tax reporting, and bookkeeping for dump truck operators.</p>
+      <div class="p-stepper-label">Number of Trucks</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('dump',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-dump">1</div>
+        <button onclick="changeQty('dump',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-dump"></div>
+    <div id="bill-dump"></div>
+  </div>
+
+  <!-- 7. SPRINTER / CARGO VAN -->
+  <div class="p-panel" id="panel-sprinter">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Sprinter / Cargo Van Operations
+      </div>
+      <p class="p-card-sub">Load booking, manifest management, last-mile coordination, invoicing, and route support for sprinter and cargo van fleets.</p>
+      <div class="p-stepper-label">Number of Vans</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('sprinter',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-sprinter">1</div>
+        <button onclick="changeQty('sprinter',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-sprinter"></div>
+    <div id="bill-sprinter"></div>
+  </div>
+
+  <!-- 8. MOVING COMPANY SUPPORT -->
+  <div class="p-panel" id="panel-moving">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        Moving Company Support
+      </div>
+      <p class="p-card-sub">Job scheduling, estimates coordination, crew dispatch, inventory documentation, and invoicing support for residential and commercial movers.</p>
+      <div class="p-stepper-label">Number of Trucks</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('moving',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-moving">1</div>
+        <button onclick="changeQty('moving',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-moving"></div>
+    <div id="bill-moving"></div>
+  </div>
+
+  <!-- 9. AFTER-HOURS COVERAGE -->
+  <div class="p-panel" id="panel-afterhours">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        After-Hours Coverage
+      </div>
+      <p class="p-card-sub">We handle your calls, dispatch, and urgent requests outside business hours — so you never miss a load or a customer. Priced per agent line covering your after-hours window.</p>
+      <div class="p-note"><strong>Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong>4+ agents:</strong> contact us for custom pricing.</div>
+      <br>
+      <div class="p-stepper-label">Number of Agent Lines (1&#8211;3 configurable; 4+ is custom)</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('afterhours',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-afterhours">1</div>
+        <button onclick="changeQty('afterhours',1,3)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-afterhours"></div>
+    <div id="bill-afterhours"></div>
+  </div>
+
+  <!-- 10. NEMT BILLING & DISPATCH -->
+  <div class="p-panel" id="panel-nemt">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        NEMT Billing &amp; Dispatch
+      </div>
+      <p class="p-card-sub">Medicaid/insurance billing, trip scheduling, driver dispatch, eligibility verification, and denial management for non-emergency medical transport providers.</p>
+      <div class="p-stepper-label">Number of Vehicles</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('nemt',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-nemt">1</div>
+        <button onclick="changeQty('nemt',1)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-nemt"></div>
+    <div id="bill-nemt"></div>
+  </div>
+
+  <!-- 11. TAXI FLEET MANAGEMENT -->
+  <div class="p-panel" id="panel-taxi">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a1 1 0 00-.8-.4H5.24a2 2 0 00-1.8 1.1L2 10v6h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+        Taxi Fleet Management &amp; Support
+      </div>
+      <p class="p-card-sub">Inbound call handling, dispatch, driver coordination, and fleet admin for taxi companies. Priced per agent line — count agreed mutually based on your call volume.</p>
+      <div class="p-note"><strong>Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong>4+ agents:</strong> contact us for custom pricing.</div>
+      <br>
+      <div class="p-stepper-label">Number of Agent Lines (1&#8211;3 configurable; 4+ is custom)</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('taxi',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-taxi">1</div>
+        <button onclick="changeQty('taxi',1,3)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-taxi"></div>
+    <div id="bill-taxi"></div>
+  </div>
+
+  <!-- 12. LIMO & BLACK CAR -->
+  <div class="p-panel" id="panel-limo">
+    <div class="p-config-card">
+      <div class="p-card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+        Limo &amp; Black Car Management &amp; Support
+      </div>
+      <p class="p-card-sub">Reservation handling, chauffeur dispatch, affiliate coordination, and client communication for limo and black car services. Agent count agreed mutually to match your booking volume.</p>
+      <div class="p-note"><strong>Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong>4+ agents:</strong> contact us for custom pricing.</div>
+      <br>
+      <div class="p-stepper-label">Number of Agent Lines (1&#8211;3 configurable; 4+ is custom)</div>
+      <div class="p-stepper">
+        <button onclick="changeQty('limo',-1)">&#8722;</button>
+        <div class="p-stepper-val" id="qty-limo">1</div>
+        <button onclick="changeQty('limo',1,3)">&#43;</button>
+      </div>
+    </div>
+    <div class="p-tier-row" id="tiers-limo"></div>
+    <div id="bill-limo"></div>
+  </div>
+
+</div><!-- /pricing-main -->
+
+<!-- ═══════════════════════════════════════════════════════════════
+     COMPARISON TABLE
+════════════════════════════════════════════════════════════════ -->
+<section class="p-compare-section">
+  <div class="container">
+    <h2>Haulxify vs. Hiring In-House</h2>
+    <p class="p-sub">The math is simple. The savings are significant.</p>
+    <div class="p-compare-wrap">
+      <table class="p-compare">
+        <thead>
+          <tr>
+            <th>What you get</th>
+            <th>In-House Staff</th>
+            <th>Haulxify</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Monthly cost (per operator)</td><td>$4,000&#8211;$6,000+</td><td class="p-highlight">From $2.50/hr</td></tr>
+          <tr><td>Onboarding time</td><td>2&#8211;6 weeks</td><td>24 hours</td></tr>
+          <tr><td>IFTA / compliance filing</td><td class="p-yes">&#10003;</td><td class="p-yes">&#10003;</td></tr>
+          <tr><td>24/7 availability</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
+          <tr><td>Industry-specific expertise</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
+          <tr><td>No long-term contract</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
+          <tr><td>Scales as you grow</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
+          <tr><td>Factoring coordination</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
+          <tr><td>Cost savings vs. in-house</td><td>&#8212;</td><td class="p-highlight">Up to 75% less</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FAQ
+════════════════════════════════════════════════════════════════ -->
+<section class="p-faq-section">
+  <h2>Pricing Questions Answered</h2>
+
+  <div class="p-faq-item">
+    <button class="p-faq-q" onclick="toggleFaq(this)">Is there a minimum commitment or contract?
+      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+    </button>
+    <div class="p-faq-a">No. Pay-as-you-go has zero commitment. Monthly and quarterly plans offer significant discounts but can be cancelled before renewal with no penalty and no questions asked.</div>
+  </div>
+
+  <div class="p-faq-item">
+    <button class="p-faq-q" onclick="toggleFaq(this)">How does per-vehicle vs. per-line vs. per-agent billing work?
+      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+    </button>
+    <div class="p-faq-a">The billing unit depends on your industry. Trucking, car hauler, dump truck, NEMT, animal hauler, sprinter, and moving companies are billed per vehicle. Tow truck dispatch is billed per active line we handle. Taxi, limo, black car, and after-hours coverage are billed per agent line, determined mutually based on your call volume. Freight brokers are billed per agent plus a 2.5% commission on confirmed loads.</div>
+  </div>
+
+  <div class="p-faq-item">
+    <button class="p-faq-q" onclick="toggleFaq(this)">How is the number of agents determined for call-based services?
+      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+    </button>
+    <div class="p-faq-a">During onboarding we review your average inbound call volume and peak windows together. We then agree on the right agent count before work begins. You only ever pay for agents agreed upon upfront — no surprise overages.</div>
+  </div>
+
+  <div class="p-faq-item">
+    <button class="p-faq-q" onclick="toggleFaq(this)">Can I scale up or down mid-cycle?
+      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+    </button>
+    <div class="p-faq-a">Yes. Adding a vehicle or line takes effect immediately and you are prorated for the remainder of the billing cycle. Removing a unit takes effect from the next cycle start.</div>
+  </div>
+
+  <div class="p-faq-item">
+    <button class="p-faq-q" onclick="toggleFaq(this)">Are features gated by plan tier?
+      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+    </button>
+    <div class="p-faq-a">No feature gating. All plans include the full service suite for your industry. The only difference between plans is the billing cycle and the discount applied — monthly saves 15%, quarterly saves 25%.</div>
+  </div>
+
+  <div class="p-faq-item">
+    <button class="p-faq-q" onclick="toggleFaq(this)">Do you work with owner-operators or only established fleets?
+      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+    </button>
+    <div class="p-faq-a">Both. Single-unit owner-operators are our most common client — they have the most to gain and the least back office capacity. We scale with you from one vehicle to fifty-plus.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER CTA
+════════════════════════════════════════════════════════════════ -->
+<section class="p-footer-cta">
+  <h2>Stop losing money on paperwork<br>you should not be doing.</h2>
+  <p>Talk to our team. We will assess your back office load and show you exactly what you are leaving on the table.</p>
+  <div class="p-footer-cta-btns">
+    <button class="p-btn-gold" onclick="openModal()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Get a Free Assessment
+    </button>
+    <a href="../contact.html" class="p-btn-ghost">Talk to a Human</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SIGNUP MODAL
+════════════════════════════════════════════════════════════════ -->
+<div class="p-modal-backdrop" id="modalBackdrop">
+  <div class="p-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+    <div class="p-modal-header">
+      <div>
+        <h2 id="modalTitle">Start your free assessment</h2>
+        <p>Takes 2 minutes. We will be in touch within one business day.</p>
+      </div>
+      <button class="p-modal-close" onclick="closeModal()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="p-modal-pill">
+      <div class="p-modal-pill-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div>
+        <div class="p-modal-pill-label">Your Selection</div>
+        <div class="p-modal-pill-val" id="modalSummaryText">Trucking Back Office &mdash; 1 Vehicle &mdash; Pay As You Go</div>
+      </div>
+    </div>
+
+    <div class="p-modal-body" id="modalFormBody">
+
+      <div class="p-form-section-title">Contact Information</div>
+      <div class="p-form-row">
+        <div class="p-form-group">
+          <label class="p-form-label">First Name <span class="req">*</span></label>
+          <input class="p-form-input" type="text" id="f-fname" placeholder="Marcus" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-form-label">Last Name <span class="req">*</span></label>
+          <input class="p-form-input" type="text" id="f-lname" placeholder="Thompson" required>
+        </div>
+      </div>
+      <div class="p-form-row">
+        <div class="p-form-group">
+          <label class="p-form-label">Email <span class="req">*</span></label>
+          <input class="p-form-input" type="email" id="f-email" placeholder="you@company.com" required>
+        </div>
+        <div class="p-form-group">
+          <label class="p-form-label">Phone</label>
+          <input class="p-form-input" type="tel" id="f-phone" placeholder="+1 (555) 000-0000">
+        </div>
+      </div>
+
+      <div class="p-form-section-title">Company Details</div>
+      <div class="p-form-row full">
+        <div class="p-form-group">
+          <label class="p-form-label">Company Name <span class="req">*</span></label>
+          <input class="p-form-input" type="text" id="f-company" placeholder="Thompson Carriers LLC" required>
+        </div>
+      </div>
+      <div class="p-form-row">
+        <div class="p-form-group">
+          <label class="p-form-label">State / Region</label>
+          <input class="p-form-input" type="text" id="f-state" placeholder="Texas">
+        </div>
+        <div class="p-form-group">
+          <label class="p-form-label">Years in Operation</label>
+          <select class="p-form-select" id="f-years">
+            <option value="">Select&hellip;</option>
+            <option>Less than 1 year</option>
+            <option>1&ndash;3 years</option>
+            <option>3&ndash;5 years</option>
+            <option>5&ndash;10 years</option>
+            <option>10+ years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="p-form-section-title">
+        Service Selection
+        <span style="font-size:.65rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--p-muted);margin-left:6px;">&#8212; pre-filled from your selection above, edit freely</span>
+      </div>
+      <div class="p-form-row">
+        <div class="p-form-group">
+          <label class="p-form-label">Industry / Service</label>
+          <select class="p-form-select" id="f-industry" onchange="onModalIndustryChange()">
+            <option value="trucking">Trucking Back Office</option>
+            <option value="broker">Freight Broker Support</option>
+            <option value="tow">Tow Truck Dispatch</option>
+            <option value="carhauler">Car Hauler Operations</option>
+            <option value="animalhauler">Animal Hauler Operations</option>
+            <option value="dump">Dump Truck Back Office</option>
+            <option value="sprinter">Sprinter / Cargo Van Operations</option>
+            <option value="moving">Moving Company Support</option>
+            <option value="afterhours">After-Hours Coverage</option>
+            <option value="nemt">NEMT Billing &amp; Dispatch</option>
+            <option value="taxi">Taxi Fleet Management</option>
+            <option value="limo">Limo &amp; Black Car Management</option>
+          </select>
+        </div>
+        <div class="p-form-group">
+          <label class="p-form-label" id="f-qty-label">Number of Vehicles</label>
+          <input class="p-form-input" type="number" id="f-qty" min="1" max="200" value="1">
+        </div>
+      </div>
+      <div class="p-form-row">
+        <div class="p-form-group">
+          <label class="p-form-label">Billing Plan</label>
+          <select class="p-form-select" id="f-plan">
+            <option value="hourly">Pay As You Go (Hourly)</option>
+            <option value="monthly">Monthly &mdash; Save 15%</option>
+            <option value="quarterly">Quarterly &mdash; Save 25%</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="p-form-section-title">Anything Else?</div>
+      <div class="p-form-row full">
+        <div class="p-form-group">
+          <label class="p-form-label">Biggest back office challenge</label>
+          <textarea class="p-form-textarea" id="f-message" placeholder="e.g. IFTA filing, delayed payments, driver hiring, after-hours calls&hellip;"></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="p-modal-footer">
+      <button class="p-modal-submit" onclick="submitForm()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Send My Free Assessment Request
+      </button>
+      <p class="p-modal-privacy">&#128274; Your information is never sold or shared. We typically respond within 4 business hours.</p>
+    </div>
+  </div>
+</div>
+
+<div id="footer-include"></div>
+<script src="../js/includes.js"></script>
+<script src="../js/main.js"></script>
+
+<!-- PRICING ENGINE -->
 <script>
-
-// ── RATES & CONSTANTS ─────────────────────────────────────────
-const RATE_V1       = 5;
-const RATE_V2_3     = 3.5;
-const HOURS_MONTH   = 176;
-const HOURS_WEEK    = 40;
-const DISC_MONTHLY  = 0.15;
-const DISC_QTRLY    = 0.20;
-const LB_MONTHLY    = 100;
-const LB_WEEKLY     = 25;
-
-// ── INDUSTRY DATA ─────────────────────────────────────────────
-const industries = {
-  trucking: {
-    name: 'Trucking / OTR Freight', icon: '🚛', loadBoard: true,
-    loadBoardName: 'DAT or Truckstop.io',
-    services: [
-      'Load sourcing & booking on DAT / Truckstop.io',
-      'Rate negotiation & rate confirmation management',
-      'BOL, POD & freight document processing',
-      'Detention, layover & lumper coordination',
-      'Driver check-in & ELD compliance monitoring',
-      'IFTA mileage & fuel tax record-keeping',
-      'Carrier–broker communication handling',
-      'Accounts receivable & collections follow-up',
-    ],
-    notes: [
-      '★ Client must provide load board access (DAT or Truckstop.io). If access is not provided, load board access is added to your bill at $100/mo or $25/wk.',
-    ]
-  },
-  freight_broker: {
-    name: 'Freight Broker Support', icon: '🤝', loadBoard: true,
-    loadBoardName: 'DAT or Truckstop.io',
-    services: [
-      'Carrier vetting, packet processing & onboarding',
-      'Load posting & available carrier sourcing',
-      'Rate negotiation & spot market quoting',
-      'Load tracking & regular check calls',
-      'POD & invoice collection from carriers',
-      'Customer updates & exception management',
-      'Claims documentation & resolution support',
-      'Aging AR & collections management',
-    ],
-    notes: [
-      '★ Client must provide load board access (DAT or Truckstop.io). If access is not provided, load board access is added to your bill at $100/mo or $25/wk.',
-    ]
-  },
-  tow_truck: {
-    name: 'Tow Truck & Roadside', icon: '🔧', loadBoard: false,
-    services: [
-      'Motor club dispatch (AAA, Allstate, Agero, NSD)',
-      'Private call & GPS-based real-time dispatch',
-      'Driver routing, ETA monitoring & updates',
-      'Impound lot coordination & release documentation',
-      'Motor club & private invoice billing',
-      'After-hours, overnight & weekend coverage',
-      'Job documentation & mileage tracking',
-      'Customer follow-up & complaint handling',
-    ],
-    notes: []
-  },
-  car_hauler: {
-    name: 'Car Hauler Operations', icon: '🚗', loadBoard: true,
-    loadBoardName: 'Central Dispatch',
-    services: [
-      'Load sourcing & booking on Central Dispatch',
-      'Multi-vehicle route planning & load stacking',
-      'Vehicle condition documentation at pickup & delivery',
-      'BOL & inspection report processing',
-      'Carrier–broker communication management',
-      'Damage claim coordination & follow-up',
-      'Driver scheduling & ETA communication',
-      'Accounts receivable & collections',
-    ],
-    notes: [
-      '★ Client must provide Central Dispatch access. If access is not provided, it is added to your bill at $100/mo or $25/wk.',
-    ]
-  },
-  nemt: {
-    name: 'NEMT Billing & Dispatch', icon: '🏥', loadBoard: false,
-    services: [
-      'Trip scheduling & driver assignment',
-      'Medicaid & broker portal billing (MTM, Modivcare, Veyo)',
-      'Claim denial management & appeal filing',
-      'Driver credential & compliance tracking',
-      'Vehicle compliance & inspection documentation',
-      'Prior authorisation coordination',
-      'No-show, cancel & will-call documentation',
-      'Revenue reconciliation & performance reporting',
-    ],
-    notes: []
-  },
-  limo: {
-    name: 'Limo & Black Car', icon: '🚘', loadBoard: false,
-    services: [
-      'Reservation management & client confirmations',
-      'Chauffeur scheduling & real-time dispatch',
-      'Flight tracking & FBO / terminal coordination',
-      'Client communication & concierge-level support',
-      'Farm-in / farm-out affiliate coordination',
-      'Invoice generation & client billing',
-      'Chauffeur & vehicle compliance tracking',
-      'Post-trip follow-up & gratuity processing',
-    ],
-    notes: []
-  },
-  hotshot: {
-    name: 'Hotshot / Expedite', icon: '⚡', loadBoard: true,
-    loadBoardName: 'DAT or 123Loadboard',
-    services: [
-      'Load sourcing on DAT & 123Loadboard',
-      'Rate negotiation & rate confirmation issuance',
-      'TONU & detention dispute management',
-      'Time-sensitive BOL & delivery documentation',
-      'Driver check-in & real-time communication',
-      'Quick-pay & factoring workflow coordination',
-      'After-hours & weekend load coverage',
-      'Collections & aging invoice follow-up',
-    ],
-    notes: [
-      '★ Client must provide load board access (DAT or 123Loadboard). If access is not provided, access is added to your bill at $100/mo or $25/wk.',
-    ]
-  },
-  moving: {
-    name: 'Moving Companies', icon: '📦', loadBoard: false,
-    services: [
-      'Job scheduling, crew assignment & dispatch',
-      'Estimate & service contract documentation',
-      'Long-distance interstate carrier coordination',
-      'COI & move permit processing',
-      'Pre- and post-move customer communication',
-      'Invoice generation & payment collection',
-      'Damage claim documentation & follow-up',
-      'CRM updates & review request follow-up',
-    ],
-    notes: []
-  },
-  box_truck: {
-    name: 'Box Truck / Last Mile', icon: '📬', loadBoard: false,
-    services: [
-      'Daily route optimisation & driver dispatch',
-      'Delivery manifest creation & stop sequencing',
-      'DSP / Amazon Relay partner coordination',
-      'Exception handling & redelivery scheduling',
-      'POD collection & on-time delivery reporting',
-      'Customer communication & live ETA updates',
-      'Driver performance tracking & reporting',
-      'Invoice & settlement processing',
-    ],
-    notes: []
-  },
-  tanker: {
-    name: 'Tanker / Specialized', icon: '⚙️', loadBoard: false,
-    services: [
-      'Oversize & overweight permit coordination',
-      'Hazmat documentation & compliance management',
-      'Bulk liquid & fuel haul load scheduling',
-      'Restricted route planning & pilot car coordination',
-      'BOL & commodity manifest processing',
-      'Driver HOS & regulatory compliance tracking',
-      'Customer & shipper communication',
-      'Invoice & collections management',
-    ],
-    notes: []
-  },
-  school_charter: {
-    name: 'School Bus & Charter', icon: '🚌', loadBoard: false,
-    services: [
-      'Daily route planning & driver assignment',
-      'Parent, student & client trip communication',
-      'Charter trip scheduling & passenger manifests',
-      'Driver certification & background check tracking',
-      'Vehicle inspection & maintenance scheduling',
-      'Substitute driver coordination',
-      'Invoice & billing management for charter clients',
-      'Compliance documentation & reporting',
-    ],
-    notes: []
-  },
-  airport_shuttle: {
-    name: 'Airport Shuttle & Taxi', icon: '✈️', loadBoard: false,
-    services: [
-      'Booking & reservation management',
-      'Driver dispatch & live vehicle tracking',
-      'Flight monitoring & dynamic schedule updates',
-      'Surge demand & capacity coordination',
-      'Customer confirmation & communication',
-      'Invoice & payment reconciliation',
-      'Driver performance & rating monitoring',
-      'Complaint handling & quality assurance',
-    ],
-    notes: []
-  },
+const INDUSTRIES = {
+  trucking:     { type: 'perVehicle', unitLabel: 'Vehicle',  baseRate: 3.50 },
+  broker:       { type: 'broker',     unitLabel: 'Agent',    baseRate: 2.50, commission: '+ 2.5% per confirmed load' },
+  tow:          { type: 'tiered',     unitLabel: 'Line',     baseRate: 5.00, tierRate: 3.50 },
+  carhauler:    { type: 'perVehicle', unitLabel: 'Unit',     baseRate: 3.50 },
+  animalhauler: { type: 'perVehicle', unitLabel: 'Vehicle',  baseRate: 3.50 },
+  dump:         { type: 'perVehicle', unitLabel: 'Truck',    baseRate: 3.50 },
+  sprinter:     { type: 'perVehicle', unitLabel: 'Van',      baseRate: 3.50 },
+  moving:       { type: 'perVehicle', unitLabel: 'Truck',    baseRate: 3.50 },
+  afterhours:   { type: 'tiered',     unitLabel: 'Agent',    baseRate: 5.00, tierRate: 3.50 },
+  nemt:         { type: 'perVehicle', unitLabel: 'Vehicle',  baseRate: 3.50 },
+  taxi:         { type: 'tiered',     unitLabel: 'Agent',    baseRate: 5.00, tierRate: 3.50 },
+  limo:         { type: 'tiered',     unitLabel: 'Agent',    baseRate: 5.00, tierRate: 3.50 },
 };
 
-// ── STATE ─────────────────────────────────────────────────────
-const state = { industry: null, vehicles: null };
-let currentPricing = {};
+const PLAN_DISCOUNT = { hourly: 0, monthly: 0.15, quarterly: 0.25 };
+const PLAN_LABEL    = { hourly: 'Pay As You Go', monthly: 'Monthly', quarterly: 'Quarterly' };
+const PLAN_HOURS    = { hourly: 1, monthly: 720, quarterly: 2160 };
 
-// ── FORMATTING ────────────────────────────────────────────────
-function fmt(n) {
-  return '$' + Math.round(n).toLocaleString('en-US');
+let currentPlan    = 'hourly';
+let activeIndustry = 'trucking';
+const quantities   = Object.fromEntries(Object.keys(INDUSTRIES).map(k => [k, 1]));
+
+function totalHourly(id, qty) {
+  const d = INDUSTRIES[id];
+  if (d.type === 'perVehicle' || d.type === 'broker') return d.baseRate * qty;
+  // tiered: first unit baseRate, rest tierRate
+  return qty === 1 ? d.baseRate : d.baseRate + (qty - 1) * d.tierRate;
 }
 
-// ── STEP NAV ──────────────────────────────────────────────────
-function showStep(n) {
-  document.getElementById('step-1').style.display = n === 1 ? 'block' : 'none';
-  document.getElementById('step-2').style.display = n === 2 ? 'block' : 'none';
-  document.getElementById('step-3').style.display = n === 3 ? 'block' : 'none';
+function fmt(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
-  ['dot-1','dot-2','dot-3'].forEach((id, i) => {
-    const dot = document.getElementById(id);
-    dot.classList.remove('active','done');
-    if (i + 1 < n) dot.classList.add('done');
-    if (i + 1 === n) dot.classList.add('active');
-  });
-  ['line-1','line-2'].forEach((id, i) => {
-    document.getElementById(id).classList.toggle('done', i + 1 < n);
-  });
-
-  const section = document.getElementById('pricing-wizard');
-  window.scrollTo({ top: section.offsetTop - 80, behavior: 'smooth' });
+function planFeatures(key) {
+  const base = ['Full-service back office team', 'Dedicated account manager', '24/7 support availability', 'No setup fee'];
+  if (key === 'monthly')   return [...base, 'Priority response SLA', '15% discount applied'];
+  if (key === 'quarterly') return [...base, 'Priority response SLA', 'Senior agent assigned', '25% discount applied'];
+  return [...base, 'Cancel any time', 'Zero commitment'];
 }
 
-// ── INDUSTRY SELECT ───────────────────────────────────────────
-function selectIndustry(key, el) {
-  state.industry = key;
-  document.querySelectorAll('.industry-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  setTimeout(() => showStep(2), 200);
-}
+function renderTiers(id) {
+  const def     = INDUSTRIES[id];
+  const qty     = quantities[id];
+  const tiersEl = document.getElementById('tiers-' + id);
+  const billEl  = document.getElementById('bill-' + id);
+  if (!tiersEl || !billEl) return;
 
-// ── VEHICLE SELECT ────────────────────────────────────────────
-function selectVehicles(n, el) {
-  state.vehicles = n;
-  document.querySelectorAll('.vehicle-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-  setTimeout(() => { buildPricingStep(); showStep(3); }, 200);
-}
+  const plans = [
+    { key: 'hourly',    label: 'Pay As You Go', savePct: 0,  popular: false },
+    { key: 'monthly',   label: 'Monthly',       savePct: 15, popular: true  },
+    { key: 'quarterly', label: 'Quarterly',     savePct: 25, popular: false },
+  ];
 
-// ── CALC ──────────────────────────────────────────────────────
-function calcPricing(v) {
-  let monthlyBase = 0, weeklyBase = 0;
-  if (v >= 1) { monthlyBase += RATE_V1 * HOURS_MONTH; weeklyBase += RATE_V1 * HOURS_WEEK; }
-  if (v >= 2) { monthlyBase += RATE_V2_3 * HOURS_MONTH; weeklyBase += RATE_V2_3 * HOURS_WEEK; }
-  if (v >= 3) { monthlyBase += RATE_V2_3 * HOURS_MONTH; weeklyBase += RATE_V2_3 * HOURS_WEEK; }
-  return {
-    weeklyBase,
-    monthlyBase,
-    monthlyDisc: monthlyBase * (1 - DISC_MONTHLY),
-    monthlySave: monthlyBase * DISC_MONTHLY,
-    qtrTotal:    monthlyBase * 3 * (1 - DISC_QTRLY),
-    qtrMonthly:  monthlyBase * (1 - DISC_QTRLY),
-    qtrSave:     monthlyBase * 3 * DISC_QTRLY,
-  };
-}
+  tiersEl.innerHTML = plans.map(function(p) {
+    var base  = totalHourly(id, qty);
+    var eff   = base * (1 - p.savePct / 100);
+    var isSel = currentPlan === p.key;
 
-// ── BUILD STEP 3 ──────────────────────────────────────────────
-function buildPricingStep() {
-  const ind = industries[state.industry];
-  const v   = state.vehicles;
+    var saveBadge = p.savePct > 0
+      ? '<div class="p-tier-save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SAVE ' + p.savePct + '%</div>'
+      : '';
 
-  // Summary bar
-  const vLabel = v === 4 ? '4+ vehicles' : v + ' vehicle' + (v > 1 ? 's' : '');
-  document.getElementById('pricing-summary').innerHTML = `
-    <div class="pricing-summary-item">
-      <span class="ps-label">Industry</span>
-      <span class="ps-value">${ind.icon} ${ind.name}</span>
-    </div>
-    <div class="pricing-summary-item">
-      <span class="ps-label">Fleet Size</span>
-      <span class="ps-value">${vLabel}</span>
-    </div>
-    <button class="ps-change-btn" onclick="showStep(1)">← Change selections</button>
-  `;
+    var totalsHtml = '';
+    if (p.key !== 'hourly') {
+      var hrs   = PLAN_HOURS[p.key];
+      var total = eff * hrs;
+      var saved = (base - eff) * hrs;
+      totalsHtml = '<div class="p-tier-total">Est. ' + p.label.toLowerCase() + ': <strong>' + fmt(total) + '</strong></div>'
+                 + '<div class="p-tier-saving-pill">You save: <strong>' + fmt(saved) + '</strong></div>';
+    } else {
+      totalsHtml = '<div class="p-tier-total">No commitment &#8212; billed per active hour</div>';
+    }
 
-  // Custom vs standard
-  const isCustom = v === 4;
-  document.getElementById('standard-pricing').style.display = isCustom ? 'none' : 'block';
-  document.getElementById('custom-pricing').style.display   = isCustom ? 'block' : 'none';
-  if (isCustom) return;
+    var commLine = def.commission ? '<div class="p-tier-commission">' + def.commission + '</div>' : '';
+    var feats    = planFeatures(p.key);
 
-  const p = calcPricing(v);
-  currentPricing = p;
+    return '<div class="p-tier-card' + (p.popular ? ' popular' : '') + (isSel ? ' selected' : '') + '"'
+         + ' onclick="selectPlan(\'' + p.key + '\',\'' + id + '\')">'
+         + '<div class="p-tier-period">' + p.label.toUpperCase() + '</div>'
+         + '<div class="p-tier-rate">' + fmt(eff) + '<span>/hr</span></div>'
+         + commLine + saveBadge + totalsHtml
+         + '<ul class="p-tier-feats">'
+         + feats.map(function(f) { return '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' + f + '</li>'; }).join('')
+         + '</ul></div>';
+  }).join('');
 
-  // Feature list HTML
-  const featureItems = ind.services.map(s => `
-    <li class="p-feature">
-      <div class="p-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-      ${s}
-    </li>`).join('');
+  // Bill bar
+  var base  = totalHourly(id, qty);
+  var eff   = base * (1 - PLAN_DISCOUNT[currentPlan]);
+  var hrs   = PLAN_HOURS[currentPlan];
+  var total = eff * hrs;
+  var saved = (base - eff) * hrs;
+  var qLabel = qty + ' ' + def.unitLabel + (qty !== 1 ? 's' : '');
 
-  // Load board notice
-  const lbTag = ind.loadBoard
-    ? `<div class="p-lb-note"><span class="p-lb-star">★</span><span>Load board access required — bring your own or we add $100/mo ($25/wk)</span></div>`
+  var savingsBox = saved > 0.01
+    ? '<div class="p-bill-savings-box"><div class="p-bill-savings-label">You\'re saving</div><div class="p-bill-savings-amount">' + fmt(saved) + '</div><div style="font-size:.68rem;color:rgba(255,255,255,.38);margin-top:2px">vs. pay-as-you-go</div></div>'
     : '';
 
-  // Cards
-  document.getElementById('pricing-cards-grid').innerHTML = `
+  var periodMap = { hourly: 'per active hour', monthly: 'est. per month (720 hrs)', quarterly: 'est. per quarter (2,160 hrs)' };
+  var commMeta  = def.commission ? '<div class="p-bill-meta">' + def.commission + '</div>' : '';
 
-    <!-- WEEKLY -->
-    <div class="p-card">
-      <div class="p-period">Weekly</div>
-      <div class="p-amount"><sup>$</sup>${Math.round(p.weeklyBase).toLocaleString()}<sub>/wk</sub></div>
-      <div class="p-sub">${vLabel} · 40 hrs/week</div>
-      <div class="p-billing">Invoiced every Friday · Due by Monday<br>Late payment = service paused</div>
-      <hr class="p-divider">
-      ${lbTag}
-      <div class="p-services-label">Covered services</div>
-      <ul class="p-features">${featureItems}</ul>
-      <button class="p-cta-btn cta-secondary" onclick="openModal('weekly')">Get Started with Weekly →</button>
-    </div>
-
-    <!-- MONTHLY (featured) -->
-    <div class="p-card featured">
-      <div class="p-badge">Best Value</div>
-      <div class="p-period">Monthly</div>
-      <div class="p-amount"><sup>$</sup>${Math.round(p.monthlyDisc).toLocaleString()}<sub>/mo</sub></div>
-      <div class="p-sub">${vLabel} · 176 hrs/month</div>
-      <div class="p-billing">Full month paid in advance · 15% discount</div>
-      <div class="p-save-pill">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Save ${fmt(p.monthlySave)}/month vs weekly rate
-      </div>
-      <hr class="p-divider">
-      ${lbTag.replace('p-lb-note', 'p-lb-note')}
-      <div class="p-services-label">Covered services</div>
-      <ul class="p-features">${featureItems}</ul>
-      <button class="p-cta-btn cta-primary" onclick="openModal('monthly')">Get Started with Monthly →</button>
-    </div>
-
-    <!-- QUARTERLY -->
-    <div class="p-card">
-      <div class="p-period">Quarterly</div>
-      <div class="p-amount"><sup>$</sup>${Math.round(p.qtrMonthly).toLocaleString()}<sub>/mo</sub></div>
-      <div class="p-sub">${fmt(p.qtrTotal)} billed once · 3 months</div>
-      <div class="p-billing">Full quarter paid in advance · 20% discount</div>
-      <div class="p-save-pill" style="background:rgba(34,197,94,0.1);color:#16a34a;">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Save ${fmt(p.qtrSave)} over 3 months
-      </div>
-      <hr class="p-divider">
-      ${lbTag}
-      <div class="p-services-label">Covered services</div>
-      <ul class="p-features">${featureItems}</ul>
-      <button class="p-cta-btn cta-secondary" onclick="openModal('quarterly')">Get Started with Quarterly →</button>
-    </div>
-  `;
-
-  // Notes
-  const stdNotes = [
-    '* 176 billable hours/month = 8 hrs/day × Mon–Fri. Weekends and major US public holidays are covered but not billed.',
-    '* Weekly plan: invoiced every Friday, payment due Monday. Non-payment by Monday results in service suspension without prior notice.',
-    '* Monthly and quarterly plans are pre-paid in full at the start of each cycle to secure your dedicated team slot.',
-    '* Pricing above is for back office labour only. Third-party software, tools, or subscriptions are not included unless stated.',
-  ];
-  const allNotes = [...stdNotes, ...ind.notes];
-  document.getElementById('pricing-notes-box').innerHTML = `
-    <div class="pricing-notes">
-      <div class="pricing-notes-title">Notes & Conditions</div>
-      ${allNotes.map(n => `<div class="pricing-note-item">${n}</div>`).join('')}
-    </div>
-  `;
+  billEl.innerHTML = '<div class="p-bill-bar">'
+    + '<div>'
+    + '<div class="p-bill-label">' + qLabel + ' &middot; ' + PLAN_LABEL[currentPlan] + '</div>'
+    + '<div class="p-bill-rate">' + fmt(eff) + '<span>/hr</span></div>'
+    + commMeta
+    + '<div class="p-bill-meta">Est. total: ' + fmt(total) + ' ' + periodMap[currentPlan] + '</div>'
+    + '</div>'
+    + savingsBox
+    + '<button class="p-bill-cta" onclick="openModal()">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Get Started'
+    + '</button></div>';
 }
 
-// ── MODAL ─────────────────────────────────────────────────────
-function openModal(planType) {
-  const ind  = state.industry ? industries[state.industry] : null;
-  const v    = state.vehicles;
-  const p    = currentPricing;
+function changeQty(id, delta, max) {
+  var newVal = quantities[id] + delta;
+  if (newVal < 1) return;
+  if (max && newVal > max) return;
+  quantities[id] = newVal;
+  document.getElementById('qty-' + id).textContent = newVal;
+  renderTiers(id);
+  syncModal();
+}
 
-  const indName = ind ? `${ind.icon} ${ind.name}` : 'Custom enquiry';
-  const vLabel  = v === 4 ? '4+ vehicles (custom)' : v ? `${v} vehicle${v > 1 ? 's' : ''}` : 'Not specified';
+function selectPlan(plan, id) {
+  currentPlan = plan;
+  document.querySelectorAll('.billing-toggle button').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.plan === plan);
+  });
+  positionPill();
+  renderTiers(id);
+  syncModal();
+}
 
-  let planLabel = '', previewHtml = '';
-  if (planType === 'weekly' && p.weeklyBase) {
-    planLabel   = `Weekly — ${fmt(p.weeklyBase)}/wk`;
-    previewHtml = `<strong>${indName}</strong> · ${vLabel} · <strong>${fmt(p.weeklyBase)}/week</strong> billed every Friday`;
-  } else if (planType === 'monthly' && p.monthlyDisc) {
-    planLabel   = `Monthly — ${fmt(p.monthlyDisc)}/mo (15% off)`;
-    previewHtml = `<strong>${indName}</strong> · ${vLabel} · <strong>${fmt(p.monthlyDisc)}/month</strong> paid in advance`;
-  } else if (planType === 'quarterly' && p.qtrTotal) {
-    planLabel   = `Quarterly — ${fmt(p.qtrTotal)} total (20% off)`;
-    previewHtml = `<strong>${indName}</strong> · ${vLabel} · <strong>${fmt(p.qtrTotal)}</strong> for 3 months`;
-  } else {
-    planLabel   = 'Custom Pricing';
-    previewHtml = `<strong>${indName}</strong> · ${vLabel} · Custom quote requested`;
+document.querySelectorAll('.billing-toggle button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.billing-toggle button').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentPlan = btn.dataset.plan;
+    positionPill();
+    renderTiers(activeIndustry);
+    syncModal();
+  });
+});
+
+function positionPill() {
+  var wrap   = document.getElementById('billingToggle');
+  var pill   = document.getElementById('togglePill');
+  var active = wrap.querySelector('button.active');
+  if (!active) return;
+  pill.style.width     = active.offsetWidth + 'px';
+  pill.style.transform = 'translateX(' + (active.offsetLeft - 4) + 'px)';
+}
+
+document.querySelectorAll('.itab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.itab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    activeIndustry = tab.dataset.industry;
+    document.querySelectorAll('.p-panel').forEach(function(p) { p.classList.remove('visible'); });
+    document.getElementById('panel-' + activeIndustry).classList.add('visible');
+    renderTiers(activeIndustry);
+    tab.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+  });
+});
+
+function openModal()  { syncModal(); document.getElementById('modalBackdrop').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal() { document.getElementById('modalBackdrop').classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('modalBackdrop').addEventListener('click', function(e) { if (e.target === document.getElementById('modalBackdrop')) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+var INDUSTRY_LABELS = {
+  trucking: 'Trucking Back Office', broker: 'Freight Broker Support', tow: 'Tow Truck Dispatch',
+  carhauler: 'Car Hauler Operations', animalhauler: 'Animal Hauler Operations', dump: 'Dump Truck Back Office',
+  sprinter: 'Sprinter / Cargo Van', moving: 'Moving Company Support', afterhours: 'After-Hours Coverage',
+  nemt: 'NEMT Billing & Dispatch', taxi: 'Taxi Fleet Management', limo: 'Limo & Black Car',
+};
+
+function syncModal() {
+  var qty  = quantities[activeIndustry];
+  var def  = INDUSTRIES[activeIndustry];
+  var unit = qty + ' ' + def.unitLabel + (qty !== 1 ? 's' : '');
+  document.getElementById('modalSummaryText').textContent =
+    INDUSTRY_LABELS[activeIndustry] + ' \u2014 ' + unit + ' \u2014 ' + PLAN_LABEL[currentPlan];
+  document.getElementById('f-industry').value = activeIndustry;
+  document.getElementById('f-qty').value      = qty;
+  document.getElementById('f-plan').value     = currentPlan;
+  document.getElementById('f-qty-label').textContent = 'Number of ' + def.unitLabel + 's';
+}
+
+function onModalIndustryChange() {
+  var sel = document.getElementById('f-industry').value;
+  var def = INDUSTRIES[sel] || INDUSTRIES.trucking;
+  document.getElementById('f-qty-label').textContent = 'Number of ' + def.unitLabel + 's';
+}
+
+function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
+
+/* Google Form submission
+   Replace YOUR_FORM_ID and entry.XXXXXXXX values with your actual Google Form IDs */
+function submitForm() {
+  var fname   = document.getElementById('f-fname').value.trim();
+  var lname   = document.getElementById('f-lname').value.trim();
+  var email   = document.getElementById('f-email').value.trim();
+  var company = document.getElementById('f-company').value.trim();
+  if (!fname || !lname || !email || !company) {
+    alert('Please fill in all required fields (marked *).');
+    return;
   }
 
-  document.getElementById('h-industry').value  = indName;
-  document.getElementById('h-vehicles').value  = vLabel;
-  document.getElementById('h-plan').value       = planLabel;
-  document.getElementById('modal-plan-preview').innerHTML = `📋 Your selection: ${previewHtml}`;
+  var FORM_ACTION = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+  var data = {
+    'entry.FIRST_NAME':  fname,
+    'entry.LAST_NAME':   lname,
+    'entry.EMAIL':       email,
+    'entry.PHONE':       document.getElementById('f-phone').value.trim(),
+    'entry.COMPANY':     company,
+    'entry.STATE':       document.getElementById('f-state').value.trim(),
+    'entry.YEARS':       document.getElementById('f-years').value,
+    'entry.INDUSTRY':    document.getElementById('f-industry').value,
+    'entry.QTY':         document.getElementById('f-qty').value,
+    'entry.PLAN':        document.getElementById('f-plan').value,
+    'entry.MESSAGE':     document.getElementById('f-message').value.trim(),
+  };
 
-  document.getElementById('modal-form-wrap').style.display = 'block';
-  document.getElementById('modal-success').style.display   = 'none';
-  document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  var iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.name = 'gf-iframe';
+  document.body.appendChild(iframe);
+  var form = document.createElement('form');
+  form.action = FORM_ACTION;
+  form.method = 'POST';
+  form.target = 'gf-iframe';
+  Object.keys(data).forEach(function(k) {
+    var inp = document.createElement('input');
+    inp.type = 'hidden'; inp.name = k; inp.value = data[k];
+    form.appendChild(inp);
+  });
+  document.body.appendChild(form);
+  form.submit();
+
+  document.getElementById('modalFormBody').innerHTML =
+    '<div style="text-align:center;padding:52px 20px;">'
+    + '<div style="width:60px;height:60px;background:#f5ead6;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">'
+    + '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a0813c" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>'
+    + '<h3 style="font-size:1.3rem;font-weight:800;letter-spacing:-.02em;color:#1c2033;margin-bottom:10px;">You\'re on your way.</h3>'
+    + '<p style="color:#6b7280;font-size:.88rem;line-height:1.72;max-width:340px;margin:0 auto;">'
+    + 'Assessment request received. Our team will reach out within <strong style="color:#1c2033">4 business hours</strong> to schedule your onboarding call.</p></div>';
+  document.querySelector('.p-modal-footer').style.display = 'none';
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
-}
-
-function handleModalSubmit(e) {
-  e.preventDefault();
-  // Submit to Google Forms here once you wire it up
-  // For now, show success state
-  document.getElementById('modal-form-wrap').style.display = 'none';
-  document.getElementById('modal-success').style.display   = 'block';
-  setTimeout(closeModal, 5000);
-}
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
+// Init
+Object.keys(INDUSTRIES).forEach(function(id) { renderTiers(id); });
+window.addEventListener('load', function() { positionPill(); setTimeout(positionPill, 200); });
+window.addEventListener('resize', positionPill);
 </script>
 </body>
 </html>
