@@ -1,3 +1,7 @@
+// Detect if we're in a subfolder
+const isSubfolder = window.location.pathname.includes('/services/');
+const base = isSubfolder ? '../' : '';
+
 // ── FAVICON ──────────────────────────────────────
 (function() {
   var base = window.location.pathname.includes('/services/') ? '../' : '';
@@ -7,10 +11,21 @@
   link.href = base + 'images/favicon.png';
   document.head.appendChild(link);
 })();
-// Detect if we're in a subfolder
-const isSubfolder = window.location.pathname.includes('/services/');
-const base = isSubfolder ? '../' : '';
-
+// ── PRELOADER ─────────────────────────────────────
+(function() {
+  var preloader = document.createElement('div');
+  preloader.id = 'preloader';
+  preloader.setAttribute('role', 'status');
+  preloader.setAttribute('aria-label', 'Loading');
+  preloader.innerHTML =
+    '<div class="preloader-logo-mark">' +
+      '<div class="preloader-word">Haul<span>xify</span></div>' +
+    '</div>' +
+    '<div class="preloader-bar-wrap">' +
+      '<div class="preloader-bar-fill"></div>' +
+    '</div>';
+  document.body.insertBefore(preloader, document.body.firstChild);
+})();
 async function loadInclude(id, file) {
   try {
     const res = await fetch(base + file);
