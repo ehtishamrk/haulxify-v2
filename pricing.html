@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing — Back Office for Transport Companies | Haulxify</title>
-  <meta name="description" content="Starting at $3.50 per vehicle per day. No long-term contracts. No setup fees. 75% less than US back office staff. See Haulxify pricing plans for every fleet size.">
+  <title>Pricing — Industry-Specific Back Office for Transport | Haulxify</title>
+  <meta name="description" content="$5/hr for your first vehicle, $3.50/hr from your second. Industry-specific back office pricing for trucking, NEMT, tow truck, car hauler, limo, and more. No contracts.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -14,211 +14,919 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/services.css">
   <style>
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-    .pricing-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-xl); padding: 40px 36px; position: relative; transition: all 0.35s var(--ease-out); }
-    .pricing-card.featured { border-color: var(--brand-orange); background: var(--brand-navy); }
-    .pricing-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
-    .pricing-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--brand-orange); color: var(--white); font-family: var(--font-display); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 16px; border-radius: 100px; white-space: nowrap; }
-    .pricing-label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
-    .pricing-card.featured .pricing-label { color: rgba(255,255,255,0.5); }
-    .pricing-card-name { font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 8px; letter-spacing: -0.02em; }
-    .pricing-card.featured .pricing-card-name { color: var(--white); }
-    .pricing-card-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
-    .pricing-card.featured .pricing-card-desc { color: rgba(255,255,255,0.6); }
-    .pricing-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
-    .pricing-amount { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.05em; line-height: 1; }
-    .pricing-card.featured .pricing-amount { color: var(--brand-orange); }
-    .pricing-period { font-size: 0.875rem; color: var(--text-muted); font-weight: 500; }
-    .pricing-card.featured .pricing-period { color: rgba(255,255,255,0.5); }
-    .pricing-sub { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 32px; }
-    .pricing-card.featured .pricing-sub { color: rgba(255,255,255,0.5); }
-    .pricing-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 24px; }
-    .pricing-card.featured .pricing-divider { border-color: rgba(255,255,255,0.12); }
-    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-    .pricing-feature { display: flex; gap: 12px; align-items: flex-start; font-size: 0.875rem; color: var(--text-body); line-height: 1.5; }
-    .pricing-card.featured .pricing-feature { color: rgba(255,255,255,0.8); }
-    .pricing-feature-check { width: 18px; height: 18px; border-radius: 50%; background: var(--orange-glow); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-    .pricing-card.featured .pricing-feature-check { background: rgba(232,119,34,0.2); }
-    .pricing-feature-check svg { width: 9px; height: 9px; color: var(--brand-orange); }
-    .pricing-cta { display: block; text-align: center; padding: 14px 24px; border-radius: var(--radius-sm); font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none; transition: all 0.25s; }
-    .pricing-cta-primary { background: var(--brand-orange); color: var(--white); }
-    .pricing-cta-primary:hover { background: #cf6a1e; }
-    .pricing-cta-secondary { background: var(--off-white); color: var(--brand-navy); border: 1px solid var(--border); }
-    .pricing-cta-secondary:hover { background: var(--white); border-color: var(--brand-navy); }
-    .pricing-cta-ghost { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
-    .pricing-cta-ghost:hover { background: rgba(255,255,255,0.15); }
-    .pricing-note { text-align: center; margin-top: 32px; font-size: 0.8125rem; color: var(--text-muted); }
+
+    /* ── WIZARD WRAPPER ─────────────────────────────── */
+    .pricing-wizard-section { background: var(--off-white); padding: 80px 0 100px; }
+
+    /* ── STEP INDICATOR ─────────────────────────────── */
+    .step-indicator { display: flex; align-items: center; justify-content: center; margin-bottom: 56px; }
+    .step-dot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .step-dot-circle {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--white); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.8125rem; font-weight: 800;
+      color: var(--text-muted); transition: all 0.3s;
+    }
+    .step-dot.active .step-dot-circle { background: var(--brand-orange); border-color: var(--brand-orange); color: var(--white); }
+    .step-dot.done .step-dot-circle { background: var(--brand-navy); border-color: var(--brand-navy); color: var(--white); }
+    .step-dot-label { font-size: 0.6875rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
+    .step-dot.active .step-dot-label, .step-dot.done .step-dot-label { color: var(--brand-navy); }
+    .step-line { width: 80px; height: 2px; background: var(--border); margin: 0 10px; margin-bottom: 22px; transition: background 0.3s; flex-shrink: 0; }
+    .step-line.done { background: var(--brand-navy); }
+
+    /* ── STEP HEADER ────────────────────────────────── */
+    .step-header { text-align: center; margin-bottom: 40px; }
+    .step-header h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; margin-bottom: 8px; }
+    .step-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── INDUSTRY GRID ───────────────────────────────── */
+    .industry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .industry-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px 16px;
+      cursor: pointer; transition: all 0.22s; text-align: center;
+      user-select: none;
+    }
+    .industry-card:hover { border-color: var(--brand-orange); box-shadow: 0 4px 20px rgba(232,119,34,0.13); transform: translateY(-2px); }
+    .industry-card.selected { border-color: var(--brand-orange); background: var(--orange-glow); }
+    .industry-icon { font-size: 1.875rem; margin-bottom: 10px; line-height: 1; display: block; }
+    .industry-name { font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); line-height: 1.35; }
+
+    /* ── BACK BUTTON ─────────────────────────────────── */
+    .back-btn {
+      background: none; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 40px; padding: 0; transition: color 0.2s; font-family: inherit;
+    }
+    .back-btn:hover { color: var(--brand-navy); }
+
+    /* ── VEHICLE SELECTOR ───────────────────────────── */
+    .vehicle-selector { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .vehicle-btn {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px 36px;
+      cursor: pointer; transition: all 0.22s; text-align: center;
+      min-width: 150px; font-family: inherit;
+    }
+    .vehicle-btn:hover { border-color: var(--brand-orange); box-shadow: 0 4px 20px rgba(232,119,34,0.13); }
+    .vehicle-btn.selected { border-color: var(--brand-orange); background: var(--orange-glow); }
+    .vehicle-btn-num { font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--brand-navy); line-height: 1; margin-bottom: 6px; }
+    .vehicle-btn.selected .vehicle-btn-num { color: var(--brand-orange); }
+    .vehicle-btn-label { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); }
+    .vehicle-hint { text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: 16px; }
+
+    /* ── SUMMARY BAR ─────────────────────────────────── */
+    .pricing-summary {
+      background: var(--brand-navy); border-radius: var(--radius-lg);
+      padding: 18px 28px; margin-bottom: 40px;
+      display: flex; flex-wrap: wrap; gap: 10px 32px; align-items: center;
+    }
+    .pricing-summary-item { display: flex; flex-direction: column; gap: 2px; }
+    .ps-label { font-size: 0.6875rem; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; }
+    .ps-value { font-size: 0.9375rem; font-weight: 700; color: var(--white); }
+    .ps-value span { color: var(--brand-orange); }
+    .ps-change-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px;
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6);
+      padding: 5px 14px; font-family: inherit; transition: all 0.2s; margin-left: auto;
+    }
+    .ps-change-btn:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+
+    /* ── PRICING CARDS ───────────────────────────────── */
+    .pricing-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    .p-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius-xl); padding: 36px 30px;
+      position: relative; transition: all 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .p-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
+    .p-card.featured { background: var(--brand-navy); border-color: var(--brand-orange); }
+    .p-badge {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--brand-orange); color: var(--white);
+      font-family: var(--font-display); font-size: 0.6875rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 100px; white-space: nowrap;
+    }
+    .p-period { font-family: var(--font-display); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .p-card.featured .p-period { color: rgba(255,255,255,0.45); }
+    .p-amount { font-family: var(--font-display); font-size: 2.875rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.05em; line-height: 1; }
+    .p-amount sup { font-size: 1.25rem; vertical-align: super; letter-spacing: 0; }
+    .p-amount sub { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
+    .p-card.featured .p-amount { color: var(--brand-orange); }
+    .p-sub { font-size: 0.8125rem; color: var(--text-muted); margin: 4px 0 4px; }
+    .p-card.featured .p-sub { color: rgba(255,255,255,0.45); }
+    .p-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+    .p-card.featured .p-billing { color: rgba(255,255,255,0.4); }
+    .p-save-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(34,197,94,0.1); color: #16a34a;
+      font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .p-divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+    .p-card.featured .p-divider { border-color: rgba(255,255,255,0.1); }
+    .p-lb-note {
+      display: flex; gap: 9px; align-items: flex-start;
+      padding: 9px 12px; border-radius: 8px; margin-bottom: 14px;
+      background: rgba(232,119,34,0.07); font-size: 0.79rem; color: var(--text-body); line-height: 1.5;
+    }
+    .p-card.featured .p-lb-note { background: rgba(232,119,34,0.12); color: rgba(255,255,255,0.65); }
+    .p-lb-star { color: var(--brand-orange); flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+    .p-services-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .p-card.featured .p-services-label { color: rgba(255,255,255,0.35); }
+    .p-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; flex: 1; }
+    .p-feature { display: flex; gap: 9px; align-items: flex-start; font-size: 0.8375rem; color: var(--text-body); line-height: 1.45; }
+    .p-card.featured .p-feature { color: rgba(255,255,255,0.72); }
+    .p-check {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--orange-glow); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .p-card.featured .p-check { background: rgba(232,119,34,0.2); }
+    .p-check svg { width: 8px; height: 8px; color: var(--brand-orange); }
+    .p-cta-btn {
+      display: block; text-align: center; padding: 13px 20px;
+      border-radius: var(--radius-sm); font-family: var(--font-display);
+      font-size: 0.875rem; font-weight: 700; letter-spacing: 0.02em;
+      cursor: pointer; border: none; width: 100%; transition: all 0.25s;
+      text-decoration: none; margin-top: auto;
+    }
+    .cta-primary { background: var(--brand-orange); color: var(--white); }
+    .cta-primary:hover { background: #cf6a1e; }
+    .cta-secondary { background: var(--off-white); color: var(--brand-navy); border: 1.5px solid var(--border); }
+    .cta-secondary:hover { background: var(--white); border-color: var(--brand-navy); }
+    .cta-ghost { background: rgba(255,255,255,0.07); color: var(--white); border: 1px solid rgba(255,255,255,0.18); }
+    .cta-ghost:hover { background: rgba(255,255,255,0.14); }
+
+    /* ── NOTES BOX ───────────────────────────────────── */
+    .pricing-notes {
+      margin-top: 28px; background: var(--white);
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 22px 26px;
+    }
+    .pricing-notes-title { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .pricing-note-item { font-size: 0.8125rem; color: var(--text-body); line-height: 1.7; margin-bottom: 5px; }
+    .pricing-note-item:last-child { margin-bottom: 0; }
+
+    /* ── CUSTOM PRICING BOX ─────────────────────────── */
+    .custom-pricing-box {
+      background: var(--brand-navy); border-radius: var(--radius-xl);
+      padding: 56px 48px; text-align: center;
+    }
+    .custom-pricing-box h3 { font-size: clamp(1.375rem, 2.5vw, 1.875rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 14px; }
+    .custom-pricing-box p { color: rgba(255,255,255,0.6); font-size: 0.9375rem; line-height: 1.75; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* ── PRICING CARDS HEADER ───────────────────────── */
+    .p-cards-header { text-align: center; margin-bottom: 0; }
+    .p-cards-header h2 { font-size: clamp(1.375rem, 2.5vw, 2rem); font-weight: 800; color: var(--brand-navy); letter-spacing: -0.03em; margin-bottom: 6px; }
+    .p-cards-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* ── FAQ ─────────────────────────────────────────── */
     .faq-section-pricing { background: var(--off-white); padding: var(--section-padding) 0; }
-    .compare-table { width: 100%; border-collapse: collapse; margin-top: 48px; }
-    .compare-table th, .compare-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
-    .compare-table th { font-family: var(--font-display); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); background: var(--off-white); }
-    .compare-table th:not(:first-child) { text-align: center; }
-    .compare-table td:not(:first-child) { text-align: center; }
-    .compare-table td:first-child { color: var(--brand-navy); font-weight: 500; }
-    .compare-table tr:hover td { background: rgba(232,119,34,0.03); }
-    .check-cell { color: var(--brand-orange); font-size: 1rem; font-weight: 700; }
-    .dash-cell { color: var(--border); }
-    .highlight-col { background: rgba(232,119,34,0.04); }
-    @media (max-width: 1024px) { .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } .compare-table { display: none; } }
+
+    /* ── MODAL ───────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(10,20,40,0.65);
+      backdrop-filter: blur(6px); z-index: 9999;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: var(--white); border-radius: var(--radius-xl);
+      padding: 40px 36px; width: 100%; max-width: 520px;
+      max-height: 90vh; overflow-y: auto; position: relative;
+      transform: translateY(20px); transition: transform 0.3s;
+    }
+    .modal-overlay.open .modal-box { transform: translateY(0); }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--off-white); border: none; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--border); }
+    .modal-title { font-family: var(--font-display); font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); letter-spacing: -0.02em; margin-bottom: 6px; }
+    .modal-sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 26px; line-height: 1.6; }
+    .modal-form-group { margin-bottom: 16px; }
+    .modal-label { font-size: 0.8125rem; font-weight: 600; color: var(--brand-navy); margin-bottom: 5px; display: block; }
+    .modal-input, .modal-select, .modal-textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); font-size: 0.875rem; color: var(--brand-navy);
+      background: var(--white); transition: border-color 0.2s;
+      font-family: inherit; box-sizing: border-box;
+    }
+    .modal-input:focus, .modal-select:focus, .modal-textarea:focus { outline: none; border-color: var(--brand-orange); }
+    .modal-input[readonly] { background: var(--off-white); color: var(--text-muted); cursor: default; }
+    .modal-textarea { resize: vertical; min-height: 80px; }
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-submit {
+      width: 100%; padding: 14px; background: var(--brand-orange); color: var(--white);
+      border: none; border-radius: var(--radius-sm); font-family: var(--font-display);
+      font-size: 0.9375rem; font-weight: 700; cursor: pointer; letter-spacing: 0.02em;
+      transition: background 0.25s; margin-top: 8px;
+    }
+    .modal-submit:hover { background: #cf6a1e; }
+    .modal-disclaimer { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 10px; line-height: 1.6; }
+    .modal-plan-preview {
+      background: var(--orange-glow); border: 1px solid rgba(232,119,34,0.2);
+      border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 20px;
+      font-size: 0.8125rem; color: var(--brand-navy); line-height: 1.6;
+    }
+    .modal-plan-preview strong { font-weight: 700; color: var(--brand-orange); }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .industry-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .industry-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-cards-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+      .step-line { width: 48px; }
+    }
+    @media (max-width: 600px) {
+      .vehicle-btn { min-width: 110px; padding: 22px 24px; }
+      .modal-row { grid-template-columns: 1fr; }
+      .modal-box { padding: 28px 20px; }
+      .custom-pricing-box { padding: 40px 24px; }
+      .step-line { width: 28px; }
+    }
+    @media (max-width: 480px) {
+      .industry-grid { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
 
- <div id="nav-include"></div>
-  <!-- HERO -->
-  <section class="page-hero">
-    <div class="container">
-<div class="page-hero-inner">
-<div class="breadcrumb">
-          <a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Pricing</span>
-        </div>
-        <div class="page-hero-tag">Transparent Pricing</div>
-        <h1>As low as <span>$3.50</span><br>per vehicle.</h1>
-        <p>No long-term contracts. No setup fees. No hidden costs. Cancel anytime. Pricing scales with your fleet — so whether you run one truck or a hundred, you always pay proportionally.</p>
+<div id="nav-include"></div>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Pricing</span>
+      </div>
+      <div class="page-hero-tag">Transparent, Industry-Specific Pricing</div>
+      <h1>Back office pricing built<br><span>for your industry.</span></h1>
+      <p>$5/hr for your first vehicle. $3.50/hr from the second. 176 billable hours a month — weekends and major holidays are on us. Pick weekly, monthly, or quarterly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING WIZARD ─────────────────────────────────────────── -->
+<section class="pricing-wizard-section" id="pricing-wizard">
+  <div class="container">
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot-1">
+        <div class="step-dot-circle">1</div>
+        <div class="step-dot-label">Industry</div>
+      </div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2">
+        <div class="step-dot-circle">2</div>
+        <div class="step-dot-label">Fleet Size</div>
+      </div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3">
+        <div class="step-dot-circle">3</div>
+        <div class="step-dot-label">Your Pricing</div>
       </div>
     </div>
-  </section>
 
-  <!-- PRICING CARDS -->
-  <section class="section" style="background: var(--off-white); padding-top: 80px; padding-bottom: 80px;">
-    <div class="container">
-      <div class="pricing-grid reveal">
+    <!-- ── STEP 1: Industry ── -->
+    <div id="step-1">
+      <div class="step-header">
+        <h2>What industry are you in?</h2>
+        <p>Select your transport sector to see services and pricing tailored to your operation.</p>
+      </div>
+      <div class="industry-grid">
+        <div class="industry-card" onclick="selectIndustry('trucking', this)"><span class="industry-icon">🚛</span><div class="industry-name">Trucking / OTR Freight</div></div>
+        <div class="industry-card" onclick="selectIndustry('freight_broker', this)"><span class="industry-icon">🤝</span><div class="industry-name">Freight Broker Support</div></div>
+        <div class="industry-card" onclick="selectIndustry('tow_truck', this)"><span class="industry-icon">🔧</span><div class="industry-name">Tow Truck & Roadside</div></div>
+        <div class="industry-card" onclick="selectIndustry('car_hauler', this)"><span class="industry-icon">🚗</span><div class="industry-name">Car Hauler Operations</div></div>
+        <div class="industry-card" onclick="selectIndustry('nemt', this)"><span class="industry-icon">🏥</span><div class="industry-name">NEMT Billing & Dispatch</div></div>
+        <div class="industry-card" onclick="selectIndustry('limo', this)"><span class="industry-icon">🚘</span><div class="industry-name">Limo & Black Car</div></div>
+        <div class="industry-card" onclick="selectIndustry('hotshot', this)"><span class="industry-icon">⚡</span><div class="industry-name">Hotshot / Expedite</div></div>
+        <div class="industry-card" onclick="selectIndustry('moving', this)"><span class="industry-icon">📦</span><div class="industry-name">Moving Companies</div></div>
+        <div class="industry-card" onclick="selectIndustry('box_truck', this)"><span class="industry-icon">📬</span><div class="industry-name">Box Truck / Last Mile</div></div>
+        <div class="industry-card" onclick="selectIndustry('tanker', this)"><span class="industry-icon">⚙️</span><div class="industry-name">Tanker / Specialized</div></div>
+        <div class="industry-card" onclick="selectIndustry('school_charter', this)"><span class="industry-icon">🚌</span><div class="industry-name">School Bus & Charter</div></div>
+        <div class="industry-card" onclick="selectIndustry('airport_shuttle', this)"><span class="industry-icon">✈️</span><div class="industry-name">Airport Shuttle & Taxi</div></div>
+      </div>
+    </div>
 
-        <!-- STARTER -->
-        <div class="pricing-card">
-          <div class="pricing-label">For Solo Operators</div>
-          <div class="pricing-card-name">Starter</div>
-          <div class="pricing-card-desc">For owner-operators and small fleets who need professional back office without the overhead.</div>
-          <div class="pricing-price">
-            <div class="pricing-amount">$5</div>
-            <div class="pricing-period">/ vehicle / day</div>
+    <!-- ── STEP 2: Vehicles ── -->
+    <div id="step-2" style="display:none;">
+      <button class="back-btn" onclick="showStep(1)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Industries
+      </button>
+      <div class="step-header">
+        <h2>How many vehicles do you operate?</h2>
+        <p>Your first vehicle is <strong>$5/hr</strong>. Your 2nd and 3rd are <strong>$3.50/hr</strong>. 4 or more gets custom bulk pricing.</p>
+      </div>
+      <div class="vehicle-selector">
+        <button class="vehicle-btn" onclick="selectVehicles(1, this)">
+          <div class="vehicle-btn-num">1</div>
+          <div class="vehicle-btn-label">Vehicle</div>
+        </button>
+        <button class="vehicle-btn" onclick="selectVehicles(2, this)">
+          <div class="vehicle-btn-num">2</div>
+          <div class="vehicle-btn-label">Vehicles</div>
+        </button>
+        <button class="vehicle-btn" onclick="selectVehicles(3, this)">
+          <div class="vehicle-btn-num">3</div>
+          <div class="vehicle-btn-label">Vehicles</div>
+        </button>
+        <button class="vehicle-btn" onclick="selectVehicles(4, this)">
+          <div class="vehicle-btn-num">4+</div>
+          <div class="vehicle-btn-label">Vehicles</div>
+        </button>
+      </div>
+      <p class="vehicle-hint">176 billable hours/month · 8 hrs/day Mon–Fri · Weekends & holidays free</p>
+    </div>
+
+    <!-- ── STEP 3: Pricing ── -->
+    <div id="step-3" style="display:none;">
+      <button class="back-btn" onclick="showStep(2)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Change Fleet Size
+      </button>
+
+      <!-- Summary bar -->
+      <div class="pricing-summary" id="pricing-summary"></div>
+
+      <!-- Standard pricing (1–3 vehicles) -->
+      <div id="standard-pricing">
+        <div class="p-cards-header">
+          <span class="eyebrow" style="display:inline-flex;margin-bottom:8px;">Choose Your Billing Cycle</span>
+          <h2>Same services. You pick the cadence.</h2>
+          <p>All three plans cover identical services — the difference is billing frequency and the discount you unlock.</p>
+        </div>
+        <div class="pricing-cards-grid" id="pricing-cards-grid"></div>
+        <div id="pricing-notes-box"></div>
+      </div>
+
+      <!-- Custom pricing (4+ vehicles) -->
+      <div id="custom-pricing" style="display:none;">
+        <div class="custom-pricing-box">
+          <h3>Custom pricing for fleets of 4 or more.</h3>
+          <p>Large fleets get a dedicated back office team and volume rates we tailor to your operation. Tell us your numbers and we'll return a custom proposal — usually within 24 hours.</p>
+          <button class="btn btn-primary btn-lg" onclick="openModal('custom')">Request a Custom Quote →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────────────── -->
+<section class="faq-section-pricing">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="eyebrow">Pricing Questions</span>
+      <h2>Common questions about how we bill</h2>
+    </div>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <div class="faq-question">How are the 176 monthly hours calculated?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">We bill 8 standard hours per weekday, Monday through Friday. A typical month has 22 working days × 8 hours = 176 hours. Weekends and major US public holidays are included in your plan at no extra charge — your team is available, but you're not billed for those hours.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How does weekly billing work?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">We work Monday through Friday. Your invoice is issued every Friday for that week's work (40 hours). Payment is due by the following Monday. If payment is not received by Monday morning, services are paused until the balance is cleared. This policy keeps things fair for the entire operation — no exceptions.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Why do monthly and quarterly plans require advance payment?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Pre-payment is what allows us to offer the 15% and 20% discounts. When you commit upfront, we commit dedicated team slots upfront. We staff your account from day one — advance payment ensures we can do that without risk on either side. Think of it as a retainer, not a deposit.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What does the load board fee cover?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Services like trucking dispatch, freight brokerage, hotshot, and car hauling require access to a load board (DAT, Truckstop.io, Central Dispatch, etc.) to source and post loads. If you already have a subscription, you simply share access with your Haulxify team — no extra charge. If you don't, we add $100/month or $25/week to your bill to cover it.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What if my fleet grows or shrinks?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Notify us and we adjust. Weekly clients: changes take effect the following week. Monthly and quarterly clients: we adjust at the next billing cycle and credit or invoice the difference. Seasonal operators scale up and down all the time — we handle it without penalties.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Are there setup fees or long-term contracts?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">No setup fees. No long-term contracts. Weekly clients can stop with one week's notice. Monthly and quarterly plans are pre-paid for that period — when the period ends, you renew or walk away. We earn your continued business every cycle, not through contractual lock-in.</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── BOTTOM CTA ─────────────────────────────────────────────── -->
+<section style="background: var(--brand-navy); padding: 80px 0;">
+  <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
+    <h2 style="font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight:800; color:var(--white); letter-spacing:-0.03em; margin-bottom:16px; line-height:1.15;">Not sure which plan fits?<br>Let's figure it out together.</h2>
+    <p style="color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 32px; font-size: 1rem;">Tell us your industry, fleet size, and how your operation runs. We'll recommend the right plan — or build a custom one that fits.</p>
+    <button class="btn btn-primary btn-lg" onclick="openModal('custom')">Get a Custom Quote →</button>
+  </div>
+</section>
+
+<div id="footer-include"></div>
+
+<!-- ── MODAL ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- Form -->
+    <div id="modal-form-wrap">
+      <div class="modal-title">Get Started with Haulxify</div>
+      <div class="modal-sub">Fill in your details and we'll reach out within a few hours to confirm your plan and get your team set up.</div>
+
+      <div class="modal-plan-preview" id="modal-plan-preview"></div>
+
+      <form id="modal-form" onsubmit="handleModalSubmit(event)">
+        <!-- Hidden pre-filled fields -->
+        <input type="hidden" id="h-industry" name="entry.industry">
+        <input type="hidden" id="h-vehicles" name="entry.vehicles">
+        <input type="hidden" id="h-plan" name="entry.plan">
+
+        <div class="modal-row">
+          <div class="modal-form-group">
+            <label class="modal-label">First Name *</label>
+            <input type="text" class="modal-input" name="entry.firstName" placeholder="John" required>
           </div>
-          <div class="pricing-sub">First vehicle. Billed monthly.</div>
-          <hr class="pricing-divider">
-          <ul class="pricing-features">
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Dispatch management</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>BOL & document processing</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Invoice generation & collections</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Monthly bookkeeping</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Email & chat support</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>No contracts. Cancel anytime.</li>
-          </ul>
-          <a href="contact.html" class="pricing-cta pricing-cta-secondary">Get Started</a>
-        </div>
-
-        <!-- GROWTH (FEATURED) -->
-        <div class="pricing-card featured">
-          <div class="pricing-badge">Most Popular</div>
-          <div class="pricing-label">For Growing Fleets</div>
-          <div class="pricing-card-name">Growth</div>
-          <div class="pricing-card-desc">For fleets of 2–20 vehicles ready to scale without adding headcount for every new truck.</div>
-          <div class="pricing-price">
-            <div class="pricing-amount">$3.50</div>
-            <div class="pricing-period">/ vehicle / day</div>
+          <div class="modal-form-group">
+            <label class="modal-label">Last Name *</label>
+            <input type="text" class="modal-input" name="entry.lastName" placeholder="Smith" required>
           </div>
-          <div class="pricing-sub">Vehicles 2+. Billed monthly.</div>
-          <hr class="pricing-divider">
-          <ul class="pricing-features">
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Everything in Starter</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Driver hiring & onboarding</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>IFTA filing & compliance support</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>After-hours dispatch coverage</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Route optimization support</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Dedicated account manager</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Priority phone & email support</li>
-          </ul>
-          <a href="contact.html" class="pricing-cta pricing-cta-primary">Get Started</a>
         </div>
-
-        <!-- ENTERPRISE -->
-        <div class="pricing-card">
-          <div class="pricing-label">For Large Fleets</div>
-          <div class="pricing-card-name">Enterprise</div>
-          <div class="pricing-card-desc">For fleets of 20+ vehicles or businesses with complex, multi-service back office requirements.</div>
-          <div class="pricing-price">
-            <div class="pricing-amount" style="font-size: 2rem; padding-top: 8px;">Custom</div>
-          </div>
-          <div class="pricing-sub">Tailored to your fleet and operations.</div>
-          <hr class="pricing-divider">
-          <ul class="pricing-features">
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Everything in Growth</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Dedicated back office team</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full HR & payroll support</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Custom reporting & KPI dashboards</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Multi-industry support</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>SLA guarantees</li>
-            <li class="pricing-feature"><div class="pricing-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Direct executive access</li>
-          </ul>
-          <a href="contact.html" class="pricing-cta pricing-cta-secondary">Contact Sales</a>
+        <div class="modal-form-group">
+          <label class="modal-label">Email Address *</label>
+          <input type="email" class="modal-input" name="entry.email" placeholder="you@company.com" required>
         </div>
-
-      </div>
-      <p class="pricing-note">All plans include a free 30-minute onboarding call. No credit card required to start the conversation.</p>
+        <div class="modal-form-group">
+          <label class="modal-label">Phone / WhatsApp</label>
+          <input type="tel" class="modal-input" name="entry.phone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="modal-form-group">
+          <label class="modal-label">Company Name</label>
+          <input type="text" class="modal-input" name="entry.company" placeholder="Your company name">
+        </div>
+        <div class="modal-form-group">
+          <label class="modal-label">Anything we should know?</label>
+          <textarea class="modal-textarea modal-input" name="entry.notes" placeholder="Current setup, pain points, questions — anything helps."></textarea>
+        </div>
+        <button type="submit" class="modal-submit">Submit & Get Started →</button>
+        <p class="modal-disclaimer">We'll be in touch within a few hours. No spam, ever.</p>
+      </form>
     </div>
-  </section>
 
-  <!-- COMPARISON TABLE -->
-  <section class="section" style="background: var(--white);">
-    <div class="container">
-      <div class="section-header centered reveal">
-        <span class="eyebrow">Compare Plans</span>
-        <h2>What's included in each plan</h2>
-      </div>
-      <table class="compare-table reveal">
-        <thead>
-          <tr>
-            <th style="width: 40%;">Feature</th>
-            <th>Starter</th>
-            <th class="highlight-col">Growth</th>
-            <th>Enterprise</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Dispatch Management</td><td class="check-cell">✓</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>BOL & Document Processing</td><td class="check-cell">✓</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>Invoice Generation & Collections</td><td class="check-cell">✓</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>Monthly Bookkeeping</td><td class="check-cell">✓</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>Driver Hiring & Onboarding</td><td class="dash-cell">—</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>IFTA Filing Support</td><td class="dash-cell">—</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>After-Hours Dispatch Coverage</td><td class="dash-cell">—</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>Dedicated Account Manager</td><td class="dash-cell">—</td><td class="check-cell highlight-col">✓</td><td class="check-cell">✓</td></tr>
-          <tr><td>Dedicated Back Office Team</td><td class="dash-cell">—</td><td class="dash-cell highlight-col">—</td><td class="check-cell">✓</td></tr>
-          <tr><td>Full HR & Payroll Support</td><td class="dash-cell">—</td><td class="dash-cell highlight-col">—</td><td class="check-cell">✓</td></tr>
-          <tr><td>Custom Reporting & KPI Dashboards</td><td class="dash-cell">—</td><td class="dash-cell highlight-col">—</td><td class="check-cell">✓</td></tr>
-          <tr><td>SLA Guarantees</td><td class="dash-cell">—</td><td class="dash-cell highlight-col">—</td><td class="check-cell">✓</td></tr>
-        </tbody>
-      </table>
+    <!-- Success -->
+    <div id="modal-success" style="display:none; text-align:center; padding: 48px 0 32px;">
+      <div style="font-size:3rem; margin-bottom:18px;">✅</div>
+      <div style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:var(--brand-navy); margin-bottom:10px; letter-spacing:-0.02em;">You're all set!</div>
+      <p style="color:var(--text-muted); font-size:0.9375rem; line-height:1.75; max-width:360px; margin:0 auto;">We've received your details and will reach out within a few hours to confirm your plan and get your back office team ready.</p>
     </div>
-  </section>
 
-  <!-- FAQ -->
-  <section class="faq-section-pricing">
-    <div class="container">
-      <div class="section-header centered reveal">
-        <span class="eyebrow">Pricing Questions</span>
-        <h2>Common pricing questions</h2>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-item"><div class="faq-question">What does "per vehicle per day" actually mean for billing?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-inner">We bill monthly based on the number of vehicles in your active fleet. If you have 5 vehicles, your monthly bill is your per-vehicle rate × 5 × days in the month. We count the vehicles you have registered with us, not by individual trips or tasks completed.</div></div></div>
-        <div class="faq-item"><div class="faq-question">What if my fleet size changes month to month?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-inner">Just notify us when you add or remove vehicles and we adjust your billing accordingly. We prorate additions and removals mid-month. There's no penalty for scaling down temporarily — seasonal operators do this regularly.</div></div></div>
-        <div class="faq-item"><div class="faq-question">Are there setup fees or long-term contracts?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-inner">No setup fees. No long-term contracts. No cancellation fees. We work month to month. You can cancel with 30 days notice. We're confident you'll stay because the results speak for themselves — not because you're contractually trapped.</div></div></div>
-        <div class="faq-item"><div class="faq-question">What's included vs. what costs extra?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-inner">Your plan covers the core back office services listed. There are no surprise charges for volume — handling 50 loads vs. 5 loads costs the same monthly fee. The only additional costs would be for truly specialized services (e.g., legal document preparation, tax filing with a CPA) which are disclosed upfront.</div></div></div>
-        <div class="faq-item"><div class="faq-question">How does the 75% cost savings compare to hiring locally?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-inner">A full-time US back office employee (dispatcher + admin) runs $45,000–$65,000/year fully loaded with benefits. Our Growth plan for a 5-truck fleet costs approximately $19,000/year — while covering all the same functions plus hiring support and 24/7 availability. The savings compound as you scale.</div></div></div>
-      </div>
+    <iframe name="modal-hidden-iframe" style="display:none;"></iframe>
+  </div>
+</div>
+
+<!-- ── SCRIPTS ────────────────────────────────────────────────── -->
+<script src="js/includes.js"></script>
+<script src="js/main.js"></script>
+<script>
+
+// ── RATES & CONSTANTS ─────────────────────────────────────────
+const RATE_V1       = 5;
+const RATE_V2_3     = 3.5;
+const HOURS_MONTH   = 176;
+const HOURS_WEEK    = 40;
+const DISC_MONTHLY  = 0.15;
+const DISC_QTRLY    = 0.20;
+const LB_MONTHLY    = 100;
+const LB_WEEKLY     = 25;
+
+// ── INDUSTRY DATA ─────────────────────────────────────────────
+const industries = {
+  trucking: {
+    name: 'Trucking / OTR Freight', icon: '🚛', loadBoard: true,
+    loadBoardName: 'DAT or Truckstop.io',
+    services: [
+      'Load sourcing & booking on DAT / Truckstop.io',
+      'Rate negotiation & rate confirmation management',
+      'BOL, POD & freight document processing',
+      'Detention, layover & lumper coordination',
+      'Driver check-in & ELD compliance monitoring',
+      'IFTA mileage & fuel tax record-keeping',
+      'Carrier–broker communication handling',
+      'Accounts receivable & collections follow-up',
+    ],
+    notes: [
+      '★ Client must provide load board access (DAT or Truckstop.io). If access is not provided, load board access is added to your bill at $100/mo or $25/wk.',
+    ]
+  },
+  freight_broker: {
+    name: 'Freight Broker Support', icon: '🤝', loadBoard: true,
+    loadBoardName: 'DAT or Truckstop.io',
+    services: [
+      'Carrier vetting, packet processing & onboarding',
+      'Load posting & available carrier sourcing',
+      'Rate negotiation & spot market quoting',
+      'Load tracking & regular check calls',
+      'POD & invoice collection from carriers',
+      'Customer updates & exception management',
+      'Claims documentation & resolution support',
+      'Aging AR & collections management',
+    ],
+    notes: [
+      '★ Client must provide load board access (DAT or Truckstop.io). If access is not provided, load board access is added to your bill at $100/mo or $25/wk.',
+    ]
+  },
+  tow_truck: {
+    name: 'Tow Truck & Roadside', icon: '🔧', loadBoard: false,
+    services: [
+      'Motor club dispatch (AAA, Allstate, Agero, NSD)',
+      'Private call & GPS-based real-time dispatch',
+      'Driver routing, ETA monitoring & updates',
+      'Impound lot coordination & release documentation',
+      'Motor club & private invoice billing',
+      'After-hours, overnight & weekend coverage',
+      'Job documentation & mileage tracking',
+      'Customer follow-up & complaint handling',
+    ],
+    notes: []
+  },
+  car_hauler: {
+    name: 'Car Hauler Operations', icon: '🚗', loadBoard: true,
+    loadBoardName: 'Central Dispatch',
+    services: [
+      'Load sourcing & booking on Central Dispatch',
+      'Multi-vehicle route planning & load stacking',
+      'Vehicle condition documentation at pickup & delivery',
+      'BOL & inspection report processing',
+      'Carrier–broker communication management',
+      'Damage claim coordination & follow-up',
+      'Driver scheduling & ETA communication',
+      'Accounts receivable & collections',
+    ],
+    notes: [
+      '★ Client must provide Central Dispatch access. If access is not provided, it is added to your bill at $100/mo or $25/wk.',
+    ]
+  },
+  nemt: {
+    name: 'NEMT Billing & Dispatch', icon: '🏥', loadBoard: false,
+    services: [
+      'Trip scheduling & driver assignment',
+      'Medicaid & broker portal billing (MTM, Modivcare, Veyo)',
+      'Claim denial management & appeal filing',
+      'Driver credential & compliance tracking',
+      'Vehicle compliance & inspection documentation',
+      'Prior authorisation coordination',
+      'No-show, cancel & will-call documentation',
+      'Revenue reconciliation & performance reporting',
+    ],
+    notes: []
+  },
+  limo: {
+    name: 'Limo & Black Car', icon: '🚘', loadBoard: false,
+    services: [
+      'Reservation management & client confirmations',
+      'Chauffeur scheduling & real-time dispatch',
+      'Flight tracking & FBO / terminal coordination',
+      'Client communication & concierge-level support',
+      'Farm-in / farm-out affiliate coordination',
+      'Invoice generation & client billing',
+      'Chauffeur & vehicle compliance tracking',
+      'Post-trip follow-up & gratuity processing',
+    ],
+    notes: []
+  },
+  hotshot: {
+    name: 'Hotshot / Expedite', icon: '⚡', loadBoard: true,
+    loadBoardName: 'DAT or 123Loadboard',
+    services: [
+      'Load sourcing on DAT & 123Loadboard',
+      'Rate negotiation & rate confirmation issuance',
+      'TONU & detention dispute management',
+      'Time-sensitive BOL & delivery documentation',
+      'Driver check-in & real-time communication',
+      'Quick-pay & factoring workflow coordination',
+      'After-hours & weekend load coverage',
+      'Collections & aging invoice follow-up',
+    ],
+    notes: [
+      '★ Client must provide load board access (DAT or 123Loadboard). If access is not provided, access is added to your bill at $100/mo or $25/wk.',
+    ]
+  },
+  moving: {
+    name: 'Moving Companies', icon: '📦', loadBoard: false,
+    services: [
+      'Job scheduling, crew assignment & dispatch',
+      'Estimate & service contract documentation',
+      'Long-distance interstate carrier coordination',
+      'COI & move permit processing',
+      'Pre- and post-move customer communication',
+      'Invoice generation & payment collection',
+      'Damage claim documentation & follow-up',
+      'CRM updates & review request follow-up',
+    ],
+    notes: []
+  },
+  box_truck: {
+    name: 'Box Truck / Last Mile', icon: '📬', loadBoard: false,
+    services: [
+      'Daily route optimisation & driver dispatch',
+      'Delivery manifest creation & stop sequencing',
+      'DSP / Amazon Relay partner coordination',
+      'Exception handling & redelivery scheduling',
+      'POD collection & on-time delivery reporting',
+      'Customer communication & live ETA updates',
+      'Driver performance tracking & reporting',
+      'Invoice & settlement processing',
+    ],
+    notes: []
+  },
+  tanker: {
+    name: 'Tanker / Specialized', icon: '⚙️', loadBoard: false,
+    services: [
+      'Oversize & overweight permit coordination',
+      'Hazmat documentation & compliance management',
+      'Bulk liquid & fuel haul load scheduling',
+      'Restricted route planning & pilot car coordination',
+      'BOL & commodity manifest processing',
+      'Driver HOS & regulatory compliance tracking',
+      'Customer & shipper communication',
+      'Invoice & collections management',
+    ],
+    notes: []
+  },
+  school_charter: {
+    name: 'School Bus & Charter', icon: '🚌', loadBoard: false,
+    services: [
+      'Daily route planning & driver assignment',
+      'Parent, student & client trip communication',
+      'Charter trip scheduling & passenger manifests',
+      'Driver certification & background check tracking',
+      'Vehicle inspection & maintenance scheduling',
+      'Substitute driver coordination',
+      'Invoice & billing management for charter clients',
+      'Compliance documentation & reporting',
+    ],
+    notes: []
+  },
+  airport_shuttle: {
+    name: 'Airport Shuttle & Taxi', icon: '✈️', loadBoard: false,
+    services: [
+      'Booking & reservation management',
+      'Driver dispatch & live vehicle tracking',
+      'Flight monitoring & dynamic schedule updates',
+      'Surge demand & capacity coordination',
+      'Customer confirmation & communication',
+      'Invoice & payment reconciliation',
+      'Driver performance & rating monitoring',
+      'Complaint handling & quality assurance',
+    ],
+    notes: []
+  },
+};
+
+// ── STATE ─────────────────────────────────────────────────────
+const state = { industry: null, vehicles: null };
+let currentPricing = {};
+
+// ── FORMATTING ────────────────────────────────────────────────
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+// ── STEP NAV ──────────────────────────────────────────────────
+function showStep(n) {
+  document.getElementById('step-1').style.display = n === 1 ? 'block' : 'none';
+  document.getElementById('step-2').style.display = n === 2 ? 'block' : 'none';
+  document.getElementById('step-3').style.display = n === 3 ? 'block' : 'none';
+
+  ['dot-1','dot-2','dot-3'].forEach((id, i) => {
+    const dot = document.getElementById(id);
+    dot.classList.remove('active','done');
+    if (i + 1 < n) dot.classList.add('done');
+    if (i + 1 === n) dot.classList.add('active');
+  });
+  ['line-1','line-2'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('done', i + 1 < n);
+  });
+
+  const section = document.getElementById('pricing-wizard');
+  window.scrollTo({ top: section.offsetTop - 80, behavior: 'smooth' });
+}
+
+// ── INDUSTRY SELECT ───────────────────────────────────────────
+function selectIndustry(key, el) {
+  state.industry = key;
+  document.querySelectorAll('.industry-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(() => showStep(2), 200);
+}
+
+// ── VEHICLE SELECT ────────────────────────────────────────────
+function selectVehicles(n, el) {
+  state.vehicles = n;
+  document.querySelectorAll('.vehicle-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(() => { buildPricingStep(); showStep(3); }, 200);
+}
+
+// ── CALC ──────────────────────────────────────────────────────
+function calcPricing(v) {
+  let monthlyBase = 0, weeklyBase = 0;
+  if (v >= 1) { monthlyBase += RATE_V1 * HOURS_MONTH; weeklyBase += RATE_V1 * HOURS_WEEK; }
+  if (v >= 2) { monthlyBase += RATE_V2_3 * HOURS_MONTH; weeklyBase += RATE_V2_3 * HOURS_WEEK; }
+  if (v >= 3) { monthlyBase += RATE_V2_3 * HOURS_MONTH; weeklyBase += RATE_V2_3 * HOURS_WEEK; }
+  return {
+    weeklyBase,
+    monthlyBase,
+    monthlyDisc: monthlyBase * (1 - DISC_MONTHLY),
+    monthlySave: monthlyBase * DISC_MONTHLY,
+    qtrTotal:    monthlyBase * 3 * (1 - DISC_QTRLY),
+    qtrMonthly:  monthlyBase * (1 - DISC_QTRLY),
+    qtrSave:     monthlyBase * 3 * DISC_QTRLY,
+  };
+}
+
+// ── BUILD STEP 3 ──────────────────────────────────────────────
+function buildPricingStep() {
+  const ind = industries[state.industry];
+  const v   = state.vehicles;
+
+  // Summary bar
+  const vLabel = v === 4 ? '4+ vehicles' : v + ' vehicle' + (v > 1 ? 's' : '');
+  document.getElementById('pricing-summary').innerHTML = `
+    <div class="pricing-summary-item">
+      <span class="ps-label">Industry</span>
+      <span class="ps-value">${ind.icon} ${ind.name}</span>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section" style="background: var(--brand-navy); padding: 80px 0;">
-    <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
-      <h2 style="font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight:800; color:var(--white); letter-spacing:-0.03em; margin-bottom:16px; line-height:1.15;">Not sure which plan fits? Talk to us.</h2>
-      <p style="color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 32px;">Tell us your fleet size, industry, and current back office setup. We'll recommend the right plan — or build a custom one if your operation needs it.</p>
-      <a href="contact.html" class="btn-primary btn-lg">Get a Custom Quote</a>
+    <div class="pricing-summary-item">
+      <span class="ps-label">Fleet Size</span>
+      <span class="ps-value">${vLabel}</span>
     </div>
-  </section>
+    <button class="ps-change-btn" onclick="showStep(1)">← Change selections</button>
+  `;
 
-  <div id="footer-include"></div>
-  <script src="js/includes.js"></script>
-  <script src="js/main.js"></script>
+  // Custom vs standard
+  const isCustom = v === 4;
+  document.getElementById('standard-pricing').style.display = isCustom ? 'none' : 'block';
+  document.getElementById('custom-pricing').style.display   = isCustom ? 'block' : 'none';
+  if (isCustom) return;
+
+  const p = calcPricing(v);
+  currentPricing = p;
+
+  // Feature list HTML
+  const featureItems = ind.services.map(s => `
+    <li class="p-feature">
+      <div class="p-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+      ${s}
+    </li>`).join('');
+
+  // Load board notice
+  const lbTag = ind.loadBoard
+    ? `<div class="p-lb-note"><span class="p-lb-star">★</span><span>Load board access required — bring your own or we add $100/mo ($25/wk)</span></div>`
+    : '';
+
+  // Cards
+  document.getElementById('pricing-cards-grid').innerHTML = `
+
+    <!-- WEEKLY -->
+    <div class="p-card">
+      <div class="p-period">Weekly</div>
+      <div class="p-amount"><sup>$</sup>${Math.round(p.weeklyBase).toLocaleString()}<sub>/wk</sub></div>
+      <div class="p-sub">${vLabel} · 40 hrs/week</div>
+      <div class="p-billing">Invoiced every Friday · Due by Monday<br>Late payment = service paused</div>
+      <hr class="p-divider">
+      ${lbTag}
+      <div class="p-services-label">Covered services</div>
+      <ul class="p-features">${featureItems}</ul>
+      <button class="p-cta-btn cta-secondary" onclick="openModal('weekly')">Get Started with Weekly →</button>
+    </div>
+
+    <!-- MONTHLY (featured) -->
+    <div class="p-card featured">
+      <div class="p-badge">Best Value</div>
+      <div class="p-period">Monthly</div>
+      <div class="p-amount"><sup>$</sup>${Math.round(p.monthlyDisc).toLocaleString()}<sub>/mo</sub></div>
+      <div class="p-sub">${vLabel} · 176 hrs/month</div>
+      <div class="p-billing">Full month paid in advance · 15% discount</div>
+      <div class="p-save-pill">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Save ${fmt(p.monthlySave)}/month vs weekly rate
+      </div>
+      <hr class="p-divider">
+      ${lbTag.replace('p-lb-note', 'p-lb-note')}
+      <div class="p-services-label">Covered services</div>
+      <ul class="p-features">${featureItems}</ul>
+      <button class="p-cta-btn cta-primary" onclick="openModal('monthly')">Get Started with Monthly →</button>
+    </div>
+
+    <!-- QUARTERLY -->
+    <div class="p-card">
+      <div class="p-period">Quarterly</div>
+      <div class="p-amount"><sup>$</sup>${Math.round(p.qtrMonthly).toLocaleString()}<sub>/mo</sub></div>
+      <div class="p-sub">${fmt(p.qtrTotal)} billed once · 3 months</div>
+      <div class="p-billing">Full quarter paid in advance · 20% discount</div>
+      <div class="p-save-pill" style="background:rgba(34,197,94,0.1);color:#16a34a;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Save ${fmt(p.qtrSave)} over 3 months
+      </div>
+      <hr class="p-divider">
+      ${lbTag}
+      <div class="p-services-label">Covered services</div>
+      <ul class="p-features">${featureItems}</ul>
+      <button class="p-cta-btn cta-secondary" onclick="openModal('quarterly')">Get Started with Quarterly →</button>
+    </div>
+  `;
+
+  // Notes
+  const stdNotes = [
+    '* 176 billable hours/month = 8 hrs/day × Mon–Fri. Weekends and major US public holidays are covered but not billed.',
+    '* Weekly plan: invoiced every Friday, payment due Monday. Non-payment by Monday results in service suspension without prior notice.',
+    '* Monthly and quarterly plans are pre-paid in full at the start of each cycle to secure your dedicated team slot.',
+    '* Pricing above is for back office labour only. Third-party software, tools, or subscriptions are not included unless stated.',
+  ];
+  const allNotes = [...stdNotes, ...ind.notes];
+  document.getElementById('pricing-notes-box').innerHTML = `
+    <div class="pricing-notes">
+      <div class="pricing-notes-title">Notes & Conditions</div>
+      ${allNotes.map(n => `<div class="pricing-note-item">${n}</div>`).join('')}
+    </div>
+  `;
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+function openModal(planType) {
+  const ind  = state.industry ? industries[state.industry] : null;
+  const v    = state.vehicles;
+  const p    = currentPricing;
+
+  const indName = ind ? `${ind.icon} ${ind.name}` : 'Custom enquiry';
+  const vLabel  = v === 4 ? '4+ vehicles (custom)' : v ? `${v} vehicle${v > 1 ? 's' : ''}` : 'Not specified';
+
+  let planLabel = '', previewHtml = '';
+  if (planType === 'weekly' && p.weeklyBase) {
+    planLabel   = `Weekly — ${fmt(p.weeklyBase)}/wk`;
+    previewHtml = `<strong>${indName}</strong> · ${vLabel} · <strong>${fmt(p.weeklyBase)}/week</strong> billed every Friday`;
+  } else if (planType === 'monthly' && p.monthlyDisc) {
+    planLabel   = `Monthly — ${fmt(p.monthlyDisc)}/mo (15% off)`;
+    previewHtml = `<strong>${indName}</strong> · ${vLabel} · <strong>${fmt(p.monthlyDisc)}/month</strong> paid in advance`;
+  } else if (planType === 'quarterly' && p.qtrTotal) {
+    planLabel   = `Quarterly — ${fmt(p.qtrTotal)} total (20% off)`;
+    previewHtml = `<strong>${indName}</strong> · ${vLabel} · <strong>${fmt(p.qtrTotal)}</strong> for 3 months`;
+  } else {
+    planLabel   = 'Custom Pricing';
+    previewHtml = `<strong>${indName}</strong> · ${vLabel} · Custom quote requested`;
+  }
+
+  document.getElementById('h-industry').value  = indName;
+  document.getElementById('h-vehicles').value  = vLabel;
+  document.getElementById('h-plan').value       = planLabel;
+  document.getElementById('modal-plan-preview').innerHTML = `📋 Your selection: ${previewHtml}`;
+
+  document.getElementById('modal-form-wrap').style.display = 'block';
+  document.getElementById('modal-success').style.display   = 'none';
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function handleModalSubmit(e) {
+  e.preventDefault();
+  // Submit to Google Forms here once you wire it up
+  // For now, show success state
+  document.getElementById('modal-form-wrap').style.display = 'none';
+  document.getElementById('modal-success').style.display   = 'block';
+  setTimeout(closeModal, 5000);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+</script>
 </body>
 </html>
