@@ -4,103 +4,364 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing | Haulxify Back Office Support</title>
-  <meta name="description" content="Transparent, hourly pricing for back office support across 12 trucking and transport industries. No contracts. No hidden fees. Start from $2.50/hr.">
+  <meta name="description" content="Transparent hourly pricing across 12 transport industries. No contracts. No hidden fees.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <!-- Existing site stylesheets -->
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/nav.css">
   <link rel="stylesheet" href="../css/components.css">
-  <!-- Pricing page styles only -->
-  <link rel="stylesheet" href="../css/pricing.css">
+  <link rel="stylesheet" href="../css/services.css">
+
+  <!-- ─────────────────────────────────────────────────────────────
+       PRICING-SPECIFIC STYLES — only things that genuinely don't
+       exist in the current sheets. Kept deliberately minimal.
+  ───────────────────────────────────────────────────────────────── -->
+  <style>
+    /* Scrollbar — cosmetic only */
+    ::-webkit-scrollbar{width:7px}
+    ::-webkit-scrollbar-track{background:var(--off-white)}
+    ::-webkit-scrollbar-thumb{background:var(--brand-orange);border-radius:var(--radius-full)}
+    ::-webkit-scrollbar-thumb:hover{background:var(--orange-dark)}
+
+    /* ── Billing toggle pill ────────────────────────────── */
+    .billing-toggle{
+      display:inline-flex;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius-full);
+      padding:4px;gap:4px;position:relative;
+    }
+    .billing-toggle button{
+      position:relative;z-index:1;
+      padding:10px 22px;border-radius:var(--radius-full);
+      font-family:var(--font-display);font-size:.82rem;font-weight:600;
+      color:rgba(255,255,255,.5);cursor:pointer;background:none;border:none;
+      transition:color var(--duration-fast);white-space:nowrap;
+    }
+    .billing-toggle button.active{color:var(--white)}
+    .toggle-pill{
+      position:absolute;top:4px;left:4px;
+      height:calc(100% - 8px);
+      background:var(--brand-orange);border-radius:var(--radius-full);
+      transition:transform .3s var(--ease-in-out),width .3s var(--ease-in-out);
+      z-index:0;
+    }
+    .save-badge{
+      display:inline-block;
+      background:var(--brand-orange);color:var(--white);
+      font-size:.58rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+      padding:2px 7px;border-radius:var(--radius-full);margin-left:6px;vertical-align:middle;
+    }
+
+    /* ── Sticky industry tab bar ────────────────────────── */
+    .itab-wrap{
+      background:var(--white);border-bottom:1px solid var(--border);
+      position:sticky;top:0;z-index:40;box-shadow:var(--shadow-sm);
+    }
+    .itab-scroll{
+      display:flex;overflow-x:auto;scrollbar-width:none;
+      max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6);gap:2px;
+    }
+    .itab-scroll::-webkit-scrollbar{display:none}
+    .itab{
+      display:flex;align-items:center;gap:7px;padding:15px 17px;
+      font-family:var(--font-display);font-size:.78rem;font-weight:600;
+      color:var(--text-muted);white-space:nowrap;
+      border-bottom:3px solid transparent;
+      cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;
+      transition:color var(--duration-fast),border-color var(--duration-fast);flex-shrink:0;
+    }
+    .itab svg{width:14px;height:14px;flex-shrink:0}
+    .itab:hover{color:var(--brand-navy)}
+    .itab.active{color:var(--brand-navy);border-bottom-color:var(--brand-orange)}
+
+    /* ── Panel show/hide ────────────────────────────────── */
+    .p-panel{display:none}
+    .p-panel.visible{display:block}
+
+    /* ── Stepper control ────────────────────────────────── */
+    .p-stepper{
+      display:flex;align-items:center;
+      background:var(--off-white);border:1.5px solid var(--border);
+      border-radius:var(--radius-md);width:fit-content;overflow:hidden;
+    }
+    .p-stepper button{
+      width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;font-weight:700;color:var(--text-dark);
+      cursor:pointer;background:none;border:none;transition:background var(--duration-fast);
+    }
+    .p-stepper button:hover{background:var(--border)}
+    .p-stepper-val{
+      min-width:54px;text-align:center;
+      font-family:var(--font-display);font-size:1.1rem;font-weight:800;
+      color:var(--brand-navy);padding:0 4px;
+    }
+
+    /* ── Tier cards grid ────────────────────────────────── */
+    .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);margin-bottom:var(--space-6)}
+    @media(max-width:768px){.tier-grid{grid-template-columns:1fr}}
+
+    .tier-card{
+      position:relative;
+      background:var(--white);border:2px solid var(--border);
+      border-radius:var(--radius-lg);padding:28px 24px;
+      cursor:pointer;overflow:hidden;
+      transition:border-color var(--duration-base) var(--ease-out),
+                 box-shadow var(--duration-base) var(--ease-out),
+                 transform var(--duration-base) var(--ease-out);
+    }
+    .tier-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:transparent;transition:background var(--duration-base);
+    }
+    .tier-card:hover{border-color:var(--brand-orange);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+    .tier-card.selected{border-color:var(--brand-orange);box-shadow:0 0 0 3px var(--orange-glow),var(--shadow-md)}
+    .tier-card.selected::before{background:var(--brand-orange)}
+    .tier-card.popular::after{
+      content:'MOST POPULAR';
+      position:absolute;top:13px;right:13px;
+      background:var(--brand-orange);color:var(--white);
+      font-family:var(--font-display);font-size:.58rem;font-weight:800;letter-spacing:.1em;
+      padding:3px 10px;border-radius:var(--radius-full);
+    }
+    /* Big hourly rate — dominant */
+    .tier-rate{
+      font-family:var(--font-display);font-size:2.5rem;font-weight:800;
+      letter-spacing:-.04em;color:var(--brand-navy);line-height:1;margin-bottom:2px;
+    }
+    .tier-rate span{font-size:.95rem;font-weight:500;color:var(--text-muted);letter-spacing:0}
+    /* Commission note */
+    .tier-commission{font-family:var(--font-display);font-size:.76rem;font-weight:700;color:var(--brand-orange);margin-bottom:8px}
+    /* Save badge — big and visible */
+    .tier-save{
+      display:inline-flex;align-items:center;gap:5px;
+      background:var(--orange-glow);border:1px solid rgba(232,119,34,.3);
+      color:var(--brand-orange);
+      font-family:var(--font-display);font-size:.66rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+      padding:4px 10px;border-radius:var(--radius-full);margin-bottom:8px;
+    }
+    .tier-save svg{width:11px;height:11px}
+    /* Total estimate — small, secondary */
+    .tier-total{
+      font-size:.76rem;color:var(--text-muted);
+      background:var(--off-white);border:1px solid var(--border);
+      border-radius:var(--radius-sm);padding:5px 11px;
+      display:inline-block;margin-bottom:5px;line-height:1.5;
+    }
+    .tier-total strong{color:var(--text-dark)}
+    .tier-saving{
+      font-size:.76rem;font-weight:600;
+      background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);
+      color:var(--brand-orange);border-radius:var(--radius-sm);
+      padding:5px 11px;display:inline-block;margin-bottom:14px;line-height:1.5;
+    }
+    /* Feature list */
+    .tier-feats{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+    .tier-feats li{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-body);line-height:1.45}
+    .tier-feats li svg{width:14px;height:14px;flex-shrink:0;color:var(--brand-orange);margin-top:2px}
+
+    /* ── Sticky bill bar ────────────────────────────────── */
+    .bill-bar{
+      background:var(--brand-navy);color:var(--white);
+      border-radius:var(--radius-lg);padding:26px 36px;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:var(--space-5);flex-wrap:wrap;
+      box-shadow:var(--shadow-xl);
+      position:sticky;bottom:20px;z-index:20;
+    }
+    .bill-rate-display{
+      font-family:var(--font-display);font-size:1.85rem;font-weight:800;
+      color:var(--brand-orange);line-height:1;letter-spacing:-.03em;
+    }
+    .bill-rate-display span{font-size:.82rem;font-weight:400;color:rgba(255,255,255,.45);letter-spacing:0}
+    .bill-meta{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:3px}
+    .bill-savings-box{
+      background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);
+      border-radius:var(--radius-md);padding:13px 20px;text-align:center;
+    }
+    .bill-savings-num{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--white)}
+
+    /* ── Modal ──────────────────────────────────────────── */
+    .p-modal-backdrop{
+      position:fixed;inset:0;
+      background:rgba(13,25,41,.82);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;
+      opacity:0;pointer-events:none;transition:opacity var(--duration-base);
+    }
+    .p-modal-backdrop.open{opacity:1;pointer-events:all}
+    .p-modal{
+      background:var(--white);border-radius:var(--radius-xl);
+      width:100%;max-width:620px;max-height:92vh;
+      display:flex;flex-direction:column;
+      box-shadow:var(--shadow-xl);overflow:hidden;
+      transform:translateY(22px) scale(.97);
+      transition:transform var(--duration-base) var(--ease-out);
+    }
+    .p-modal-backdrop.open .p-modal{transform:none}
+
+    .p-modal-head{
+      padding:28px 36px 20px;border-bottom:1px solid var(--border);
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-shrink:0;
+    }
+    .p-modal-head h2{font-family:var(--font-display);font-size:1.4rem;font-weight:800;letter-spacing:-.025em;color:var(--text-dark);margin-bottom:3px}
+    .p-modal-head p{font-size:.84rem;color:var(--text-muted)}
+
+    .p-modal-close{
+      width:32px;height:32px;border-radius:50%;background:var(--off-white);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text-muted);flex-shrink:0;cursor:pointer;border:none;
+      transition:background var(--duration-fast),color var(--duration-fast);
+    }
+    .p-modal-close:hover{background:var(--border);color:var(--text-dark)}
+    .p-modal-close svg{width:14px;height:14px;display:block}
+
+    /* Selection summary inside modal */
+    .p-modal-sel{
+      margin:0 36px;margin-top:16px;
+      padding:12px 15px;
+      background:var(--off-white);border:1px solid var(--border);
+      border-radius:var(--radius-md);
+      display:flex;align-items:center;gap:11px;flex-shrink:0;
+    }
+    .p-modal-sel-icon{
+      width:32px;height:32px;border-radius:var(--radius-sm);
+      background:var(--brand-navy);
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .p-modal-sel-icon svg{width:15px;height:15px;color:var(--brand-orange);display:block}
+    .p-modal-sel-lbl{font-family:var(--font-display);font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+    .p-modal-sel-val{font-family:var(--font-display);font-size:.88rem;font-weight:700;color:var(--text-dark)}
+
+    /* Scrollable form body */
+    .p-modal-body{overflow-y:auto;flex:1;padding:20px 36px 26px;scrollbar-width:thin;scrollbar-color:var(--brand-orange) var(--off-white)}
+    .p-modal-body::-webkit-scrollbar{width:5px}
+    .p-modal-body::-webkit-scrollbar-track{background:var(--off-white);border-radius:var(--radius-full)}
+    .p-modal-body::-webkit-scrollbar-thumb{background:var(--brand-orange);border-radius:var(--radius-full)}
+
+    .p-modal-foot{padding:16px 36px 22px;border-top:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;gap:9px}
+    .p-modal-submit{
+      width:100%;background:var(--brand-navy);color:var(--white);
+      font-family:var(--font-display);font-weight:700;font-size:.9rem;
+      padding:14px;border-radius:var(--radius-md);cursor:pointer;border:none;
+      display:flex;align-items:center;justify-content:center;gap:9px;
+      transition:background var(--duration-base) var(--ease-out),transform var(--duration-base),box-shadow var(--duration-base);
+    }
+    .p-modal-submit:hover{background:var(--mid-navy);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+    .p-modal-submit svg{width:16px;height:16px;display:block}
+
+    /* Form field section labels */
+    .p-field-section{
+      font-family:var(--font-display);font-size:.66rem;font-weight:800;
+      letter-spacing:.11em;text-transform:uppercase;color:var(--brand-orange);
+      margin:20px 0 11px;
+    }
+    .p-field-section:first-child{margin-top:0}
+    .p-form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .p-form-row.full{grid-template-columns:1fr}
+    @media(max-width:540px){.p-form-row{grid-template-columns:1fr}}
+
+    /* Comparison table – only the highlight column treatment */
+    .p-col-highlight{background:rgba(232,119,34,.04)}
+
+    @media(max-width:640px){
+      .bill-bar{flex-direction:column;text-align:center;position:static}
+      .p-modal-head,.p-modal-body,.p-modal-foot{padding-left:18px;padding-right:18px}
+      .p-modal-sel{margin:0 18px}
+      .tier-rate{font-size:2rem}
+    }
+  </style>
 </head>
 <body>
 
 <div id="nav-include"></div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════════════════════════ -->
-<section class="pricing-hero">
-  <div class="pricing-hero-noise"></div>
-  <div class="pricing-hero-badge">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-    Simple, Honest Pricing
-  </div>
-  <h1>Pay per hour.<br><em>Keep more profit.</em></h1>
-  <p class="pricing-hero-sub">No hidden fees. No long contracts. Choose your industry, configure your setup, and see your exact rate — instantly.</p>
+<!-- ═══════════════════════════════════════════════════════════
+     HERO  —  uses .page-hero from services.css
+═══════════════════════════════════════════════════════════ -->
+<section class="page-hero" style="padding-bottom:56px">
+  <div class="container">
+    <div class="page-hero-inner" style="max-width:100%;text-align:center">
 
-  <div class="billing-toggle" id="billingToggle">
-    <div class="toggle-pill" id="togglePill"></div>
-    <button data-plan="hourly" class="active">Pay As You Go</button>
-    <button data-plan="monthly">Monthly <span class="p-save-tag">SAVE 15%</span></button>
-    <button data-plan="quarterly">Quarterly <span class="p-save-tag">SAVE 25%</span></button>
+      <!-- breadcrumb -->
+      <div class="breadcrumb" style="justify-content:center">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Pricing</span>
+      </div>
+
+      <div class="page-hero-tag">Simple, Honest Pricing</div>
+
+      <h1 style="max-width:none">Pay per hour.<br><span>Keep more profit.</span></h1>
+
+      <p style="margin:0 auto 36px;text-align:center">
+        No hidden fees. No long contracts. Choose your industry, configure your setup,<br>and see your exact rate — instantly.
+      </p>
+
+      <!-- Billing toggle -->
+      <div class="billing-toggle" id="billingToggle">
+        <div class="toggle-pill" id="togglePill"></div>
+        <button data-plan="hourly" class="active">Pay As You Go</button>
+        <button data-plan="monthly">Monthly <span class="save-badge">SAVE 15%</span></button>
+        <button data-plan="quarterly">Quarterly <span class="save-badge">SAVE 25%</span></button>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     INDUSTRY TABS
-════════════════════════════════════════════════════════════════ -->
-<div class="industry-tabs-wrap">
-  <div class="industry-tabs-scroll" id="industryTabs">
+<!-- ═══════════════════════════════════════════════════════════
+     INDUSTRY TAB BAR
+═══════════════════════════════════════════════════════════ -->
+<div class="itab-wrap">
+  <div class="itab-scroll" id="industryTabs">
 
     <button class="itab active" data-industry="trucking">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
       Trucking Back Office
     </button>
-
     <button class="itab" data-industry="broker">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
       Freight Broker Support
     </button>
-
     <button class="itab" data-industry="tow">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       Tow Truck Dispatch
     </button>
-
     <button class="itab" data-industry="carhauler">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
       Car Hauler Operations
     </button>
-
     <button class="itab" data-industry="animalhauler">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
       Animal Hauler Operations
     </button>
-
     <button class="itab" data-industry="dump">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
       Dump Truck Back Office
     </button>
-
     <button class="itab" data-industry="sprinter">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
       Sprinter / Cargo Van
     </button>
-
     <button class="itab" data-industry="moving">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
       Moving Company Support
     </button>
-
     <button class="itab" data-industry="afterhours">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       After-Hours Coverage
     </button>
-
     <button class="itab" data-industry="nemt">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
       NEMT Billing &amp; Dispatch
     </button>
-
     <button class="itab" data-industry="taxi">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a1 1 0 00-.8-.4H5.24a2 2 0 00-1.8 1.1L2 10v6h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
       Taxi Fleet Management
     </button>
-
     <button class="itab" data-industry="limo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
       Limo &amp; Black Car
@@ -109,430 +370,499 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════
      PRICING PANELS
-════════════════════════════════════════════════════════════════ -->
-<div class="pricing-main">
+═══════════════════════════════════════════════════════════ -->
+<div class="section-white section-sm">
+<div class="container">
 
-  <!-- 1. TRUCKING BACK OFFICE -->
+  <!-- ── 1. TRUCKING ───────────────────────────────────────── -->
   <div class="p-panel visible" id="panel-trucking">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        Trucking Back Office
+    <!-- config card uses .card from components.css -->
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Trucking Back Office</h3>
       </div>
-      <p class="p-card-sub">Full dispatch, compliance, IFTA filing, invoicing, and driver onboarding — priced per vehicle in your fleet.</p>
-      <div class="p-stepper-label">Number of Vehicles</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Full dispatch, compliance, IFTA filing, invoicing and driver onboarding — priced per vehicle in your fleet.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Vehicles</p>
       <div class="p-stepper">
         <button onclick="changeQty('trucking',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-trucking">1</div>
         <button onclick="changeQty('trucking',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-trucking"></div>
+    <div class="tier-grid" id="tiers-trucking"></div>
     <div id="bill-trucking"></div>
   </div>
 
-  <!-- 2. FREIGHT BROKER SUPPORT -->
+  <!-- ── 2. FREIGHT BROKER ─────────────────────────────────── -->
   <div class="p-panel" id="panel-broker">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        Freight Broker Support
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Freight Broker Support</h3>
       </div>
-      <p class="p-card-sub">Carrier sourcing, rate negotiation support, load tracking, and document processing for freight brokers.</p>
-      <div class="p-note"><strong>Broker pricing:</strong> $2.50/hr per agent + 2.5% of each confirmed load amount. Vehicle count does not apply — select the number of agents below.</div>
-      <br>
-      <div class="p-stepper-label">Number of Agents</div>
+      <p class="body-sm" style="margin-bottom:var(--space-5);max-width:560px">Carrier sourcing, rate negotiation, load tracking and document processing for freight brokers.</p>
+      <!-- .pain-stat repurposed as an info callout -->
+      <div style="background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);border-left:4px solid var(--brand-orange);border-radius:var(--radius-md);padding:13px 17px;font-size:.875rem;color:var(--text-body);line-height:1.65;margin-bottom:var(--space-6)">
+        <strong style="color:var(--text-dark)">Broker pricing:</strong> $2.50/hr per agent + 2.5% of each confirmed load. Vehicle count does not apply &#8212; configure agents below.
+      </div>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Agents</p>
       <div class="p-stepper">
         <button onclick="changeQty('broker',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-broker">1</div>
         <button onclick="changeQty('broker',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-broker"></div>
+    <div class="tier-grid" id="tiers-broker"></div>
     <div id="bill-broker"></div>
   </div>
 
-  <!-- 3. TOW TRUCK DISPATCH -->
+  <!-- ── 3. TOW TRUCK ──────────────────────────────────────── -->
   <div class="p-panel" id="panel-tow">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        Tow Truck Dispatch
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Tow Truck Dispatch</h3>
       </div>
-      <p class="p-card-sub">Inbound dispatch management for tow companies — priced per active <strong>line</strong> we handle, not per truck in your fleet.</p>
-      <div class="p-note"><strong>Line 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Lines 2+:</strong> $3.50/hr each</div>
-      <br>
-      <div class="p-stepper-label">Number of Lines</div>
+      <p class="body-sm" style="margin-bottom:var(--space-5);max-width:560px">Inbound dispatch for tow companies &#8212; priced per active <strong>line</strong> we handle, not per truck in your fleet.</p>
+      <div style="background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);border-left:4px solid var(--brand-orange);border-radius:var(--radius-md);padding:13px 17px;font-size:.875rem;color:var(--text-body);line-height:1.65;margin-bottom:var(--space-6)">
+        <strong style="color:var(--text-dark)">Line 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">Lines 2+:</strong> $3.50/hr each
+      </div>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Lines</p>
       <div class="p-stepper">
         <button onclick="changeQty('tow',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-tow">1</div>
         <button onclick="changeQty('tow',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-tow"></div>
+    <div class="tier-grid" id="tiers-tow"></div>
     <div id="bill-tow"></div>
   </div>
 
-  <!-- 4. CAR HAULER OPERATIONS -->
+  <!-- ── 4. CAR HAULER ─────────────────────────────────────── -->
   <div class="p-panel" id="panel-carhauler">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
-        Car Hauler Operations
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Car Hauler Operations</h3>
       </div>
-      <p class="p-card-sub">Load coordination, BOL processing, invoicing, and compliance management for auto transport carriers — priced per carrier unit.</p>
-      <div class="p-stepper-label">Number of Carrier Units</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Load coordination, BOL processing, invoicing and compliance for auto transport carriers &#8212; priced per carrier unit.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Carrier Units</p>
       <div class="p-stepper">
         <button onclick="changeQty('carhauler',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-carhauler">1</div>
         <button onclick="changeQty('carhauler',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-carhauler"></div>
+    <div class="tier-grid" id="tiers-carhauler"></div>
     <div id="bill-carhauler"></div>
   </div>
 
-  <!-- 5. ANIMAL HAULER OPERATIONS -->
+  <!-- ── 5. ANIMAL HAULER ──────────────────────────────────── -->
   <div class="p-panel" id="panel-animalhauler">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
-        Animal Hauler Operations
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Animal Hauler Operations</h3>
       </div>
-      <p class="p-card-sub">Compliance, dispatch coordination, permit tracking, and document management tailored for livestock and animal transport operators.</p>
-      <div class="p-stepper-label">Number of Vehicles</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Compliance, dispatch coordination, permit tracking and document management for livestock and animal transport operators.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Vehicles</p>
       <div class="p-stepper">
         <button onclick="changeQty('animalhauler',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-animalhauler">1</div>
         <button onclick="changeQty('animalhauler',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-animalhauler"></div>
+    <div class="tier-grid" id="tiers-animalhauler"></div>
     <div id="bill-animalhauler"></div>
   </div>
 
-  <!-- 6. DUMP TRUCK BACK OFFICE -->
+  <!-- ── 6. DUMP TRUCK ─────────────────────────────────────── -->
   <div class="p-panel" id="panel-dump">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-        Dump Truck Back Office
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Dump Truck Back Office</h3>
       </div>
-      <p class="p-card-sub">Job ticket management, invoicing, permit coordination, fuel tax reporting, and bookkeeping for dump truck operators.</p>
-      <div class="p-stepper-label">Number of Trucks</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Job ticket management, invoicing, permit coordination, fuel tax reporting and bookkeeping for dump truck operators.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Trucks</p>
       <div class="p-stepper">
         <button onclick="changeQty('dump',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-dump">1</div>
         <button onclick="changeQty('dump',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-dump"></div>
+    <div class="tier-grid" id="tiers-dump"></div>
     <div id="bill-dump"></div>
   </div>
 
-  <!-- 7. SPRINTER / CARGO VAN -->
+  <!-- ── 7. SPRINTER / CARGO VAN ───────────────────────────── -->
   <div class="p-panel" id="panel-sprinter">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        Sprinter / Cargo Van Operations
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Sprinter / Cargo Van Operations</h3>
       </div>
-      <p class="p-card-sub">Load booking, manifest management, last-mile coordination, invoicing, and route support for sprinter and cargo van fleets.</p>
-      <div class="p-stepper-label">Number of Vans</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Load booking, manifest management, last-mile coordination, invoicing and route support for sprinter and cargo van fleets.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Vans</p>
       <div class="p-stepper">
         <button onclick="changeQty('sprinter',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-sprinter">1</div>
         <button onclick="changeQty('sprinter',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-sprinter"></div>
+    <div class="tier-grid" id="tiers-sprinter"></div>
     <div id="bill-sprinter"></div>
   </div>
 
-  <!-- 8. MOVING COMPANY SUPPORT -->
+  <!-- ── 8. MOVING COMPANY ─────────────────────────────────── -->
   <div class="p-panel" id="panel-moving">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-        Moving Company Support
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Moving Company Support</h3>
       </div>
-      <p class="p-card-sub">Job scheduling, estimates coordination, crew dispatch, inventory documentation, and invoicing support for residential and commercial movers.</p>
-      <div class="p-stepper-label">Number of Trucks</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Job scheduling, estimates, crew dispatch, inventory documentation and invoicing for residential and commercial movers.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Trucks</p>
       <div class="p-stepper">
         <button onclick="changeQty('moving',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-moving">1</div>
         <button onclick="changeQty('moving',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-moving"></div>
+    <div class="tier-grid" id="tiers-moving"></div>
     <div id="bill-moving"></div>
   </div>
 
-  <!-- 9. AFTER-HOURS COVERAGE -->
+  <!-- ── 9. AFTER-HOURS ────────────────────────────────────── -->
   <div class="p-panel" id="panel-afterhours">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-        After-Hours Coverage
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">After-Hours Coverage</h3>
       </div>
-      <p class="p-card-sub">We handle your calls, dispatch, and urgent requests outside business hours — so you never miss a load or a customer. Priced per agent line covering your after-hours window.</p>
-      <div class="p-note"><strong>Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong>4+ agents:</strong> contact us for custom pricing.</div>
-      <br>
-      <div class="p-stepper-label">Number of Agent Lines (1&#8211;3 configurable; 4+ is custom)</div>
+      <p class="body-sm" style="margin-bottom:var(--space-5);max-width:560px">We handle calls, dispatch and urgent requests outside business hours so you never miss a load or a customer. Priced per agent line.</p>
+      <div style="background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);border-left:4px solid var(--brand-orange);border-radius:var(--radius-md);padding:13px 17px;font-size:.875rem;color:var(--text-body);line-height:1.65;margin-bottom:var(--space-6)">
+        <strong style="color:var(--text-dark)">Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">4+ agents:</strong> contact us for custom pricing.
+      </div>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Agent Lines (1&#8211;3; 4+ is custom)</p>
       <div class="p-stepper">
         <button onclick="changeQty('afterhours',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-afterhours">1</div>
         <button onclick="changeQty('afterhours',1,3)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-afterhours"></div>
+    <div class="tier-grid" id="tiers-afterhours"></div>
     <div id="bill-afterhours"></div>
   </div>
 
-  <!-- 10. NEMT BILLING & DISPATCH -->
+  <!-- ── 10. NEMT ──────────────────────────────────────────── -->
   <div class="p-panel" id="panel-nemt">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        NEMT Billing &amp; Dispatch
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">NEMT Billing &amp; Dispatch</h3>
       </div>
-      <p class="p-card-sub">Medicaid/insurance billing, trip scheduling, driver dispatch, eligibility verification, and denial management for non-emergency medical transport providers.</p>
-      <div class="p-stepper-label">Number of Vehicles</div>
+      <p class="body-sm" style="margin-bottom:var(--space-6);max-width:560px">Medicaid/insurance billing, trip scheduling, driver dispatch, eligibility verification and denial management for non-emergency medical transport providers.</p>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Vehicles</p>
       <div class="p-stepper">
         <button onclick="changeQty('nemt',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-nemt">1</div>
         <button onclick="changeQty('nemt',1)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-nemt"></div>
+    <div class="tier-grid" id="tiers-nemt"></div>
     <div id="bill-nemt"></div>
   </div>
 
-  <!-- 11. TAXI FLEET MANAGEMENT -->
+  <!-- ── 11. TAXI ──────────────────────────────────────────── -->
   <div class="p-panel" id="panel-taxi">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a1 1 0 00-.8-.4H5.24a2 2 0 00-1.8 1.1L2 10v6h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
-        Taxi Fleet Management &amp; Support
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a1 1 0 00-.8-.4H5.24a2 2 0 00-1.8 1.1L2 10v6h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Taxi Fleet Management &amp; Support</h3>
       </div>
-      <p class="p-card-sub">Inbound call handling, dispatch, driver coordination, and fleet admin for taxi companies. Priced per agent line — count agreed mutually based on your call volume.</p>
-      <div class="p-note"><strong>Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong>4+ agents:</strong> contact us for custom pricing.</div>
-      <br>
-      <div class="p-stepper-label">Number of Agent Lines (1&#8211;3 configurable; 4+ is custom)</div>
+      <p class="body-sm" style="margin-bottom:var(--space-5);max-width:560px">Inbound call handling, dispatch, driver coordination and fleet admin for taxi companies. Agent count agreed mutually based on your call volume.</p>
+      <div style="background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);border-left:4px solid var(--brand-orange);border-radius:var(--radius-md);padding:13px 17px;font-size:.875rem;color:var(--text-body);line-height:1.65;margin-bottom:var(--space-6)">
+        <strong style="color:var(--text-dark)">Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">4+ agents:</strong> contact us for custom pricing.
+      </div>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Agent Lines (1&#8211;3; 4+ is custom)</p>
       <div class="p-stepper">
         <button onclick="changeQty('taxi',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-taxi">1</div>
         <button onclick="changeQty('taxi',1,3)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-taxi"></div>
+    <div class="tier-grid" id="tiers-taxi"></div>
     <div id="bill-taxi"></div>
   </div>
 
-  <!-- 12. LIMO & BLACK CAR -->
+  <!-- ── 12. LIMO & BLACK CAR ──────────────────────────────── -->
   <div class="p-panel" id="panel-limo">
-    <div class="p-config-card">
-      <div class="p-card-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
-        Limo &amp; Black Car Management &amp; Support
+    <div class="card card-fill" style="margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="service-icon" style="margin-bottom:0;width:36px;height:36px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9h8a2 2 0 002-2v-3a2 2 0 00-2-2h-8m-4 7a2 2 0 104 0 2 2 0 00-4 0zm10 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+        </div>
+        <h3 class="heading-md" style="margin:0">Limo &amp; Black Car Management &amp; Support</h3>
       </div>
-      <p class="p-card-sub">Reservation handling, chauffeur dispatch, affiliate coordination, and client communication for limo and black car services. Agent count agreed mutually to match your booking volume.</p>
-      <div class="p-note"><strong>Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong>Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong>4+ agents:</strong> contact us for custom pricing.</div>
-      <br>
-      <div class="p-stepper-label">Number of Agent Lines (1&#8211;3 configurable; 4+ is custom)</div>
+      <p class="body-sm" style="margin-bottom:var(--space-5);max-width:560px">Reservation handling, chauffeur dispatch, affiliate coordination and client communication. Agent count agreed mutually to match your booking volume.</p>
+      <div style="background:var(--orange-glow);border:1px solid rgba(232,119,34,.25);border-left:4px solid var(--brand-orange);border-radius:var(--radius-md);padding:13px 17px;font-size:.875rem;color:var(--text-body);line-height:1.65;margin-bottom:var(--space-6)">
+        <strong style="color:var(--text-dark)">Agent 1:</strong> $5.00/hr &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">Agents 2&#8211;3:</strong> $3.50/hr each &nbsp;&#183;&nbsp; <strong style="color:var(--text-dark)">4+ agents:</strong> contact us for custom pricing.
+      </div>
+      <p class="label" style="color:var(--text-muted);margin-bottom:10px">Number of Agent Lines (1&#8211;3; 4+ is custom)</p>
       <div class="p-stepper">
         <button onclick="changeQty('limo',-1)">&#8722;</button>
         <div class="p-stepper-val" id="qty-limo">1</div>
         <button onclick="changeQty('limo',1,3)">&#43;</button>
       </div>
     </div>
-    <div class="p-tier-row" id="tiers-limo"></div>
+    <div class="tier-grid" id="tiers-limo"></div>
     <div id="bill-limo"></div>
   </div>
 
-</div><!-- /pricing-main -->
+</div><!-- /container -->
+</div><!-- /section -->
 
-<!-- ═══════════════════════════════════════════════════════════════
-     COMPARISON TABLE
-════════════════════════════════════════════════════════════════ -->
-<section class="p-compare-section">
+<!-- ═══════════════════════════════════════════════════════════
+     COMPARISON  —  .pain-section + table from services.css
+═══════════════════════════════════════════════════════════ -->
+<section class="pain-section">
   <div class="container">
-    <h2>Haulxify vs. Hiring In-House</h2>
-    <p class="p-sub">The math is simple. The savings are significant.</p>
-    <div class="p-compare-wrap">
-      <table class="p-compare">
+    <div class="section-header centered reveal">
+      <span class="eyebrow">Haulxify vs. In-House</span>
+      <h2>The math is simple. The savings are significant.</h2>
+    </div>
+    <div style="max-width:860px;margin:0 auto;overflow-x:auto;border-radius:var(--radius-lg);box-shadow:var(--shadow-md)">
+      <table style="width:100%;border-collapse:collapse;background:var(--white);font-size:.87rem">
         <thead>
-          <tr>
-            <th>What you get</th>
-            <th>In-House Staff</th>
-            <th>Haulxify</th>
+          <tr style="background:var(--brand-navy);color:var(--white)">
+            <th style="padding:18px 22px;text-align:left;font-family:var(--font-display);font-weight:700;font-size:.9rem">What you get</th>
+            <th style="padding:18px 22px;text-align:center;font-family:var(--font-display);font-weight:700;font-size:.9rem">In-House Staff</th>
+            <th style="padding:18px 22px;text-align:center;font-family:var(--font-display);font-weight:700;font-size:.9rem">Haulxify</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Monthly cost (per operator)</td><td>$4,000&#8211;$6,000+</td><td class="p-highlight">From $2.50/hr</td></tr>
-          <tr><td>Onboarding time</td><td>2&#8211;6 weeks</td><td>24 hours</td></tr>
-          <tr><td>IFTA / compliance filing</td><td class="p-yes">&#10003;</td><td class="p-yes">&#10003;</td></tr>
-          <tr><td>24/7 availability</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
-          <tr><td>Industry-specific expertise</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
-          <tr><td>No long-term contract</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
-          <tr><td>Scales as you grow</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
-          <tr><td>Factoring coordination</td><td class="p-no">&#10007;</td><td class="p-yes">&#10003;</td></tr>
-          <tr><td>Cost savings vs. in-house</td><td>&#8212;</td><td class="p-highlight">Up to 75% less</td></tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">Monthly cost (per operator)</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--text-body)">$4,000&#8211;$6,000+</td>
+            <td style="padding:13px 22px;text-align:center;font-weight:700;color:var(--brand-orange)">From $2.50/hr</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">Onboarding time</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--text-body)">2&#8211;6 weeks</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--text-body)">24 hours</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">IFTA / compliance filing</td>
+            <td style="padding:13px 22px;text-align:center;color:#22c55e;font-size:1.05rem">&#10003;</td>
+            <td style="padding:13px 22px;text-align:center;color:#22c55e;font-size:1.05rem">&#10003;</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">24/7 availability</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--border);font-size:1.05rem">&#10007;</td>
+            <td style="padding:13px 22px;text-align:center;color:#22c55e;font-size:1.05rem">&#10003;</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">No long-term contract</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--border);font-size:1.05rem">&#10007;</td>
+            <td style="padding:13px 22px;text-align:center;color:#22c55e;font-size:1.05rem">&#10003;</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">Scales as you grow</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--border);font-size:1.05rem">&#10007;</td>
+            <td style="padding:13px 22px;text-align:center;color:#22c55e;font-size:1.05rem">&#10003;</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">Factoring coordination</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--border);font-size:1.05rem">&#10007;</td>
+            <td style="padding:13px 22px;text-align:center;color:#22c55e;font-size:1.05rem">&#10003;</td>
+          </tr>
+          <tr>
+            <td style="padding:13px 22px;font-weight:500;color:var(--text-dark)">Cost savings vs. in-house</td>
+            <td style="padding:13px 22px;text-align:center;color:var(--text-muted)">&#8212;</td>
+            <td style="padding:13px 22px;text-align:center;font-weight:700;color:var(--brand-orange)">Up to 75% less</td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     FAQ
-════════════════════════════════════════════════════════════════ -->
-<section class="p-faq-section">
-  <h2>Pricing Questions Answered</h2>
+<!-- ═══════════════════════════════════════════════════════════
+     FAQ  —  .service-faq classes from services.css
+═══════════════════════════════════════════════════════════ -->
+<section class="service-faq">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Pricing questions answered</h2>
+    </div>
+    <div class="faq-list">
 
-  <div class="p-faq-item">
-    <button class="p-faq-q" onclick="toggleFaq(this)">Is there a minimum commitment or contract?
-      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-    </button>
-    <div class="p-faq-a">No. Pay-as-you-go has zero commitment. Monthly and quarterly plans offer significant discounts but can be cancelled before renewal with no penalty and no questions asked.</div>
-  </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Is there a minimum commitment or contract?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Pay-as-you-go has zero commitment. Monthly and quarterly plans offer significant discounts but can be cancelled before renewal with no penalty and no questions asked.</div></div>
+      </div>
 
-  <div class="p-faq-item">
-    <button class="p-faq-q" onclick="toggleFaq(this)">How does per-vehicle vs. per-line vs. per-agent billing work?
-      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-    </button>
-    <div class="p-faq-a">The billing unit depends on your industry. Trucking, car hauler, dump truck, NEMT, animal hauler, sprinter, and moving companies are billed per vehicle. Tow truck dispatch is billed per active line we handle. Taxi, limo, black car, and after-hours coverage are billed per agent line, determined mutually based on your call volume. Freight brokers are billed per agent plus a 2.5% commission on confirmed loads.</div>
-  </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">How does per-vehicle vs. per-line vs. per-agent billing work?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">The billing unit depends on your industry. Trucking, car hauler, dump truck, NEMT, animal hauler, sprinter and moving companies are billed per vehicle. Tow truck dispatch is billed per active line. Taxi, limo, black car and after-hours coverage are billed per agent line, determined mutually based on your call volume. Freight brokers pay per agent plus a 2.5% commission on confirmed loads.</div></div>
+      </div>
 
-  <div class="p-faq-item">
-    <button class="p-faq-q" onclick="toggleFaq(this)">How is the number of agents determined for call-based services?
-      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-    </button>
-    <div class="p-faq-a">During onboarding we review your average inbound call volume and peak windows together. We then agree on the right agent count before work begins. You only ever pay for agents agreed upon upfront — no surprise overages.</div>
-  </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">How is the number of agents determined for call-based services?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">During onboarding we review your average inbound call volume and peak windows together, then agree on the right agent count before work begins. You only pay for agents agreed upon upfront &#8212; no surprise overages.</div></div>
+      </div>
 
-  <div class="p-faq-item">
-    <button class="p-faq-q" onclick="toggleFaq(this)">Can I scale up or down mid-cycle?
-      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-    </button>
-    <div class="p-faq-a">Yes. Adding a vehicle or line takes effect immediately and you are prorated for the remainder of the billing cycle. Removing a unit takes effect from the next cycle start.</div>
-  </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Can I scale up or down mid-cycle?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Adding a vehicle or line takes effect immediately and you are prorated for the remainder of the billing cycle. Removing a unit takes effect from the next cycle start.</div></div>
+      </div>
 
-  <div class="p-faq-item">
-    <button class="p-faq-q" onclick="toggleFaq(this)">Are features gated by plan tier?
-      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-    </button>
-    <div class="p-faq-a">No feature gating. All plans include the full service suite for your industry. The only difference between plans is the billing cycle and the discount applied — monthly saves 15%, quarterly saves 25%.</div>
-  </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Are features gated by plan tier?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No feature gating. All plans include the full service suite for your industry. The only difference is the billing cycle and discount &#8212; monthly saves 15%, quarterly saves 25%.</div></div>
+      </div>
 
-  <div class="p-faq-item">
-    <button class="p-faq-q" onclick="toggleFaq(this)">Do you work with owner-operators or only established fleets?
-      <span class="p-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-    </button>
-    <div class="p-faq-a">Both. Single-unit owner-operators are our most common client — they have the most to gain and the least back office capacity. We scale with you from one vehicle to fifty-plus.</div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     FOOTER CTA
-════════════════════════════════════════════════════════════════ -->
-<section class="p-footer-cta">
-  <h2>Stop losing money on paperwork<br>you should not be doing.</h2>
-  <p>Talk to our team. We will assess your back office load and show you exactly what you are leaving on the table.</p>
-  <div class="p-footer-cta-btns">
-    <button class="p-btn-gold" onclick="openModal()">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      Get a Free Assessment
-    </button>
-    <a href="../contact.html" class="p-btn-ghost">Talk to a Human</a>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER CTA  —  .section + .cta-banner from components.css
+═══════════════════════════════════════════════════════════ -->
+<section class="section section-off-white">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="display-md" style="color:var(--white);margin-bottom:14px">Stop losing money on paperwork<br>you shouldn&#8217;t be doing.</h2>
+      <p>Talk to our team. We&#8217;ll assess your back office load and show you exactly what you&#8217;re leaving on the table.</p>
+      <div class="cta-banner-actions">
+        <button class="btn btn-primary btn-lg" onclick="openModal()">Get a Free Assessment</button>
+        <a href="../contact.html" class="btn btn-ghost-white btn-lg">Talk to a Human</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
      SIGNUP MODAL
-════════════════════════════════════════════════════════════════ -->
+═══════════════════════════════════════════════════════════ -->
 <div class="p-modal-backdrop" id="modalBackdrop">
-  <div class="p-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="p-modal" role="dialog" aria-modal="true">
 
-    <div class="p-modal-header">
+    <div class="p-modal-head">
       <div>
-        <h2 id="modalTitle">Start your free assessment</h2>
-        <p>Takes 2 minutes. We will be in touch within one business day.</p>
+        <h2>Start your free assessment</h2>
+        <p>Takes 2 minutes. We&#8217;ll be in touch within one business day.</p>
       </div>
       <button class="p-modal-close" onclick="closeModal()" aria-label="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
 
-    <div class="p-modal-pill">
-      <div class="p-modal-pill-icon">
+    <!-- Pre-filled selection pill -->
+    <div class="p-modal-sel">
+      <div class="p-modal-sel-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
       </div>
       <div>
-        <div class="p-modal-pill-label">Your Selection</div>
-        <div class="p-modal-pill-val" id="modalSummaryText">Trucking Back Office &mdash; 1 Vehicle &mdash; Pay As You Go</div>
+        <div class="p-modal-sel-lbl">Your Selection</div>
+        <div class="p-modal-sel-val" id="modalSummaryText">Trucking Back Office &#8212; 1 Vehicle &#8212; Pay As You Go</div>
       </div>
     </div>
 
     <div class="p-modal-body" id="modalFormBody">
 
-      <div class="p-form-section-title">Contact Information</div>
-      <div class="p-form-row">
-        <div class="p-form-group">
-          <label class="p-form-label">First Name <span class="req">*</span></label>
-          <input class="p-form-input" type="text" id="f-fname" placeholder="Marcus" required>
+      <div class="p-field-section">Contact Information</div>
+      <div class="p-form-row" style="margin-bottom:13px">
+        <div class="form-group">
+          <label class="form-label">First Name <span style="color:var(--brand-orange)">*</span></label>
+          <input class="form-input" type="text" id="f-fname" placeholder="Marcus" required>
         </div>
-        <div class="p-form-group">
-          <label class="p-form-label">Last Name <span class="req">*</span></label>
-          <input class="p-form-input" type="text" id="f-lname" placeholder="Thompson" required>
+        <div class="form-group">
+          <label class="form-label">Last Name <span style="color:var(--brand-orange)">*</span></label>
+          <input class="form-input" type="text" id="f-lname" placeholder="Thompson" required>
         </div>
       </div>
-      <div class="p-form-row">
-        <div class="p-form-group">
-          <label class="p-form-label">Email <span class="req">*</span></label>
-          <input class="p-form-input" type="email" id="f-email" placeholder="you@company.com" required>
+      <div class="p-form-row" style="margin-bottom:13px">
+        <div class="form-group">
+          <label class="form-label">Email <span style="color:var(--brand-orange)">*</span></label>
+          <input class="form-input" type="email" id="f-email" placeholder="you@company.com" required>
         </div>
-        <div class="p-form-group">
-          <label class="p-form-label">Phone</label>
-          <input class="p-form-input" type="tel" id="f-phone" placeholder="+1 (555) 000-0000">
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" id="f-phone" placeholder="+1 (555) 000-0000">
         </div>
       </div>
 
-      <div class="p-form-section-title">Company Details</div>
-      <div class="p-form-row full">
-        <div class="p-form-group">
-          <label class="p-form-label">Company Name <span class="req">*</span></label>
-          <input class="p-form-input" type="text" id="f-company" placeholder="Thompson Carriers LLC" required>
+      <div class="p-field-section">Company Details</div>
+      <div class="p-form-row full" style="margin-bottom:13px">
+        <div class="form-group">
+          <label class="form-label">Company Name <span style="color:var(--brand-orange)">*</span></label>
+          <input class="form-input" type="text" id="f-company" placeholder="Thompson Carriers LLC" required>
         </div>
       </div>
-      <div class="p-form-row">
-        <div class="p-form-group">
-          <label class="p-form-label">State / Region</label>
-          <input class="p-form-input" type="text" id="f-state" placeholder="Texas">
+      <div class="p-form-row" style="margin-bottom:13px">
+        <div class="form-group">
+          <label class="form-label">State / Region</label>
+          <input class="form-input" type="text" id="f-state" placeholder="Texas">
         </div>
-        <div class="p-form-group">
-          <label class="p-form-label">Years in Operation</label>
-          <select class="p-form-select" id="f-years">
-            <option value="">Select&hellip;</option>
+        <div class="form-group">
+          <label class="form-label">Years in Operation</label>
+          <select class="form-select" id="f-years">
+            <option value="">Select&#8230;</option>
             <option>Less than 1 year</option>
-            <option>1&ndash;3 years</option>
-            <option>3&ndash;5 years</option>
-            <option>5&ndash;10 years</option>
+            <option>1&#8211;3 years</option>
+            <option>3&#8211;5 years</option>
+            <option>5&#8211;10 years</option>
             <option>10+ years</option>
           </select>
         </div>
       </div>
 
-      <div class="p-form-section-title">
+      <div class="p-field-section">
         Service Selection
-        <span style="font-size:.65rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--p-muted);margin-left:6px;">&#8212; pre-filled from your selection above, edit freely</span>
+        <span style="font-size:.65rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--text-muted);margin-left:6px">&#8212; pre-filled from your selection, edit freely</span>
       </div>
-      <div class="p-form-row">
-        <div class="p-form-group">
-          <label class="p-form-label">Industry / Service</label>
-          <select class="p-form-select" id="f-industry" onchange="onModalIndustryChange()">
+      <div class="p-form-row" style="margin-bottom:13px">
+        <div class="form-group">
+          <label class="form-label">Industry / Service</label>
+          <select class="form-select" id="f-industry" onchange="onModalIndustryChange()">
             <option value="trucking">Trucking Back Office</option>
             <option value="broker">Freight Broker Support</option>
             <option value="tow">Tow Truck Dispatch</option>
@@ -547,39 +877,42 @@
             <option value="limo">Limo &amp; Black Car Management</option>
           </select>
         </div>
-        <div class="p-form-group">
-          <label class="p-form-label" id="f-qty-label">Number of Vehicles</label>
-          <input class="p-form-input" type="number" id="f-qty" min="1" max="200" value="1">
+        <div class="form-group">
+          <label class="form-label" id="f-qty-label">Number of Vehicles</label>
+          <input class="form-input" type="number" id="f-qty" min="1" max="200" value="1">
         </div>
       </div>
-      <div class="p-form-row">
-        <div class="p-form-group">
-          <label class="p-form-label">Billing Plan</label>
-          <select class="p-form-select" id="f-plan">
+      <div class="p-form-row" style="margin-bottom:13px">
+        <div class="form-group">
+          <label class="form-label">Billing Plan</label>
+          <select class="form-select" id="f-plan">
             <option value="hourly">Pay As You Go (Hourly)</option>
-            <option value="monthly">Monthly &mdash; Save 15%</option>
-            <option value="quarterly">Quarterly &mdash; Save 25%</option>
+            <option value="monthly">Monthly &#8212; Save 15%</option>
+            <option value="quarterly">Quarterly &#8212; Save 25%</option>
           </select>
         </div>
       </div>
 
-      <div class="p-form-section-title">Anything Else?</div>
+      <div class="p-field-section">Anything Else?</div>
       <div class="p-form-row full">
-        <div class="p-form-group">
-          <label class="p-form-label">Biggest back office challenge</label>
-          <textarea class="p-form-textarea" id="f-message" placeholder="e.g. IFTA filing, delayed payments, driver hiring, after-hours calls&hellip;"></textarea>
+        <div class="form-group">
+          <label class="form-label">Biggest back office challenge</label>
+          <textarea class="form-textarea" id="f-message" style="min-height:76px" placeholder="e.g. IFTA filing, delayed payments, driver hiring, after-hours calls&#8230;"></textarea>
         </div>
       </div>
 
-    </div>
+    </div><!-- /modal-body -->
 
-    <div class="p-modal-footer">
+    <div class="p-modal-foot">
       <button class="p-modal-submit" onclick="submitForm()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         Send My Free Assessment Request
       </button>
-      <p class="p-modal-privacy">&#128274; Your information is never sold or shared. We typically respond within 4 business hours.</p>
+      <p style="text-align:center;font-size:.73rem;color:var(--text-muted);line-height:1.5">
+        &#128274; Your information is never sold or shared. We typically respond within 4 business hours.
+      </p>
     </div>
+
   </div>
 </div>
 
@@ -589,259 +922,271 @@
 
 <!-- PRICING ENGINE -->
 <script>
-const INDUSTRIES = {
-  trucking:     { type: 'perVehicle', unitLabel: 'Vehicle',  baseRate: 3.50 },
-  broker:       { type: 'broker',     unitLabel: 'Agent',    baseRate: 2.50, commission: '+ 2.5% per confirmed load' },
-  tow:          { type: 'tiered',     unitLabel: 'Line',     baseRate: 5.00, tierRate: 3.50 },
-  carhauler:    { type: 'perVehicle', unitLabel: 'Unit',     baseRate: 3.50 },
-  animalhauler: { type: 'perVehicle', unitLabel: 'Vehicle',  baseRate: 3.50 },
-  dump:         { type: 'perVehicle', unitLabel: 'Truck',    baseRate: 3.50 },
-  sprinter:     { type: 'perVehicle', unitLabel: 'Van',      baseRate: 3.50 },
-  moving:       { type: 'perVehicle', unitLabel: 'Truck',    baseRate: 3.50 },
-  afterhours:   { type: 'tiered',     unitLabel: 'Agent',    baseRate: 5.00, tierRate: 3.50 },
-  nemt:         { type: 'perVehicle', unitLabel: 'Vehicle',  baseRate: 3.50 },
-  taxi:         { type: 'tiered',     unitLabel: 'Agent',    baseRate: 5.00, tierRate: 3.50 },
-  limo:         { type: 'tiered',     unitLabel: 'Agent',    baseRate: 5.00, tierRate: 3.50 },
+var INDUSTRIES = {
+  trucking:     { type:'flat',   unitLabel:'Vehicle', baseRate:3.50 },
+  broker:       { type:'flat',   unitLabel:'Agent',   baseRate:2.50, commission:'+ 2.5% per confirmed load' },
+  tow:          { type:'tiered', unitLabel:'Line',    baseRate:5.00, tierRate:3.50 },
+  carhauler:    { type:'flat',   unitLabel:'Unit',    baseRate:3.50 },
+  animalhauler: { type:'flat',   unitLabel:'Vehicle', baseRate:3.50 },
+  dump:         { type:'flat',   unitLabel:'Truck',   baseRate:3.50 },
+  sprinter:     { type:'flat',   unitLabel:'Van',     baseRate:3.50 },
+  moving:       { type:'flat',   unitLabel:'Truck',   baseRate:3.50 },
+  afterhours:   { type:'tiered', unitLabel:'Agent',   baseRate:5.00, tierRate:3.50 },
+  nemt:         { type:'flat',   unitLabel:'Vehicle', baseRate:3.50 },
+  taxi:         { type:'tiered', unitLabel:'Agent',   baseRate:5.00, tierRate:3.50 },
+  limo:         { type:'tiered', unitLabel:'Agent',   baseRate:5.00, tierRate:3.50 }
 };
 
-const PLAN_DISCOUNT = { hourly: 0, monthly: 0.15, quarterly: 0.25 };
-const PLAN_LABEL    = { hourly: 'Pay As You Go', monthly: 'Monthly', quarterly: 'Quarterly' };
-const PLAN_HOURS    = { hourly: 1, monthly: 720, quarterly: 2160 };
+var DISC  = { hourly:0, monthly:0.15, quarterly:0.25 };
+var LABEL = { hourly:'Pay As You Go', monthly:'Monthly', quarterly:'Quarterly' };
+var HRS   = { hourly:1, monthly:720, quarterly:2160 };
 
-let currentPlan    = 'hourly';
-let activeIndustry = 'trucking';
-const quantities   = Object.fromEntries(Object.keys(INDUSTRIES).map(k => [k, 1]));
+var plan     = 'hourly';
+var active   = 'trucking';
+var qtys     = {};
+Object.keys(INDUSTRIES).forEach(function(k){ qtys[k] = 1; });
 
-function totalHourly(id, qty) {
-  const d = INDUSTRIES[id];
-  if (d.type === 'perVehicle' || d.type === 'broker') return d.baseRate * qty;
-  // tiered: first unit baseRate, rest tierRate
+function totalHr(id, qty) {
+  var d = INDUSTRIES[id];
+  if (d.type === 'flat') return d.baseRate * qty;
   return qty === 1 ? d.baseRate : d.baseRate + (qty - 1) * d.tierRate;
 }
 
-function fmt(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function money(n) {
+  return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
 
-function planFeatures(key) {
-  const base = ['Full-service back office team', 'Dedicated account manager', '24/7 support availability', 'No setup fee'];
-  if (key === 'monthly')   return [...base, 'Priority response SLA', '15% discount applied'];
-  if (key === 'quarterly') return [...base, 'Priority response SLA', 'Senior agent assigned', '25% discount applied'];
-  return [...base, 'Cancel any time', 'Zero commitment'];
+function featList(p) {
+  var base = ['Full-service back office team','Dedicated account manager','24/7 support availability','No setup fee'];
+  if (p === 'monthly')   return base.concat(['Priority response SLA','15% discount applied']);
+  if (p === 'quarterly') return base.concat(['Priority response SLA','Senior agent assigned','25% discount applied']);
+  return base.concat(['Cancel any time','Zero commitment']);
 }
 
 function renderTiers(id) {
-  const def     = INDUSTRIES[id];
-  const qty     = quantities[id];
-  const tiersEl = document.getElementById('tiers-' + id);
-  const billEl  = document.getElementById('bill-' + id);
-  if (!tiersEl || !billEl) return;
+  var d      = INDUSTRIES[id];
+  var qty    = qtys[id];
+  var tEl    = document.getElementById('tiers-' + id);
+  var bEl    = document.getElementById('bill-' + id);
+  if (!tEl || !bEl) return;
 
-  const plans = [
-    { key: 'hourly',    label: 'Pay As You Go', savePct: 0,  popular: false },
-    { key: 'monthly',   label: 'Monthly',       savePct: 15, popular: true  },
-    { key: 'quarterly', label: 'Quarterly',     savePct: 25, popular: false },
+  var plans = [
+    {key:'hourly',    label:'Pay As You Go', savePct:0,  popular:false},
+    {key:'monthly',   label:'Monthly',       savePct:15, popular:true },
+    {key:'quarterly', label:'Quarterly',     savePct:25, popular:false}
   ];
 
-  tiersEl.innerHTML = plans.map(function(p) {
-    var base  = totalHourly(id, qty);
-    var eff   = base * (1 - p.savePct / 100);
-    var isSel = currentPlan === p.key;
+  tEl.innerHTML = plans.map(function(p) {
+    var base = totalHr(id, qty);
+    var eff  = base * (1 - p.savePct/100);
+    var sel  = plan === p.key;
 
     var saveBadge = p.savePct > 0
-      ? '<div class="p-tier-save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SAVE ' + p.savePct + '%</div>'
+      ? '<div class="tier-save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SAVE '+p.savePct+'%</div>'
       : '';
 
-    var totalsHtml = '';
+    var totals = '';
     if (p.key !== 'hourly') {
-      var hrs   = PLAN_HOURS[p.key];
+      var hrs   = HRS[p.key];
       var total = eff * hrs;
       var saved = (base - eff) * hrs;
-      totalsHtml = '<div class="p-tier-total">Est. ' + p.label.toLowerCase() + ': <strong>' + fmt(total) + '</strong></div>'
-                 + '<div class="p-tier-saving-pill">You save: <strong>' + fmt(saved) + '</strong></div>';
+      totals = '<div class="tier-total">Est. '+p.label.toLowerCase()+': <strong>'+money(total)+'</strong></div>'
+             + '<div class="tier-saving">You save: <strong>'+money(saved)+'</strong></div>';
     } else {
-      totalsHtml = '<div class="p-tier-total">No commitment &#8212; billed per active hour</div>';
+      totals = '<div class="tier-total">No commitment &#8212; billed per active hour</div>';
     }
 
-    var commLine = def.commission ? '<div class="p-tier-commission">' + def.commission + '</div>' : '';
-    var feats    = planFeatures(p.key);
+    var comm = d.commission ? '<div class="tier-commission">'+d.commission+'</div>' : '';
+    var feats = featList(p.key);
 
-    return '<div class="p-tier-card' + (p.popular ? ' popular' : '') + (isSel ? ' selected' : '') + '"'
-         + ' onclick="selectPlan(\'' + p.key + '\',\'' + id + '\')">'
-         + '<div class="p-tier-period">' + p.label.toUpperCase() + '</div>'
-         + '<div class="p-tier-rate">' + fmt(eff) + '<span>/hr</span></div>'
-         + commLine + saveBadge + totalsHtml
-         + '<ul class="p-tier-feats">'
-         + feats.map(function(f) { return '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' + f + '</li>'; }).join('')
-         + '</ul></div>';
+    return '<div class="tier-card'+(p.popular?' popular':'')+(sel?' selected':'')+'" onclick="selectPlan(\''+p.key+'\',\''+id+'\')">'
+      + '<p class="label" style="color:var(--text-muted);margin-bottom:10px">'+p.label.toUpperCase()+'</p>'
+      + '<div class="tier-rate">'+money(eff)+'<span>/hr</span></div>'
+      + comm + saveBadge + totals
+      + '<ul class="tier-feats">'
+      + feats.map(function(f){
+          return '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'+f+'</li>';
+        }).join('')
+      + '</ul></div>';
   }).join('');
 
-  // Bill bar
-  var base  = totalHourly(id, qty);
-  var eff   = base * (1 - PLAN_DISCOUNT[currentPlan]);
-  var hrs   = PLAN_HOURS[currentPlan];
+  /* Bill bar */
+  var base  = totalHr(id, qty);
+  var eff   = base * (1 - DISC[plan]);
+  var hrs   = HRS[plan];
   var total = eff * hrs;
   var saved = (base - eff) * hrs;
-  var qLabel = qty + ' ' + def.unitLabel + (qty !== 1 ? 's' : '');
+  var qLbl  = qty + ' ' + d.unitLabel + (qty !== 1 ? 's' : '');
+  var period = {hourly:'per active hour', monthly:'est. per month (720 hrs)', quarterly:'est. per quarter (2,160 hrs)'}[plan];
+  var commMeta = d.commission ? '<div class="bill-meta">'+d.commission+'</div>' : '';
 
-  var savingsBox = saved > 0.01
-    ? '<div class="p-bill-savings-box"><div class="p-bill-savings-label">You\'re saving</div><div class="p-bill-savings-amount">' + fmt(saved) + '</div><div style="font-size:.68rem;color:rgba(255,255,255,.38);margin-top:2px">vs. pay-as-you-go</div></div>'
+  var savBox = saved > 0.01
+    ? '<div class="bill-savings-box">'
+        + '<p class="label" style="color:var(--brand-orange);margin-bottom:3px">You\'re saving</p>'
+        + '<div class="bill-savings-num">'+money(saved)+'</div>'
+        + '<div class="bill-meta" style="color:rgba(255,255,255,.38);margin-top:2px">vs. pay-as-you-go</div>'
+      + '</div>'
     : '';
 
-  var periodMap = { hourly: 'per active hour', monthly: 'est. per month (720 hrs)', quarterly: 'est. per quarter (2,160 hrs)' };
-  var commMeta  = def.commission ? '<div class="p-bill-meta">' + def.commission + '</div>' : '';
-
-  billEl.innerHTML = '<div class="p-bill-bar">'
+  bEl.innerHTML = '<div class="bill-bar">'
     + '<div>'
-    + '<div class="p-bill-label">' + qLabel + ' &middot; ' + PLAN_LABEL[currentPlan] + '</div>'
-    + '<div class="p-bill-rate">' + fmt(eff) + '<span>/hr</span></div>'
-    + commMeta
-    + '<div class="p-bill-meta">Est. total: ' + fmt(total) + ' ' + periodMap[currentPlan] + '</div>'
+      + '<p class="label" style="color:rgba(255,255,255,.4);margin-bottom:4px">'+qLbl+' &middot; '+LABEL[plan]+'</p>'
+      + '<div class="bill-rate-display">'+money(eff)+'<span>/hr</span></div>'
+      + commMeta
+      + '<div class="bill-meta">Est. total: '+money(total)+' '+period+'</div>'
     + '</div>'
-    + savingsBox
-    + '<button class="p-bill-cta" onclick="openModal()">'
-    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Get Started'
-    + '</button></div>';
+    + savBox
+    + '<button class="btn btn-primary" onclick="openModal()">'
+        + '<svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
+        + 'Get Started'
+      + '</button>'
+    + '</div>';
 }
 
 function changeQty(id, delta, max) {
-  var newVal = quantities[id] + delta;
-  if (newVal < 1) return;
-  if (max && newVal > max) return;
-  quantities[id] = newVal;
-  document.getElementById('qty-' + id).textContent = newVal;
+  var v = qtys[id] + delta;
+  if (v < 1) return;
+  if (max && v > max) return;
+  qtys[id] = v;
+  document.getElementById('qty-' + id).textContent = v;
   renderTiers(id);
   syncModal();
 }
 
-function selectPlan(plan, id) {
-  currentPlan = plan;
-  document.querySelectorAll('.billing-toggle button').forEach(function(b) {
-    b.classList.toggle('active', b.dataset.plan === plan);
+function selectPlan(p, id) {
+  plan = p;
+  document.querySelectorAll('.billing-toggle button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.plan === p);
   });
   positionPill();
   renderTiers(id);
   syncModal();
 }
 
-document.querySelectorAll('.billing-toggle button').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.billing-toggle button').forEach(function(b) { b.classList.remove('active'); });
+/* Billing toggle */
+document.querySelectorAll('.billing-toggle button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.billing-toggle button').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    currentPlan = btn.dataset.plan;
+    plan = btn.dataset.plan;
     positionPill();
-    renderTiers(activeIndustry);
+    renderTiers(active);
     syncModal();
   });
 });
 
 function positionPill() {
-  var wrap   = document.getElementById('billingToggle');
-  var pill   = document.getElementById('togglePill');
-  var active = wrap.querySelector('button.active');
-  if (!active) return;
-  pill.style.width     = active.offsetWidth + 'px';
-  pill.style.transform = 'translateX(' + (active.offsetLeft - 4) + 'px)';
+  var wrap = document.getElementById('billingToggle');
+  var pill = document.getElementById('togglePill');
+  var a    = wrap.querySelector('button.active');
+  if (!a) return;
+  pill.style.width = a.offsetWidth + 'px';
+  pill.style.transform = 'translateX(' + (a.offsetLeft - 4) + 'px)';
 }
 
-document.querySelectorAll('.itab').forEach(function(tab) {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.itab').forEach(function(t) { t.classList.remove('active'); });
+/* Industry tabs */
+document.querySelectorAll('.itab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.itab').forEach(function(t){ t.classList.remove('active'); });
     tab.classList.add('active');
-    activeIndustry = tab.dataset.industry;
-    document.querySelectorAll('.p-panel').forEach(function(p) { p.classList.remove('visible'); });
-    document.getElementById('panel-' + activeIndustry).classList.add('visible');
-    renderTiers(activeIndustry);
-    tab.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+    active = tab.dataset.industry;
+    document.querySelectorAll('.p-panel').forEach(function(p){ p.classList.remove('visible'); });
+    document.getElementById('panel-' + active).classList.add('visible');
+    renderTiers(active);
+    tab.scrollIntoView({inline:'center', behavior:'smooth', block:'nearest'});
   });
 });
 
-function openModal()  { syncModal(); document.getElementById('modalBackdrop').classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeModal() { document.getElementById('modalBackdrop').classList.remove('open'); document.body.style.overflow = ''; }
-document.getElementById('modalBackdrop').addEventListener('click', function(e) { if (e.target === document.getElementById('modalBackdrop')) closeModal(); });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+/* FAQ — reuses existing faq-item open/close logic from main.js,
+   but also wired here as fallback */
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var ans  = item.querySelector('.faq-answer');
+  var isOpen = item.classList.contains('open');
+  item.classList.toggle('open');
+  ans.style.maxHeight = isOpen ? '0' : ans.scrollHeight + 'px';
+}
 
-var INDUSTRY_LABELS = {
-  trucking: 'Trucking Back Office', broker: 'Freight Broker Support', tow: 'Tow Truck Dispatch',
-  carhauler: 'Car Hauler Operations', animalhauler: 'Animal Hauler Operations', dump: 'Dump Truck Back Office',
-  sprinter: 'Sprinter / Cargo Van', moving: 'Moving Company Support', afterhours: 'After-Hours Coverage',
-  nemt: 'NEMT Billing & Dispatch', taxi: 'Taxi Fleet Management', limo: 'Limo & Black Car',
+/* Modal */
+var ILABELS = {
+  trucking:'Trucking Back Office', broker:'Freight Broker Support', tow:'Tow Truck Dispatch',
+  carhauler:'Car Hauler Operations', animalhauler:'Animal Hauler Operations', dump:'Dump Truck Back Office',
+  sprinter:'Sprinter / Cargo Van', moving:'Moving Company Support', afterhours:'After-Hours Coverage',
+  nemt:'NEMT Billing & Dispatch', taxi:'Taxi Fleet Management', limo:'Limo & Black Car'
 };
 
 function syncModal() {
-  var qty  = quantities[activeIndustry];
-  var def  = INDUSTRIES[activeIndustry];
-  var unit = qty + ' ' + def.unitLabel + (qty !== 1 ? 's' : '');
-  document.getElementById('modalSummaryText').textContent =
-    INDUSTRY_LABELS[activeIndustry] + ' \u2014 ' + unit + ' \u2014 ' + PLAN_LABEL[currentPlan];
-  document.getElementById('f-industry').value = activeIndustry;
-  document.getElementById('f-qty').value      = qty;
-  document.getElementById('f-plan').value     = currentPlan;
-  document.getElementById('f-qty-label').textContent = 'Number of ' + def.unitLabel + 's';
+  var d    = INDUSTRIES[active];
+  var qty  = qtys[active];
+  var unit = qty + ' ' + d.unitLabel + (qty !== 1 ? 's' : '');
+  document.getElementById('modalSummaryText').textContent = ILABELS[active] + ' \u2014 ' + unit + ' \u2014 ' + LABEL[plan];
+  document.getElementById('f-industry').value  = active;
+  document.getElementById('f-qty').value       = qty;
+  document.getElementById('f-plan').value      = plan;
+  document.getElementById('f-qty-label').textContent = 'Number of ' + d.unitLabel + 's';
 }
 
 function onModalIndustryChange() {
   var sel = document.getElementById('f-industry').value;
-  var def = INDUSTRIES[sel] || INDUSTRIES.trucking;
-  document.getElementById('f-qty-label').textContent = 'Number of ' + def.unitLabel + 's';
+  var d   = INDUSTRIES[sel] || INDUSTRIES.trucking;
+  document.getElementById('f-qty-label').textContent = 'Number of ' + d.unitLabel + 's';
 }
 
-function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
+function openModal()  { syncModal(); document.getElementById('modalBackdrop').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal() { document.getElementById('modalBackdrop').classList.remove('open'); document.body.style.overflow = ''; }
+
+document.getElementById('modalBackdrop').addEventListener('click', function(e){
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+});
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
 
 /* Google Form submission
-   Replace YOUR_FORM_ID and entry.XXXXXXXX values with your actual Google Form IDs */
+   Replace YOUR_FORM_ID and each entry.XXXXXXXX with real IDs from your form */
 function submitForm() {
   var fname   = document.getElementById('f-fname').value.trim();
   var lname   = document.getElementById('f-lname').value.trim();
   var email   = document.getElementById('f-email').value.trim();
   var company = document.getElementById('f-company').value.trim();
-  if (!fname || !lname || !email || !company) {
-    alert('Please fill in all required fields (marked *).');
-    return;
-  }
+  if (!fname || !lname || !email || !company) { alert('Please fill in all required fields (marked *).'); return; }
 
-  var FORM_ACTION = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+  var ACTION = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
   var data = {
-    'entry.FIRST_NAME':  fname,
-    'entry.LAST_NAME':   lname,
-    'entry.EMAIL':       email,
-    'entry.PHONE':       document.getElementById('f-phone').value.trim(),
-    'entry.COMPANY':     company,
-    'entry.STATE':       document.getElementById('f-state').value.trim(),
-    'entry.YEARS':       document.getElementById('f-years').value,
-    'entry.INDUSTRY':    document.getElementById('f-industry').value,
-    'entry.QTY':         document.getElementById('f-qty').value,
-    'entry.PLAN':        document.getElementById('f-plan').value,
-    'entry.MESSAGE':     document.getElementById('f-message').value.trim(),
+    'entry.FIRST_NAME': fname,
+    'entry.LAST_NAME':  lname,
+    'entry.EMAIL':      email,
+    'entry.PHONE':      document.getElementById('f-phone').value.trim(),
+    'entry.COMPANY':    company,
+    'entry.STATE':      document.getElementById('f-state').value.trim(),
+    'entry.YEARS':      document.getElementById('f-years').value,
+    'entry.INDUSTRY':   document.getElementById('f-industry').value,
+    'entry.QTY':        document.getElementById('f-qty').value,
+    'entry.PLAN':       document.getElementById('f-plan').value,
+    'entry.MESSAGE':    document.getElementById('f-message').value.trim()
   };
 
   var iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.name = 'gf-iframe';
+  iframe.style.display = 'none'; iframe.name = 'gf-frame';
   document.body.appendChild(iframe);
   var form = document.createElement('form');
-  form.action = FORM_ACTION;
-  form.method = 'POST';
-  form.target = 'gf-iframe';
-  Object.keys(data).forEach(function(k) {
-    var inp = document.createElement('input');
-    inp.type = 'hidden'; inp.name = k; inp.value = data[k];
-    form.appendChild(inp);
+  form.action = ACTION; form.method = 'POST'; form.target = 'gf-frame';
+  Object.keys(data).forEach(function(k){
+    var i = document.createElement('input'); i.type='hidden'; i.name=k; i.value=data[k]; form.appendChild(i);
   });
-  document.body.appendChild(form);
-  form.submit();
+  document.body.appendChild(form); form.submit();
 
   document.getElementById('modalFormBody').innerHTML =
-    '<div style="text-align:center;padding:52px 20px;">'
-    + '<div style="width:60px;height:60px;background:#f5ead6;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">'
-    + '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a0813c" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>'
-    + '<h3 style="font-size:1.3rem;font-weight:800;letter-spacing:-.02em;color:#1c2033;margin-bottom:10px;">You\'re on your way.</h3>'
-    + '<p style="color:#6b7280;font-size:.88rem;line-height:1.72;max-width:340px;margin:0 auto;">'
-    + 'Assessment request received. Our team will reach out within <strong style="color:#1c2033">4 business hours</strong> to schedule your onboarding call.</p></div>';
-  document.querySelector('.p-modal-footer').style.display = 'none';
+    '<div style="text-align:center;padding:52px 20px">'
+    + '<div style="width:56px;height:56px;background:var(--orange-glow);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px">'
+    + '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>'
+    + '<h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;letter-spacing:-.02em;color:var(--text-dark);margin-bottom:10px">You\'re on your way.</h3>'
+    + '<p style="color:var(--text-muted);font-size:.88rem;line-height:1.72;max-width:340px;margin:0 auto">'
+    + 'Assessment request received. Our team will reach out within <strong style="color:var(--text-dark)">4 business hours</strong> to schedule your onboarding call.</p></div>';
+  document.querySelector('.p-modal-foot').style.display = 'none';
 }
 
-// Init
-Object.keys(INDUSTRIES).forEach(function(id) { renderTiers(id); });
-window.addEventListener('load', function() { positionPill(); setTimeout(positionPill, 200); });
+/* Init */
+Object.keys(INDUSTRIES).forEach(function(id){ renderTiers(id); });
+window.addEventListener('load', function(){ positionPill(); setTimeout(positionPill, 200); });
 window.addEventListener('resize', positionPill);
 </script>
 </body>
