@@ -865,10 +865,11 @@ padding: 100px 0 40px;
   background: var(--white);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 8px 24px rgba(13,25,41,0.10);
   z-index: 500;
   overflow: hidden;
   animation: p-fadeup 0.28s var(--ease-out) forwards;
+  clip-path: inset(0px -20px -20px -20px);
 }
 .svc-panel.open { display: block; }
 .svc-panel-search {
