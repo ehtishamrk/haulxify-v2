@@ -499,6 +499,56 @@
   .pf-logo-btn span { display: none; }
   .pf-logo-btn { padding: 0 8px; }
 }
+  /* ═══════════════════════════════════════
+   MODAL — MOBILE
+═══════════════════════════════════════ */
+@media (max-width: 639px) {
+  .px-modal-bg { align-items: flex-end; padding: 0; }
+
+  .px-modal {
+    max-height: 94vh;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .px-modal-head { padding: 16px 18px 14px; }
+  .px-modal-head h3 { font-size: 1rem; }
+  .px-modal-head p { font-size: 0.75rem; }
+
+  .px-modal-strip {
+    padding: 8px 14px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+  }
+  .px-ms-item { padding: 4px 10px; flex-shrink: 0; }
+  .px-ms-lbl { font-size: 0.55rem; }
+  .px-ms-val { font-size: 0.75rem; }
+
+  .px-modal-body { padding: 14px 16px; }
+
+  .px-form-2col {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    font-size: 16px !important; /* prevents iOS zoom */
+  }
+
+  .px-sect-label { margin: 16px 0 10px; font-size: 0.6rem; }
+  .px-sect-label:first-child { margin-top: 0; }
+
+  .px-modal-foot { padding: 12px 16px 28px; }
+  .px-submit-btn { padding: 14px; font-size: 0.875rem; }
+  .px-modal-privacy { font-size: 0.68rem; }
+
+  .px-modal-success { padding: 36px 24px; }
+  .px-success-icon { width: 56px; height: 56px; }
+  .px-success-icon svg { width: 24px; height: 24px; }
+  .px-modal-success h4 { font-size: 1.2rem; }
+}
 </style>
 </head>
 <body>
@@ -947,7 +997,14 @@
             </div>
 
           </div><!-- /plans-grid-p -->
-
+ <!-- ═══ WHAT'S INCLUDED CHIPS ═══ -->
+          <div class="incl-chips-wrap" id="feat-accordion" style="display:none;">
+            <div class="incl-chips-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="feat-trigger-label">Included in every plan</span>
+            </div>
+            <div class="incl-chips-row" id="feat-mini-grid"></div>
+          </div>
      <!-- ═══ PLAN FOOTER — notices + payment ═══ -->
 <div class="plan-footer">
 
