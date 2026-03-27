@@ -249,17 +249,6 @@
   transition: transform 0.25s, color 0.2s; flex-shrink: 0;
 }
 .svc-trigger.active .svc-trigger-chevron { transform: rotate(180deg); color: var(--brand-orange); }
-
-.svc-panel {
-  display: none; position: absolute;
-  top: calc(100% + 6px); left: 0; right: 0;
-  background: var(--white); border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px; box-shadow: 0 8px 32px rgba(13,25,41,0.14);
-  z-index: 500; overflow: hidden;
-  animation: p-fadeup 0.22s cubic-bezier(0.16,1,0.3,1) forwards;
-  filter: drop-shadow(0 6px 16px rgba(13,25,41,0.13));
-}
-.svc-panel.open { display: block; }
 .svc-panel-search {
   padding: 10px 12px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 9px;
@@ -313,16 +302,6 @@
 
 .svc-overlay { display: none; position: fixed; inset: 0; background: rgba(13,25,41,0.5); z-index: 490; backdrop-filter: blur(2px); }
 .svc-overlay.show { display: block; }
-
-@media (max-width: 640px) {
-  .svc-panel {
-    position: fixed; top: auto; bottom: 0; left: 0; right: 0;
-    border-radius: 16px 16px 0 0; border: none;
-    max-height: 75vh; z-index: 510;
-    animation: sheet-up 0.3s cubic-bezier(0.16,1,0.3,1);
-  }
-  .svc-options { max-height: 55vh; }
-}
 
 /* ═══════════════════════════════════════
    MINIMAL QUANTITY STEPPER
