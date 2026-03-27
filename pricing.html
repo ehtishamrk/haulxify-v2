@@ -246,7 +246,7 @@
   display: none; position: absolute;
   top: calc(100% + 6px); left: 0; right: 0;
   background: var(--white); border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px; box-shadow: 0 8px 40px rgba(13,25,41,0.12);
+  border-radius: 12px; box-shadow: 0 2px 0 rgba(0,0,0,0) , 0 8px 32px rgba(13,25,41,0.14);
   z-index: 500; overflow: hidden;
   animation: p-fadeup 0.22s cubic-bezier(0.16,1,0.3,1) forwards;
 }
@@ -642,8 +642,8 @@
     </div>
 
     <!-- ── Step 1: Industry Selector (minimal redesign) ── -->
-    <div class="reveal" id="step1-wrap">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+<div class="reveal" id="step1-wrap" style="position:relative;z-index:50;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
         <div style="width:22px;height:22px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <span style="font-family:var(--font-display);font-size:0.65rem;font-weight:800;color:var(--white);">1</span>
         </div>
