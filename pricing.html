@@ -13,13 +13,552 @@
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/services.css">
+
+<style>
+/* ═══════════════════════════════════════
+   HERO SAVINGS CALCULATOR
+═══════════════════════════════════════ */
+.hero-pw-wrap {
+  display: flex; align-items: center; justify-content: center;
+  position: relative; padding: 20px 0 20px 20px;
+}
+@media (max-width: 768px) { .hero-pw-wrap { display: none; } }
+
+.hc-outer {
+  position: relative;
+  width: 100%; max-width: 380px;
+  perspective: 1000px;
+}
+
+.hc-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 20px;
+  padding: 28px 26px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+.hc-card::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(232,119,34,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hc-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(30,58,95,0.4) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Header */
+.hc-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 22px;
+}
+.hc-live-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--brand-orange);
+}
+.hc-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--brand-orange);
+  box-shadow: 0 0 0 0 rgba(232,119,34,0.5);
+  animation: hcPulse 2s ease-in-out infinite;
+}
+@keyframes hcPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(232,119,34,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(232,119,34,0); }
+}
+.hc-head-label {
+  font-size: 0.72rem; color: rgba(255,255,255,0.35);
+  font-weight: 500;
+}
+
+/* Slider control */
+.hc-ctrl { margin-bottom: 20px; }
+.hc-ctrl-top {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px;
+}
+.hc-ctrl-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+.hc-ctrl-val {
+  font-family: var(--font-display); font-size: 0.85rem;
+  font-weight: 800; color: var(--white);
+  background: rgba(232,119,34,0.15);
+  border: 1px solid rgba(232,119,34,0.25);
+  border-radius: 100px; padding: 3px 12px;
+}
+
+.hc-range-wrap { position: relative; height: 20px; display: flex; align-items: center; }
+.hc-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 100px; outline: none;
+  cursor: pointer; position: relative; z-index: 2;
+}
+.hc-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%; background: var(--brand-orange);
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(232,119,34,0.2), 0 2px 8px rgba(232,119,34,0.5);
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative; z-index: 3;
+}
+.hc-range::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 7px rgba(232,119,34,0.2), 0 2px 12px rgba(232,119,34,0.6);
+  transform: scale(1.1);
+}
+.hc-range-fill {
+  position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  height: 3px; border-radius: 100px;
+  background: linear-gradient(90deg, var(--brand-orange), #f5a623);
+  pointer-events: none; z-index: 1;
+  transition: width 0.1s;
+}
+.hc-range-marks {
+  display: flex; justify-content: space-between;
+  margin-top: 6px;
+}
+.hc-range-marks span { font-size: 0.62rem; color: rgba(255,255,255,0.25); }
+
+/* Comparison */
+.hc-compare {
+  display: flex; align-items: stretch; gap: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 18px;
+}
+.hc-col {
+  flex: 1; padding: 14px 16px; text-align: center;
+}
+.hc-col-bad { border-right: 1px solid rgba(255,255,255,0.07); }
+.hc-col-label {
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  font-weight: 600; letter-spacing: 0.05em; margin-bottom: 5px;
+}
+.hc-col-amount {
+  font-family: var(--font-display); font-size: 1.55rem;
+  font-weight: 800; line-height: 1; letter-spacing: -0.03em;
+  transition: color 0.3s;
+}
+.hc-col-bad .hc-col-amount { color: rgba(255,255,255,0.45); text-decoration: line-through; text-decoration-color: rgba(255,80,80,0.5); }
+.hc-col-good .hc-col-amount { color: var(--brand-orange); }
+.hc-col-period { font-size: 0.65rem; color: rgba(255,255,255,0.25); margin-top: 2px; }
+.hc-divider {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 6px;
+}
+.hc-vs {
+  font-family: var(--font-display); font-size: 0.62rem;
+  font-weight: 800; color: rgba(255,255,255,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* Savings */
+.hc-savings { margin-bottom: 20px; }
+.hc-save-top {
+  display: flex; align-items: baseline;
+  justify-content: space-between; margin-bottom: 8px;
+}
+.hc-save-label { font-size: 0.72rem; color: rgba(255,255,255,0.4); font-weight: 500; }
+.hc-save-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.hc-save-pct {
+  font-family: var(--font-display); font-size: 2rem;
+  font-weight: 800; color: #4ade80; line-height: 1;
+  letter-spacing: -0.04em; transition: all 0.3s;
+}
+.hc-save-amt {
+  font-size: 0.8rem; color: rgba(255,255,255,0.45); font-weight: 500;
+}
+.hc-bar-track {
+  height: 5px; border-radius: 100px;
+  background: rgba(255,255,255,0.08); overflow: hidden;
+}
+.hc-bar-fill {
+  height: 100%; border-radius: 100px;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  transition: width 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* CTA Button */
+.hc-cta {
+  width: 100%; padding: 13px 20px;
+  background: var(--brand-orange);
+  color: var(--white); border: none; border-radius: 11px;
+  font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 20px rgba(232,119,34,0.35);
+}
+.hc-cta:hover {
+  background: #d4680f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232,119,34,0.45);
+}
+.hc-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* Trust pills */
+.hc-trust-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.hc-trust-pill {
+  font-size: 0.65rem; font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px; padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   MINIMAL INDUSTRY SELECTOR
+═══════════════════════════════════════ */
+.svc-selector { position: relative; margin-bottom: 28px; }
+
+.svc-trigger {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 10px; cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: left; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.svc-trigger:hover, .svc-trigger.active {
+  border-color: rgba(232,119,34,0.5);
+  box-shadow: 0 0 0 3px rgba(232,119,34,0.08);
+}
+.svc-trigger-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--off-white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background 0.2s;
+}
+.svc-trigger.selected .svc-trigger-icon { background: var(--orange-glow); }
+.svc-trigger-icon svg { width: 16px; height: 16px; color: var(--text-muted); }
+.svc-trigger.selected .svc-trigger-icon svg { color: var(--brand-orange); }
+.svc-trigger-text { flex: 1; min-width: 0; }
+.svc-trigger-label {
+  font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+  color: var(--brand-navy); line-height: 1.2; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.svc-trigger.empty .svc-trigger-label { color: var(--text-muted); font-weight: 500; font-size: 0.85rem; }
+.svc-trigger-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+.svc-trigger-chevron {
+  width: 16px; height: 16px; color: var(--text-muted);
+  transition: transform 0.25s, color 0.2s; flex-shrink: 0;
+}
+.svc-trigger.active .svc-trigger-chevron { transform: rotate(180deg); color: var(--brand-orange); }
+
+.svc-panel {
+  display: none; position: absolute;
+  top: calc(100% + 6px); left: 0; right: 0;
+  background: var(--white); border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px; box-shadow: 0 8px 40px rgba(13,25,41,0.12);
+  z-index: 500; overflow: hidden;
+  animation: p-fadeup 0.22s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.svc-panel.open { display: block; }
+.svc-panel-search {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 9px;
+  background: var(--off-white);
+}
+.svc-panel-search svg { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
+.svc-search-input {
+  flex: 1; border: none; outline: none;
+  font-family: var(--font-body); font-size: 0.83rem;
+  color: var(--text-dark); background: transparent;
+}
+.svc-search-input::placeholder { color: var(--text-muted); }
+.svc-options { max-height: 300px; overflow-y: auto; }
+
+.svc-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  -webkit-tap-highlight-color: transparent;
+}
+.svc-opt:last-child { border-bottom: none; }
+.svc-opt:hover { background: var(--off-white); }
+.svc-opt.selected { background: rgba(232,119,34,0.05); }
+.svc-opt-icon {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: transparent; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.15s;
+}
+.svc-opt:hover .svc-opt-icon,
+.svc-opt.selected .svc-opt-icon { background: var(--orange-glow); border-color: rgba(232,119,34,0.25); }
+.svc-opt-icon svg { width: 14px; height: 14px; color: var(--text-muted); }
+.svc-opt:hover .svc-opt-icon svg,
+.svc-opt.selected .svc-opt-icon svg { color: var(--brand-orange); }
+.svc-opt-name {
+  font-size: 0.85rem; font-weight: 600; color: var(--brand-navy);
+  flex: 1; letter-spacing: -0.01em;
+}
+.svc-opt.selected .svc-opt-name { color: var(--brand-orange); }
+.svc-opt-type { font-size: 0.68rem; color: var(--text-muted); }
+.svc-opt-check {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--brand-orange);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; flex-shrink: 0; transition: opacity 0.15s;
+}
+.svc-opt.selected .svc-opt-check { opacity: 1; }
+.svc-opt-check svg { width: 8px; height: 8px; color: var(--white); }
+.svc-opt-hidden { display: none; }
+
+.svc-overlay { display: none; position: fixed; inset: 0; background: rgba(13,25,41,0.5); z-index: 490; backdrop-filter: blur(2px); }
+.svc-overlay.show { display: block; }
+
+@media (max-width: 640px) {
+  .svc-panel {
+    position: fixed; top: auto; bottom: 0; left: 0; right: 0;
+    border-radius: 16px 16px 0 0; border: none;
+    max-height: 75vh; z-index: 510;
+    animation: sheet-up 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .svc-options { max-height: 55vh; }
+}
+
+/* ═══════════════════════════════════════
+   MINIMAL QUANTITY STEPPER
+═══════════════════════════════════════ */
+.qty-compact-wrap {
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap; margin-bottom: 24px;
+  padding: 14px 18px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 10px;
+}
+.qty-compact-left { flex: 1; min-width: 0; }
+.qty-compact-title {
+  font-family: var(--font-display); font-size: 0.85rem;
+  font-weight: 700; color: var(--brand-navy); margin-bottom: 1px;
+}
+.qty-compact-hint { font-size: 0.73rem; color: var(--text-muted); }
+.qty-compact-hint strong { color: var(--text-dark); }
+.qty-compact-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.qty-inline-stepper {
+  display: flex; align-items: center; gap: 0;
+  border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.qis-btn {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--off-white); border: none; cursor: pointer;
+  font-size: 1rem; font-weight: 700; color: var(--text-muted);
+  transition: all 0.15s; flex-shrink: 0;
+}
+.qis-btn:hover:not(:disabled) { background: var(--orange-glow); color: var(--brand-orange); }
+.qis-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.qis-val {
+  min-width: 46px; text-align: center;
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 800;
+  color: var(--brand-navy);
+  border-left: 1.5px solid var(--border); border-right: 1.5px solid var(--border);
+  height: 34px; display: flex; align-items: center; justify-content: center;
+  padding: 0 8px;
+}
+
+.qty-tiers-mini { display: flex; gap: 5px; flex-wrap: wrap; }
+.qty-tier-mini {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 100px;
+  font-size: 0.68rem; font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--off-white); color: var(--text-muted);
+  transition: all 0.15s;
+}
+.qty-tier-mini.active {
+  background: var(--orange-glow); border-color: rgba(232,119,34,0.3);
+  color: var(--brand-orange);
+}
+.qty-tier-mini svg { width: 9px; height: 9px; }
+
+/* ═══════════════════════════════════════
+   FEATURES ACCORDION (inline, below plans)
+═══════════════════════════════════════ */
+.feat-accordion {
+  margin-top: 12px; border: 1.5px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--white);
+}
+.feat-accordion-trigger {
+  width: 100%; padding: 14px 20px;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--white); border: none; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+  color: var(--brand-navy); letter-spacing: -0.01em;
+  transition: background 0.2s; text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+.feat-accordion-trigger:hover { background: var(--off-white); }
+.feat-accordion-trigger .fat-icon {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: var(--orange-glow);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.feat-accordion-trigger .fat-icon svg { width: 11px; height: 11px; color: var(--brand-orange); }
+.feat-accordion-trigger .fat-label { flex: 1; }
+.feat-accordion-trigger .fat-chevron {
+  width: 16px; height: 16px; color: var(--text-muted);
+  transition: transform 0.3s;
+}
+.feat-accordion-trigger.open .fat-chevron { transform: rotate(180deg); color: var(--brand-orange); }
+.feat-accordion-trigger.open { background: rgba(232,119,34,0.03); border-bottom: 1px solid var(--border); }
+
+.feat-accordion-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+.feat-mini-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+@media (min-width: 540px) { .feat-mini-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .feat-mini-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.feat-mini-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px 16px; background: var(--white);
+  transition: background 0.15s;
+}
+.feat-mini-item:hover { background: var(--off-white); }
+.feat-mini-icon {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: var(--orange-glow);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.feat-mini-icon svg { width: 13px; height: 13px; color: var(--brand-orange); }
+.feat-mini-title {
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  color: var(--brand-navy); margin-bottom: 2px;
+}
+.feat-mini-desc { font-size: 0.71rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Incl badge on plan cards */
+.plan-incl-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--text-muted); margin-bottom: 18px;
+  cursor: pointer; transition: color 0.15s;
+}
+.plan-incl-badge:hover { color: var(--brand-orange); }
+.plan-incl-badge svg { width: 11px; height: 11px; }
+.featured-p .plan-incl-badge { color: rgba(255,255,255,0.35); }
+.premium-p .plan-incl-badge { color: rgba(255,255,255,0.35); }
+
+/* ═══════════════════════════════════════
+   PAYMENT METHODS — INLINE BELOW PLANS
+═══════════════════════════════════════ */
+.pay-inline-wrap {
+  margin-top: 16px;
+  padding: 18px 20px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 12px; display: flex;
+  align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.pil-label {
+  font-family: var(--font-display); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted); white-space: nowrap; flex-shrink: 0;
+}
+.pil-logos { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; flex: 1; }
+
+.pil-logo-item {
+  position: relative; display: inline-flex;
+}
+.pil-logo-btn {
+  height: 36px; padding: 0 13px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--off-white);
+  cursor: pointer; display: flex; align-items: center; gap: 7px;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.pil-logo-btn:hover { border-color: var(--brand-orange); background: var(--white); box-shadow: 0 3px 14px rgba(0,0,0,0.08); }
+.pil-logo-btn svg { flex-shrink: 0; }
+.pil-logo-btn span { font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+
+/* Tooltip */
+.pil-tooltip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--brand-navy); border-radius: 10px;
+  padding: 12px 16px; min-width: 200px;
+  box-shadow: 0 8px 30px rgba(13,25,41,0.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 100; white-space: nowrap;
+}
+.pil-tooltip::after {
+  content: '';
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--brand-navy);
+}
+.pil-logo-item:hover .pil-tooltip {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+.pil-tt-name {
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--brand-orange); margin-bottom: 6px;
+}
+.pil-tt-row {
+  display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px;
+}
+.pil-tt-row:last-child { margin-bottom: 0; }
+.pil-tt-key {
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  font-weight: 600; min-width: 52px; flex-shrink: 0;
+}
+.pil-tt-val {
+  font-size: 0.73rem; color: var(--white); font-weight: 600;
+  font-family: 'Courier New', monospace; letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE & GENERAL OVERRIDES
+═══════════════════════════════════════ */
+@media (max-width: 480px) {
+  .pil-logo-btn span { display: none; }
+  .pil-logo-btn { padding: 0 10px; }
+  .pil-tooltip { min-width: 170px; left: 0; transform: translateX(0) translateY(4px); }
+  .pil-logo-item:hover .pil-tooltip { transform: translateX(0) translateY(0); }
+  .pil-tooltip::after { left: 20px; transform: none; }
+}
+</style>
 </head>
 <body>
 
 <div id="nav-include"></div>
 
 <!-- ═══════════════════════════════════════════════════
-     HERO — Two-column: text left, live pricing widget right
+     HERO
 ═══════════════════════════════════════════════════ -->
 <section class="page-hero" style="padding-bottom:60px;overflow:hidden;position:relative;">
 
@@ -49,7 +588,6 @@
           12 industries. Hourly rates starting at <strong style="color:var(--white);">$5/hr</strong>. No contracts, no setup fees — just clean back office support that scales with you.
         </p>
 
-        <!-- Trust stats row -->
         <div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:36px;">
           <div>
             <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--brand-orange);line-height:1;letter-spacing:-0.03em;">12</div>
@@ -73,95 +611,95 @@
         </div>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <!-- CHANGED: "Show Pricing" -->
           <a href="#sect-configure" class="btn btn-primary btn-lg" onclick="document.getElementById('sect-configure').scrollIntoView({behavior:'smooth'});return false;">
-            Get My Price
+            Show Pricing
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
-          <a href="contact.html" class="btn btn-ghost-white btn-lg">Talk to a Human</a>
+          <!-- CHANGED: WhatsApp link -->
+          <a href="https://wa.me/923311419141?text=I%20wanna%20talk%20with%20a%20live%20agent" target="_blank" rel="noopener" class="btn btn-ghost-white btn-lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.25 2 2 6.25 2 11.5c0 1.84.5 3.57 1.37 5.04L2 22l5.56-1.35A9.45 9.45 0 0011.5 21C16.75 21 21 16.75 21 11.5S16.75 2 11.5 2z"/></svg>
+            Talk to a Human
+          </a>
         </div>
       </div>
 
-      <!-- RIGHT — Live pricing preview widget -->
+      <!-- RIGHT — Interactive Savings Calculator -->
       <div class="hero-pw-wrap">
-        <div class="hero-price-widget" style="width:100%;max-width:360px;">
+        <div class="hc-outer">
+          <div class="hc-card" id="hc-card">
 
-          <!-- Floating stat: No contracts -->
-          <div class="hpw-stat-float sf-a">
-            <div class="hpw-sf-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg>
+            <!-- Header -->
+            <div class="hc-head">
+              <div class="hc-live-badge">
+                <span class="hc-dot"></span>
+                Savings Calculator
+              </div>
+              <div class="hc-head-label">vs. in-house dispatcher</div>
             </div>
-            <div>
-              <div class="hpw-sf-num">No Contracts</div>
-              <div class="hpw-sf-lbl">Cancel anytime</div>
+
+            <!-- Fleet slider -->
+            <div class="hc-ctrl">
+              <div class="hc-ctrl-top">
+                <span class="hc-ctrl-lbl">Fleet Size</span>
+                <span class="hc-ctrl-val" id="hc-fleet-label">3 trucks</span>
+              </div>
+              <div class="hc-range-wrap">
+                <input type="range" id="hc-slider" min="1" max="15" value="3" class="hc-range">
+                <div class="hc-range-fill" id="hc-range-fill" style="width:14.3%"></div>
+              </div>
+              <div class="hc-range-marks">
+                <span>1</span><span>5</span><span>10</span><span>15</span>
+              </div>
             </div>
+
+            <!-- Comparison -->
+            <div class="hc-compare">
+              <div class="hc-col hc-col-bad">
+                <div class="hc-col-label">In-House Cost</div>
+                <div class="hc-col-amount" id="hc-inhouse">$3,500</div>
+                <div class="hc-col-period">/month</div>
+              </div>
+              <div class="hc-divider"><div class="hc-vs">vs</div></div>
+              <div class="hc-col hc-col-good">
+                <div class="hc-col-label">Haulxify</div>
+                <div class="hc-col-amount" id="hc-ours">$748</div>
+                <div class="hc-col-period">/month</div>
+              </div>
+            </div>
+
+            <!-- Savings -->
+            <div class="hc-savings">
+              <div class="hc-save-top">
+                <span class="hc-save-label">You save monthly</span>
+              </div>
+              <div class="hc-save-row">
+                <span class="hc-save-pct" id="hc-pct">79%</span>
+                <span class="hc-save-amt" id="hc-amt">$2,752/mo</span>
+              </div>
+              <div class="hc-bar-track">
+                <div class="hc-bar-fill" id="hc-bar" style="width:79%"></div>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <button class="hc-cta" onclick="document.getElementById('sect-configure').scrollIntoView({behavior:'smooth'})">
+              Show My Pricing
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+
+            <!-- Trust row -->
+            <div class="hc-trust-row">
+              <span class="hc-trust-pill">✓ No contracts</span>
+              <span class="hc-trust-pill">✓ 24hr setup</span>
+              <span class="hc-trust-pill">✓ Cancel anytime</span>
+            </div>
+
           </div>
-
-          <!-- Main card -->
-          <div class="hpw-card">
-            <div class="hpw-label">
-              <span class="hpw-label-dot"></span>
-              Live Pricing Preview
-            </div>
-            <div class="hpw-rate-row">
-              <span class="hpw-sym">$</span>
-              <span class="hpw-num" id="hero-rate">5</span>
-              <span class="hpw-unit">/hr</span>
-            </div>
-
-            <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-              <div style="flex:1;background:rgba(232,119,34,0.12);border:1px solid rgba(232,119,34,0.2);border-radius:10px;padding:12px;min-width:90px;">
-                <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--brand-orange);line-height:1;">20%</div>
-                <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:3px;">Max savings</div>
-              </div>
-              <div style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;min-width:90px;">
-                <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--white);line-height:1;">$748</div>
-                <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:3px;">Monthly from</div>
-              </div>
-            </div>
-
-            <div class="hpw-features">
-              <div class="hpw-feat">
-                <div class="hpw-feat-dot">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                Dedicated agents assigned
-              </div>
-              <div class="hpw-feat">
-                <div class="hpw-feat-dot">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                All 12 industries covered
-              </div>
-              <div class="hpw-feat">
-                <div class="hpw-feat-dot">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                Up and running in 24 hours
-              </div>
-              <div class="hpw-feat">
-                <div class="hpw-feat-dot">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                Weekends &amp; holidays not billed
-              </div>
-            </div>
-          </div>
-
-          <!-- Floating stat: Active clients -->
-          <div class="hpw-stat-float sf-b">
-            <div class="hpw-sf-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-            </div>
-            <div>
-              <div class="hpw-sf-num">Save 20%</div>
-              <div class="hpw-sf-lbl">On quarterly plan</div>
-            </div>
-          </div>
-
         </div>
       </div>
 
-    </div><!-- /page-hero-grid -->
+    </div>
   </div>
 </section>
 
@@ -178,16 +716,15 @@
       <p>Select your industry, tell us your fleet size, and pick a billing cycle. Pricing updates live.</p>
     </div>
 
-    <!-- ── Step 1: Industry Selector ── -->
+    <!-- ── Step 1: Industry Selector (minimal redesign) ── -->
     <div class="reveal" id="step1-wrap">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-        <div style="width:24px;height:24px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <span style="font-family:var(--font-display);font-size:0.7rem;font-weight:800;color:var(--white);">1</span>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-family:var(--font-display);font-size:0.65rem;font-weight:800;color:var(--white);">1</span>
         </div>
-        <span style="font-family:var(--font-display);font-size:0.875rem;font-weight:700;color:var(--brand-navy);">Select your industry</span>
+        <span style="font-family:var(--font-display);font-size:0.82rem;font-weight:700;color:var(--brand-navy);">Select your industry</span>
       </div>
 
-      <!-- Custom selector -->
       <div class="svc-selector">
         <div class="svc-trigger empty" id="svc-trigger" onclick="toggleSelector()">
           <div class="svc-trigger-icon" id="svc-trigger-icon">
@@ -195,138 +732,86 @@
           </div>
           <div class="svc-trigger-text">
             <div class="svc-trigger-label" id="svc-trigger-label">Choose your transport industry…</div>
-            <div class="svc-trigger-sub" id="svc-trigger-sub">12 industries supported — pricing specific to each</div>
+            <div class="svc-trigger-sub" id="svc-trigger-sub">12 industries supported</div>
           </div>
           <svg class="svc-trigger-chevron" id="svc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
 
-        <!-- Panel (dropdown on desktop / bottom sheet on mobile) -->
         <div class="svc-panel" id="svc-panel">
           <div class="svc-panel-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input class="svc-search-input" type="text" placeholder="Search industry…" id="svc-search" oninput="filterOptions(this.value)" autocomplete="off">
           </div>
           <div class="svc-options" id="svc-options">
-
             <div class="svc-opt" data-svc="trucking" onclick="pickSvc('trucking')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Trucking Back Office</div>
-                <div class="svc-opt-type">Per vehicle · Load board req.</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Trucking Back Office</div><div class="svc-opt-type">Per vehicle · Load board req.</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="broker" onclick="pickSvc('broker')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Freight Broker Support</div>
-                <div class="svc-opt-type">Hybrid pricing model</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Freight Broker Support</div><div class="svc-opt-type">Hybrid pricing model</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="tow" onclick="pickSvc('tow')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h2m14 0h2M5 17a2 2 0 100-4H3v4h2zm12 0a2 2 0 100-4"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Tow Truck Dispatch</div>
-                <div class="svc-opt-type">Per dispatch line</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Tow Truck Dispatch</div><div class="svc-opt-type">Per dispatch line</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="carhauler" onclick="pickSvc('carhauler')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="8" rx="2"/><circle cx="7" cy="16" r="2"/><circle cx="17" cy="16" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Car Hauler Operations</div>
-                <div class="svc-opt-type">Per carrier unit · Load board req.</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Car Hauler Operations</div><div class="svc-opt-type">Per carrier unit · Load board req.</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="animal" onclick="pickSvc('animal')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Animal Hauler Operations</div>
-                <div class="svc-opt-type">Per vehicle</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Animal Hauler Operations</div><div class="svc-opt-type">Per vehicle</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="dump" onclick="pickSvc('dump')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Dump Truck Back Office</div>
-                <div class="svc-opt-type">Per vehicle</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Dump Truck Back Office</div><div class="svc-opt-type">Per vehicle</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="sprinter" onclick="pickSvc('sprinter')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Sprinter / Cargo Van</div>
-                <div class="svc-opt-type">Per vehicle</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Sprinter / Cargo Van</div><div class="svc-opt-type">Per vehicle</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="moving" onclick="pickSvc('moving')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/><rect x="9" y="14" width="6" height="7"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Moving Company Support</div>
-                <div class="svc-opt-type">Per truck</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Moving Company Support</div><div class="svc-opt-type">Per truck</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="afterhours" onclick="pickSvc('afterhours')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">After-Hours Coverage</div>
-                <div class="svc-opt-type">Per agent line</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">After-Hours Coverage</div><div class="svc-opt-type">Per agent line</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="nemt" onclick="pickSvc('nemt')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">NEMT Billing &amp; Dispatch</div>
-                <div class="svc-opt-type">Per vehicle</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">NEMT Billing &amp; Dispatch</div><div class="svc-opt-type">Per vehicle</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="taxi" onclick="pickSvc('taxi')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h11l4 4h1a2 2 0 012 2v2m0 0a2 2 0 01-2 2H5"/><circle cx="7.5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Taxi Fleet Management</div>
-                <div class="svc-opt-type">Per agent line</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Taxi Fleet Management</div><div class="svc-opt-type">Per agent line</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
             <div class="svc-opt" data-svc="limo" onclick="pickSvc('limo')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="9" rx="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg></div>
-              <div style="flex:1">
-                <div class="svc-opt-name">Limo &amp; Black Car</div>
-                <div class="svc-opt-type">Per agent line</div>
-              </div>
+              <div style="flex:1"><div class="svc-opt-name">Limo &amp; Black Car</div><div class="svc-opt-type">Per agent line</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
-
           </div>
         </div>
       </div>
-      <!-- Mobile overlay for bottom sheet -->
       <div class="svc-overlay" id="svc-overlay" onclick="closeSelector()"></div>
     </div>
 
-    <!-- ── Configure section (revealed after industry pick) ── -->
+    <!-- ── Configure section ── -->
     <div class="px-configure" id="px-configure">
 
-      <!-- Context + back -->
       <div class="px-ctx-strip">
         <a class="px-back" onclick="resetSvc()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
@@ -338,13 +823,11 @@
         </div>
       </div>
 
-      <!-- Load board notice -->
       <div class="px-notice" id="px-lb-notice">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p><strong>Load board access required.</strong> Provide DAT, Truckstop, or similar access. No access? We source loads via our own accounts for an additional <strong>$100/month</strong> or <strong>$25/week</strong>.</p>
       </div>
 
-      <!-- Broker special panel -->
       <div class="broker-panel-p" id="px-broker-panel">
         <div class="section-header" style="margin-bottom:0">
           <span class="eyebrow">Broker Pricing</span>
@@ -352,51 +835,46 @@
           <p style="font-size:.9rem;max-width:480px;">Our agents earn alongside your load volume. The better the loads we book, the more we both win.</p>
         </div>
         <div class="broker-rate-row-p">
-          <div class="broker-box-p hl">
-            <div class="broker-big-p">$2.50</div>
-            <div class="broker-sub-p">Per hour / per agent</div>
-          </div>
+          <div class="broker-box-p hl"><div class="broker-big-p">$2.50</div><div class="broker-sub-p">Per hour / per agent</div></div>
           <div class="broker-plus-p">+</div>
-          <div class="broker-box-p hl">
-            <div class="broker-big-p">2.5%</div>
-            <div class="broker-sub-p">Per confirmed load</div>
-          </div>
+          <div class="broker-box-p hl"><div class="broker-big-p">2.5%</div><div class="broker-sub-p">Per confirmed load</div></div>
         </div>
         <button class="btn btn-primary" onclick="openModal('broker')">Get a Freight Broker Quote</button>
       </div>
 
-      <!-- Step 2: Quantity -->
+      <!-- Step 2: Quantity — MINIMAL REDESIGN -->
       <div id="px-std-panel">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-          <div style="width:24px;height:24px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="font-family:var(--font-display);font-size:0.7rem;font-weight:800;color:var(--white);">2</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-family:var(--font-display);font-size:0.65rem;font-weight:800;color:var(--white);">2</span>
           </div>
-          <span style="font-family:var(--font-display);font-size:0.875rem;font-weight:700;color:var(--brand-navy);" id="px-qty-step-label">How many vehicles?</span>
+          <span style="font-family:var(--font-display);font-size:0.82rem;font-weight:700;color:var(--brand-navy);" id="px-qty-step-label">How many vehicles?</span>
         </div>
 
-        <div class="qty-row-p">
-          <div class="qty-left-p">
-            <div class="qty-title-p" id="qty-title">Number of Vehicles</div>
-            <div class="qty-hint-p" id="qty-hint">1st unit: <strong>$5.00/hr</strong> &nbsp;·&nbsp; 2nd–3rd: <strong>$3.50/hr each</strong></div>
+        <!-- Compact quantity row -->
+        <div class="qty-compact-wrap">
+          <div class="qty-compact-left">
+            <div class="qty-compact-title" id="qty-title">Number of Vehicles</div>
+            <div class="qty-compact-hint" id="qty-hint">1st unit: <strong>$5.00/hr</strong> · 2nd–3rd: <strong>$3.50/hr each</strong></div>
           </div>
-          <div class="qty-right-p">
-            <div class="qty-stepper-p">
-              <button class="qty-btn-p" id="btn-minus" onclick="changeQty(-1)" disabled>&#8722;</button>
-              <div class="qty-val-p" id="qty-display">1</div>
-              <button class="qty-btn-p" id="btn-plus" onclick="changeQty(1)">&#43;</button>
+          <div class="qty-compact-right">
+            <div class="qty-inline-stepper">
+              <button class="qis-btn" id="btn-minus" onclick="changeQty(-1)" disabled>−</button>
+              <div class="qis-val" id="qty-display">1</div>
+              <button class="qis-btn" id="btn-plus" onclick="changeQty(1)">+</button>
             </div>
-            <div class="qty-tiers-p">
-              <div class="qty-tier-p active" id="tier1">
+            <div class="qty-tiers-mini">
+              <div class="qty-tier-mini active" id="tier1">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="tier1-txt">1 unit · $5.00/hr</span>
+                <span id="tier1-txt">1 · $5/hr</span>
               </div>
-              <div class="qty-tier-p" id="tier2">
+              <div class="qty-tier-mini" id="tier2">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="tier2-txt">2–3 units · $3.50/hr</span>
+                <span id="tier2-txt">2–3 · $3.50/hr</span>
               </div>
-              <div class="qty-tier-p" id="tier3">
+              <div class="qty-tier-mini" id="tier3">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="tier3-txt">4+ · Custom bulk</span>
+                <span id="tier3-txt">4+ · Custom</span>
               </div>
             </div>
           </div>
@@ -409,12 +887,12 @@
 
         <!-- Step 3: Plans -->
         <div id="px-plans-wrap">
-          <div style="display:flex;align-items:center;gap:8px;margin:32px 0 20px;">
-            <div style="width:24px;height:24px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-family:var(--font-display);font-size:0.7rem;font-weight:800;color:var(--white);">3</span>
+          <div style="display:flex;align-items:center;gap:8px;margin:28px 0 18px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:var(--brand-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-family:var(--font-display);font-size:0.65rem;font-weight:800;color:var(--white);">3</span>
             </div>
-            <span style="font-family:var(--font-display);font-size:0.875rem;font-weight:700;color:var(--brand-navy);">Choose your billing cycle</span>
-            <span style="font-size:0.78rem;color:var(--text-muted);">— Features identical across all plans</span>
+            <span style="font-family:var(--font-display);font-size:0.82rem;font-weight:700;color:var(--brand-navy);">Choose your billing cycle</span>
+            <span style="font-size:0.75rem;color:var(--text-muted);">— Features identical across all plans</span>
           </div>
 
           <div class="plans-grid-p">
@@ -445,6 +923,11 @@
                 <div style="font-size:.72rem;color:var(--text-muted);margin-top:3px;" id="w-hrs">Based on 40 hrs/week</div>
               </div>
               <hr class="plan-div-p">
+              <!-- Services included badge -->
+              <div class="plan-incl-badge" onclick="openFeatures()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+                <span id="w-incl-badge">8 services included ↓</span>
+              </div>
               <ul class="plan-feats-p">
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Standard rate, no commitment</li>
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Invoice delivered every Friday</li>
@@ -489,6 +972,10 @@
                 <div class="plan-est-saved" id="m-saved">You save $132/month</div>
               </div>
               <hr class="plan-div-p">
+              <div class="plan-incl-badge" onclick="openFeatures()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+                <span id="m-incl-badge">8 services included ↓</span>
+              </div>
               <ul class="plan-feats-p">
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong>15% discount applied</strong></li>
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>176 hrs/month (8 hrs × 22 working days)</li>
@@ -534,6 +1021,10 @@
                 <div class="plan-est-saved" id="q-saved">You save $528 over 3 months</div>
               </div>
               <hr class="plan-div-p">
+              <div class="plan-incl-badge" onclick="openFeatures()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+                <span id="q-incl-badge">8 services included ↓</span>
+              </div>
               <ul class="plan-feats-p">
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong>20% discount — best rate available</strong></li>
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>528 hrs/quarter (3 months coverage)</li>
@@ -556,6 +1047,131 @@
             <span><strong>Weekly:</strong> Service pauses if payment not received by Monday — no late fees. &nbsp;|&nbsp; <strong>Monthly &amp; Quarterly:</strong> Paid in advance to lock in your discount and guarantee team allocation.</span>
           </div>
 
+          <!-- ═══ WHAT'S INCLUDED ACCORDION (replaces separate section) ═══ -->
+          <div class="feat-accordion" id="feat-accordion" style="display:none;">
+            <button class="feat-accordion-trigger" id="feat-trigger" onclick="toggleFeats()">
+              <div class="fat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              </div>
+              <span class="fat-label" id="feat-trigger-label">8 services included in every plan</span>
+              <svg class="fat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="feat-accordion-body" id="feat-body">
+              <div class="feat-mini-grid" id="feat-mini-grid"></div>
+            </div>
+          </div>
+
+          <!-- ═══ PAYMENT METHODS INLINE (replaces separate section) ═══ -->
+          <div class="pay-inline-wrap" id="pay-inline-wrap">
+            <div class="pil-label">Payment methods</div>
+            <div class="pil-logos">
+
+              <!-- Payoneer -->
+              <div class="pil-logo-item">
+                <button class="pil-logo-btn">
+                  <!-- Payoneer SVG Logo (brand recreated) -->
+                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="20" fill="#FF4800"/>
+                    <text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="#fff">P</text>
+                  </svg>
+                  <span style="color:#FF4800;">Payoneer</span>
+                </button>
+                <div class="pil-tooltip">
+                  <div class="pil-tt-name">Payoneer</div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Email</span><span class="pil-tt-val">[YOUR_PAYONEER_EMAIL]</span></div>
+                </div>
+              </div>
+
+              <!-- Elevate Pay -->
+              <div class="pil-logo-item">
+                <button class="pil-logo-btn">
+                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="20" fill="#00C47B"/>
+                    <text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="#fff">E</text>
+                  </svg>
+                  <span style="color:#00A86B;">Elevate Pay</span>
+                </button>
+                <div class="pil-tooltip">
+                  <div class="pil-tt-name">Elevate Pay</div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Account</span><span class="pil-tt-val">[YOUR_ELEVATE_ID]</span></div>
+                </div>
+              </div>
+
+              <!-- WorldFirst -->
+              <div class="pil-logo-item">
+                <button class="pil-logo-btn">
+                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="20" fill="#003087"/>
+                    <circle cx="20" cy="20" r="10" fill="none" stroke="#fff" stroke-width="2"/>
+                    <line x1="20" y1="10" x2="20" y2="30" stroke="#fff" stroke-width="1.5"/>
+                    <ellipse cx="20" cy="20" rx="5" ry="10" fill="none" stroke="#fff" stroke-width="1.5"/>
+                  </svg>
+                  <span style="color:#003087;">WorldFirst</span>
+                </button>
+                <div class="pil-tooltip">
+                  <div class="pil-tt-name">WorldFirst</div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Account</span><span class="pil-tt-val">[YOUR_WF_ACCOUNT]</span></div>
+                </div>
+              </div>
+
+              <!-- Western Union -->
+              <div class="pil-logo-item">
+                <button class="pil-logo-btn">
+                  <svg width="28" height="20" viewBox="0 0 56 40" fill="none">
+                    <rect width="56" height="40" rx="6" fill="#FFDD00"/>
+                    <text x="28" y="28" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="18" fill="#000">WU</text>
+                  </svg>
+                  <span style="color:#222;">Western Union</span>
+                </button>
+                <div class="pil-tooltip">
+                  <div class="pil-tt-name">Western Union</div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Name</span><span class="pil-tt-val">[RECEIVER_NAME]</span></div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Country</span><span class="pil-tt-val">Pakistan</span></div>
+                </div>
+              </div>
+
+              <!-- MoneyGram -->
+              <div class="pil-logo-item">
+                <button class="pil-logo-btn">
+                  <svg width="28" height="20" viewBox="0 0 56 40" fill="none">
+                    <rect width="56" height="40" rx="6" fill="#CC0000"/>
+                    <text x="28" y="28" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="18" fill="#fff">MG</text>
+                  </svg>
+                  <span style="color:#CC0000;">MoneyGram</span>
+                </button>
+                <div class="pil-tooltip">
+                  <div class="pil-tt-name">MoneyGram</div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Name</span><span class="pil-tt-val">[RECEIVER_NAME]</span></div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Country</span><span class="pil-tt-val">Pakistan</span></div>
+                </div>
+              </div>
+
+              <!-- Wire Transfer -->
+              <div class="pil-logo-item">
+                <button class="pil-logo-btn">
+                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="20" fill="#1E3A5F"/>
+                    <rect x="10" y="14" width="20" height="14" rx="2" fill="none" stroke="#fff" stroke-width="1.8"/>
+                    <line x1="10" y1="19" x2="30" y2="19" stroke="#fff" stroke-width="1.5"/>
+                  </svg>
+                  <span style="color:#1E3A5F;">Wire Transfer</span>
+                </button>
+                <div class="pil-tooltip" style="min-width:230px;">
+                  <div class="pil-tt-name">Wire Transfer</div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">Bank</span><span class="pil-tt-val">[BANK_NAME]</span></div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">IBAN</span><span class="pil-tt-val">[YOUR_IBAN]</span></div>
+                  <div class="pil-tt-row"><span class="pil-tt-key">SWIFT</span><span class="pil-tt-val">[SWIFT_CODE]</span></div>
+                </div>
+              </div>
+
+            </div><!-- /pil-logos -->
+          </div><!-- /pay-inline-wrap -->
+
+          <div style="text-align:center;margin-top:10px;font-size:0.72rem;color:var(--text-muted);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="display:inline;vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Hover any logo to see account details. Our representative will confirm payment within 1 business day.
+          </div>
+
           <!-- Bulk custom CTA -->
           <div class="bulk-cta-p" id="px-bulk-cta">
             <div>
@@ -574,80 +1190,6 @@
 
 
 <!-- ═══════════════════════════════════════════════════
-     WHAT'S INCLUDED (reveals after industry pick)
-═══════════════════════════════════════════════════ -->
-<section class="section-off-white px-feats-section" id="px-feats-section" style="padding:64px 0;">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">What's Included</span>
-      <h2 id="px-feats-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">Everything we handle for you</h2>
-      <p id="px-feats-sub">Industry-specific back office support targeting your exact operational challenges.</p>
-    </div>
-    <div class="px-feats-grid" id="px-feats-grid"></div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════
-     PAYMENT METHODS
-═══════════════════════════════════════════════════ -->
-<section class="pay-strip-section">
-  <div class="container">
-    <div class="pay-strip-label">We accept all major payment methods</div>
-    <div class="pay-logos-row">
-
-      <div class="pay-logo-box">
-        <div class="pay-logo-name" style="color:#FF6600;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10" fill="#FF6600" opacity="0.15"/><path d="M12 6v6l4 2" stroke="#FF6600" stroke-width="2" stroke-linecap="round"/></svg>
-          Payoneer
-        </div>
-      </div>
-
-      <div class="pay-logo-box">
-        <div class="pay-logo-name" style="color:#00A86B;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:5px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#00A86B" opacity="0.15"/><path d="M12 7v5l3 3" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/></svg>
-          Elevate Pay
-        </div>
-      </div>
-
-      <div class="pay-logo-box">
-        <div class="pay-logo-name" style="color:#003087;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10" fill="#003087" opacity="0.12"/><path d="M8 12h8M12 8v8" stroke="#003087" stroke-width="2" stroke-linecap="round"/></svg>
-          WorldFirst
-        </div>
-      </div>
-
-      <div class="pay-logo-box">
-        <div class="pay-logo-name" style="color:#FFCC00;text-shadow:0 0 1px rgba(0,0,0,0.3);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:5px;"><path d="M3 10h18M3 14h18" stroke="#FFCC00" stroke-width="2" stroke-linecap="round"/><rect x="2" y="6" width="20" height="12" rx="2" stroke="#FFCC00" stroke-width="1.5"/></svg>
-          <span style="color:var(--brand-navy);">Western Union</span>
-        </div>
-      </div>
-
-      <div class="pay-logo-box">
-        <div class="pay-logo-name" style="color:#CC0000;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10" fill="#CC0000" opacity="0.12"/><path d="M8 12h8" stroke="#CC0000" stroke-width="2.5" stroke-linecap="round"/></svg>
-          MoneyGram
-        </div>
-      </div>
-
-      <div class="pay-logo-box">
-        <div class="pay-logo-name" style="color:var(--brand-navy);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:5px;"><path d="M3 10h18M3 14h18M6 6h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z" stroke="var(--brand-navy)" stroke-width="1.5"/></svg>
-          Wire Transfer
-        </div>
-      </div>
-
-    </div>
-    <div style="text-align:center;margin-top:14px;font-size:0.78rem;color:var(--text-muted);">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" style="display:inline;vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      Our representative will contact you within 1 business day to confirm payment after sign-up. We do not process payments online.
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════
      BOTTOM CTA
 ═══════════════════════════════════════════════════ -->
 <section class="section section-off-white">
@@ -657,7 +1199,11 @@
       <p>Describe your operation and we'll recommend the right plan — or build a custom one that fits precisely.</p>
       <div class="cta-banner-actions">
         <button class="btn btn-primary btn-lg" onclick="openModal('consult')">Get a Free Consultation</button>
-        <a href="contact.html" class="btn btn-ghost-white btn-lg">Talk to a Human</a>
+        <!-- CHANGED: WhatsApp link -->
+        <a href="https://wa.me/923311419141?text=I%20wanna%20talk%20with%20a%20live%20agent" target="_blank" rel="noopener" class="btn btn-ghost-white btn-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.25 2 2 6.25 2 11.5c0 1.84.5 3.57 1.37 5.04L2 22l5.56-1.35A9.45 9.45 0 0011.5 21C16.75 21 21 16.75 21 11.5S16.75 2 11.5 2z"/></svg>
+          Talk to a Human
+        </a>
       </div>
     </div>
   </div>
@@ -665,12 +1211,11 @@
 
 
 <!-- ═══════════════════════════════════════════════════
-     MODAL (bottom-sheet on mobile, centered on desktop)
+     MODAL
 ═══════════════════════════════════════════════════ -->
 <div class="px-modal-bg" id="px-modal-bg" onclick="handleMBg(event)">
   <div class="px-modal" id="px-modal" role="dialog" aria-modal="true">
 
-    <!-- Header -->
     <div class="px-modal-head">
       <div>
         <h3>Start Your Back Office Support</h3>
@@ -681,83 +1226,38 @@
       </button>
     </div>
 
-    <!-- Summary strip -->
     <div class="px-modal-strip" id="px-modal-strip">
-      <div class="px-ms-item">
-        <div class="px-ms-lbl">Service</div>
-        <div class="px-ms-val" id="ms-service">—</div>
-      </div>
-      <div class="px-ms-item" id="ms-unit-item">
-        <div class="px-ms-lbl" id="ms-unit-lbl">Units</div>
-        <div class="px-ms-val" id="ms-unit-val">1</div>
-      </div>
-      <div class="px-ms-item">
-        <div class="px-ms-lbl">Plan</div>
-        <div class="px-ms-val" id="ms-plan">Monthly</div>
-      </div>
-      <div class="px-ms-item">
-        <div class="px-ms-lbl">Est. Total</div>
-        <div class="px-ms-val" id="ms-total">—</div>
-      </div>
+      <div class="px-ms-item"><div class="px-ms-lbl">Service</div><div class="px-ms-val" id="ms-service">—</div></div>
+      <div class="px-ms-item" id="ms-unit-item"><div class="px-ms-lbl" id="ms-unit-lbl">Units</div><div class="px-ms-val" id="ms-unit-val">1</div></div>
+      <div class="px-ms-item"><div class="px-ms-lbl">Plan</div><div class="px-ms-val" id="ms-plan">Monthly</div></div>
+      <div class="px-ms-item"><div class="px-ms-lbl">Est. Total</div><div class="px-ms-val" id="ms-total">—</div></div>
     </div>
 
-    <!-- Form wrapper -->
     <div id="px-form-wrap" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
       <div class="px-modal-body">
         <form id="px-form">
-
           <div class="px-sect-label">Contact Information</div>
           <div class="px-form-2col">
-            <div class="form-group">
-              <label class="form-label">First Name <span style="color:var(--brand-orange)">*</span></label>
-              <input class="form-input" type="text" name="firstName" placeholder="John" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Last Name <span style="color:var(--brand-orange)">*</span></label>
-              <input class="form-input" type="text" name="lastName" placeholder="Smith" required>
-            </div>
+            <div class="form-group"><label class="form-label">First Name <span style="color:var(--brand-orange)">*</span></label><input class="form-input" type="text" name="firstName" placeholder="John" required></div>
+            <div class="form-group"><label class="form-label">Last Name <span style="color:var(--brand-orange)">*</span></label><input class="form-input" type="text" name="lastName" placeholder="Smith" required></div>
           </div>
           <div class="px-form-2col">
-            <div class="form-group">
-              <label class="form-label">Email <span style="color:var(--brand-orange)">*</span></label>
-              <input class="form-input" type="email" name="email" placeholder="you@company.com" required>
-            </div>
+            <div class="form-group"><label class="form-label">Email <span style="color:var(--brand-orange)">*</span></label><input class="form-input" type="email" name="email" placeholder="you@company.com" required></div>
             <div class="form-group">
               <label class="form-label">Primary Phone <span style="color:var(--brand-orange)">*</span></label>
               <input class="form-input" type="tel" name="phone" placeholder="+1 (555) 000-0000" required>
-              <div class="phone-wa-hint">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.25 2 2 6.25 2 11.5c0 1.84.5 3.57 1.37 5.04L2 22l5.56-1.35A9.45 9.45 0 0011.5 21C16.75 21 21 16.75 21 11.5S16.75 2 11.5 2z"/></svg>
-                WhatsApp-enabled? We'll use it for quick updates.
-              </div>
+              <div class="phone-wa-hint"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.25 2 2 6.25 2 11.5c0 1.84.5 3.57 1.37 5.04L2 22l5.56-1.35A9.45 9.45 0 0011.5 21C16.75 21 21 16.75 21 11.5S16.75 2 11.5 2z"/></svg>WhatsApp-enabled? We'll use it for quick updates.</div>
             </div>
           </div>
           <div class="px-form-2col">
-            <div class="form-group">
-              <label class="form-label">Secondary Phone / WhatsApp</label>
-              <input class="form-input" type="tel" name="phone2" placeholder="+1 (555) 000-0000">
-              <div class="phone-wa-hint">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.25 2 2 6.25 2 11.5c0 1.84.5 3.57 1.37 5.04L2 22l5.56-1.35A9.45 9.45 0 0011.5 21C16.75 21 21 16.75 21 11.5S16.75 2 11.5 2z"/></svg>
-                Alternate contact or WhatsApp number
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">State / Location</label>
-              <input class="form-input" type="text" name="state" placeholder="Texas, USA">
-            </div>
+            <div class="form-group"><label class="form-label">Secondary Phone / WhatsApp</label><input class="form-input" type="tel" name="phone2" placeholder="+1 (555) 000-0000"><div class="phone-wa-hint"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.25 2 2 6.25 2 11.5c0 1.84.5 3.57 1.37 5.04L2 22l5.56-1.35A9.45 9.45 0 0011.5 21C16.75 21 21 16.75 21 11.5S16.75 2 11.5 2z"/></svg>Alternate contact</div></div>
+            <div class="form-group"><label class="form-label">State / Location</label><input class="form-input" type="text" name="state" placeholder="Texas, USA"></div>
           </div>
-
           <div class="px-sect-label">Company Details</div>
           <div class="px-form-2col">
-            <div class="form-group">
-              <label class="form-label">Company Name</label>
-              <input class="form-input" type="text" name="company" placeholder="ABC Transport LLC">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Current TMS / Software</label>
-              <input class="form-input" type="text" name="tms" placeholder="DAT, McLeod, Excel, None…">
-            </div>
+            <div class="form-group"><label class="form-label">Company Name</label><input class="form-input" type="text" name="company" placeholder="ABC Transport LLC"></div>
+            <div class="form-group"><label class="form-label">Current TMS / Software</label><input class="form-input" type="text" name="tms" placeholder="DAT, McLeod, Excel, None…"></div>
           </div>
-
           <div class="px-sect-label">Service Selection</div>
           <div class="px-form-2col">
             <div class="form-group">
@@ -806,14 +1306,9 @@
               </select>
             </div>
           </div>
-
           <div class="px-form-1col">
-            <div class="form-group">
-              <label class="form-label">Biggest Back-Office Challenge</label>
-              <textarea class="form-textarea" name="challenge" placeholder="What's taking the most time or causing the most pain right now?"></textarea>
-            </div>
+            <div class="form-group"><label class="form-label">Biggest Back-Office Challenge</label><textarea class="form-textarea" name="challenge" placeholder="What's taking the most time or causing the most pain right now?"></textarea></div>
           </div>
-
           <div class="px-form-2col">
             <div class="form-group">
               <label class="form-label">How Did You Find Us?</label>
@@ -836,10 +1331,8 @@
               </select>
             </div>
           </div>
-
         </form>
       </div>
-
       <div class="px-modal-foot">
         <button class="px-submit-btn" id="modal-submit-btn" onclick="submitModal(event)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -852,11 +1345,8 @@
       </div>
     </div>
 
-    <!-- Success state -->
     <div class="px-modal-success" id="px-modal-success">
-      <div class="px-success-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
+      <div class="px-success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
       <h4>Request Received!</h4>
       <p>Our team has your details. A representative will reach out within <strong>1 business day</strong> to confirm your plan and payment details.</p>
       <div style="margin-top:20px;display:flex;align-items:center;gap:8px;justify-content:center;font-size:0.85rem;color:var(--text-muted);">
@@ -874,8 +1364,7 @@
 <script src="js/main.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════
-   HAULXIFY PRICING ENGINE v2
-   Replace GFORM_URL and GFIELDS entries with real IDs
+   HAULXIFY PRICING ENGINE v3
 ═══════════════════════════════════════════════════ */
 const GFORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID_HERE/formResponse';
 const GFIELDS = {
@@ -940,7 +1429,7 @@ const FEAT_ICONS = [
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>',
 ];
 
@@ -969,7 +1458,7 @@ function toggleSelector(){
     overlay.classList.add('show');
     document.getElementById('svc-search').value='';
     filterOptions('');
-    setTimeout(()=>document.getElementById('svc-search').focus(),100);
+    setTimeout(()=>document.getElementById('svc-search').focus(),80);
   }
 }
 function closeSelector(){
@@ -977,10 +1466,8 @@ function closeSelector(){
   document.getElementById('svc-trigger').classList.remove('active');
   document.getElementById('svc-overlay').classList.remove('show');
 }
-
 function filterOptions(q){
-  const opts=document.querySelectorAll('.svc-opt');
-  opts.forEach(o=>{
+  document.querySelectorAll('.svc-opt').forEach(o=>{
     const name=o.querySelector('.svc-opt-name').textContent.toLowerCase();
     const type=o.querySelector('.svc-opt-type').textContent.toLowerCase();
     o.classList.toggle('svc-opt-hidden',q&&!name.includes(q.toLowerCase())&&!type.includes(q.toLowerCase()));
@@ -988,68 +1475,51 @@ function filterOptions(q){
 }
 
 function pickSvc(key){
-  STATE.svc=key;
-  STATE.qty=1;
+  STATE.svc=key; STATE.qty=1;
   closeSelector();
   const data=SVC[key];
-
-  // Update all selected states in dropdown
   document.querySelectorAll('.svc-opt').forEach(o=>o.classList.toggle('selected',o.dataset.svc===key));
-
-  // Update trigger
   const trigger=document.getElementById('svc-trigger');
-  trigger.classList.remove('empty');
-  trigger.classList.add('selected');
+  trigger.classList.remove('empty'); trigger.classList.add('selected');
   document.getElementById('svc-trigger-icon').innerHTML=SVC_ICONS[key]||SVC_ICONS.trucking;
   document.getElementById('svc-trigger-label').textContent=data.label;
-  document.getElementById('svc-trigger-sub').textContent=data.broker?'Hybrid pricing model':`Per ${data.ul} · Click to change`;
-
-  // Ctx label
+  document.getElementById('svc-trigger-sub').textContent=data.broker?'Hybrid pricing model':`Per ${data.ul}`;
   document.getElementById('px-ctx-label').textContent=data.label;
-
-  // Show/hide panels
   document.getElementById('px-lb-notice').classList.toggle('show',data.lb);
   document.getElementById('px-broker-panel').classList.toggle('show',data.broker);
   document.getElementById('px-std-panel').style.display=data.broker?'none':'block';
-
   if(!data.broker){
-    // Unit labels
     const up=data.up,ul=data.ul;
     const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
     document.getElementById('qty-title').textContent=`Number of ${cap(up)}`;
-    document.getElementById('qty-hint').innerHTML=`1st ${ul}: <strong>$${fr(R1)}/hr</strong> &nbsp;&middot;&nbsp; 2nd–3rd: <strong>$${fr(R2)}/hr each</strong>`;
+    document.getElementById('qty-hint').innerHTML=`1st ${ul}: <strong>$${fr(R1)}/hr</strong> · 2nd–3rd: <strong>$${fr(R2)}/hr each</strong>`;
     document.getElementById('px-qty-step-label').textContent=`How many ${up}?`;
-    document.getElementById('tier1-txt').textContent=`1 ${ul} · $${fr(R1)}/hr`;
-    document.getElementById('tier2-txt').textContent=`2–3 ${up} · $${fr(R2)}/hr`;
-    document.getElementById('tier3-txt').textContent=`4+ · Custom bulk`;
+    document.getElementById('tier1-txt').textContent=`1 · $${fr(R1)}/hr`;
+    document.getElementById('tier2-txt').textContent=`2–3 · $${fr(R2)}/hr`;
+    document.getElementById('tier3-txt').textContent=`4+ · Custom`;
     setQty(1);
     renderPlans();
   }
-
-  // Reveal configure section
   const cfg=document.getElementById('px-configure');
-  cfg.classList.remove('visible');
-  void cfg.offsetWidth;
-  cfg.classList.add('visible');
+  cfg.classList.remove('visible'); void cfg.offsetWidth; cfg.classList.add('visible');
   setTimeout(()=>cfg.scrollIntoView({behavior:'smooth',block:'start'}),80);
-
   renderFeatures(key);
 }
 
 function resetSvc(){
   document.getElementById('px-configure').classList.remove('visible');
-  document.getElementById('px-feats-section').classList.remove('visible');
   document.getElementById('svc-trigger').classList.remove('selected');
   document.getElementById('svc-trigger').classList.add('empty');
   document.getElementById('svc-trigger-label').textContent='Choose your transport industry…';
-  document.getElementById('svc-trigger-sub').textContent='12 industries supported — pricing specific to each';
+  document.getElementById('svc-trigger-sub').textContent='12 industries supported';
   document.getElementById('svc-trigger-icon').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>';
   document.querySelectorAll('.svc-opt').forEach(o=>o.classList.remove('selected'));
   STATE.svc=null;
+  document.getElementById('feat-accordion').style.display='none';
   document.getElementById('sect-configure').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* ── Quantity ── */
+/* ── Quantity (updated for new stepper) ── */
 function changeQty(d){setQty(STATE.qty+d);}
 function setQty(n){
   if(n<1)return;
@@ -1071,8 +1541,11 @@ function renderPlans(){
   const q=STATE.qty; if(q>=4)return;
   const d=SVC[STATE.svc];
   const up=d.up,ul=d.ul, show=q>1;
-
-  // Weekly
+  const featCount=(FEATURES[STATE.svc]||[]).length;
+  const badgeTxt=`${featCount} services included ↓`;
+  ['w-incl-badge','m-incl-badge','q-incl-badge'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=badgeTxt;
+  });
   const wBase=baseRate(q),wTotal=wBase*HRS.weekly;
   document.getElementById('w-rate').textContent=fr(wBase);
   document.getElementById('w-note').textContent=show?`Combined rate · ${q} ${up}`:'Standard rate — no discount';
@@ -1080,10 +1553,7 @@ function renderPlans(){
   document.getElementById('w-bd').classList.toggle('show',show);
   document.getElementById('w-total').textContent=fc(wTotal);
   document.getElementById('w-hrs').textContent=`Based on 40 hrs/week · ${q} ${q===1?ul:up}`;
-
-  // Monthly
-  const mBT=baseTotal(q,'monthly'),mT=mBT*DISC.monthly,mSaved=mBT-mT;
-  const mEff=mT/HRS.monthly;
+  const mBT=baseTotal(q,'monthly'),mT=mBT*DISC.monthly,mSaved=mBT-mT,mEff=mT/HRS.monthly;
   document.getElementById('m-rate').textContent=fr(mEff);
   document.getElementById('m-note').textContent=show?`Combined eff. rate · ${q} ${up} · 15% off`:'Effective rate after 15% discount';
   setBreakdown('m',q,ul,DISC.monthly);
@@ -1091,10 +1561,7 @@ function renderPlans(){
   document.getElementById('m-total').textContent=fc(mT);
   document.getElementById('m-orig').textContent=fc(mBT);
   document.getElementById('m-saved').textContent=`You save ${fc(mSaved)}/month`;
-
-  // Quarterly
-  const qBT=baseTotal(q,'quarterly'),qT=qBT*DISC.quarterly,qSaved=qBT-qT;
-  const qEff=qT/HRS.quarterly;
+  const qBT=baseTotal(q,'quarterly'),qT=qBT*DISC.quarterly,qSaved=qBT-qT,qEff=qT/HRS.quarterly;
   document.getElementById('q-rate').textContent=fr(qEff);
   document.getElementById('q-note').textContent=show?`Combined eff. rate · ${q} ${up} · 20% off`:'Effective rate after 20% discount';
   setBreakdown('q',q,ul,DISC.quarterly);
@@ -1118,23 +1585,52 @@ function setBreakdown(p,q,ul,disc){
   }
 }
 
-/* ── Features ── */
+/* ── Features Accordion (replaces separate section) ── */
 function renderFeatures(key){
   const d=SVC[key];
-  document.getElementById('px-feats-title').textContent=`Everything included with ${d.label}`;
-  const grid=document.getElementById('px-feats-grid');
-  grid.innerHTML=(FEATURES[key]||[]).map((f,i)=>`
-    <div class="px-feat-item">
-      <div class="px-feat-icon">${FEAT_ICONS[i%FEAT_ICONS.length]}</div>
+  const feats=FEATURES[key]||[];
+  document.getElementById('feat-trigger-label').textContent=`${feats.length} services included in every plan — ${d.label}`;
+  const grid=document.getElementById('feat-mini-grid');
+  grid.innerHTML=feats.map((f,i)=>`
+    <div class="feat-mini-item">
+      <div class="feat-mini-icon">${FEAT_ICONS[i%FEAT_ICONS.length]}</div>
       <div>
-        <div class="px-feat-title">${f[0]}</div>
-        <p class="px-feat-desc">${f[1]}</p>
+        <div class="feat-mini-title">${f[0]}</div>
+        <div class="feat-mini-desc">${f[1]}</div>
       </div>
     </div>`).join('');
-  const sec=document.getElementById('px-feats-section');
-  sec.classList.remove('visible');
-  void sec.offsetWidth;
-  sec.classList.add('visible');
+  const acc=document.getElementById('feat-accordion');
+  acc.style.display='block';
+  // Close and reset
+  const trigger=document.getElementById('feat-trigger');
+  const body=document.getElementById('feat-body');
+  trigger.classList.remove('open');
+  body.style.maxHeight='0';
+}
+
+function toggleFeats(){
+  const trigger=document.getElementById('feat-trigger');
+  const body=document.getElementById('feat-body');
+  const isOpen=trigger.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight='0';
+    trigger.classList.remove('open');
+  } else {
+    body.style.maxHeight=body.scrollHeight+'px';
+    trigger.classList.add('open');
+  }
+}
+
+function openFeatures(){
+  const acc=document.getElementById('feat-accordion');
+  if(!acc||acc.style.display==='none')return;
+  const body=document.getElementById('feat-body');
+  const trigger=document.getElementById('feat-trigger');
+  if(!trigger.classList.contains('open')){
+    body.style.maxHeight=body.scrollHeight+'px';
+    trigger.classList.add('open');
+  }
+  setTimeout(()=>acc.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
 }
 
 /* ── Modal ── */
@@ -1187,12 +1683,88 @@ async function submitModal(e){
   btn.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send My Assessment Request`;
 }
 
-// Close selector on outside click (desktop)
 document.addEventListener('click',e=>{
   const panel=document.getElementById('svc-panel');
   const trigger=document.getElementById('svc-trigger');
   if(panel.classList.contains('open')&&!panel.contains(e.target)&&!trigger.contains(e.target)&&window.innerWidth>640){closeSelector();}
 });
+
+/* ═══════════════════════════════════════════════════
+   HERO SAVINGS CALCULATOR
+═══════════════════════════════════════════════════ */
+function calcHeroSavings(fleet) {
+  const DISC_M = 0.85, HRS_M = 176;
+  const R1 = 5.00, R2 = 3.50, RBULK = 2.80;
+  let baseRate;
+  if (fleet <= 1) baseRate = R1;
+  else if (fleet <= 2) baseRate = R1 + R2;
+  else if (fleet <= 3) baseRate = R1 + R2 + R2;
+  else baseRate = R1 + R2 + R2 + (fleet - 3) * RBULK;
+  const ourCost = Math.round(baseRate * HRS_M * DISC_M);
+  const inHouseCost = Math.ceil(fleet / 3) * 3500;
+  const savings = Math.max(0, inHouseCost - ourCost);
+  const savePct = Math.round((savings / inHouseCost) * 100);
+  return { ourCost, inHouseCost, savings, savePct };
+}
+
+const _numTimers = {};
+function animateNum(id, target, prefix='$') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  clearTimeout(_numTimers[id]);
+  const cur = parseInt(el.textContent.replace(/\D/g, '')) || 0;
+  const diff = target - cur;
+  const steps = 18;
+  let step = 0;
+  function tick() {
+    step++;
+    if (step >= steps) { el.textContent = prefix + target.toLocaleString(); return; }
+    const val = Math.round(cur + (diff / steps) * step);
+    el.textContent = prefix + val.toLocaleString();
+    _numTimers[id] = setTimeout(tick, 14);
+  }
+  tick();
+}
+
+function updateHeroCalc(fleet) {
+  const { ourCost, inHouseCost, savings, savePct } = calcHeroSavings(fleet);
+  const unit = fleet === 1 ? 'truck' : 'trucks';
+  document.getElementById('hc-fleet-label').textContent = fleet + ' ' + unit;
+  animateNum('hc-inhouse', inHouseCost);
+  animateNum('hc-ours', ourCost);
+  document.getElementById('hc-pct').textContent = savePct + '%';
+  document.getElementById('hc-amt').textContent = '$' + savings.toLocaleString() + '/mo';
+  const pct = ((fleet - 1) / 14) * 100;
+  document.getElementById('hc-range-fill').style.width = pct + '%';
+  const bar = document.getElementById('hc-bar');
+  if (bar) bar.style.width = Math.max(savePct, 5) + '%';
+}
+
+// Slider listener
+const hcSlider = document.getElementById('hc-slider');
+if (hcSlider) {
+  hcSlider.addEventListener('input', function() {
+    updateHeroCalc(parseInt(this.value));
+  });
+}
+updateHeroCalc(3);
+
+// 3D tilt on mouse move
+(function() {
+  const card = document.getElementById('hc-card');
+  if (!card) return;
+  card.addEventListener('mousemove', function(e) {
+    const r = this.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    this.style.transform = `perspective(700px) rotateX(${-y * 9}deg) rotateY(${x * 9}deg) translateZ(8px)`;
+    this.style.boxShadow = `${-x * 14}px ${-y * 14}px 40px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)`;
+  });
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateZ(0)';
+    this.style.boxShadow = '';
+  });
+})();
 </script>
 </body>
 </html>
