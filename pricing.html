@@ -257,6 +257,7 @@
   border-radius: 12px; box-shadow: 0 8px 32px rgba(13,25,41,0.14);
   z-index: 500; overflow: hidden;
   animation: p-fadeup 0.22s cubic-bezier(0.16,1,0.3,1) forwards;
+  filter: drop-shadow(0 6px 16px rgba(13,25,41,0.13));
 }
 .svc-panel.open { display: block; }
 .svc-panel-search {
@@ -556,19 +557,6 @@
   .px-success-icon { width: 56px; height: 56px; }
   .px-success-icon svg { width: 24px; height: 24px; }
   .px-modal-success h4 { font-size: 1.2rem; }
-}
-  .svc-panel {
-  margin-top: 2px;
-}
-#step1-wrap {
-  isolation: isolate;
-}
-  #step1-wrap::before {
-  content: '';
-  position: absolute;
-  top: -20px; left: 0; right: 0; height: 20px;
-  background: white;
-  z-index: 499;
 }
 </style>
 </head>
@@ -1424,9 +1412,9 @@ if(lbEl) lbEl.style.display = data.lb ? 'flex' : 'none';
     document.getElementById('qty-title').textContent=`Number of ${cap(up)}`;
     document.getElementById('qty-hint').innerHTML=`1st ${ul}: <strong>$${fr(R1)}/hr</strong> · 2nd–3rd: <strong>$${fr(R2)}/hr each</strong>`;
     document.getElementById('px-qty-step-label').textContent=`How many ${up}?`;
-    document.getElementById('tier1-txt').textContent=`1 · $${fr(R1)}/hr`;
-    document.getElementById('tier2-txt').textContent=`2–3 · $${fr(R2)}/hr`;
-    document.getElementById('tier3-txt').textContent=`4+ · Custom`;
+    const t1txt=document.getElementById('tier1-txt'); if(t1txt) t1txt.textContent=`1 · $${fr(R1)}/hr`;
+    const t2txt=document.getElementById('tier2-txt'); if(t2txt) t2txt.textContent=`2–3 · $${fr(R2)}/hr`;
+    const t3txt=document.getElementById('tier3-txt'); if(t3txt) t3txt.textContent=`4+ · Custom`;
     setQty(1);
     renderPlans();
   }
