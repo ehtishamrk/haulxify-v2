@@ -20,21 +20,21 @@
 ═══════════════════════════════════════ */
 .hero-pw-wrap {
   display: flex; align-items: center; justify-content: center;
-  position: relative; padding: 20px 0 20px 20px;
+  position: relative; padding: 16px 0 16px 16px;
 }
 @media (max-width: 768px) { .hero-pw-wrap { display: none; } }
 
 .hc-outer {
   position: relative;
-  width: 100%; max-width: 380px;
+  width: 100%; max-width: 300px;
   perspective: 1000px;
 }
 
 .hc-card {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.13);
-  border-radius: 20px;
-  padding: 28px 26px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 20px 18px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: transform 0.15s ease, box-shadow 0.3s ease;
@@ -42,20 +42,19 @@
   will-change: transform;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(232,119,34,0.12), 0 24px 60px rgba(0,0,0,0.35);
 }
 .hc-card::before {
   content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(232,119,34,0.18) 0%, transparent 70%);
+  position: absolute; top: -60px; right: -60px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(232,119,34,0.16) 0%, transparent 70%);
   pointer-events: none;
 }
 .hc-card::after {
   content: '';
-  position: absolute;
-  bottom: -60px; left: -60px;
-  width: 160px; height: 160px;
+  position: absolute; bottom: -50px; left: -50px;
+  width: 130px; height: 130px;
   background: radial-gradient(circle, rgba(30,58,95,0.4) 0%, transparent 70%);
   pointer-events: none;
 }
@@ -63,47 +62,41 @@
 /* Header */
 .hc-head {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 .hc-live-badge {
-  display: inline-flex; align-items: center; gap: 7px;
+  display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--font-display);
-  font-size: 0.62rem; font-weight: 700;
+  font-size: 0.6rem; font-weight: 700;
   letter-spacing: 0.13em; text-transform: uppercase;
   color: var(--brand-orange);
 }
 .hc-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
+  width: 6px; height: 6px; border-radius: 50%;
   background: var(--brand-orange);
   box-shadow: 0 0 0 0 rgba(232,119,34,0.5);
   animation: hcPulse 2s ease-in-out infinite;
 }
 @keyframes hcPulse {
   0%,100% { box-shadow: 0 0 0 0 rgba(232,119,34,0.5); }
-  50% { box-shadow: 0 0 0 6px rgba(232,119,34,0); }
-}
-.hc-head-label {
-  font-size: 0.72rem; color: rgba(255,255,255,0.35);
-  font-weight: 500;
+  50% { box-shadow: 0 0 0 5px rgba(232,119,34,0); }
 }
 
 /* Slider control */
-.hc-ctrl { margin-bottom: 20px; }
+.hc-ctrl { margin-bottom: 16px; }
 .hc-ctrl-top {
   display: flex; align-items: center;
-  justify-content: space-between; margin-bottom: 10px;
+  justify-content: space-between; margin-bottom: 8px;
 }
-.hc-ctrl-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+.hc-ctrl-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.45); font-weight: 500; }
 .hc-ctrl-val {
-  font-family: var(--font-display); font-size: 0.85rem;
+  font-family: var(--font-display); font-size: 0.78rem;
   font-weight: 800; color: var(--white);
   background: rgba(232,119,34,0.15);
   border: 1px solid rgba(232,119,34,0.25);
-  border-radius: 100px; padding: 3px 12px;
+  border-radius: 100px; padding: 2px 10px;
 }
-
-.hc-range-wrap { position: relative; height: 20px; display: flex; align-items: center; }
+.hc-range-wrap { position: relative; height: 18px; display: flex; align-items: center; }
 .hc-range {
   -webkit-appearance: none; appearance: none;
   width: 100%; height: 3px;
@@ -113,7 +106,7 @@
 }
 .hc-range::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 20px; height: 20px;
+  width: 18px; height: 18px;
   border-radius: 50%; background: var(--brand-orange);
   cursor: pointer;
   box-shadow: 0 0 0 4px rgba(232,119,34,0.2), 0 2px 8px rgba(232,119,34,0.5);
@@ -121,7 +114,7 @@
   position: relative; z-index: 3;
 }
 .hc-range::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 7px rgba(232,119,34,0.2), 0 2px 12px rgba(232,119,34,0.6);
+  box-shadow: 0 0 0 6px rgba(232,119,34,0.2), 0 2px 12px rgba(232,119,34,0.6);
   transform: scale(1.1);
 }
 .hc-range-fill {
@@ -129,67 +122,52 @@
   transform: translateY(-50%);
   height: 3px; border-radius: 100px;
   background: linear-gradient(90deg, var(--brand-orange), #f5a623);
-  pointer-events: none; z-index: 1;
-  transition: width 0.1s;
+  pointer-events: none; z-index: 1; transition: width 0.1s;
 }
 .hc-range-marks {
-  display: flex; justify-content: space-between;
-  margin-top: 6px;
+  display: flex; justify-content: space-between; margin-top: 5px;
 }
-.hc-range-marks span { font-size: 0.62rem; color: rgba(255,255,255,0.25); }
+.hc-range-marks span { font-size: 0.58rem; color: rgba(255,255,255,0.22); }
 
 /* Comparison */
 .hc-compare {
   display: flex; align-items: stretch; gap: 0;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px; overflow: hidden;
-  margin-bottom: 18px;
+  border-radius: 12px; overflow: hidden; margin-bottom: 14px;
 }
-.hc-col {
-  flex: 1; padding: 14px 16px; text-align: center;
-}
+.hc-col { flex: 1; padding: 11px 14px; text-align: center; }
 .hc-col-bad { border-right: 1px solid rgba(255,255,255,0.07); }
 .hc-col-label {
-  font-size: 0.68rem; color: rgba(255,255,255,0.35);
-  font-weight: 600; letter-spacing: 0.05em; margin-bottom: 5px;
+  font-size: 0.62rem; color: rgba(255,255,255,0.3);
+  font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px;
 }
 .hc-col-amount {
-  font-family: var(--font-display); font-size: 1.55rem;
+  font-family: var(--font-display); font-size: 1.2rem;
   font-weight: 800; line-height: 1; letter-spacing: -0.03em;
   transition: color 0.3s;
 }
-.hc-col-bad .hc-col-amount { color: rgba(255,255,255,0.45); text-decoration: line-through; text-decoration-color: rgba(255,80,80,0.5); }
+.hc-col-bad .hc-col-amount { color: rgba(255,255,255,0.4); text-decoration: line-through; text-decoration-color: rgba(255,80,80,0.45); }
 .hc-col-good .hc-col-amount { color: var(--brand-orange); }
-.hc-col-period { font-size: 0.65rem; color: rgba(255,255,255,0.25); margin-top: 2px; }
-.hc-divider {
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 6px;
-}
+.hc-col-period { font-size: 0.6rem; color: rgba(255,255,255,0.22); margin-top: 2px; }
+.hc-divider { display: flex; align-items: center; justify-content: center; padding: 0 5px; }
 .hc-vs {
-  font-family: var(--font-display); font-size: 0.62rem;
-  font-weight: 800; color: rgba(255,255,255,0.2);
-  letter-spacing: 0.08em;
+  font-family: var(--font-display); font-size: 0.58rem;
+  font-weight: 800; color: rgba(255,255,255,0.18); letter-spacing: 0.08em;
 }
 
 /* Savings */
-.hc-savings { margin-bottom: 20px; }
-.hc-save-top {
-  display: flex; align-items: baseline;
-  justify-content: space-between; margin-bottom: 8px;
-}
-.hc-save-label { font-size: 0.72rem; color: rgba(255,255,255,0.4); font-weight: 500; }
-.hc-save-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.hc-savings { margin-bottom: 16px; }
+.hc-save-label { font-size: 0.67rem; color: rgba(255,255,255,0.35); font-weight: 500; margin-bottom: 6px; }
+.hc-save-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 7px; }
 .hc-save-pct {
-  font-family: var(--font-display); font-size: 2rem;
+  font-family: var(--font-display); font-size: 1.65rem;
   font-weight: 800; color: #4ade80; line-height: 1;
   letter-spacing: -0.04em; transition: all 0.3s;
 }
-.hc-save-amt {
-  font-size: 0.8rem; color: rgba(255,255,255,0.45); font-weight: 500;
-}
+.hc-save-amt { font-size: 0.75rem; color: rgba(255,255,255,0.4); font-weight: 500; }
 .hc-bar-track {
-  height: 5px; border-radius: 100px;
+  height: 4px; border-radius: 100px;
   background: rgba(255,255,255,0.08); overflow: hidden;
 }
 .hc-bar-fill {
@@ -200,38 +178,34 @@
 
 /* CTA Button */
 .hc-cta {
-  width: 100%; padding: 13px 20px;
+  width: 100%; padding: 11px 16px;
   background: var(--brand-orange);
-  color: var(--white); border: none; border-radius: 11px;
-  font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  color: var(--white); border: none; border-radius: 10px;
+  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 20px rgba(232,119,34,0.35);
+  margin-bottom: 12px;
+  box-shadow: 0 3px 16px rgba(232,119,34,0.32);
 }
 .hc-cta:hover {
-  background: #d4680f;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(232,119,34,0.45);
+  background: #d4680f; transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(232,119,34,0.42);
 }
-.hc-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+.hc-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
 
 /* Trust pills */
-.hc-trust-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.hc-trust-row { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
 .hc-trust-pill {
-  font-size: 0.65rem; font-weight: 600;
-  color: rgba(255,255,255,0.35);
+  font-size: 0.6rem; font-weight: 600;
+  color: rgba(255,255,255,0.3);
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 100px; padding: 3px 10px;
-  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 100px; padding: 2px 8px; white-space: nowrap;
 }
-
 /* ═══════════════════════════════════════
    MINIMAL INDUSTRY SELECTOR
 ═══════════════════════════════════════ */
-.svc-selector { position: relative; margin-bottom: 28px; }
-
+.svc-selector { position: relative; margin-bottom: 28px; max-width: 440px; }
 .svc-trigger {
   width: 100%; display: flex; align-items: center; gap: 12px;
   padding: 12px 16px;
@@ -350,6 +324,7 @@
   padding: 14px 18px;
   background: var(--white); border: 1.5px solid var(--border);
   border-radius: 10px;
+  max-width: 440px; 
 }
 .qty-compact-left { flex: 1; min-width: 0; }
 .qty-compact-title {
@@ -398,158 +373,131 @@
 .qty-tier-mini svg { width: 9px; height: 9px; }
 
 /* ═══════════════════════════════════════
-   FEATURES ACCORDION (inline, below plans)
+   SERVICES INCLUDED CHIPS
 ═══════════════════════════════════════ */
-.feat-accordion {
-  margin-top: 12px; border: 1.5px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-  background: var(--white);
+.incl-chips-wrap {
+  margin-top: 20px;
+  padding: 16px 0 4px;
+  border-top: 1px solid var(--border);
 }
-.feat-accordion-trigger {
-  width: 100%; padding: 14px 20px;
-  display: flex; align-items: center; gap: 10px;
-  background: var(--white); border: none; cursor: pointer;
-  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
-  color: var(--brand-navy); letter-spacing: -0.01em;
-  transition: background 0.2s; text-align: left;
-  -webkit-tap-highlight-color: transparent;
-}
-.feat-accordion-trigger:hover { background: var(--off-white); }
-.feat-accordion-trigger .fat-icon {
-  width: 22px; height: 22px; border-radius: 6px;
-  background: var(--orange-glow);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.feat-accordion-trigger .fat-icon svg { width: 11px; height: 11px; color: var(--brand-orange); }
-.feat-accordion-trigger .fat-label { flex: 1; }
-.feat-accordion-trigger .fat-chevron {
-  width: 16px; height: 16px; color: var(--text-muted);
-  transition: transform 0.3s;
-}
-.feat-accordion-trigger.open .fat-chevron { transform: rotate(180deg); color: var(--brand-orange); }
-.feat-accordion-trigger.open { background: rgba(232,119,34,0.03); border-bottom: 1px solid var(--border); }
-
-.feat-accordion-body {
-  max-height: 0; overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1);
-}
-.feat-mini-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: var(--border);
-}
-@media (min-width: 540px) { .feat-mini-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 900px) { .feat-mini-grid { grid-template-columns: repeat(4, 1fr); } }
-
-.feat-mini-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 14px 16px; background: var(--white);
-  transition: background 0.15s;
-}
-.feat-mini-item:hover { background: var(--off-white); }
-.feat-mini-icon {
-  width: 30px; height: 30px; border-radius: 7px;
-  background: var(--orange-glow);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.feat-mini-icon svg { width: 13px; height: 13px; color: var(--brand-orange); }
-.feat-mini-title {
-  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
-  color: var(--brand-navy); margin-bottom: 2px;
-}
-.feat-mini-desc { font-size: 0.71rem; color: var(--text-muted); line-height: 1.5; }
-
-/* Incl badge on plan cards */
-.plan-incl-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 0.68rem; font-weight: 600;
-  color: var(--text-muted); margin-bottom: 18px;
-  cursor: pointer; transition: color 0.15s;
-}
-.plan-incl-badge:hover { color: var(--brand-orange); }
-.plan-incl-badge svg { width: 11px; height: 11px; }
-.featured-p .plan-incl-badge { color: rgba(255,255,255,0.35); }
-.premium-p .plan-incl-badge { color: rgba(255,255,255,0.35); }
-
-/* ═══════════════════════════════════════
-   PAYMENT METHODS — INLINE BELOW PLANS
-═══════════════════════════════════════ */
-.pay-inline-wrap {
-  margin-top: 16px;
-  padding: 18px 20px;
-  background: var(--white); border: 1.5px solid var(--border);
-  border-radius: 12px; display: flex;
-  align-items: center; gap: 16px; flex-wrap: wrap;
-}
-.pil-label {
+.incl-chips-header {
+  display: flex; align-items: center; gap: 6px;
   font-family: var(--font-display); font-size: 0.62rem; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-muted); white-space: nowrap; flex-shrink: 0;
+  color: var(--text-muted); margin-bottom: 10px;
 }
-.pil-logos { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; flex: 1; }
+.incl-chips-header svg { color: var(--brand-orange); flex-shrink: 0; }
+.incl-chips-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.incl-chip {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: 100px;
+  background: var(--white); border: 1px solid var(--border);
+  font-size: 0.73rem; font-weight: 600; color: var(--text-dark);
+  cursor: default; white-space: nowrap;
+  transition: border-color 0.18s, box-shadow 0.18s, color 0.18s;
+  user-select: none;
+}
+.incl-chip:hover {
+  border-color: rgba(232,119,34,0.4);
+  box-shadow: 0 2px 8px rgba(232,119,34,0.1);
+  color: var(--brand-navy);
+}
+.incl-chip svg { width: 10px; height: 10px; color: var(--brand-orange); flex-shrink: 0; }
+.incl-chip-tip {
+  display: none; position: absolute;
+  bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand-navy); color: rgba(255,255,255,0.85);
+  font-size: 0.7rem; font-weight: 400; line-height: 1.55;
+  padding: 9px 13px; border-radius: 9px;
+  min-width: 200px; max-width: 240px;
+  text-align: left; white-space: normal;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 200;
+  font-family: var(--font-body);
+}
+.incl-chip-tip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: var(--brand-navy);
+}
+.incl-chip:hover .incl-chip-tip { display: block; }
 
-.pil-logo-item {
-  position: relative; display: inline-flex;
+/* ═══════════════════════════════════════
+   PLAN FOOTER (notices + payment)
+═══════════════════════════════════════ */
+.plan-footer {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 10px;
 }
-.pil-logo-btn {
-  height: 36px; padding: 0 13px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--off-white);
-  cursor: pointer; display: flex; align-items: center; gap: 7px;
-  transition: all 0.2s;
+.pf-notice {
+  align-items: flex-start; gap: 7px;
+  font-size: 0.775rem; color: var(--text-muted); line-height: 1.65;
+  padding: 10px 14px;
+  background: rgba(232,119,34,0.04);
+  border: 1px solid rgba(232,119,34,0.15);
+  border-radius: 8px;
+}
+.pf-notice[style*="block"],
+.pf-notice:not([style*="none"]) { display: flex; }
+.pf-notice svg { color: var(--brand-orange); flex-shrink: 0; margin-top: 2px; }
+.pf-terms {
+  font-size: 0.775rem; color: var(--text-muted); line-height: 1.7; margin: 0;
+}
+.pf-pay-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.pf-pay-label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--text-muted); flex-shrink: 0;
+}
+.pf-logos { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.pf-logo-item { position: relative; }
+.pf-logo-btn {
+  height: 28px; padding: 0 9px;
+  border-radius: 6px; border: 1px solid var(--border);
+  background: var(--white); cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  transition: border-color 0.18s, box-shadow 0.18s;
   -webkit-tap-highlight-color: transparent;
 }
-.pil-logo-btn:hover { border-color: var(--brand-orange); background: var(--white); box-shadow: 0 3px 14px rgba(0,0,0,0.08); }
-.pil-logo-btn svg { flex-shrink: 0; }
-.pil-logo-btn span { font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
-
+.pf-logo-btn:hover { border-color: rgba(232,119,34,0.45); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.pf-logo-btn span { font-size: 0.67rem; font-weight: 700; color: var(--text-dark); white-space: nowrap; }
 /* Tooltip */
-.pil-tooltip {
-  position: absolute; bottom: calc(100% + 8px); left: 50%;
+.pf-tooltip {
+  position: absolute; bottom: calc(100% + 7px); left: 50%;
   transform: translateX(-50%) translateY(4px);
-  background: var(--brand-navy); border-radius: 10px;
-  padding: 12px 16px; min-width: 200px;
-  box-shadow: 0 8px 30px rgba(13,25,41,0.25);
+  background: var(--brand-navy); border-radius: 9px;
+  padding: 10px 14px; min-width: 190px;
+  box-shadow: 0 8px 28px rgba(13,25,41,0.22);
   opacity: 0; pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 100; white-space: nowrap;
+  transition: opacity 0.18s, transform 0.18s; z-index: 200;
 }
-.pil-tooltip::after {
-  content: '';
-  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-  border: 6px solid transparent; border-top-color: var(--brand-navy);
+.pf-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: var(--brand-navy);
 }
-.pil-logo-item:hover .pil-tooltip {
-  opacity: 1; transform: translateX(-50%) translateY(0);
-}
-.pil-tt-name {
-  font-family: var(--font-display); font-size: 0.7rem; font-weight: 800;
+.pf-logo-item:hover .pf-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+.pf-tt-name {
+  font-family: var(--font-display); font-size: 0.65rem; font-weight: 800;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--brand-orange); margin-bottom: 6px;
 }
-.pil-tt-row {
+.pf-tt-row {
   display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px;
+  font-size: 0.7rem;
 }
-.pil-tt-row:last-child { margin-bottom: 0; }
-.pil-tt-key {
-  font-size: 0.68rem; color: rgba(255,255,255,0.35);
-  font-weight: 600; min-width: 52px; flex-shrink: 0;
-}
-.pil-tt-val {
-  font-size: 0.73rem; color: var(--white); font-weight: 600;
-  font-family: 'Courier New', monospace; letter-spacing: 0.02em;
-}
-
-/* ═══════════════════════════════════════
-   RESPONSIVE & GENERAL OVERRIDES
-═══════════════════════════════════════ */
+.pf-tt-row:last-child { margin-bottom: 0; }
+.pf-tt-row span { color: rgba(255,255,255,0.35); font-weight: 600; min-width: 46px; flex-shrink: 0; }
+.pf-tt-row strong { color: var(--white); font-family: 'Courier New', monospace; font-size: 0.68rem; }
 @media (max-width: 480px) {
-  .pil-logo-btn span { display: none; }
-  .pil-logo-btn { padding: 0 10px; }
-  .pil-tooltip { min-width: 170px; left: 0; transform: translateX(0) translateY(4px); }
-  .pil-logo-item:hover .pil-tooltip { transform: translateX(0) translateY(0); }
-  .pil-tooltip::after { left: 20px; transform: none; }
+  .pf-logo-btn span { display: none; }
+  .pf-logo-btn { padding: 0 8px; }
 }
 </style>
 </head>
@@ -799,12 +747,6 @@
           <span id="px-ctx-label">Trucking Back Office</span>
         </div>
       </div>
-
-      <div class="px-notice" id="px-lb-notice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <p><strong>Load board access required.</strong> Provide DAT, Truckstop, or similar access. No access? We source loads via our own accounts for an additional <strong>$100/month</strong> or <strong>$25/week</strong>.</p>
-      </div>
-
       <div class="broker-panel-p" id="px-broker-panel">
         <div class="section-header" style="margin-bottom:0">
           <span class="eyebrow">Broker Pricing</span>
@@ -901,10 +843,6 @@
               </div>
               <hr class="plan-div-p">
               <!-- Services included badge -->
-              <div class="plan-incl-badge" onclick="openFeatures()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-                <span id="w-incl-badge">8 services included ↓</span>
-              </div>
               <ul class="plan-feats-p">
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Standard rate, no commitment</li>
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Invoice delivered every Friday</li>
@@ -949,10 +887,6 @@
                 <div class="plan-est-saved" id="m-saved">You save $132/month</div>
               </div>
               <hr class="plan-div-p">
-              <div class="plan-incl-badge" onclick="openFeatures()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-                <span id="m-incl-badge">8 services included ↓</span>
-              </div>
               <ul class="plan-feats-p">
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong>15% discount applied</strong></li>
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>176 hrs/month (8 hrs × 22 working days)</li>
@@ -998,10 +932,6 @@
                 <div class="plan-est-saved" id="q-saved">You save $528 over 3 months</div>
               </div>
               <hr class="plan-div-p">
-              <div class="plan-incl-badge" onclick="openFeatures()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-                <span id="q-incl-badge">8 services included ↓</span>
-              </div>
               <ul class="plan-feats-p">
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong>20% discount — best rate available</strong></li>
                 <li class="plan-feat-p"><div class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>528 hrs/quarter (3 months coverage)</li>
@@ -1018,136 +948,102 @@
 
           </div><!-- /plans-grid-p -->
 
-          <!-- Payment note -->
-          <div class="plan-pay-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span><strong>Weekly:</strong> Service pauses if payment not received by Monday — no late fees. &nbsp;|&nbsp; <strong>Monthly &amp; Quarterly:</strong> Paid in advance to lock in your discount and guarantee team allocation.</span>
-          </div>
+     <!-- ═══ PLAN FOOTER — notices + payment ═══ -->
+<div class="plan-footer">
 
-          <!-- ═══ WHAT'S INCLUDED ACCORDION (replaces separate section) ═══ -->
-          <div class="feat-accordion" id="feat-accordion" style="display:none;">
-            <button class="feat-accordion-trigger" id="feat-trigger" onclick="toggleFeats()">
-              <div class="fat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-              </div>
-              <span class="fat-label" id="feat-trigger-label">8 services included in every plan</span>
-              <svg class="fat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="feat-accordion-body" id="feat-body">
-              <div class="feat-mini-grid" id="feat-mini-grid"></div>
-            </div>
-          </div>
+  <!-- Load board (conditional) -->
+  <div class="pf-notice" id="px-lb-notice" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span><strong>Load board required.</strong> Provide DAT, Truckstop, or similar access. No access? We source via our own accounts for an additional <strong>$100/mo</strong> or <strong>$25/wk</strong>.</span>
+  </div>
 
-          <!-- ═══ PAYMENT METHODS INLINE (replaces separate section) ═══ -->
-          <div class="pay-inline-wrap" id="pay-inline-wrap">
-            <div class="pil-label">Payment methods</div>
-            <div class="pil-logos">
+  <!-- Payment terms -->
+  <p class="pf-terms">
+    <strong>Weekly:</strong> Invoice every Friday, due by Monday — service pauses if unpaid (no late fees).
+    &nbsp;·&nbsp;
+    <strong>Monthly &amp; Quarterly:</strong> Paid in advance to lock in your discount and guarantee team allocation.
+  </p>
 
-              <!-- Payoneer -->
-              <div class="pil-logo-item">
-                <button class="pil-logo-btn">
-                  <!-- Payoneer SVG Logo (brand recreated) -->
-                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
-                    <circle cx="20" cy="20" r="20" fill="#FF4800"/>
-                    <text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="#fff">P</text>
-                  </svg>
-                  <span style="color:#FF4800;">Payoneer</span>
-                </button>
-                <div class="pil-tooltip">
-                  <div class="pil-tt-name">Payoneer</div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Email</span><span class="pil-tt-val">[YOUR_PAYONEER_EMAIL]</span></div>
-                </div>
-              </div>
+  <!-- Payment methods -->
+  <div class="pf-pay-row">
+    <span class="pf-pay-label">Payments via</span>
 
-              <!-- Elevate Pay -->
-              <div class="pil-logo-item">
-                <button class="pil-logo-btn">
-                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
-                    <circle cx="20" cy="20" r="20" fill="#00C47B"/>
-                    <text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="#fff">E</text>
-                  </svg>
-                  <span style="color:#00A86B;">Elevate Pay</span>
-                </button>
-                <div class="pil-tooltip">
-                  <div class="pil-tt-name">Elevate Pay</div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Account</span><span class="pil-tt-val">[YOUR_ELEVATE_ID]</span></div>
-                </div>
-              </div>
+    <div class="pf-logos">
 
-              <!-- WorldFirst -->
-              <div class="pil-logo-item">
-                <button class="pil-logo-btn">
-                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
-                    <circle cx="20" cy="20" r="20" fill="#003087"/>
-                    <circle cx="20" cy="20" r="10" fill="none" stroke="#fff" stroke-width="2"/>
-                    <line x1="20" y1="10" x2="20" y2="30" stroke="#fff" stroke-width="1.5"/>
-                    <ellipse cx="20" cy="20" rx="5" ry="10" fill="none" stroke="#fff" stroke-width="1.5"/>
-                  </svg>
-                  <span style="color:#003087;">WorldFirst</span>
-                </button>
-                <div class="pil-tooltip">
-                  <div class="pil-tt-name">WorldFirst</div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Account</span><span class="pil-tt-val">[YOUR_WF_ACCOUNT]</span></div>
-                </div>
-              </div>
+      <div class="pf-logo-item">
+        <button class="pf-logo-btn">
+          <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#FF4800"/><text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="#fff">P</text></svg>
+          <span>Payoneer</span>
+        </button>
+        <div class="pf-tooltip">
+          <div class="pf-tt-name">Payoneer</div>
+          <div class="pf-tt-row"><span>Email</span><strong>[YOUR_PAYONEER_EMAIL]</strong></div>
+        </div>
+      </div>
 
-              <!-- Western Union -->
-              <div class="pil-logo-item">
-                <button class="pil-logo-btn">
-                  <svg width="28" height="20" viewBox="0 0 56 40" fill="none">
-                    <rect width="56" height="40" rx="6" fill="#FFDD00"/>
-                    <text x="28" y="28" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="18" fill="#000">WU</text>
-                  </svg>
-                  <span style="color:#222;">Western Union</span>
-                </button>
-                <div class="pil-tooltip">
-                  <div class="pil-tt-name">Western Union</div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Name</span><span class="pil-tt-val">[RECEIVER_NAME]</span></div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Country</span><span class="pil-tt-val">Pakistan</span></div>
-                </div>
-              </div>
+      <div class="pf-logo-item">
+        <button class="pf-logo-btn">
+          <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#00C47B"/><text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="#fff">E</text></svg>
+          <span>Elevate Pay</span>
+        </button>
+        <div class="pf-tooltip">
+          <div class="pf-tt-name">Elevate Pay</div>
+          <div class="pf-tt-row"><span>Account</span><strong>[YOUR_ELEVATE_ID]</strong></div>
+        </div>
+      </div>
 
-              <!-- MoneyGram -->
-              <div class="pil-logo-item">
-                <button class="pil-logo-btn">
-                  <svg width="28" height="20" viewBox="0 0 56 40" fill="none">
-                    <rect width="56" height="40" rx="6" fill="#CC0000"/>
-                    <text x="28" y="28" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="18" fill="#fff">MG</text>
-                  </svg>
-                  <span style="color:#CC0000;">MoneyGram</span>
-                </button>
-                <div class="pil-tooltip">
-                  <div class="pil-tt-name">MoneyGram</div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Name</span><span class="pil-tt-val">[RECEIVER_NAME]</span></div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Country</span><span class="pil-tt-val">Pakistan</span></div>
-                </div>
-              </div>
+      <div class="pf-logo-item">
+        <button class="pf-logo-btn">
+          <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#003087"/><circle cx="20" cy="20" r="10" fill="none" stroke="#fff" stroke-width="2"/><line x1="20" y1="10" x2="20" y2="30" stroke="#fff" stroke-width="1.5"/><ellipse cx="20" cy="20" rx="5" ry="10" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+          <span>WorldFirst</span>
+        </button>
+        <div class="pf-tooltip">
+          <div class="pf-tt-name">WorldFirst</div>
+          <div class="pf-tt-row"><span>Account</span><strong>[YOUR_WF_ACCOUNT]</strong></div>
+        </div>
+      </div>
 
-              <!-- Wire Transfer -->
-              <div class="pil-logo-item">
-                <button class="pil-logo-btn">
-                  <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
-                    <circle cx="20" cy="20" r="20" fill="#1E3A5F"/>
-                    <rect x="10" y="14" width="20" height="14" rx="2" fill="none" stroke="#fff" stroke-width="1.8"/>
-                    <line x1="10" y1="19" x2="30" y2="19" stroke="#fff" stroke-width="1.5"/>
-                  </svg>
-                  <span style="color:#1E3A5F;">Wire Transfer</span>
-                </button>
-                <div class="pil-tooltip" style="min-width:230px;">
-                  <div class="pil-tt-name">Wire Transfer</div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">Bank</span><span class="pil-tt-val">[BANK_NAME]</span></div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">IBAN</span><span class="pil-tt-val">[YOUR_IBAN]</span></div>
-                  <div class="pil-tt-row"><span class="pil-tt-key">SWIFT</span><span class="pil-tt-val">[SWIFT_CODE]</span></div>
-                </div>
-              </div>
+      <div class="pf-logo-item">
+        <button class="pf-logo-btn">
+          <svg width="22" height="16" viewBox="0 0 56 40"><rect width="56" height="40" rx="5" fill="#FFDD00"/><text x="28" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="16" fill="#000">WU</text></svg>
+          <span>Western Union</span>
+        </button>
+        <div class="pf-tooltip">
+          <div class="pf-tt-name">Western Union</div>
+          <div class="pf-tt-row"><span>Name</span><strong>[RECEIVER_NAME]</strong></div>
+          <div class="pf-tt-row"><span>Country</span><strong>Pakistan</strong></div>
+        </div>
+      </div>
 
-            </div><!-- /pil-logos -->
-          </div><!-- /pay-inline-wrap -->
+      <div class="pf-logo-item">
+        <button class="pf-logo-btn">
+          <svg width="22" height="16" viewBox="0 0 56 40"><rect width="56" height="40" rx="5" fill="#CC0000"/><text x="28" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="16" fill="#fff">MG</text></svg>
+          <span>MoneyGram</span>
+        </button>
+        <div class="pf-tooltip">
+          <div class="pf-tt-name">MoneyGram</div>
+          <div class="pf-tt-row"><span>Name</span><strong>[RECEIVER_NAME]</strong></div>
+          <div class="pf-tt-row"><span>Country</span><strong>Pakistan</strong></div>
+        </div>
+      </div>
 
-          <div style="text-align:center;margin-top:10px;font-size:0.72rem;color:var(--text-muted);">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="display:inline;vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Hover any logo to see account details. Our representative will confirm payment within 1 business day.
-          </div>
+      <div class="pf-logo-item">
+        <button class="pf-logo-btn">
+          <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#1E3A5F"/><rect x="10" y="14" width="20" height="14" rx="2" fill="none" stroke="#fff" stroke-width="1.8"/><line x1="10" y1="19" x2="30" y2="19" stroke="#fff" stroke-width="1.5"/></svg>
+          <span>Wire Transfer</span>
+        </button>
+        <div class="pf-tooltip" style="min-width:210px;">
+          <div class="pf-tt-name">Wire Transfer</div>
+          <div class="pf-tt-row"><span>Bank</span><strong>[BANK_NAME]</strong></div>
+          <div class="pf-tt-row"><span>IBAN</span><strong>[YOUR_IBAN]</strong></div>
+          <div class="pf-tt-row"><span>SWIFT</span><strong>[SWIFT_CODE]</strong></div>
+        </div>
+      </div>
+
+    </div><!-- /pf-logos -->
+  </div><!-- /pf-pay-row -->
+
+</div><!-- /plan-footer -->
 
           <!-- Bulk custom CTA -->
           <div class="bulk-cta-p" id="px-bulk-cta">
@@ -1462,7 +1358,8 @@ function pickSvc(key){
   document.getElementById('svc-trigger-label').textContent=data.label;
   document.getElementById('svc-trigger-sub').textContent=data.broker?'Hybrid pricing model':`Per ${data.ul}`;
   document.getElementById('px-ctx-label').textContent=data.label;
-  document.getElementById('px-lb-notice').classList.toggle('show',data.lb);
+const lbEl = document.getElementById('px-lb-notice');
+if(lbEl) lbEl.style.display = data.lb ? 'flex' : 'none';
   document.getElementById('px-broker-panel').classList.toggle('show',data.broker);
   document.getElementById('px-std-panel').style.display=data.broker?'none':'block';
   if(!data.broker){
@@ -1494,6 +1391,8 @@ function resetSvc(){
   STATE.svc=null;
   document.getElementById('feat-accordion').style.display='none';
   document.getElementById('sect-configure').scrollIntoView({behavior:'smooth',block:'start'});
+  const lbEl = document.getElementById('px-lb-notice');
+if(lbEl) lbEl.style.display = 'none';
 }
 
 /* ── Quantity (updated for new stepper) ── */
@@ -1518,11 +1417,6 @@ function renderPlans(){
   const q=STATE.qty; if(q>=4)return;
   const d=SVC[STATE.svc];
   const up=d.up,ul=d.ul, show=q>1;
-  const featCount=(FEATURES[STATE.svc]||[]).length;
-  const badgeTxt=`${featCount} services included ↓`;
-  ['w-incl-badge','m-incl-badge','q-incl-badge'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.textContent=badgeTxt;
-  });
   const wBase=baseRate(q),wTotal=wBase*HRS.weekly;
   document.getElementById('w-rate').textContent=fr(wBase);
   document.getElementById('w-note').textContent=show?`Combined rate · ${q} ${up}`:'Standard rate — no discount';
@@ -1564,52 +1458,16 @@ function setBreakdown(p,q,ul,disc){
 
 /* ── Features Accordion (replaces separate section) ── */
 function renderFeatures(key){
-  const d=SVC[key];
   const feats=FEATURES[key]||[];
-  document.getElementById('feat-trigger-label').textContent=`${feats.length} services included in every plan — ${d.label}`;
+  document.getElementById('feat-trigger-label').textContent=`${feats.length} services included in every plan`;
   const grid=document.getElementById('feat-mini-grid');
-  grid.innerHTML=feats.map((f,i)=>`
-    <div class="feat-mini-item">
-      <div class="feat-mini-icon">${FEAT_ICONS[i%FEAT_ICONS.length]}</div>
-      <div>
-        <div class="feat-mini-title">${f[0]}</div>
-        <div class="feat-mini-desc">${f[1]}</div>
-      </div>
-    </div>`).join('');
-  const acc=document.getElementById('feat-accordion');
-  acc.style.display='block';
-  // Close and reset
-  const trigger=document.getElementById('feat-trigger');
-  const body=document.getElementById('feat-body');
-  trigger.classList.remove('open');
-  body.style.maxHeight='0';
+  grid.innerHTML=feats.map((f)=>`
+    <span class="incl-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      ${f[0]}<span class="incl-chip-tip">${f[1]}</span>
+    </span>`).join('');
+  document.getElementById('feat-accordion').style.display='block';
 }
-
-function toggleFeats(){
-  const trigger=document.getElementById('feat-trigger');
-  const body=document.getElementById('feat-body');
-  const isOpen=trigger.classList.contains('open');
-  if(isOpen){
-    body.style.maxHeight='0';
-    trigger.classList.remove('open');
-  } else {
-    body.style.maxHeight=body.scrollHeight+'px';
-    trigger.classList.add('open');
-  }
-}
-
-function openFeatures(){
-  const acc=document.getElementById('feat-accordion');
-  if(!acc||acc.style.display==='none')return;
-  const body=document.getElementById('feat-body');
-  const trigger=document.getElementById('feat-trigger');
-  if(!trigger.classList.contains('open')){
-    body.style.maxHeight=body.scrollHeight+'px';
-    trigger.classList.add('open');
-  }
-  setTimeout(()=>acc.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
-}
-
 /* ── Modal ── */
 function openModal(plan){
   STATE.plan=plan;
