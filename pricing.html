@@ -13,7 +13,652 @@
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/services.css">
-  <link rel="stylesheet" href="css/pricing.css">
+
+  <!--
+    PAGE-SPECIFIC CSS ONLY
+    Everything below extends the existing design system.
+    No color variables, no scrollbars, no font imports, no global resets.
+    Only layout + components unique to this pricing page.
+  -->
+  <style>
+
+  /* ── Industry Card Grid ────────────────────────────────── */
+  .p-industry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: var(--space-5);
+  }
+  @media (min-width: 640px)  { .p-industry-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
+  @media (min-width: 1024px) { .p-industry-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .p-icard {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 14px;
+    cursor: pointer;
+    transition: border-color var(--duration-base) var(--ease-out),
+                box-shadow    var(--duration-base) var(--ease-out),
+                transform     var(--duration-base) var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  @media (min-width: 640px) { .p-icard { padding: 20px 18px; } }
+
+  .p-icard:hover,
+  .p-icard.selected {
+    border-color: var(--brand-orange);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .p-icard.selected {
+    background: linear-gradient(140deg, rgba(232,119,34,.06) 0%, var(--white) 100%);
+    box-shadow: 0 0 0 1px var(--brand-orange), var(--shadow-md);
+  }
+
+  .p-icard-icon {
+    width: 38px; height: 38px;
+    background: var(--off-white);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background var(--duration-base);
+  }
+  .p-icard.selected .p-icard-icon { background: var(--orange-glow); }
+  .p-icard-icon svg { width: 18px; height: 18px; color: var(--text-muted); transition: color var(--duration-base); }
+  .p-icard.selected .p-icard-icon svg { color: var(--brand-orange); }
+
+  .p-icard-name {
+    font-family: var(--font-display);
+    font-size: 0.875rem; font-weight: 700;
+    color: var(--brand-navy); line-height: 1.25;
+  }
+  .p-icard-meta {
+    font-size: 0.72rem; color: var(--text-muted);
+    font-weight: 500; display: flex; align-items: center; gap: 4px;
+  }
+  .p-icard-meta svg { width: 10px; height: 10px; }
+
+  /* Selected check badge */
+  .p-icard-check {
+    position: absolute; top: 10px; right: 10px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--brand-orange);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0);
+    transition: opacity var(--duration-fast), transform var(--duration-fast) var(--ease-out);
+  }
+  .p-icard.selected .p-icard-check { opacity: 1; transform: scale(1); }
+  .p-icard-check svg { width: 10px; height: 10px; color: var(--white); }
+
+  /* Special badge (load board) */
+  .p-icard-lb {
+    font-family: var(--font-display);
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--brand-orange);
+  }
+
+  /* ── Configure + Pricing Section (step 2+3) ─────────────── */
+  .p-configure {
+    display: none;
+    background: var(--off-white);
+    border-top: 1px solid var(--border);
+    padding: 48px 0 64px;
+    animation: p-fadeup .38s var(--ease-out) forwards;
+  }
+  .p-configure.visible { display: block; }
+  @keyframes p-fadeup {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Back link */
+  .p-back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.8125rem; font-weight: 600;
+    color: var(--brand-orange); cursor: pointer;
+    text-decoration: none; margin-bottom: 28px;
+    transition: color var(--duration-fast);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .p-back-link:hover { color: var(--orange-dark); }
+  .p-back-link svg { width: 14px; height: 14px; }
+
+  /* Section label strip (selected service) */
+  .p-context-strip {
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .p-ctx-tag {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--brand-navy); color: var(--white);
+    border-radius: var(--radius-full); padding: 6px 14px;
+    font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  }
+  .p-ctx-tag svg { width: 12px; height: 12px; color: var(--brand-orange); }
+
+  /* ── Quantity Stepper ────────────────────────────────────── */
+  .p-qty-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .p-qty-left { display: flex; flex-direction: column; gap: 3px; }
+  .p-qty-label {
+    font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+    color: var(--brand-navy);
+  }
+  .p-qty-hint { font-size: 0.775rem; color: var(--text-muted); }
+  .p-qty-hint strong { color: var(--text-dark); }
+
+  .p-stepper {
+    display: flex; align-items: center;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .p-stepper-btn {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--off-white); border: none; cursor: pointer;
+    font-size: 1.25rem; font-weight: 700; color: var(--brand-navy);
+    transition: background var(--duration-fast), color var(--duration-fast);
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+  }
+  .p-stepper-btn:hover:not(:disabled) { background: var(--orange-glow); color: var(--brand-orange); }
+  .p-stepper-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .p-stepper-val {
+    min-width: 60px; text-align: center;
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 800;
+    color: var(--brand-navy);
+    border-left: 1.5px solid var(--border);
+    border-right: 1.5px solid var(--border);
+    padding: 0 10px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Tier pills */
+  .p-tier-pills { display: flex; gap: 7px; flex-wrap: wrap; }
+  .p-tier-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: var(--radius-full);
+    font-size: 0.75rem; font-weight: 600;
+    border: 1px solid var(--border);
+    background: var(--off-white); color: var(--text-muted);
+    transition: all var(--duration-fast);
+  }
+  .p-tier-pill.active {
+    background: var(--orange-glow);
+    border-color: rgba(232,119,34,.3);
+    color: var(--brand-orange);
+  }
+  .p-tier-pill svg { width: 12px; height: 12px; }
+
+  /* Custom bulk note */
+  .p-bulk-note {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-left: 4px solid var(--brand-orange);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    font-size: 0.875rem; color: var(--text-body); line-height: 1.65;
+    display: none; margin-bottom: 28px;
+  }
+  .p-bulk-note.show { display: block; }
+
+  /* ── Pricing Plans Grid ──────────────────────────────────── */
+  .p-plans-grid {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  @media (min-width: 900px) {
+    .p-plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+  }
+
+  .p-plan-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 28px 24px;
+    position: relative;
+    transition: box-shadow var(--duration-base) var(--ease-out),
+                transform var(--duration-base) var(--ease-out);
+    display: flex; flex-direction: column;
+  }
+  @media (min-width: 640px) { .p-plan-card { padding: 32px 28px; } }
+
+  .p-plan-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-3px); }
+
+  .p-plan-card.featured {
+    background: var(--brand-navy);
+    border-color: var(--brand-navy);
+    box-shadow: var(--shadow-xl);
+  }
+  .p-plan-card.featured:hover { transform: translateY(-5px); }
+
+  /* Featured badge */
+  .p-plan-badge {
+    display: none;
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--brand-orange); color: var(--white);
+    font-family: var(--font-display); font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 14px; border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+  .p-plan-card.featured .p-plan-badge { display: block; }
+
+  /* Plan name */
+  .p-plan-name {
+    font-family: var(--font-display); font-size: 0.68rem; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px;
+  }
+  .p-plan-card.featured .p-plan-name { color: rgba(255,255,255,.45); }
+
+  .p-plan-title {
+    font-family: var(--font-display); font-size: 1.2rem; font-weight: 800;
+    color: var(--brand-navy); letter-spacing: -0.02em; margin-bottom: 18px;
+  }
+  .p-plan-card.featured .p-plan-title { color: var(--white); }
+
+  /* Discount badge */
+  .p-plan-discount {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #10B981; color: var(--white);
+    font-family: var(--font-display); font-size: 0.68rem; font-weight: 800;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 4px 11px; border-radius: var(--radius-full);
+    margin-bottom: 18px; width: fit-content;
+  }
+  .p-plan-discount svg { width: 11px; height: 11px; }
+
+  /* Rate hero */
+  .p-plan-rate {
+    display: flex; align-items: baseline; gap: 3px;
+    margin-bottom: 5px;
+  }
+  .p-plan-rate-sym {
+    font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+    color: var(--brand-navy); padding-bottom: 5px;
+  }
+  .p-plan-card.featured .p-plan-rate-sym { color: rgba(255,255,255,.6); }
+
+  .p-plan-rate-num {
+    font-family: var(--font-display); font-size: 3.25rem; font-weight: 800;
+    color: var(--brand-navy); line-height: 1; letter-spacing: -0.04em;
+  }
+  .p-plan-card.featured .p-plan-rate-num { color: var(--brand-orange); }
+
+  .p-plan-rate-unit {
+    font-size: 0.875rem; color: var(--text-muted);
+    font-weight: 500; padding-bottom: 4px;
+  }
+  .p-plan-card.featured .p-plan-rate-unit { color: rgba(255,255,255,.35); }
+
+  .p-plan-rate-note {
+    font-size: 0.775rem; color: var(--text-muted); margin-bottom: 4px; line-height: 1.5;
+  }
+  .p-plan-card.featured .p-plan-rate-note { color: rgba(255,255,255,.38); }
+
+  /* Breakdown (shown for multi-unit) */
+  .p-plan-breakdown {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 10px 13px;
+    margin-bottom: 2px; display: none;
+  }
+  .p-plan-card.featured .p-plan-breakdown {
+    background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.1);
+  }
+  .p-plan-breakdown.show { display: block; }
+  .p-plan-breakdown-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.775rem; color: var(--text-muted); line-height: 1.7;
+  }
+  .p-plan-card.featured .p-plan-breakdown-row { color: rgba(255,255,255,.4); }
+  .p-plan-breakdown-row strong { color: var(--text-dark); }
+  .p-plan-card.featured .p-plan-breakdown-row strong { color: rgba(255,255,255,.75); }
+  .p-plan-breakdown-total {
+    display: flex; justify-content: space-between;
+    font-size: 0.775rem; font-weight: 700;
+    color: var(--text-dark); border-top: 1px solid var(--border);
+    padding-top: 5px; margin-top: 5px;
+  }
+  .p-plan-card.featured .p-plan-breakdown-total {
+    color: var(--white); border-color: rgba(255,255,255,.15);
+  }
+
+  /* Estimate box */
+  .p-plan-estimate {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 13px 15px; margin: 16px 0;
+  }
+  .p-plan-card.featured .p-plan-estimate {
+    background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.1);
+  }
+  .p-plan-est-lbl {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 5px;
+  }
+  .p-plan-card.featured .p-plan-est-lbl { color: rgba(255,255,255,.35); }
+  .p-plan-est-row { display: flex; align-items: baseline; gap: 8px; }
+  .p-plan-est-val {
+    font-family: var(--font-display); font-size: 1.35rem; font-weight: 800;
+    color: var(--brand-navy);
+  }
+  .p-plan-card.featured .p-plan-est-val { color: var(--white); }
+  .p-plan-est-period { font-size: 0.8rem; color: var(--text-muted); }
+  .p-plan-card.featured .p-plan-est-period { color: rgba(255,255,255,.35); }
+  .p-plan-est-orig { font-size: 0.85rem; color: var(--text-muted); text-decoration: line-through; }
+  .p-plan-saved { font-size: 0.8rem; color: #10B981; font-weight: 600; margin-top: 3px; }
+
+  /* Features list */
+  .p-plan-divider {
+    border: none; border-top: 1px solid var(--border); margin: 20px 0;
+  }
+  .p-plan-card.featured .p-plan-divider { border-color: rgba(255,255,255,.1); }
+
+  .p-plan-feats { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; flex: 1; }
+  .p-plan-feat {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 0.8125rem; color: var(--text-body); line-height: 1.5;
+  }
+  .p-plan-card.featured .p-plan-feat { color: rgba(255,255,255,.72); }
+  .p-plan-feat-check {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--orange-glow);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .p-plan-card.featured .p-plan-feat-check { background: rgba(232,119,34,.2); }
+  .p-plan-feat-check svg { width: 8px; height: 8px; color: var(--brand-orange); }
+
+  /* Plan CTA */
+  .p-plan-cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 14px 20px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+    border: none; cursor: pointer;
+    transition: background var(--duration-base) var(--ease-out),
+                transform  var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base);
+    -webkit-tap-highlight-color: transparent;
+    text-align: center; margin-top: auto;
+  }
+  .p-plan-cta svg { width: 15px; height: 15px; transition: transform var(--duration-fast); }
+  .p-plan-cta:hover svg { transform: translateX(3px); }
+
+  .p-plan-cta-light {
+    background: var(--off-white); color: var(--brand-navy);
+    border: 1.5px solid var(--border);
+  }
+  .p-plan-cta-light:hover { background: var(--white); border-color: rgba(13,25,41,.25); transform: translateY(-1px); }
+
+  .p-plan-cta-orange {
+    background: var(--brand-orange); color: var(--white);
+    box-shadow: var(--shadow-orange);
+  }
+  .p-plan-cta-orange:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(232,119,34,.4); }
+
+  .p-plan-cta-ghost {
+    background: rgba(255,255,255,.1); color: var(--white);
+    border: 1.5px solid rgba(255,255,255,.2);
+  }
+  .p-plan-cta-ghost:hover { background: rgba(255,255,255,.18); transform: translateY(-1px); }
+
+  /* Payment info note below cards */
+  .p-payment-note {
+    display: flex; align-items: flex-start; gap: 9px;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 13px 16px;
+    font-size: 0.775rem; color: var(--text-muted); line-height: 1.65;
+    margin-top: 16px;
+  }
+  .p-payment-note svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; color: var(--text-muted); }
+
+  /* ── Features Grid ───────────────────────────────────────── */
+  .p-feats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px; margin-top: 32px;
+  }
+  @media (min-width: 640px)  { .p-feats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .p-feat-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 16px; background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .p-feat-icon {
+    width: 34px; height: 34px; border-radius: var(--radius-sm);
+    background: var(--orange-glow);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .p-feat-icon svg { width: 15px; height: 15px; color: var(--brand-orange); }
+  .p-feat-title {
+    font-family: var(--font-display); font-size: 0.875rem; font-weight: 700;
+    color: var(--brand-navy); margin-bottom: 2px;
+  }
+  .p-feat-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+
+  /* ── Broker Special Panel ────────────────────────────────── */
+  .p-broker-panel {
+    display: none; background: var(--white);
+    border: 1.5px solid var(--border); border-radius: var(--radius-xl);
+    padding: 32px 28px; margin-bottom: 24px;
+  }
+  .p-broker-panel.show { display: block; }
+  .p-broker-rate-row {
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap; margin: 20px 0 16px;
+  }
+  .p-broker-rate-box {
+    flex: 1; min-width: 140px;
+    background: var(--off-white); border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 20px;
+    text-align: center;
+  }
+  .p-broker-rate-box.hl { border-color: var(--brand-orange); }
+  .p-broker-big {
+    font-family: var(--font-display); font-size: 2.5rem; font-weight: 800;
+    color: var(--brand-orange); line-height: 1; letter-spacing: -0.04em;
+    margin-bottom: 4px;
+  }
+  .p-broker-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+  .p-broker-plus {
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+    color: var(--text-muted); flex-shrink: 0;
+  }
+
+  /* ── Load-board notice ───────────────────────────────────── */
+  .p-lb-notice {
+    display: none; align-items: flex-start; gap: 12px;
+    background: rgba(232,119,34,.05);
+    border: 1px solid rgba(232,119,34,.2);
+    border-radius: var(--radius-md); padding: 14px 18px;
+    margin-bottom: 24px;
+  }
+  .p-lb-notice.show { display: flex; }
+  .p-lb-notice svg { width: 16px; height: 16px; color: var(--brand-orange); flex-shrink: 0; margin-top: 2px; }
+  .p-lb-notice p { font-size: 0.8125rem; color: var(--text-body); line-height: 1.65; margin: 0; }
+
+  /* ── Custom Bulk CTA ─────────────────────────────────────── */
+  .p-custom-cta {
+    display: none;
+    background: var(--brand-navy);
+    border-radius: var(--radius-xl); padding: 28px 32px;
+    flex-direction: column; gap: 16px;
+  }
+  @media (min-width: 640px) { .p-custom-cta { flex-direction: row; align-items: center; justify-content: space-between; } }
+  .p-custom-cta.show { display: flex; }
+  .p-custom-cta h4 {
+    font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+    color: var(--white); margin-bottom: 4px; letter-spacing: -0.02em;
+  }
+  .p-custom-cta p { font-size: 0.875rem; color: rgba(255,255,255,.5); margin: 0; }
+
+  /* ── Features section visibility ────────────────────────── */
+  .p-features-section {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 64px 0;
+  }
+  .p-features-section.visible { display: block; animation: p-fadeup .4s var(--ease-out); }
+
+  /* ── MODAL ───────────────────────────────────────────────── */
+  .p-modal-bg {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(13,25,41,.75);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--duration-base) var(--ease-out);
+  }
+  @media (min-width: 640px) {
+    .p-modal-bg { align-items: center; padding: 20px; }
+  }
+  .p-modal-bg.open { opacity: 1; pointer-events: all; }
+
+  .p-modal {
+    background: var(--white);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    width: 100%; max-width: 680px; max-height: 96vh;
+    display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 -20px 80px rgba(13,25,41,.3);
+    transform: translateY(100%);
+    transition: transform .4s var(--ease-out);
+  }
+  @media (min-width: 640px) {
+    .p-modal {
+      border-radius: var(--radius-xl);
+      transform: translateY(20px) scale(.97);
+      box-shadow: 0 40px 100px rgba(13,25,41,.3);
+    }
+  }
+  .p-modal-bg.open .p-modal { transform: none; }
+
+  .p-modal-head {
+    background: var(--brand-navy);
+    padding: 22px 24px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    flex-shrink: 0;
+  }
+  @media (min-width: 640px) { .p-modal-head { padding: 26px 32px; } }
+  .p-modal-head h3 {
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 800;
+    color: var(--white); margin-bottom: 3px; letter-spacing: -0.025em;
+  }
+  .p-modal-head p { font-size: 0.8rem; color: rgba(255,255,255,.45); margin: 0; }
+  .p-modal-close {
+    width: 34px; height: 34px; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15); border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: rgba(255,255,255,.6); flex-shrink: 0;
+    transition: background var(--duration-fast);
+  }
+  .p-modal-close:hover { background: rgba(255,255,255,.2); color: var(--white); }
+  .p-modal-close svg { width: 15px; height: 15px; }
+
+  /* Summary strip */
+  .p-modal-strip {
+    background: var(--orange-glow); border-bottom: 1px solid rgba(232,119,34,.18);
+    padding: 11px 24px; display: flex; gap: 0; flex-wrap: wrap; flex-shrink: 0;
+  }
+  @media (min-width: 640px) { .p-modal-strip { padding: 12px 32px; } }
+  .p-ms-item {
+    display: flex; flex-direction: column;
+    padding: 5px 16px; border-right: 1px solid rgba(232,119,34,.2);
+  }
+  .p-ms-item:first-child { padding-left: 0; }
+  .p-ms-item:last-child  { border-right: none; }
+  .p-ms-lbl { font-family: var(--font-display); font-size: 0.6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--brand-orange); }
+  .p-ms-val { font-size: 0.875rem; font-weight: 600; color: var(--brand-navy); }
+
+  /* Modal body */
+  .p-modal-body {
+    flex: 1; overflow-y: auto; padding: 24px;
+  }
+  @media (min-width: 640px) { .p-modal-body { padding: 28px 32px; } }
+  .p-modal-sect-label {
+    font-family: var(--font-display); font-size: 0.65rem; font-weight: 800;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
+    margin: 20px 0 12px; display: flex; align-items: center; gap: 10px;
+  }
+  .p-modal-sect-label:first-child { margin-top: 0; }
+  .p-modal-sect-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .p-form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
+  .p-form-1col { margin-bottom: 13px; }
+  @media (max-width: 500px) { .p-form-2col { grid-template-columns: 1fr; } }
+
+  /* Modal footer */
+  .p-modal-foot {
+    padding: 16px 24px 22px; border-top: 1px solid var(--border); flex-shrink: 0;
+  }
+  @media (min-width: 640px) { .p-modal-foot { padding: 16px 32px 24px; } }
+  .p-modal-submit {
+    width: 100%; padding: 15px;
+    background: var(--brand-navy); color: var(--white);
+    border: none; border-radius: var(--radius-md);
+    font-family: var(--font-display); font-size: 0.9375rem; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background var(--duration-base), transform var(--duration-base), box-shadow var(--duration-base);
+  }
+  .p-modal-submit:hover { background: var(--mid-navy); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .p-modal-submit svg { width: 16px; height: 16px; }
+  .p-modal-privacy {
+    text-align: center; font-size: 0.72rem; color: var(--text-muted);
+    margin-top: 9px; display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .p-modal-privacy svg { width: 11px; height: 11px; }
+
+  /* Success */
+  .p-modal-success {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 56px 32px; flex: 1;
+  }
+  .p-modal-success.show { display: flex; animation: p-fadeup .4s var(--ease-out); }
+  .p-success-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(16,185,129,.1); border: 2px solid #10B981;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+  }
+  .p-success-icon svg { width: 32px; height: 32px; color: #10B981; }
+  .p-modal-success h4 {
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+    color: var(--brand-navy); letter-spacing: -0.025em; margin-bottom: 10px;
+  }
+  .p-modal-success p { color: var(--text-muted); line-height: 1.75; max-width: 340px; margin: 0 auto; }
+
+  /* ── Mobile-specific touch UX ────────────────────────────── */
+  @media (max-width: 639px) {
+    .p-plans-grid { padding-bottom: 8px; }
+    .p-plan-card { border-radius: var(--radius-lg); }
+    .p-plan-rate-num { font-size: 2.75rem; }
+  }
+
+  /* ── Spin anim for submit loader ─────────────────────────── */
+  @keyframes p-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  .p-spinning { animation: p-spin .9s linear infinite; }
+
+  </style>
 </head>
 <body>
 
@@ -22,99 +667,169 @@
 <!-- ═══════════════════════════════════════════════════
      HERO
 ═══════════════════════════════════════════════════ -->
-<section class="prc-hero">
-  <img src="images/Pricing-Page-Hero.png" alt="Pricing" class="prc-hero-bg">
-  <div class="prc-hero-overlay"></div>
+<section class="page-hero" style="position:relative; padding-bottom:52px; overflow:hidden;">
 
-  <div class="container">
-    <div class="prc-hero-inner">
+  
 
-      <!-- Left -->
-      <div class="prc-hero-left prc-reveal">
-        <div class="breadcrumb" style="margin-bottom:14px">
-          <a href="index.html" style="color:rgba(255,255,255,0.55)">Home</a>
-          <span class="breadcrumb-sep" style="color:rgba(255,255,255,0.3)">›</span>
-          <span class="breadcrumb-current" style="color:rgba(255,255,255,0.75)">Pricing</span>
-        </div>
+  <img 
 
-        <div class="page-hero-tag" style="margin-bottom:16px">Transparent Pricing</div>
+    src="images/Pricing-Page-Hero.png" 
 
-        <h1>
-          Simple, honest pricing.<br>
-          <span>Built for transport.</span>
-        </h1>
+    alt="Pricing Operations" 
 
-        <p>
-          12 industries. Hourly rates starting at $5. No contracts, no setup fees, no surprises —
-          just clean back-office support that grows with your fleet.
-        </p>
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:0;"
 
-        <div class="prc-hero-trust prc-reveal-stagger">
-          <div class="prc-trust-chip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            No setup fees
-          </div>
-          <div class="prc-trust-chip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            No long-term contracts
-          </div>
-          <div class="prc-trust-chip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Team ready in 24 hrs
-          </div>
-          <div class="prc-trust-chip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Cancel anytime
-          </div>
-        </div>
+  />
 
-        <div style="margin-top:28px">
-          <a href="#pricing-wizard" class="btn btn-primary btn-lg" style="display:inline-flex;align-items:center;gap:8px">
-            See My Price
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
+
+
+  <div style="position:absolute; inset:0; background:linear-gradient(105deg,rgba(6,13,26,0.93) 0%,rgba(6,13,26,0.82) 42%,rgba(6,13,26,0.38) 68%,rgba(6,13,26,0.15) 100%); z-index:1;"></div>
+
+
+
+  <div class="container" style="position:relative; z-index:2;">
+
+    <div class="page-hero-inner" style="max-width:700px">
+
+
+
+      <div class="breadcrumb">
+
+        <a href="index.html">Home</a>
+
+        <span class="breadcrumb-sep">›</span>
+
+        <span class="breadcrumb-current">Pricing</span>
+
       </div>
 
-      <!-- Right — glassmorphic stats card -->
-      <div class="prc-hero-right prc-reveal">
-        <div class="prc-stat-card">
 
-          <div class="prc-live-row">
-            <div class="prc-live-dot"></div>
-            <div class="prc-live-label">Operations Active Now</div>
-          </div>
 
-          <div class="prc-stats-grid">
-            <div class="prc-stat-cell">
-              <div class="prc-stat-val">$5</div>
-              <div class="prc-stat-lbl">Starting hourly rate</div>
-            </div>
-            <div class="prc-stat-cell">
-              <div class="prc-stat-val">12</div>
-              <div class="prc-stat-lbl">Industries served</div>
-            </div>
-            <div class="prc-stat-cell">
-              <div class="prc-stat-val">&lt;24h</div>
-              <div class="prc-stat-lbl">Team assigned in</div>
-            </div>
-            <div class="prc-stat-cell">
-              <div class="prc-stat-val">98%</div>
-              <div class="prc-stat-lbl">Client satisfaction</div>
-            </div>
-          </div>
+      <div class="page-hero-tag">Transparent Pricing</div>
 
-          <div class="prc-review">
-            <div class="prc-review-stars">★★★★★</div>
-            <p class="prc-review-text">"Our deadhead miles dropped 30% in the first month. Best decision we made for the back office."</p>
-            <div class="prc-reviewer">— Mike T. · Owner, 6-truck fleet · Texas</div>
-          </div>
 
-          <div class="prc-savings-badge">
-            💰 Avg. $800+/month saved vs. in-house hiring
-          </div>
 
-        </div>
+      <h1 style="font-size:clamp(2rem,4vw,2.75rem); max-width:600px; color:#fff;">
+
+        Simple, honest pricing.<br>
+
+        <span>Built around your operation.</span>
+
+      </h1>
+
+
+
+      <p style="max-width:520px; margin-bottom:32px; color:rgba(255,255,255,0.8);">
+
+        12 industries. Hourly rates starting at $5. No contracts, no setup fees, no surprises — just clean back office support that grows with you.
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 1 — INDUSTRY SELECTOR
+═══════════════════════════════════════════════════ -->
+<section class="section-white" style="padding:56px 0 64px" id="sect-industry">
+  <div class="container">
+
+    <div class="section-header reveal" style="margin-bottom:8px">
+      <span class="eyebrow">Step 1 of 3</span>
+      <h2 style="font-size:clamp(1.5rem,2.5vw,2rem)">Select your industry</h2>
+      <p style="max-width:480px">Choose the service category that matches your operation. Pricing is specific to each industry.</p>
+    </div>
+
+    <div class="p-industry-grid reveal">
+
+      <div class="p-icard" data-svc="trucking" onclick="pickIndustry('trucking')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="p-icard-name">Trucking Back Office</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per vehicle</div>
+        <div class="p-icard-lb">Load board req.</div>
+      </div>
+
+      <div class="p-icard" data-svc="broker" onclick="pickIndustry('broker')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="p-icard-name">Freight Broker Support</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Hybrid pricing</div>
+      </div>
+
+      <div class="p-icard" data-svc="tow" onclick="pickIndustry('tow')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h2m14 0h2M5 17a2 2 0 100-4H3v4h2zm12 0a2 2 0 100-4"/></svg></div>
+        <div class="p-icard-name">Tow Truck Dispatch</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>Per dispatch line</div>
+      </div>
+
+      <div class="p-icard" data-svc="carhauler" onclick="pickIndustry('carhauler')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="8" rx="2"/><circle cx="7" cy="16" r="2"/><circle cx="17" cy="16" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg></div>
+        <div class="p-icard-name">Car Hauler Operations</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per carrier unit</div>
+        <div class="p-icard-lb">Load board req.</div>
+      </div>
+
+      <div class="p-icard" data-svc="animal" onclick="pickIndustry('animal')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+        <div class="p-icard-name">Animal Hauler Operations</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per vehicle</div>
+      </div>
+
+      <div class="p-icard" data-svc="dump" onclick="pickIndustry('dump')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+        <div class="p-icard-name">Dump Truck Back Office</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per vehicle</div>
+      </div>
+
+      <div class="p-icard" data-svc="sprinter" onclick="pickIndustry('sprinter')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg></div>
+        <div class="p-icard-name">Sprinter / Cargo Van</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per vehicle</div>
+      </div>
+
+      <div class="p-icard" data-svc="moving" onclick="pickIndustry('moving')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/><rect x="9" y="14" width="6" height="7"/></svg></div>
+        <div class="p-icard-name">Moving Company Support</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per truck</div>
+      </div>
+
+      <div class="p-icard" data-svc="afterhours" onclick="pickIndustry('afterhours')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
+        <div class="p-icard-name">After-Hours Coverage</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>Per agent line</div>
+      </div>
+
+      <div class="p-icard" data-svc="nemt" onclick="pickIndustry('nemt')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="p-icard-name">NEMT Billing &amp; Dispatch</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Per vehicle</div>
+      </div>
+
+      <div class="p-icard" data-svc="taxi" onclick="pickIndustry('taxi')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h11l4 4h1a2 2 0 012 2v2m0 0a2 2 0 01-2 2H5"/><circle cx="7.5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg></div>
+        <div class="p-icard-name">Taxi Fleet Management</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>Per agent line</div>
+      </div>
+
+      <div class="p-icard" data-svc="limo" onclick="pickIndustry('limo')">
+        <div class="p-icard-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="p-icard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="9" rx="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg></div>
+        <div class="p-icard-name">Limo &amp; Black Car</div>
+        <div class="p-icard-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>Per agent line</div>
       </div>
 
     </div>
@@ -123,402 +838,288 @@
 
 
 <!-- ═══════════════════════════════════════════════════
-     PRICING WIZARD
+     STEP 2 + 3 — CONFIGURE + PLANS  (reveals after industry pick)
 ═══════════════════════════════════════════════════ -->
-<section class="prc-wizard-section" id="pricing-wizard">
+<div class="p-configure" id="p-configure">
   <div class="container">
 
-    <!-- Step indicator -->
-    <div class="prc-steps prc-reveal" id="prc-steps">
-      <div class="prc-step active" id="step-indicator-1">
-        <div class="prc-step-num" id="stepnum-1">1</div>
-        <div class="prc-step-label">Industry</div>
-      </div>
-      <div class="prc-step" id="step-indicator-2">
-        <div class="prc-step-num" id="stepnum-2">2</div>
-        <div class="prc-step-label">Fleet Size</div>
-      </div>
-      <div class="prc-step" id="step-indicator-3">
-        <div class="prc-step-num" id="stepnum-3">3</div>
-        <div class="prc-step-label">Choose Plan</div>
+    <!-- Back + context strip -->
+    <a class="p-back-link" onclick="resetIndustry()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
+      Change industry
+    </a>
+
+    <div class="p-context-strip">
+      <div class="p-ctx-tag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="p-ctx-label">Trucking Back Office</span>
       </div>
     </div>
 
-    <!-- ── STEP 1: Industry ── -->
-    <div class="prc-panel active" id="panel-1">
-      <div class="prc-panel-head">
-        <div class="prc-panel-eyebrow">Step 1 of 3</div>
-        <div class="prc-panel-title">What's your industry?</div>
-        <div class="prc-panel-sub">We tailor pricing and the team to your exact operation. Select from 12 transport industries below.</div>
+    <!-- ── Freight Broker Special Layout ── -->
+    <div class="p-broker-panel" id="p-broker-panel">
+      <div class="section-header" style="margin-bottom:0">
+        <span class="eyebrow">Broker Pricing</span>
+        <h3 style="font-size:1.25rem;margin-bottom:8px">A unique model — built for volume</h3>
+        <p style="max-width:480px;font-size:.9rem">Our agents earn alongside your load volume. The better the loads we book, the more we both win.</p>
       </div>
-
-      <!-- Service selector trigger -->
-      <div class="prc-svc-trigger" id="svc-trigger" onclick="openSheet()">
-        <div class="prc-svc-icon-wrap" id="svc-trigger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <div class="p-broker-rate-row">
+        <div class="p-broker-rate-box hl">
+          <div class="p-broker-big">$2.50</div>
+          <div class="p-broker-sub">Per hour / per agent</div>
         </div>
-        <div class="prc-svc-text">
-          <div class="prc-svc-lbl">Your Industry</div>
-          <div class="prc-svc-val" id="svc-trigger-val">Tap to select your service type</div>
-        </div>
-        <div class="prc-svc-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="p-broker-plus">+</div>
+        <div class="p-broker-rate-box hl">
+          <div class="p-broker-big">2.5%</div>
+          <div class="p-broker-sub">Per confirmed load amount</div>
         </div>
       </div>
-
-      <!-- Load board notice -->
-      <div class="prc-lb-notice" id="prc-lb-notice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span><strong>Load board access required:</strong> Please provide access to your DAT, Truckstop, or similar load board. No board? We source through our own accounts for an additional <strong>$100/month</strong> or <strong>$25/week</strong>.</span>
-      </div>
-
-      <!-- Broker panel -->
-      <div id="prc-broker-panel" style="display:none">
-        <div class="prc-broker-panel">
-          <div class="prc-panel-eyebrow" style="margin-bottom:6px">Freight Broker Pricing</div>
-          <div class="prc-broker-title">A unique model built for volume</div>
-          <div class="prc-broker-sub">Our agents earn alongside your loads. The better the loads we help book, the more we both grow.</div>
-          <div class="prc-broker-rates">
-            <div class="prc-broker-rate-box">
-              <div class="prc-broker-big">$2.50</div>
-              <div class="prc-broker-small">Per hour / per agent</div>
-            </div>
-            <div class="prc-broker-plus">+</div>
-            <div class="prc-broker-rate-box">
-              <div class="prc-broker-big">2.5%</div>
-              <div class="prc-broker-small">Per confirmed load amount</div>
-            </div>
-          </div>
-          <button class="btn btn-primary" onclick="openModal('broker','broker',0,'broker')">Get a Freight Broker Quote</button>
-        </div>
-      </div>
-
-      <button class="prc-next-btn" id="step1-next" disabled onclick="goToStep(2)">
-        Continue to Fleet Size
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
+      <button class="btn btn-primary" onclick="openModal('broker','broker',0,'broker')">Get a Freight Broker Quote</button>
     </div>
 
-    <!-- ── STEP 2: Quantity ── -->
-    <div class="prc-panel" id="panel-2">
-      <div class="prc-panel-head">
-        <div class="prc-panel-eyebrow">Step 2 of 3</div>
-        <div class="prc-panel-title" id="qty-panel-title">How many vehicles do you operate?</div>
-        <div class="prc-panel-sub">
-          1st unit: <strong>$5.00/hr</strong> — 2nd &amp; 3rd: <strong>$3.50/hr each</strong> — 4 or more: custom bulk pricing.
-        </div>
+    <!-- ── Load board notice ── -->
+    <div class="p-lb-notice" id="p-lb-notice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p><strong>Load board access required:</strong> Please provide access to your DAT, Truckstop, or similar load board. If you prefer not to share access, we source loads through our own accounts for an additional <strong>$100/month</strong> or <strong>$25/week</strong>.</p>
+    </div>
+
+    <!-- ── Step 2: Quantity ── -->
+    <div id="p-std-panel">
+      <div class="section-header" style="margin-bottom:24px">
+        <span class="eyebrow">Step 2 of 3</span>
+        <h3 id="p-qty-h" style="font-size:1.25rem;margin-bottom:4px">How many vehicles do you operate?</h3>
+        <p id="p-qty-sub" style="font-size:.875rem;max-width:420px">First unit: <strong>$5.00/hr</strong> — 2nd and 3rd: <strong>$3.50/hr each</strong> — 4 or more: custom bulk pricing.</p>
       </div>
 
-      <!-- Context pill showing selected service -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap">
-        <div style="display:inline-flex;align-items:center;gap:7px;background:var(--brand-navy);color:var(--white);border-radius:var(--radius-full);padding:6px 14px;font-family:var(--font-display);font-size:0.78rem;font-weight:700">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-orange)" stroke-width="2.5" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>
-          <span id="qty-ctx-label">Service selected</span>
-        </div>
-        <button onclick="goToStep(1)" style="background:none;border:none;cursor:pointer;font-size:0.78rem;color:var(--brand-orange);font-weight:600;font-family:var(--font-display);padding:0">Change →</button>
-      </div>
-
-      <div class="prc-qty-card">
-        <div class="prc-qty-left">
-          <div class="prc-qty-name" id="qty-label">Number of Vehicles</div>
-          <div class="prc-qty-hint" id="qty-hint">
-            1st unit: <strong>$5.00/hr</strong> · 2nd–3rd: <strong>$3.50/hr each</strong>
+      <div class="p-qty-row">
+        <div class="p-qty-left">
+          <div class="p-qty-label" id="p-qty-label">Number of Vehicles</div>
+          <div class="p-qty-hint" id="p-qty-hint">
+            1st unit: <strong>$5.00/hr</strong> &nbsp;·&nbsp; 2nd–3rd: <strong>$3.50/hr each</strong>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:14px">
-          <div class="prc-stepper">
-            <button class="prc-stepper-btn" id="btn-minus" onclick="changeQty(-1)" disabled>&#8722;</button>
-            <div class="prc-stepper-val" id="qty-display">1</div>
-            <button class="prc-stepper-btn" id="btn-plus" onclick="changeQty(1)">&#43;</button>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+          <div class="p-stepper">
+            <button class="p-stepper-btn" id="btn-minus" onclick="changeQty(-1)" disabled>&#8722;</button>
+            <div class="p-stepper-val" id="qty-display">1</div>
+            <button class="p-stepper-btn" id="btn-plus" onclick="changeQty(1)">&#43;</button>
           </div>
-          <div class="prc-tier-pills">
-            <div class="prc-tier-pill active" id="pill1">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
-              <span id="pill1-txt">1 unit · $5.00/hr</span>
+          <div class="p-tier-pills">
+            <div class="p-tier-pill active" id="pill1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="pill1-text">1 unit · $5.00/hr</span>
             </div>
-            <div class="prc-tier-pill" id="pill2">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
-              <span id="pill2-txt">2–3 units · $3.50/hr</span>
+            <div class="p-tier-pill" id="pill2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="pill2-text">2–3 units · $3.50/hr each</span>
             </div>
-            <div class="prc-tier-pill" id="pill3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
-              <span id="pill3-txt">4+ units · Custom</span>
+            <div class="p-tier-pill" id="pill3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="pill3-text">4+ units · Custom bulk</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="prc-bulk-note" id="bulk-note">
+      <div class="p-bulk-note" id="p-bulk-note">
         <strong>4+ units — custom bulk pricing applies.</strong><br>
-        We build a tailored plan for larger fleets — typically <strong>25–40% below</strong> standard rates. Tell us your size and we respond within 2 hours.
+        We build a tailored plan based on your fleet size and operational pattern — typically 25–40% below the standard rate. Tap below to request a quote.
       </div>
 
-      <button class="prc-next-btn" onclick="goToStep(3)">
-        See Pricing Plans
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </div>
-
-    <!-- ── STEP 3: Plans ── -->
-    <div class="prc-panel" id="panel-3">
-      <div class="prc-plan-head">
-        <div class="prc-panel-eyebrow">Step 3 of 3</div>
-        <div class="prc-panel-title">Choose your billing cycle</div>
-        <div class="prc-panel-sub">Longer cycles unlock bigger discounts. All plans include the same full service suite.</div>
-
-        <!-- Context: service + qty recap -->
-        <div style="display:flex;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap">
-          <div style="display:inline-flex;align-items:center;gap:7px;background:var(--brand-navy);color:var(--white);border-radius:var(--radius-full);padding:6px 14px;font-family:var(--font-display);font-size:0.78rem;font-weight:700">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-orange)" stroke-width="2.5" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>
-            <span id="plan-ctx-svc">Service</span>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:7px;background:var(--brand-navy);color:var(--white);border-radius:var(--radius-full);padding:6px 14px;font-family:var(--font-display);font-size:0.78rem;font-weight:700">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-orange)" stroke-width="2.5" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>
-            <span id="plan-ctx-qty">1 unit</span>
-          </div>
-          <button onclick="goToStep(2)" style="background:none;border:none;cursor:pointer;font-size:0.78rem;color:var(--brand-orange);font-weight:600;font-family:var(--font-display);padding:0">Change →</button>
+      <!-- ── Step 3: Pricing Plans ── -->
+      <div id="p-plans-wrap">
+        <div class="section-header" style="margin:32px 0 24px">
+          <span class="eyebrow">Step 3 of 3</span>
+          <h3 style="font-size:1.25rem;margin-bottom:4px">Choose your billing cycle</h3>
+          <p style="font-size:.875rem">Longer cycles save more. Features are identical across all three plans.</p>
         </div>
-      </div>
 
-      <!-- Scroll dots (mobile) -->
-      <div class="prc-scroll-dots" id="plan-dots">
-        <div class="prc-scroll-dot active" onclick="scrollToPlan(0)"></div>
-        <div class="prc-scroll-dot" onclick="scrollToPlan(1)"></div>
-        <div class="prc-scroll-dot" onclick="scrollToPlan(2)"></div>
-      </div>
+        <div class="p-plans-grid">
 
-      <!-- Plan cards -->
-      <div class="prc-plans-scroll" id="plans-scroll">
+          <!-- WEEKLY -->
+          <div class="p-plan-card">
+            <div class="p-plan-badge">Weekly</div>
+            <div class="p-plan-name">Pay as you go</div>
+            <div class="p-plan-title">Weekly Plan</div>
 
-        <!-- WEEKLY -->
-        <div class="prc-plan" id="plan-weekly">
-          <div class="prc-plan-label">Pay as you go</div>
-          <div class="prc-plan-title">Weekly</div>
+            <div style="min-height:28px;margin-bottom:16px"></div><!-- spacer to align rates -->
 
-          <div style="min-height:28px;margin-bottom:14px"></div><!-- spacer -->
-
-          <div class="prc-rate">
-            <div class="prc-rate-sym">$</div>
-            <div class="prc-rate-num" id="w-rate">5.00</div>
-            <div class="prc-rate-unit">/hr</div>
-          </div>
-          <div class="prc-rate-note" id="w-rate-note">Standard rate — no discount</div>
-
-          <div class="prc-breakdown" id="w-breakdown">
-            <div class="prc-bd-row"><span id="w-b1">1st unit</span><strong>$5.00/hr</strong></div>
-            <div class="prc-bd-row" id="w-b2r" style="display:none"><span id="w-b2">2nd unit</span><strong>$3.50/hr</strong></div>
-            <div class="prc-bd-row" id="w-b3r" style="display:none"><span id="w-b3">3rd unit</span><strong>$3.50/hr</strong></div>
-            <div class="prc-bd-total"><span>Combined</span><strong id="w-combined">$5.00/hr</strong></div>
-          </div>
-
-          <div class="prc-estimate">
-            <div class="prc-est-lbl">Estimated weekly total</div>
-            <div class="prc-est-row">
-              <div class="prc-est-val" id="w-total">$200</div>
-              <div class="prc-est-period">/week</div>
+            <div class="p-plan-rate">
+              <div class="p-plan-rate-sym">$</div>
+              <div class="p-plan-rate-num" id="w-rate">5.00</div>
+              <div class="p-plan-rate-unit">/hr</div>
             </div>
-            <div style="font-size:.72rem;color:var(--text-muted);margin-top:3px" id="w-hrs">Based on 40 hrs/week</div>
-          </div>
+            <div class="p-plan-rate-note" id="w-rate-note">Standard rate &mdash; no discount</div>
 
-          <hr class="prc-plan-divider">
-          <ul class="prc-plan-feats">
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Standard hourly rate, no discount</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Invoice delivered every Friday</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Payment due by Monday EOD</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full service suite included</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>No advance payment needed</li>
-          </ul>
-          <button class="prc-plan-cta prc-cta-light" onclick="openModal('weekly')">
-            Get Started
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-        </div><!-- /weekly -->
-
-        <!-- MONTHLY -->
-        <div class="prc-plan featured" id="plan-monthly">
-          <div class="prc-plan-badge">Most Popular</div>
-          <div class="prc-plan-label">Best value for growing fleets</div>
-          <div class="prc-plan-title">Monthly</div>
-
-          <div class="prc-disc-pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Save 15%
-          </div>
-
-          <div class="prc-rate">
-            <div class="prc-rate-sym">$</div>
-            <div class="prc-rate-num" id="m-rate">4.25</div>
-            <div class="prc-rate-unit">/hr</div>
-          </div>
-          <div class="prc-rate-note" id="m-rate-note">Effective rate after 15% discount</div>
-
-          <div class="prc-breakdown" id="m-breakdown">
-            <div class="prc-bd-row"><span id="m-b1">1st unit</span><strong id="m-b1v">$4.25/hr</strong></div>
-            <div class="prc-bd-row" id="m-b2r" style="display:none"><span id="m-b2">2nd unit</span><strong id="m-b2v">$2.98/hr</strong></div>
-            <div class="prc-bd-row" id="m-b3r" style="display:none"><span id="m-b3">3rd unit</span><strong id="m-b3v">$2.98/hr</strong></div>
-            <div class="prc-bd-total"><span>Combined effective rate</span><strong id="m-combined">$4.25/hr</strong></div>
-          </div>
-
-          <div class="prc-estimate">
-            <div class="prc-est-lbl">Estimated monthly total</div>
-            <div class="prc-est-row">
-              <div class="prc-est-val" id="m-total">$748</div>
-              <div class="prc-est-period">/month</div>
-              <div class="prc-est-orig" id="m-total-orig">$880</div>
+            <!-- Multi-unit breakdown (shown when qty > 1) -->
+            <div class="p-plan-breakdown" id="w-breakdown">
+              <div class="p-plan-breakdown-row"><span id="w-b1">1st unit</span><strong>$5.00/hr</strong></div>
+              <div class="p-plan-breakdown-row" id="w-b2-row" style="display:none"><span id="w-b2">2nd unit</span><strong>$3.50/hr</strong></div>
+              <div class="p-plan-breakdown-row" id="w-b3-row" style="display:none"><span id="w-b3">3rd unit</span><strong>$3.50/hr</strong></div>
+              <div class="p-plan-breakdown-total"><span>Combined rate</span><strong id="w-combined">$5.00/hr</strong></div>
             </div>
-            <div class="prc-est-saved" id="m-saved">You save $132/month</div>
-          </div>
 
-          <hr class="prc-plan-divider">
-          <ul class="prc-plan-feats">
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong>15% discount applied</strong></li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>176 hrs/month · 22 working days</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Weekends &amp; holidays not billed</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Paid in advance to lock your team</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Dedicated team assigned</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Priority support access</li>
-          </ul>
-          <button class="prc-plan-cta prc-cta-orange" onclick="openModal('monthly')">
-            Start Monthly Plan
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-        </div><!-- /monthly -->
-
-        <!-- QUARTERLY -->
-        <div class="prc-plan best-savings" id="plan-quarterly">
-          <div class="prc-plan-badge" style="background:#059669">Best Savings</div>
-          <div class="prc-plan-label">Maximum discount</div>
-          <div class="prc-plan-title">Quarterly</div>
-
-          <div class="prc-disc-pill green2">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Save 20%
-          </div>
-
-          <div class="prc-rate">
-            <div class="prc-rate-sym">$</div>
-            <div class="prc-rate-num" id="q-rate">4.00</div>
-            <div class="prc-rate-unit">/hr</div>
-          </div>
-          <div class="prc-rate-note" id="q-rate-note">Effective rate after 20% discount</div>
-
-          <div class="prc-breakdown" id="q-breakdown">
-            <div class="prc-bd-row"><span id="q-b1">1st unit</span><strong id="q-b1v">$4.00/hr</strong></div>
-            <div class="prc-bd-row" id="q-b2r" style="display:none"><span id="q-b2">2nd unit</span><strong id="q-b2v">$2.80/hr</strong></div>
-            <div class="prc-bd-row" id="q-b3r" style="display:none"><span id="q-b3">3rd unit</span><strong id="q-b3v">$2.80/hr</strong></div>
-            <div class="prc-bd-total"><span>Combined effective rate</span><strong id="q-combined">$4.00/hr</strong></div>
-          </div>
-
-          <div class="prc-estimate">
-            <div class="prc-est-lbl">Estimated quarterly total</div>
-            <div class="prc-est-row">
-              <div class="prc-est-val" id="q-total">$2,112</div>
-              <div class="prc-est-period">/quarter</div>
-              <div class="prc-est-orig" id="q-total-orig">$2,640</div>
+            <div class="p-plan-estimate">
+              <div class="p-plan-est-lbl">Estimated weekly total</div>
+              <div class="p-plan-est-row">
+                <div class="p-plan-est-val" id="w-total">$200</div>
+                <div class="p-plan-est-period">/week</div>
+              </div>
+              <div style="font-size:.72rem;color:var(--text-muted);margin-top:3px" id="w-hours">Based on 40 hrs/week</div>
             </div>
-            <div class="prc-est-saved" id="q-saved">You save $528 over 3 months</div>
+
+            <hr class="p-plan-divider">
+            <ul class="p-plan-feats">
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Standard hourly rate, no discount</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Invoice delivered every Friday</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Payment due by end of Monday</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full service suite included</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>No advance payment required</li>
+            </ul>
+
+            <button class="p-plan-cta p-plan-cta-light" onclick="openModal('weekly')">
+              Get Started
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
 
-          <hr class="prc-plan-divider">
-          <ul class="prc-plan-feats">
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong style="color:#fff">20% discount — best rate available</strong></li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>528 hrs/quarter · 3 full months</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Weekends &amp; holidays not billed</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full advance payment</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Locked-in team for 3 months</li>
-            <li class="prc-plan-feat"><div class="prc-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Quarterly performance review</li>
-          </ul>
-          <button class="prc-plan-cta prc-cta-ghost" onclick="openModal('quarterly')">
-            Start Quarterly Plan
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-        </div><!-- /quarterly -->
+          <!-- MONTHLY (FEATURED) -->
+          <div class="p-plan-card featured">
+            <div class="p-plan-badge">Most Popular</div>
+            <div class="p-plan-name">Best value for growing operations</div>
+            <div class="p-plan-title">Monthly Plan</div>
 
-      </div><!-- /plans scroll -->
+            <div class="p-plan-discount">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Save 15%
+            </div>
 
-      <!-- Payment note -->
-      <div class="prc-pay-note">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>
-          <strong>Weekly:</strong> Service pauses if payment isn't received by Monday — no late fees, just timely payment.
-          &nbsp;|&nbsp;
-          <strong>Monthly &amp; Quarterly:</strong> Paid in advance to lock your discount and guarantee team allocation.
-        </span>
-      </div>
+            <div class="p-plan-rate">
+              <div class="p-plan-rate-sym">$</div>
+              <div class="p-plan-rate-num" id="m-rate">4.25</div>
+              <div class="p-plan-rate-unit">/hr</div>
+            </div>
+            <div class="p-plan-rate-note" id="m-rate-note">Effective rate after 15% discount</div>
 
-      <!-- Custom bulk CTA -->
-      <div class="prc-custom-cta" id="prc-custom-cta">
-        <div>
-          <h4>Need pricing for 4+ units?</h4>
-          <p>Custom bulk plans typically run 25–40% below standard rates. Tell us your fleet size and we respond in 2 hours.</p>
+            <div class="p-plan-breakdown" id="m-breakdown">
+              <div class="p-plan-breakdown-row"><span id="m-b1">1st unit</span><strong id="m-b1v">$4.25/hr</strong></div>
+              <div class="p-plan-breakdown-row" id="m-b2-row" style="display:none"><span id="m-b2">2nd unit</span><strong id="m-b2v">$2.98/hr</strong></div>
+              <div class="p-plan-breakdown-row" id="m-b3-row" style="display:none"><span id="m-b3">3rd unit</span><strong id="m-b3v">$2.98/hr</strong></div>
+              <div class="p-plan-breakdown-total"><span>Combined effective rate</span><strong id="m-combined">$4.25/hr</strong></div>
+            </div>
+
+            <div class="p-plan-estimate">
+              <div class="p-plan-est-lbl">Estimated monthly total</div>
+              <div class="p-plan-est-row">
+                <div class="p-plan-est-val" id="m-total">$748</div>
+                <div class="p-plan-est-period">/month</div>
+                <div class="p-plan-est-orig" id="m-total-orig">$880</div>
+              </div>
+              <div class="p-plan-saved" id="m-saved">You save $132/month</div>
+            </div>
+
+            <hr class="p-plan-divider">
+            <ul class="p-plan-feats">
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong>15% discount applied</strong></li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>176 hrs/month (8 hrs × 22 working days)</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Weekends &amp; holidays not billed</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full payment in advance</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Dedicated team assigned</li>
+              <li class="p-plan-feat"><div class="p-plan-feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Priority support access</li>
+            </ul>
+
+            <button class="p-plan-cta p-plan-cta-orange" onclick="openModal('monthly')">
+              Start Monthly Plan
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- QUARTERLY -->
+          <div class="p-plan-card" style="background:linear-gradient(150deg,#0d1929 0%,#1a2e4a 100%);border-color:var(--brand-navy)">
+            <div class="p-plan-badge" style="display:block;background:#059669">Best Savings</div>
+            <div class="p-plan-name" style="color:rgba(255,255,255,.45)">Maximum discount</div>
+            <div class="p-plan-title" style="color:var(--white)">Quarterly Plan</div>
+
+            <div class="p-plan-discount" style="background:#059669;margin-bottom:16px">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Save 20%
+            </div>
+
+            <div class="p-plan-rate">
+              <div class="p-plan-rate-sym" style="color:rgba(255,255,255,.5)">$</div>
+              <div class="p-plan-rate-num" style="color:var(--brand-orange)" id="q-rate">4.00</div>
+              <div class="p-plan-rate-unit" style="color:rgba(255,255,255,.35)">/hr</div>
+            </div>
+            <div class="p-plan-rate-note" style="color:rgba(255,255,255,.38)" id="q-rate-note">Effective rate after 20% discount</div>
+
+            <div class="p-plan-breakdown" id="q-breakdown" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1)">
+              <div class="p-plan-breakdown-row" style="color:rgba(255,255,255,.4)"><span id="q-b1">1st unit</span><strong style="color:rgba(255,255,255,.8)" id="q-b1v">$4.00/hr</strong></div>
+              <div class="p-plan-breakdown-row" id="q-b2-row" style="display:none;color:rgba(255,255,255,.4)"><span id="q-b2">2nd unit</span><strong style="color:rgba(255,255,255,.8)" id="q-b2v">$2.80/hr</strong></div>
+              <div class="p-plan-breakdown-row" id="q-b3-row" style="display:none;color:rgba(255,255,255,.4)"><span id="q-b3">3rd unit</span><strong style="color:rgba(255,255,255,.8)" id="q-b3v">$2.80/hr</strong></div>
+              <div class="p-plan-breakdown-total" style="color:var(--white);border-color:rgba(255,255,255,.15)"><span>Combined effective rate</span><strong id="q-combined">$4.00/hr</strong></div>
+            </div>
+
+            <div class="p-plan-estimate" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1)">
+              <div class="p-plan-est-lbl" style="color:rgba(255,255,255,.35)">Estimated quarterly total</div>
+              <div class="p-plan-est-row">
+                <div class="p-plan-est-val" style="color:var(--white)" id="q-total">$2,112</div>
+                <div class="p-plan-est-period" style="color:rgba(255,255,255,.35)">/quarter</div>
+                <div class="p-plan-est-orig" id="q-total-orig">$2,640</div>
+              </div>
+              <div class="p-plan-saved" id="q-saved">You save $528 over 3 months</div>
+            </div>
+
+            <hr class="p-plan-divider" style="border-color:rgba(255,255,255,.1)">
+            <ul class="p-plan-feats">
+              <li class="p-plan-feat" style="color:rgba(255,255,255,.72)"><div class="p-plan-feat-check" style="background:rgba(232,119,34,.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><strong style="color:var(--white)">20% discount — best available rate</strong></li>
+              <li class="p-plan-feat" style="color:rgba(255,255,255,.72)"><div class="p-plan-feat-check" style="background:rgba(232,119,34,.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>528 hrs/quarter (3 months)</li>
+              <li class="p-plan-feat" style="color:rgba(255,255,255,.72)"><div class="p-plan-feat-check" style="background:rgba(232,119,34,.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Weekends &amp; holidays not billed</li>
+              <li class="p-plan-feat" style="color:rgba(255,255,255,.72)"><div class="p-plan-feat-check" style="background:rgba(232,119,34,.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full advance payment</li>
+              <li class="p-plan-feat" style="color:rgba(255,255,255,.72)"><div class="p-plan-feat-check" style="background:rgba(232,119,34,.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Locked-in dedicated team for 3 months</li>
+              <li class="p-plan-feat" style="color:rgba(255,255,255,.72)"><div class="p-plan-feat-check" style="background:rgba(232,119,34,.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Quarterly performance review included</li>
+            </ul>
+
+            <button class="p-plan-cta p-plan-cta-ghost" onclick="openModal('quarterly')">
+              Start Quarterly Plan
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div><!-- /plans grid -->
+
+        <!-- Payment notes -->
+        <div class="p-payment-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span><strong>Weekly plan:</strong> Service pauses if payment is not received by Monday — no late fees, just timely payment. &nbsp;|&nbsp; <strong>Monthly &amp; Quarterly:</strong> Paid in advance to lock in your discount and guarantee your team allocation.</span>
         </div>
-        <button class="btn btn-primary" style="flex-shrink:0" onclick="openModal('custom')">Request Custom Quote</button>
-      </div>
 
-    </div><!-- /panel-3 -->
+        <!-- Custom bulk -->
+        <div class="p-custom-cta" id="p-custom-cta">
+          <div>
+            <h4>Need pricing for 4 or more units?</h4>
+            <p>We build custom plans for larger fleets — typically 25–40% below standard rates. Tell us your size and we'll respond within 2 hours.</p>
+          </div>
+          <button class="btn btn-primary" style="flex-shrink:0" onclick="openModal('custom')">Request Custom Quote</button>
+        </div>
+
+      </div><!-- /p-plans-wrap -->
+    </div><!-- /p-std-panel -->
 
   </div><!-- /container -->
-</section>
+</div><!-- /p-configure -->
 
 
 <!-- ═══════════════════════════════════════════════════
-     PAYMENT METHODS
+     WHAT'S INCLUDED — FEATURES (reveals dynamically)
 ═══════════════════════════════════════════════════ -->
-<section class="prc-payment-section">
+<section class="section-white p-features-section" id="p-feats-section">
   <div class="container">
-    <div class="prc-payment-inner prc-reveal">
-      <div class="prc-payment-label">We accept</div>
-      <div class="prc-payment-logos prc-reveal-stagger">
-
-        <div class="prc-pay-logo prc-pay-payoneer">
-          <div class="prc-pay-dot"></div>
-          Payoneer
-        </div>
-
-        <div class="prc-pay-logo prc-pay-elevate">
-          <div class="prc-pay-dot"></div>
-          Elevate Pay
-        </div>
-
-        <div class="prc-pay-logo prc-pay-worldfirst">
-          <div class="prc-pay-dot"></div>
-          WorldFirst
-        </div>
-
-        <div class="prc-pay-logo prc-pay-wu">
-          <div class="prc-pay-dot"></div>
-          Western Union
-        </div>
-
-        <div class="prc-pay-logo prc-pay-mg">
-          <div class="prc-pay-dot"></div>
-          MoneyGram
-        </div>
-
-        <div class="prc-pay-logo prc-pay-wire">
-          <div class="prc-pay-dot"></div>
-          Wire Transfer
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════
-     WHAT'S INCLUDED (dynamic)
-═══════════════════════════════════════════════════ -->
-<section class="prc-features-section" id="prc-feats-section">
-  <div class="container">
-    <div class="section-header prc-reveal">
+    <div class="section-header">
       <span class="eyebrow">What's Included</span>
-      <h2 id="feats-title" style="font-size:clamp(1.4rem,2.5vw,2rem)">Everything we handle for you</h2>
-      <p id="feats-sub">Industry-specific back-office support targeting your exact operational challenges.</p>
+      <h2 id="p-feats-title" style="font-size:clamp(1.4rem,2.5vw,2rem)">Everything we handle for you</h2>
+      <p id="p-feats-sub">Industry-specific back office support targeting your exact operational challenges.</p>
     </div>
-    <div class="prc-feats-grid prc-reveal-stagger" id="feats-grid">
-      <!-- populated by JS -->
-    </div>
+    <div class="p-feats-grid" id="p-feats-grid"><!-- populated by JS --></div>
   </div>
 </section>
 
@@ -530,7 +1131,7 @@
   <div class="container">
     <div class="cta-banner">
       <h2 class="display-md" style="color:var(--white);margin-bottom:12px">Not sure which plan fits?</h2>
-      <p>Describe your operation and we'll recommend the right plan — or build a custom one that fits precisely.</p>
+      <p>Describe your operation and we will recommend the right plan — or build a custom one that fits precisely.</p>
       <div class="cta-banner-actions">
         <button class="btn btn-primary btn-lg" onclick="openModal('consult')">Get a Free Consultation</button>
         <a href="contact.html" class="btn btn-ghost-white btn-lg">Talk to a Human</a>
@@ -541,218 +1142,49 @@
 
 
 <!-- ═══════════════════════════════════════════════════
-     BOTTOM SHEET — SERVICE SELECTOR
+     MODAL
 ═══════════════════════════════════════════════════ -->
-<div class="prc-sheet-overlay" id="sheet-overlay" onclick="handleSheetBg(event)">
-  <div class="prc-sheet" id="svc-sheet">
-
-    <div class="prc-sheet-handle"></div>
-
-    <div class="prc-sheet-head">
-      <h3>Select Your Industry</h3>
-      <button class="prc-sheet-close" onclick="closeSheet()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-
-    <div class="prc-sheet-body">
-
-      <!-- FREIGHT & HAULING -->
-      <div class="prc-sheet-cat-label">Freight &amp; Hauling</div>
-
-      <div class="prc-sheet-opt" data-svc="trucking" onclick="selectService('trucking')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Trucking Back Office</div>
-          <div class="prc-opt-note">Per vehicle · From $5/hr · Load board required</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="carhauler" onclick="selectService('carhauler')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="8" rx="2"/><circle cx="7" cy="16" r="2"/><circle cx="17" cy="16" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Car Hauler Operations</div>
-          <div class="prc-opt-note">Per carrier unit · Load board required</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="animal" onclick="selectService('animal')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Animal Hauler Operations</div>
-          <div class="prc-opt-note">Per vehicle · Livestock &amp; equine transport</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="dump" onclick="selectService('dump')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Dump Truck Back Office</div>
-          <div class="prc-opt-note">Per vehicle · Site dispatch &amp; ticketing</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <!-- BROKERAGE -->
-      <div class="prc-sheet-cat-label">Brokerage</div>
-
-      <div class="prc-sheet-opt" data-svc="broker" onclick="selectService('broker')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Freight Broker Support</div>
-          <div class="prc-opt-note">Hybrid pricing: $2.50/hr + 2.5% per load</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <!-- DISPATCH & FLEET -->
-      <div class="prc-sheet-cat-label">Dispatch &amp; Fleet</div>
-
-      <div class="prc-sheet-opt" data-svc="tow" onclick="selectService('tow')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h2m14 0h2M5 17a2 2 0 100-4H3v4h2zm12 0a2 2 0 100-4"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Tow Truck Dispatch</div>
-          <div class="prc-opt-note">Per dispatch line · 24/7 call answering</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="sprinter" onclick="selectService('sprinter')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Sprinter / Cargo Van</div>
-          <div class="prc-opt-note">Per vehicle · Last-mile &amp; freight networks</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="moving" onclick="selectService('moving')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/><rect x="9" y="14" width="6" height="7"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Moving Company Support</div>
-          <div class="prc-opt-note">Per truck · Bookings, quotes &amp; crew scheduling</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <!-- SPECIALTY -->
-      <div class="prc-sheet-cat-label">Specialty</div>
-
-      <div class="prc-sheet-opt" data-svc="afterhours" onclick="selectService('afterhours')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">After-Hours Coverage</div>
-          <div class="prc-opt-note">Per agent line · Nights, weekends &amp; holidays</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="nemt" onclick="selectService('nemt')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">NEMT Billing &amp; Dispatch</div>
-          <div class="prc-opt-note">Per vehicle · Medicaid, insurance &amp; prior auth</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <!-- GROUND TRANSPORT -->
-      <div class="prc-sheet-cat-label">Ground Transport</div>
-
-      <div class="prc-sheet-opt" data-svc="taxi" onclick="selectService('taxi')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h11l4 4h1a2 2 0 012 2v2"/><circle cx="7.5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Taxi Fleet Management</div>
-          <div class="prc-opt-note">Per agent line · Full dispatch &amp; booking</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="prc-sheet-opt" data-svc="limo" onclick="selectService('limo')">
-        <div class="prc-opt-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="9" rx="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg>
-        </div>
-        <div class="prc-opt-info">
-          <div class="prc-opt-name">Limo &amp; Black Car</div>
-          <div class="prc-opt-note">Per agent line · White-glove VIP handling</div>
-        </div>
-        <div class="prc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-    </div><!-- /sheet-body -->
-  </div><!-- /sheet -->
-</div><!-- /sheet-overlay -->
-
-
-<!-- ═══════════════════════════════════════════════════
-     MODAL — INTAKE FORM
-═══════════════════════════════════════════════════ -->
-<div class="prc-modal-bg" id="prc-modal-bg" onclick="handleModalBg(event)">
-  <div class="prc-modal" id="prc-modal" role="dialog" aria-modal="true">
+<div class="p-modal-bg" id="p-modal-bg" onclick="handleModalBgClick(event)">
+  <div class="p-modal" id="p-modal" role="dialog" aria-modal="true">
 
     <!-- Header -->
-    <div class="prc-modal-head">
+    <div class="p-modal-head">
       <div>
         <h3>Start Your Back Office Support</h3>
-        <p>Submit your details — our representative will contact you within 1 business day.</p>
+        <p>We review your operation and have your team ready within 24 hours.</p>
       </div>
-      <button class="prc-modal-close" onclick="closeModal()">
+      <button class="p-modal-close" onclick="closeModal()" aria-label="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
 
     <!-- Summary strip -->
-    <div class="prc-modal-strip" id="prc-modal-strip">
-      <div class="prc-ms-item">
-        <div class="prc-ms-lbl">Service</div>
-        <div class="prc-ms-val" id="ms-svc">—</div>
+    <div class="p-modal-strip" id="p-modal-strip">
+      <div class="p-ms-item">
+        <div class="p-ms-lbl">Service</div>
+        <div class="p-ms-val" id="ms-service">—</div>
       </div>
-      <div class="prc-ms-item" id="ms-units-item">
-        <div class="prc-ms-lbl" id="ms-units-lbl">Units</div>
-        <div class="prc-ms-val" id="ms-units-val">1</div>
+      <div class="p-ms-item" id="ms-unit-item">
+        <div class="p-ms-lbl" id="ms-unit-lbl">Units</div>
+        <div class="p-ms-val" id="ms-unit-val">1</div>
       </div>
-      <div class="prc-ms-item">
-        <div class="prc-ms-lbl">Plan</div>
-        <div class="prc-ms-val" id="ms-plan">Monthly</div>
+      <div class="p-ms-item">
+        <div class="p-ms-lbl">Plan</div>
+        <div class="p-ms-val" id="ms-plan">Monthly</div>
       </div>
-      <div class="prc-ms-item">
-        <div class="prc-ms-lbl">Est. Total</div>
-        <div class="prc-ms-val" id="ms-total">—</div>
+      <div class="p-ms-item">
+        <div class="p-ms-lbl">Est. Total</div>
+        <div class="p-ms-val" id="ms-total">—</div>
       </div>
     </div>
 
-    <!-- Form wrap -->
-    <div id="prc-modal-form-wrap" style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0">
-      <div class="prc-modal-body">
-        <form id="prc-form" novalidate>
+    <!-- Form -->
+    <div id="p-modal-form-wrap" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+      <div class="p-modal-body">
+        <form id="p-form">
 
-          <div class="prc-form-section-label">Contact Information</div>
-          <div class="prc-form-grid-2">
+          <div class="p-modal-sect-label">Contact Information</div>
+          <div class="p-form-2col">
             <div class="form-group">
               <label class="form-label">First Name <span style="color:var(--brand-orange)">*</span></label>
               <input class="form-input" type="text" name="firstName" placeholder="John" required>
@@ -762,49 +1194,19 @@
               <input class="form-input" type="text" name="lastName" placeholder="Smith" required>
             </div>
           </div>
-
-          <div class="prc-form-grid-2">
+          <div class="p-form-2col">
             <div class="form-group">
               <label class="form-label">Email <span style="color:var(--brand-orange)">*</span></label>
               <input class="form-input" type="email" name="email" placeholder="you@company.com" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Primary Phone <span style="color:var(--brand-orange)">*</span></label>
-              <div class="prc-phone-row">
-                <input class="form-input" type="tel" name="phone" id="modal-phone1" placeholder="+1 (555) 000-0000" required>
-                <label class="prc-wa-check">
-                  <input type="checkbox" name="phone1_wa" id="phone1-wa">
-                  <span class="prc-wa-check-label">
-                    <svg class="prc-wa-icon" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 2C6.473 2 2 6.472 2 11.99c0 1.933.536 3.87 1.548 5.54L2 22l4.623-1.516A9.965 9.965 0 0011.99 22c5.518 0 9.99-4.472 9.99-9.99S17.508 2 11.99 2z"/></svg>
-                    This number is on WhatsApp
-                  </span>
-                </label>
-              </div>
+              <label class="form-label">Phone <span style="color:var(--brand-orange)">*</span></label>
+              <input class="form-input" type="tel" name="phone" placeholder="+1 (555) 000-0000" required>
             </div>
           </div>
 
-          <div class="prc-form-grid-2">
-            <div class="form-group">
-              <label class="form-label">Secondary Phone</label>
-              <div class="prc-phone-row">
-                <input class="form-input" type="tel" name="phone2" id="modal-phone2" placeholder="+1 (555) 000-0001">
-                <label class="prc-wa-check">
-                  <input type="checkbox" name="phone2_wa" id="phone2-wa">
-                  <span class="prc-wa-check-label">
-                    <svg class="prc-wa-icon" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 2C6.473 2 2 6.472 2 11.99c0 1.933.536 3.87 1.548 5.54L2 22l4.623-1.516A9.965 9.965 0 0011.99 22c5.518 0 9.99-4.472 9.99-9.99S17.508 2 11.99 2z"/></svg>
-                    This number is on WhatsApp
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">WhatsApp Number <span style="font-size:.75em;font-weight:400;color:var(--text-muted)">(if different)</span></label>
-              <input class="form-input" type="tel" name="whatsapp" placeholder="+1 (555) 000-0002">
-            </div>
-          </div>
-
-          <div class="prc-form-section-label">Company Details</div>
-          <div class="prc-form-grid-2">
+          <div class="p-modal-sect-label">Company Details</div>
+          <div class="p-form-2col">
             <div class="form-group">
               <label class="form-label">Company Name</label>
               <input class="form-input" type="text" name="company" placeholder="ABC Transport LLC">
@@ -815,8 +1217,8 @@
             </div>
           </div>
 
-          <div class="prc-form-section-label">Service Selection</div>
-          <div class="prc-form-grid-2">
+          <div class="p-modal-sect-label">Service Selection</div>
+          <div class="p-form-2col">
             <div class="form-group">
               <label class="form-label">Industry <span style="color:var(--brand-orange)">*</span></label>
               <select class="form-select" name="serviceType" id="modal-svc" required onchange="onModalSvcChange()">
@@ -845,8 +1247,7 @@
               </select>
             </div>
           </div>
-
-          <div class="prc-form-grid-2" id="modal-unit-row">
+          <div class="p-form-2col p-form-1col" id="modal-unit-row">
             <div class="form-group">
               <label class="form-label" id="modal-unit-lbl">Number of Vehicles</label>
               <input class="form-input" type="number" name="unitCount" id="modal-unit-count" min="1" value="1">
@@ -857,15 +1258,14 @@
             </div>
           </div>
 
-          <div class="prc-form-section-label">Tell Us More</div>
-          <div class="prc-form-full">
+          <div class="p-form-1col">
             <div class="form-group">
               <label class="form-label">Biggest Back-Office Challenge</label>
-              <textarea class="form-textarea" name="challenge" placeholder="What's taking the most time or causing the most pain in your operation?"></textarea>
+              <textarea class="form-textarea" name="challenge" placeholder="What's taking the most time or causing the most pain?"></textarea>
             </div>
           </div>
 
-          <div class="prc-form-grid-2">
+          <div class="p-form-2col">
             <div class="form-group">
               <label class="form-label">How Did You Find Us?</label>
               <select class="form-select" name="referral">
@@ -891,12 +1291,12 @@
         </form>
       </div>
 
-      <div class="prc-modal-foot">
-        <button class="prc-modal-submit" id="modal-submit-btn" onclick="submitModal(event)">
+      <div class="p-modal-foot">
+        <button class="p-modal-submit" id="modal-submit-btn" onclick="submitModal(event)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           Send My Assessment Request
         </button>
-        <div class="prc-modal-privacy">
+        <div class="p-modal-privacy">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
           Your information is private and never sold or shared.
         </div>
@@ -904,20 +1304,16 @@
     </div>
 
     <!-- Success state -->
-    <div class="prc-modal-success" id="prc-modal-success">
-      <div class="prc-success-icon">
+    <div class="p-modal-success" id="p-modal-success">
+      <div class="p-success-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h4>Request Received!</h4>
-      <p>We have your details. Our representative will contact you within <strong>1 business day</strong> to walk you through the plan and get you set up.</p>
-      <div class="prc-representative-note">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l.41-.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-        <p>No payment is taken now. A Haulxify representative will call or WhatsApp you to confirm your plan and share payment instructions.</p>
-      </div>
+      <h4>Request Received</h4>
+      <p>We have your details and will have a personalized assessment ready within <strong>2 business hours</strong>. Check your inbox for a confirmation shortly.</p>
     </div>
 
-  </div><!-- /modal -->
-</div><!-- /modal bg -->
+  </div>
+</div>
 
 
 <div id="footer-include"></div>
@@ -925,11 +1321,15 @@
 <script src="js/main.js"></script>
 
 <script>
-/* ==========================================================
-   HAULXIFY PRICING ENGINE v2
-   Mobile-first. Progressive disclosure wizard.
-   Google Forms integration below.
-========================================================== */
+/* ═══════════════════════════════════════════════════════
+   HAULXIFY PRICING ENGINE
+   ─────────────────────────────────────────────────────
+   Google Forms setup:
+   1. Create a Google Form with the fields listed in GFIELDS
+   2. Replace GFORM_URL with your form submission URL
+   3. Replace each entry.XXXXXXXXXX with real entry IDs
+      (Inspect each form field → look for name="entry.XXX")
+═══════════════════════════════════════════════════════ */
 
 const GFORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID_HERE/formResponse';
 const GFIELDS = {
@@ -937,35 +1337,31 @@ const GFIELDS = {
   lastName:    'entry.0000000002',
   email:       'entry.0000000003',
   phone:       'entry.0000000004',
-  phone2:      'entry.0000000005',
-  whatsapp:    'entry.0000000006',
-  phone1_wa:   'entry.0000000007',
-  phone2_wa:   'entry.0000000008',
-  company:     'entry.0000000009',
-  state:       'entry.0000000010',
-  serviceType: 'entry.0000000011',
-  billingPlan: 'entry.0000000012',
-  unitCount:   'entry.0000000013',
-  tms:         'entry.0000000014',
-  challenge:   'entry.0000000015',
-  referral:    'entry.0000000016',
-  contactTime: 'entry.0000000017',
+  company:     'entry.0000000005',
+  state:       'entry.0000000006',
+  serviceType: 'entry.0000000007',
+  billingPlan: 'entry.0000000008',
+  unitCount:   'entry.0000000009',
+  tms:         'entry.0000000010',
+  challenge:   'entry.0000000011',
+  referral:    'entry.0000000012',
+  contactTime: 'entry.0000000013',
 };
 
-/* ── SERVICE DATA ── */
+/* ── SERVICE DATA ────────────────────────── */
 const SVC = {
-  trucking:   { label:'Trucking Back Office',     ul:'vehicle', up:'vehicles', loadboard:true,  broker:false },
-  broker:     { label:'Freight Broker Support',   ul:null,      up:null,       loadboard:false, broker:true  },
-  tow:        { label:'Tow Truck Dispatch',        ul:'line',    up:'lines',    loadboard:false, broker:false },
-  carhauler:  { label:'Car Hauler Operations',     ul:'unit',    up:'units',    loadboard:true,  broker:false },
-  animal:     { label:'Animal Hauler Operations',  ul:'vehicle', up:'vehicles', loadboard:false, broker:false },
-  dump:       { label:'Dump Truck Back Office',    ul:'truck',   up:'trucks',   loadboard:false, broker:false },
-  sprinter:   { label:'Sprinter / Cargo Van',      ul:'vehicle', up:'vehicles', loadboard:false, broker:false },
-  moving:     { label:'Moving Company Support',    ul:'truck',   up:'trucks',   loadboard:false, broker:false },
-  afterhours: { label:'After-Hours Coverage',      ul:'agent',   up:'agents',   loadboard:false, broker:false },
-  nemt:       { label:'NEMT Billing & Dispatch',   ul:'vehicle', up:'vehicles', loadboard:false, broker:false },
-  taxi:       { label:'Taxi Fleet Management',     ul:'agent',   up:'agents',   loadboard:false, broker:false },
-  limo:       { label:'Limo & Black Car',           ul:'agent',   up:'agents',   loadboard:false, broker:false },
+  trucking:   { label:'Trucking Back Office',     ul:'vehicle', up:'vehicles',  loadboard:true,  broker:false },
+  broker:     { label:'Freight Broker Support',   ul:null,      up:null,        loadboard:false, broker:true  },
+  tow:        { label:'Tow Truck Dispatch',       ul:'line',    up:'lines',     loadboard:false, broker:false },
+  carhauler:  { label:'Car Hauler Operations',    ul:'unit',    up:'units',     loadboard:true,  broker:false },
+  animal:     { label:'Animal Hauler Operations', ul:'vehicle', up:'vehicles',  loadboard:false, broker:false },
+  dump:       { label:'Dump Truck Back Office',   ul:'truck',   up:'trucks',    loadboard:false, broker:false },
+  sprinter:   { label:'Sprinter / Cargo Van',     ul:'vehicle', up:'vehicles',  loadboard:false, broker:false },
+  moving:     { label:'Moving Company Support',   ul:'truck',   up:'trucks',    loadboard:false, broker:false },
+  afterhours: { label:'After-Hours Coverage',     ul:'agent',   up:'agents',    loadboard:false, broker:false },
+  nemt:       { label:'NEMT Billing & Dispatch',  ul:'vehicle', up:'vehicles',  loadboard:false, broker:false },
+  taxi:       { label:'Taxi Fleet Management',    ul:'agent',   up:'agents',    loadboard:false, broker:false },
+  limo:       { label:'Limo & Black Car',         ul:'agent',   up:'agents',    loadboard:false, broker:false },
 };
 
 const FEATURES = {
@@ -990,282 +1386,263 @@ const FEAT_ICONS = [
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.07 9.81"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>',
 ];
 
-const PLAN_LABELS = {
-  weekly:'Weekly', monthly:'Monthly — Save 15%',
-  quarterly:'Quarterly — Save 20%', custom:'Custom Bulk',
-  consult:'Free Consultation', broker:'Freight Broker'
-};
-
-const R1 = 5.00, R2 = 3.50;
+/* ── RATES ──────────────────────────────── */
+const R1 = 5.00, R2 = 3.50; // base and add-on
 const HRS = { weekly:40, monthly:176, quarterly:528 };
 const DISC = { weekly:1.0, monthly:0.85, quarterly:0.80 };
+const PLAN_LABELS = { weekly:'Weekly', monthly:'Monthly — Save 15%', quarterly:'Quarterly — Save 20%', custom:'Custom Bulk', consult:'Free Consultation', broker:'Freight Broker' };
 
-let STATE = { svc: null, qty: 1, plan: 'monthly', step: 1 };
+/* ── STATE ──────────────────────────────── */
+let STATE = { svc: null, qty: 1, plan: 'monthly' };
 
-/* ── Utils ── */
-function baseRate(qty) { if (qty===1) return R1; if (qty===2) return R1+R2; return R1+R2+R2; }
-function baseTotal(qty,plan) { return baseRate(qty) * HRS[plan]; }
-function fc(n) { return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+/* ── Combined hourly rate before discount ─ */
+function baseRate(qty) {
+  if (qty === 1) return R1;
+  if (qty === 2) return R1 + R2;
+  return R1 + R2 + R2; // 3
+}
+
+/* ── Total for period before discount ───── */
+function baseTotal(qty, plan) { return baseRate(qty) * HRS[plan]; }
+
+/* ── Formatted currency (no decimals for totals) */
+function fc(n) {
+  return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+}
 function fr(n) { return n.toFixed(2); }
 
-/* ── STEP NAVIGATION ── */
-function goToStep(n) {
-  if (n === 2 && !STATE.svc) { openSheet(); return; }
-  STATE.step = n;
-  document.querySelectorAll('.prc-panel').forEach((p,i) => {
-    p.classList.toggle('active', i+1 === n);
-  });
-  ['1','2','3'].forEach(i => {
-    const ind = document.getElementById('step-indicator-'+i);
-    const num = document.getElementById('stepnum-'+i);
-    const iN = parseInt(i);
-    ind.classList.remove('active','done');
-    if (iN === n) { ind.classList.add('active'); }
-    else if (iN < n) {
-      ind.classList.add('done');
-      num.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>';
-    } else {
-      num.textContent = i;
-    }
-  });
-  // Scroll wizard into view
-  setTimeout(() => {
-    document.getElementById('pricing-wizard').scrollIntoView({ behavior:'smooth', block:'start' });
-  }, 60);
-  if (n === 3) { renderPlans(); renderFeatures(STATE.svc); }
-}
-
-/* ── BOTTOM SHEET ── */
-function openSheet() {
-  document.getElementById('sheet-overlay').classList.add('open');
-  document.getElementById('svc-trigger').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSheet() {
-  document.getElementById('sheet-overlay').classList.remove('open');
-  document.getElementById('svc-trigger').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function handleSheetBg(e) {
-  if (e.target === document.getElementById('sheet-overlay')) closeSheet();
-}
-
-function selectService(svc) {
+/* ── PICK INDUSTRY ───────────────────────── */
+function pickIndustry(svc) {
   STATE.svc = svc;
-  const d = SVC[svc];
+  STATE.qty = 1;
 
-  // Clear all selected
-  document.querySelectorAll('.prc-sheet-opt').forEach(o => o.classList.remove('selected'));
-  // Mark selected
-  const opt = document.querySelector(`.prc-sheet-opt[data-svc="${svc}"]`);
-  if (opt) opt.classList.add('selected');
+  // Highlight selected card
+  document.querySelectorAll('.p-icard').forEach(c => c.classList.remove('selected'));
+  document.querySelector(`[data-svc="${svc}"]`).classList.add('selected');
 
-  // Update trigger button
-  const trigger = document.getElementById('svc-trigger');
-  trigger.classList.add('has-value');
-  document.getElementById('svc-trigger-val').textContent = d.label;
+  const data = SVC[svc];
 
-  // Copy the icon from the selected option
-  const optIcon = opt ? opt.querySelector('.prc-opt-icon').innerHTML : '';
-  document.getElementById('svc-trigger-icon').innerHTML = optIcon;
+  // Update context label
+  document.getElementById('p-ctx-label').textContent = data.label;
 
-  // Load board notice
-  document.getElementById('prc-lb-notice').classList.toggle('show', d.loadboard);
+  // Broker vs standard
+  document.getElementById('p-broker-panel').classList.toggle('show', data.broker);
+  document.getElementById('p-lb-notice').classList.toggle('show', data.loadboard);
+  document.getElementById('p-std-panel').style.display = data.broker ? 'none' : 'block';
 
-  // Broker
-  const brokerPanel = document.getElementById('prc-broker-panel');
-  brokerPanel.style.display = d.broker ? 'block' : 'none';
-
-  // Enable next
-  const nextBtn = document.getElementById('step1-next');
-  nextBtn.disabled = d.broker; // broker has its own CTA
-
-  // Update qty context
-  if (!d.broker) {
-    const ul = d.ul, up = d.up;
-    document.getElementById('qty-panel-title').textContent = `How many ${up} do you operate?`;
-    document.getElementById('qty-label').textContent = `Number of ${up.charAt(0).toUpperCase()+up.slice(1)}`;
-    document.getElementById('qty-hint').innerHTML = `1st ${ul}: <strong>$${fr(R1)}/hr</strong> · 2nd–3rd: <strong>$${fr(R2)}/hr each</strong>`;
-    document.getElementById('pill1-txt').textContent = `1 ${ul} · $${fr(R1)}/hr`;
-    document.getElementById('pill2-txt').textContent = `2–3 ${up} · $${fr(R2)}/hr`;
-    document.getElementById('pill3-txt').textContent = `4+ ${up} · Custom`;
-    document.getElementById('qty-ctx-label').textContent = d.label;
-    document.getElementById('plan-ctx-svc').textContent = d.label;
+  if (!data.broker) {
+    // Update unit labels
+    const ul = data.ul, up = data.up;
+    document.getElementById('p-qty-h').textContent = `How many ${up} do you operate?`;
+    document.getElementById('p-qty-sub').innerHTML = `First ${ul}: <strong>$5.00/hr</strong> — 2nd and 3rd: <strong>$3.50/hr each</strong> — 4 or more: custom bulk pricing.`;
+    document.getElementById('p-qty-label').textContent = `Number of ${up.charAt(0).toUpperCase()+up.slice(1)}`;
+    document.getElementById('p-qty-hint').innerHTML = `1st ${ul}: <strong>$${fr(R1)}/hr</strong> &nbsp;&middot;&nbsp; 2nd–3rd: <strong>$${fr(R2)}/hr each</strong>`;
+    document.getElementById('pill1-text').textContent = `1 ${ul} · $${fr(R1)}/hr`;
+    document.getElementById('pill2-text').textContent = `2–3 ${up} · $${fr(R2)}/hr each`;
+    document.getElementById('pill3-text').textContent = `4+ ${up} · Custom bulk`;
+    setQty(1);
+    renderPlans();
   }
 
-  closeSheet();
+  // Show configure section
+  const cfg = document.getElementById('p-configure');
+  cfg.classList.remove('visible'); // reset animation
+  void cfg.offsetWidth;           // force reflow
+  cfg.classList.add('visible');
+
+  // Scroll to configure
+  setTimeout(() => {
+    cfg.scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 80);
+
+  // Features
+  renderFeatures(svc);
 }
 
-/* ── QUANTITY ── */
-function changeQty(d) { setQty(STATE.qty + d); }
+function resetIndustry() {
+  document.getElementById('p-configure').classList.remove('visible');
+  document.getElementById('p-feats-section').classList.remove('visible');
+  document.querySelectorAll('.p-icard').forEach(c => c.classList.remove('selected'));
+  STATE.svc = null;
+  document.getElementById('sect-industry').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ── QUANTITY ────────────────────────────── */
+function changeQty(d) {
+  setQty(STATE.qty + d);
+}
 
 function setQty(n) {
   if (n < 1) return;
   STATE.qty = n;
   const isCustom = n >= 4;
+
   document.getElementById('qty-display').textContent = isCustom ? '4+' : n;
   document.getElementById('btn-minus').disabled = n <= 1;
-  document.getElementById('pill1').classList.toggle('active', n===1);
-  document.getElementById('pill2').classList.toggle('active', n===2||n===3);
-  document.getElementById('pill3').classList.toggle('active', n>=4);
-  document.getElementById('bulk-note').classList.toggle('show', isCustom);
-  document.getElementById('plan-ctx-qty').textContent = isCustom ? '4+ units (Custom)' : `${n} ${n===1?(SVC[STATE.svc]?.ul||'unit'):(SVC[STATE.svc]?.up||'units')}`;
+
+  // Tier pills
+  document.getElementById('pill1').classList.toggle('active', n === 1);
+  document.getElementById('pill2').classList.toggle('active', n === 2 || n === 3);
+  document.getElementById('pill3').classList.toggle('active', n >= 4);
+
+  // Custom note
+  document.getElementById('p-bulk-note').classList.toggle('show', isCustom);
+
+  // Show/hide pricing cards
+  document.getElementById('p-plans-wrap').style.display = isCustom ? 'none' : 'block';
+  document.getElementById('p-custom-cta').classList.toggle('show', isCustom);
+
+  if (!isCustom) renderPlans();
 }
 
-/* ── RENDER PLANS ── */
+/* ── RENDER PRICING CARDS ────────────────── */
 function renderPlans() {
   const qty = STATE.qty;
-  if (qty >= 4) {
-    document.getElementById('plans-scroll').style.display = 'none';
-    document.getElementById('plan-dots').style.display = 'none';
-    document.getElementById('prc-custom-cta').classList.add('show');
-    return;
-  }
-  document.getElementById('plans-scroll').style.display = '';
-  document.getElementById('plan-dots').style.display = '';
-  document.getElementById('prc-custom-cta').classList.remove('show');
-
+  if (qty >= 4) return;
   const svc = SVC[STATE.svc];
   const ul = svc.ul, up = svc.up;
-  const showBD = qty > 1;
+  const showBreakdown = qty > 1;
 
-  // Weekly
+  // ── Weekly
   const wBase = baseRate(qty);
   const wTotal = wBase * HRS.weekly;
   document.getElementById('w-rate').textContent = fr(wBase);
-  document.getElementById('w-rate-note').textContent = showBD ? `Combined rate · ${qty} ${up}` : 'Standard rate — no discount';
-  fillBreakdown('w', qty, ul, 1.0);
-  document.getElementById('w-breakdown').classList.toggle('show', showBD);
+  document.getElementById('w-rate-note').textContent = showBreakdown
+    ? `Combined rate · ${qty} ${up}`
+    : 'Standard rate — no discount';
+  // breakdown
+  setBreakdown('w', qty, ul, 1.0);
+  document.getElementById('w-breakdown').classList.toggle('show', showBreakdown);
   document.getElementById('w-total').textContent = fc(wTotal);
-  document.getElementById('w-hrs').textContent = `Based on 40 hrs/week · ${qty} ${qty===1?ul:up}`;
+  document.getElementById('w-hours').textContent = `Based on 40 hrs/week · ${qty} ${qty===1?ul:up}`;
 
-  // Monthly
-  const mBT = baseTotal(qty,'monthly'), mT = mBT*DISC.monthly;
-  document.getElementById('m-rate').textContent = fr(mT/HRS.monthly);
-  document.getElementById('m-rate-note').textContent = showBD ? `Combined effective rate · ${qty} ${up} · 15% off` : 'Effective rate after 15% discount';
-  fillBreakdown('m', qty, ul, DISC.monthly);
-  document.getElementById('m-breakdown').classList.toggle('show', showBD);
-  document.getElementById('m-total').textContent = fc(mT);
-  document.getElementById('m-total-orig').textContent = fc(mBT);
-  document.getElementById('m-saved').textContent = `You save ${fc(mBT-mT)}/month`;
+  // ── Monthly (15% off)
+  const mBaseTotal = baseTotal(qty, 'monthly');
+  const mTotal = mBaseTotal * DISC.monthly;
+  const mSaved = mBaseTotal - mTotal;
+  const mEffRate = mTotal / HRS.monthly; // effective combined hourly cost
+  document.getElementById('m-rate').textContent = fr(mEffRate);
+  document.getElementById('m-rate-note').textContent = showBreakdown
+    ? `Combined effective rate · ${qty} ${up} · 15% off`
+    : 'Effective rate after 15% discount';
+  setBreakdown('m', qty, ul, DISC.monthly);
+  document.getElementById('m-breakdown').classList.toggle('show', showBreakdown);
+  document.getElementById('m-total').textContent = fc(mTotal);
+  document.getElementById('m-total-orig').textContent = fc(mBaseTotal);
+  document.getElementById('m-saved').textContent = `You save ${fc(mSaved)}/month`;
 
-  // Quarterly
-  const qBT = baseTotal(qty,'quarterly'), qT = qBT*DISC.quarterly;
-  document.getElementById('q-rate').textContent = fr(qT/HRS.quarterly);
-  document.getElementById('q-rate-note').textContent = showBD ? `Combined effective rate · ${qty} ${up} · 20% off` : 'Effective rate after 20% discount';
-  fillBreakdown('q', qty, ul, DISC.quarterly);
-  document.getElementById('q-breakdown').classList.toggle('show', showBD);
-  document.getElementById('q-total').textContent = fc(qT);
-  document.getElementById('q-total-orig').textContent = fc(qBT);
-  document.getElementById('q-saved').textContent = `You save ${fc(qBT-qT)} over 3 months`;
+  // ── Quarterly (20% off)
+  const qBaseTotal = baseTotal(qty, 'quarterly');
+  const qTotal = qBaseTotal * DISC.quarterly;
+  const qSaved = qBaseTotal - qTotal;
+  const qEffRate = qTotal / HRS.quarterly;
+  document.getElementById('q-rate').textContent = fr(qEffRate);
+  document.getElementById('q-rate-note').textContent = showBreakdown
+    ? `Combined effective rate · ${qty} ${up} · 20% off`
+    : 'Effective rate after 20% discount';
+  setBreakdown('q', qty, ul, DISC.quarterly);
+  document.getElementById('q-breakdown').classList.toggle('show', showBreakdown);
+  document.getElementById('q-total').textContent = fc(qTotal);
+  document.getElementById('q-total-orig').textContent = fc(qBaseTotal);
+  document.getElementById('q-saved').textContent = `You save ${fc(qSaved)} over 3 months`;
 }
 
-function fillBreakdown(pfx, qty, ul, disc) {
-  const r1d = R1*disc, r2d = R2*disc;
-  const b2r = document.getElementById(pfx+'-b2r');
-  const b3r = document.getElementById(pfx+'-b3r');
-  if (b2r) b2r.style.display = qty >= 2 ? '' : 'none';
-  if (b3r) b3r.style.display = qty >= 3 ? '' : 'none';
+/* ── Populate breakdown rows ─────────────── */
+function setBreakdown(prefix, qty, ul, disc) {
+  // First unit
+  document.getElementById(prefix+'-b1').textContent = `1st ${ul}`;
+  document.getElementById(prefix+'-b2-row').style.display = qty >= 2 ? '' : 'none';
+  document.getElementById(prefix+'-b3-row').style.display = qty >= 3 ? '' : 'none';
 
-  const setT = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  setT(pfx+'-b1', `1st ${ul}`);
-  if (qty>=2) { setT(pfx+'-b2', `2nd ${ul}`); if (pfx!=='w') setT(pfx+'-b2v', `$${fr(r2d)}/hr`); }
-  if (qty>=3) { setT(pfx+'-b3', `3rd ${ul}`); if (pfx!=='w') setT(pfx+'-b3v', `$${fr(r2d)}/hr`); }
-  if (pfx==='w') { setT(pfx+'-combined', `$${fr(baseRate(qty))}/hr`); }
-  else { setT(pfx+'-b1v', `$${fr(r1d)}/hr`); setT(pfx+'-combined', `$${fr(baseRate(qty)*disc)}/hr`); }
+  if (prefix === 'w') {
+    document.getElementById(prefix+'-combined').textContent = `$${fr(baseRate(qty))}/hr`;
+  } else {
+    const r1d = R1 * disc, r2d = R2 * disc;
+    document.getElementById(prefix+'-b1v').textContent = `$${fr(r1d)}/hr`;
+    if (qty >= 2) document.getElementById(prefix+'-b2v').textContent = `$${fr(r2d)}/hr`;
+    if (qty >= 3) document.getElementById(prefix+'-b3v').textContent = `$${fr(r2d)}/hr`;
+    document.getElementById(prefix+'-combined').textContent = `$${fr(baseRate(qty)*disc)}/hr`;
+    if (qty >= 2) { document.getElementById(prefix+'-b2').textContent = `2nd ${ul}`; }
+    if (qty >= 3) { document.getElementById(prefix+'-b3').textContent = `3rd ${ul}`; }
+  }
 }
 
-/* ── FEATURES ── */
+/* ── RENDER FEATURES ─────────────────────── */
 function renderFeatures(svc) {
-  if (!svc || !FEATURES[svc]) return;
-  const d = SVC[svc];
-  document.getElementById('feats-title').textContent = `Everything included with ${d.label}`;
-  const grid = document.getElementById('feats-grid');
-  grid.innerHTML = FEATURES[svc].map((f,i) => `
-    <div class="prc-feat-item">
-      <div class="prc-feat-icon">${FEAT_ICONS[i%FEAT_ICONS.length]}</div>
+  const data = SVC[svc];
+  document.getElementById('p-feats-title').textContent = `Everything included with ${data.label}`;
+  const grid = document.getElementById('p-feats-grid');
+  grid.innerHTML = (FEATURES[svc]||[]).map((f,i)=>`
+    <div class="p-feat-item">
+      <div class="p-feat-icon">${FEAT_ICONS[i%FEAT_ICONS.length]}</div>
       <div>
-        <div class="prc-feat-title">${f[0]}</div>
-        <p class="prc-feat-desc">${f[1]}</p>
+        <div class="p-feat-title">${f[0]}</div>
+        <p class="p-feat-desc">${f[1]}</p>
       </div>
     </div>`).join('');
-  const sec = document.getElementById('prc-feats-section');
-  sec.classList.add('show');
-  // Trigger stagger reveal
-  setTimeout(() => { initReveal(); }, 50);
+  const sec = document.getElementById('p-feats-section');
+  sec.classList.remove('visible');
+  void sec.offsetWidth;
+  sec.classList.add('visible');
 }
 
-/* ── PLAN SCROLL DOTS ── */
-function initScrollDots() {
-  const scroll = document.getElementById('plans-scroll');
-  if (!scroll) return;
-  scroll.addEventListener('scroll', () => {
-    const idx = Math.round(scroll.scrollLeft / scroll.offsetWidth);
-    document.querySelectorAll('.prc-scroll-dot').forEach((d,i) => {
-      d.classList.toggle('active', i===idx);
-    });
-  }, { passive: true });
-}
-
-function scrollToPlan(idx) {
-  const scroll = document.getElementById('plans-scroll');
-  if (scroll) scroll.scrollTo({ left: idx * scroll.offsetWidth, behavior:'smooth' });
-}
-
-/* ── MODAL ── */
-function openModal(plan, svcOverride, qtyOverride, type) {
+/* ── MODAL ───────────────────────────────── */
+function openModal(plan) {
   STATE.plan = plan;
-  const svc  = svcOverride || STATE.svc;
-  const qty  = (qtyOverride !== undefined) ? qtyOverride : STATE.qty;
-  const d    = svc ? SVC[svc] : null;
+  const svc  = STATE.svc;
+  const data = svc ? SVC[svc] : null;
+  const qty  = STATE.qty;
 
-  document.getElementById('ms-svc').textContent    = d ? d.label : '—';
-  document.getElementById('ms-plan').textContent   = PLAN_LABELS[plan] || plan;
+  // Summary strip
+  document.getElementById('ms-service').textContent = data ? data.label : '—';
+  document.getElementById('ms-plan').textContent    = PLAN_LABELS[plan] || plan;
 
-  const uItem = document.getElementById('ms-units-item');
-  if (d && d.ul) {
+  const uItem = document.getElementById('ms-unit-item');
+  if (data && data.ul) {
     uItem.style.display = '';
-    document.getElementById('ms-units-lbl').textContent = d.up || 'Units';
-    document.getElementById('ms-units-val').textContent = qty >= 4 ? '4+ (Custom)' : qty;
+    document.getElementById('ms-unit-lbl').textContent = data.up || 'Units';
+    document.getElementById('ms-unit-val').textContent = qty >= 4 ? '4+ (Custom)' : qty;
   } else { uItem.style.display = 'none'; }
 
+  // Est total in strip
   let tot = '—';
-  if (d && !d.broker && qty < 4) {
-    const pk = ['weekly','monthly','quarterly'].includes(plan) ? plan : 'monthly';
-    const t  = baseTotal(qty, pk) * DISC[pk];
-    const sfx = {weekly:'/wk',monthly:'/mo',quarterly:'/qtr'}[pk] || '/mo';
+  if (data && !data.broker && qty < 4) {
+    const planKey = ['weekly','monthly','quarterly'].includes(plan) ? plan : 'monthly';
+    const t = baseTotal(qty, planKey) * DISC[planKey];
+    const sfx = {weekly:'/wk',monthly:'/mo',quarterly:'/qtr'}[planKey] || '/mo';
     tot = fc(t) + sfx;
-  } else if (d && d.broker) { tot = '$2.50/hr + 2.5%'; }
+  } else if (data && data.broker) { tot = '$2.50/hr + 2.5%'; }
   document.getElementById('ms-total').textContent = tot;
 
+  // Pre-fill form
   if (svc) document.getElementById('modal-svc').value = svc;
   const pm = {weekly:'weekly',monthly:'monthly',quarterly:'quarterly',custom:'custom'};
   document.getElementById('modal-plan').value = pm[plan] || 'monthly';
   if (qty) document.getElementById('modal-unit-count').value = qty >= 4 ? 4 : qty;
   onModalSvcChange();
 
-  document.getElementById('prc-modal-form-wrap').style.display = 'flex';
-  document.getElementById('prc-modal-success').classList.remove('show');
-  document.getElementById('prc-modal-bg').classList.add('open');
+  // Reset to form view
+  document.getElementById('p-modal-form-wrap').style.display = 'flex';
+  document.getElementById('p-modal-success').classList.remove('show');
+
+  document.getElementById('p-modal-bg').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  document.getElementById('prc-modal-bg').classList.remove('open');
+  document.getElementById('p-modal-bg').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-function handleModalBg(e) {
-  if (e.target === document.getElementById('prc-modal-bg')) closeModal();
+function handleModalBgClick(e) {
+  if (e.target === document.getElementById('p-modal-bg')) closeModal();
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSheet(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 function onModalSvcChange() {
   const s = document.getElementById('modal-svc').value;
@@ -1278,63 +1655,49 @@ function onModalSvcChange() {
   }
 }
 
-/* ── SUBMIT ── */
+/* ── FORM SUBMIT ──────────────────────────── */
 async function submitModal(e) {
   e.preventDefault();
-  const form = document.getElementById('prc-form');
+  const form = document.getElementById('p-form');
   const btn  = document.getElementById('modal-submit-btn');
   const fd   = new FormData(form);
 
+  // Basic validation
   const req = ['firstName','lastName','email','phone'];
-  for (const k of req) {
-    if (!fd.get(k) || !fd.get(k).trim()) {
-      const input = form.querySelector(`[name="${k}"]`);
-      if (input) { input.focus(); input.style.borderColor='var(--brand-orange)'; }
-      alert('Please fill in all required fields.');
-      return;
-    }
-  }
+  for (const k of req) { if (!fd.get(k).trim()) { alert('Please fill in all required fields.'); return; } }
 
   btn.disabled = true;
-  btn.innerHTML = `<svg class="prc-spinning" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 11 16 11"/><path d="M20.49 15a9 9 0 11-.49-5"/></svg>&nbsp;Sending…`;
+  btn.innerHTML = `<svg class="p-spinning" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 11 16 11"/><path d="M20.49 15a9 9 0 11-.49-5"/></svg>Sending…`;
 
   const params = new URLSearchParams();
   for (const [key, entryId] of Object.entries(GFIELDS)) {
-    const val = fd.get(key);
-    params.append(entryId, val || '');
+    params.append(entryId, fd.get(key) || '');
   }
 
   try { await fetch(GFORM_URL, { method:'POST', mode:'no-cors', body:params }); } catch(_) {}
 
-  document.getElementById('prc-modal-form-wrap').style.display = 'none';
-  document.getElementById('prc-modal-success').classList.add('show');
-
+  // Show success
+  document.getElementById('p-modal-form-wrap').style.display = 'none';
+  document.getElementById('p-modal-success').classList.add('show');
   btn.disabled = false;
   btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send My Assessment Request`;
 }
 
-/* ── INTERSECTION OBSERVER (reveal) ── */
-function initReveal() {
-  const els = document.querySelectorAll('.prc-reveal:not(.in), .prc-reveal-stagger:not(.in)');
-  if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  els.forEach(e => obs.observe(e));
+/* ── FAQ ─────────────────────────────────── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const ans  = item.querySelector('.faq-answer');
+  const open = item.classList.contains('open');
+  // close all
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight = '0';
+  });
+  if (!open) {
+    item.classList.add('open');
+    ans.style.maxHeight = ans.scrollHeight + 'px';
+  }
 }
-
-/* ── INIT ── */
-document.addEventListener('DOMContentLoaded', () => {
-  initReveal();
-  initScrollDots();
-  setQty(1);
-});
 </script>
-
 </body>
 </html>
