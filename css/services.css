@@ -869,7 +869,7 @@ padding: 100px 0 40px;
   z-index: 500;
   overflow: hidden;
   animation: p-fadeup 0.28s var(--ease-out) forwards;
-  clip-path: inset(0px -20px -20px -20px);
+  clip-path: inset(-2px -20px -20px -20px);
 }
 .svc-panel.open { display: block; }
 .svc-panel-search {
