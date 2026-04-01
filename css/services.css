@@ -1548,3 +1548,99 @@ padding: 100px 0 40px;
   padding: 40px;
 }
 @media (max-width: 768px) { .hero-pw-wrap { display: none; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   PROCESS — SCROLL-DRIVEN REVEAL
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── All cards start hidden ───────────────────────────────────── */
+.process-scroll-wrapper .process-step-card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+}
+.process-scroll-wrapper .process-step-card.step-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Suppress the static CSS gradient line ───────────────────── */
+.process-scroll-wrapper .process-steps-list::before {
+  display: none;
+}
+
+/* ── Shared line base styles ──────────────────────────────────── */
+.process-line-track {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
+}
+.process-line-fill {
+  border-radius: 2px;
+  background: var(--brand-orange);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   DESKTOP (>1024px) — sticky + horizontal line
+   ───────────────────────────────────────────────────────────────── */
+@media (min-width: 1025px) {
+  /* Tall wrapper provides the scroll room */
+  .process-scroll-wrapper {
+    position: relative;
+    height: 400vh;
+  }
+
+  /* Section pins to top while wrapper scrolls */
+  .process-scroll-wrapper .process-section {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+
+  /* Horizontal track — from center of circle 1 to center of circle 4 */
+  /* These calc values match your existing ::before positioning exactly */
+  .process-line-track {
+    top: 24px; /* half of the 48px .process-step-num circle */
+    left: calc(12.5% + 24px);
+    right: calc(12.5% + 24px);
+    height: 3px;
+  }
+  .process-line-fill {
+    height: 100%;
+    width: 0%; /* grows via JS */
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   MOBILE (<768px) — natural flow + vertical centered line
+   ───────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* No sticky needed — cards stack, section flows naturally */
+  .process-scroll-wrapper {
+    height: auto;
+  }
+  .process-scroll-wrapper .process-section {
+    position: static;
+    height: auto;
+  }
+
+  /* Vertical track — runs down the center under each circle */
+  .process-line-track {
+    top: 24px;
+    bottom: 24px;
+    left: calc(50% - 1.5px);
+    width: 3px;
+    height: auto;
+  }
+  .process-line-fill {
+    width: 100%;
+    height: 0%; /* grows via JS */
+    transition: height 0.65s var(--ease-out);
+  }
+}
+
+/* Tablet (768–1024px): 2×2 grid, cards reveal without line */
+/* No extra rules needed — existing breakpoint already hides ::before */
