@@ -240,48 +240,38 @@
   </section>
 
   <!-- PROCESS -->
-<!-- SCROLL WRAPPER — tall on desktop to give animation room -->
-<div class="process-scroll-wrapper">
-  <section class="process-section" style="margin-top:0; margin-bottom:0; padding-top:140px; padding-bottom:80px; background-image:linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,0) 15%, rgba(6,13,26,0) 45%, rgba(6,13,26,0.85) 72%, rgba(6,13,26,1) 100%), linear-gradient(rgba(6,13,26,0.35), rgba(6,13,26,0.35)), url('../images/what-we-handle.png'); background-size:cover; background-position:center;">
-    <div class="container">
+<section class="process-section" style="margin-top:0; margin-bottom:0; padding-top:140px; padding-bottom:80; background-image:linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,0) 15%, rgba(6,13,26,0) 45%, rgba(6,13,26,0.85) 72%, rgba(6,13,26,1) 100%), linear-gradient(rgba(6,13,26,0.35), rgba(6,13,26,0.35)), url('../images/what-we-handle.png'); background-size:cover; background-position:center;">
+  <div class="container">
       <div class="section-header centered reveal">
         <span class="eyebrow">Simple Onboarding</span>
         <h2 style="color:white;">Up and running in 24 hours</h2>
         <p style="color:rgba(255,255,255,0.75);">No long setup, no IT requirements. Just tell us about your operation and we get to work.</p>
       </div>
       <div class="process-steps-list">
-
-        <!-- Animated orange connecting line -->
-        <div class="process-line-track">
-          <div class="process-line-fill" id="processLineFill"></div>
-        </div>
-
-        <div class="process-step-card" data-step="1">
+        <div class="process-step-card reveal delay-1">
           <div class="process-step-num">1</div>
           <h4 style="color:white;">Discovery Call</h4>
           <p style="color:rgba(255,255,255,0.75);">We learn your fleet size, lanes, current software, and biggest pain points. Takes 30 minutes.</p>
         </div>
-        <div class="process-step-card" data-step="2">
+        <div class="process-step-card reveal delay-2">
           <div class="process-step-num">2</div>
           <h4 style="color:white;">Custom Setup</h4>
           <p style="color:rgba(255,255,255,0.75);">We configure access to your TMS, load boards, factoring company, and communication channels.</p>
         </div>
-        <div class="process-step-card" data-step="3">
+        <div class="process-step-card reveal delay-3">
           <div class="process-step-num">3</div>
           <h4 style="color:white;">Team Assigned</h4>
           <p style="color:rgba(255,255,255,0.75);">Your dedicated back office team learns your preferences, lanes, and standards before handling a single load.</p>
         </div>
-        <div class="process-step-card" data-step="4">
+        <div class="process-step-card reveal delay-4">
           <div class="process-step-num">4</div>
           <h4 style="color:white;">Go Live</h4>
           <p style="color:rgba(255,255,255,0.75);">We start running your back office. Weekly reports keep you informed. You drive. We handle everything else.</p>
         </div>
-
       </div>
     </div>
   </section>
-</div>
-  
+
   <!-- TESTIMONIAL -->
 <section class="industry-testimonial" style="margin-top:-100px; position:relative; z-index:2; background-color:#060d1a;">
   <div class="industry-testimonial-inner">
@@ -346,72 +336,5 @@
   <div id="footer-include"></div>
 <script src="../js/includes.js"></script>
   <script src="../js/main.js"></script>
-<script>
-(function () {
-  var wrapper  = document.querySelector('.process-scroll-wrapper');
-  var lineFill = document.getElementById('processLineFill');
-  var cards    = document.querySelectorAll('.process-scroll-wrapper .process-step-card');
-  var TOTAL    = cards.length; // 4
-
-  if (!wrapper || !lineFill || !TOTAL) return;
-
-  // Step 1 is always visible immediately
-  cards[0].classList.add('step-active');
-
-  /* ── DESKTOP (>1024px): sticky scroll progress ──────────────── */
-  if (window.innerWidth > 1024) {
-
-    function desktopTick() {
-      var top  = wrapper.getBoundingClientRect().top;
-      var room = wrapper.offsetHeight - window.innerHeight;
-      if (room <= 0) return;
-
-      // p = 0 (section just pinned) → 1 (about to unpin)
-      var p = Math.max(0, Math.min(1, -top / room));
-
-      lineFill.style.width = (p * 100).toFixed(2) + '%';
-
-      // Reveal each card at its threshold: 0%, 33%, 66%, 100%
-      cards.forEach(function (card, i) {
-        if (p >= i / (TOTAL - 1)) card.classList.add('step-active');
-      });
-    }
-
-    window.addEventListener('scroll', desktopTick, { passive: true });
-    desktopTick(); // run once in case already scrolled into view
-    return;
-  }
-
-  /* ── MOBILE / TABLET (≤1024px): IntersectionObserver ───────── */
-  var revealedCount = 1; // step 1 already visible
-
-  function updateMobileLine() {
-    // Only animate line on single-column mobile (<768px)
-    if (window.innerWidth < 768) {
-      var pct = ((revealedCount - 1) / (TOTAL - 1) * 100).toFixed(1) + '%';
-      lineFill.style.height = pct;
-    }
-  }
-
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting && !entry.target.classList.contains('step-active')) {
-        entry.target.classList.add('step-active');
-        revealedCount++;
-        updateMobileLine();
-      }
-    });
-  }, {
-    threshold: 0.55
-  });
-
-  // Observe cards 2–4 (card 1 is already active)
-  Array.from(cards).slice(1).forEach(function (card) {
-    observer.observe(card);
-  });
-
-  updateMobileLine();
-})();
-</script>
 </body>
 </html>
