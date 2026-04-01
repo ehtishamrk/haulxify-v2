@@ -116,7 +116,7 @@
 
       <!-- RIGHT: FORM -->
       <div class="contact-form-card reveal delay-2">
-        <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfPpkFVf5RCggcRihkqVuqq7LaWO8mfNsBcCx2uJKiw2JcARQ/formResponse" method="POST">
+        <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfPpkFVf5RCggcRihkqVuqq7LaWO8mfNsBcCx2uJKiw2JcARQ/formResponse" method="POST" target="hidden_iframe">
           <div class="form-grid">
             <div class="form-group">
               <label for="firstName">First Name *</label>
@@ -228,22 +228,13 @@
 <div id="footer-include"></div>
   <script src="js/includes.js"></script>
 <script src="js/main.js"></script>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 <script>
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const form = this;
-    const data = new FormData(form);
-    fetch(form.action, {
-      method: 'POST',
-      body: data,
-      mode: 'no-cors'
-    }).then(function() {
-      form.style.display = 'none';
+  document.getElementById('contactForm').addEventListener('submit', function() {
+    setTimeout(function() {
+      document.getElementById('contactForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
-    }).catch(function() {
-      form.style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    });
+    }, 800);
   });
 </script>
 </body>
