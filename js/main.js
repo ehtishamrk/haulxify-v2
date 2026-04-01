@@ -399,16 +399,3 @@ window.HaulxifyApp = {
   initPricingSelector,
   initModal
 };
-function nlSubmit(e, form) {
-  e.preventDefault();
-  const data = new FormData(form);
-  fetch(form.action, {
-    method: 'POST',
-    body: data,
-    mode: 'no-cors'
-  }).finally(function() {
-    document.getElementById('nl-wrap').style.display = 'none';
-    const success = document.getElementById('nl-success');
-    success.style.display = 'flex';
-  });
-}
