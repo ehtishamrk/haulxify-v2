@@ -399,3 +399,20 @@ window.HaulxifyApp = {
   initPricingSelector,
   initModal
 };
+// =================================================================
+// NEWSLETTER SUBMIT
+// =================================================================
+function nlSubmit() {
+  var email = document.getElementById('nl-email').value;
+  if (!email) return;
+  var formData = new FormData();
+  formData.append('entry.1829529202', email);
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLSfa8U_1NQgykdUOcLKABOIlHMulFilp5tFA05XqqDT6jnPkIQ/formResponse', {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors'
+  });
+  document.getElementById('nl-email').value = '';
+  document.getElementById('nl-wrap').style.display = 'none';
+  document.getElementById('nl-success').style.display = 'block';
+}
