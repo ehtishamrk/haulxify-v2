@@ -65,14 +65,12 @@
   <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin:0 0 10px;line-height:1.5;">Get industry insights. Stay updated.</p>
   
   <div id="nl-wrap">
-    <form action="https://docs.google.com/forms/d/e/1FAIpQLSfa8U_1NQgykdUOcLKABOIlHMulFilp5tFA05XqqDT6jnPkIQ/formResponse" method="POST" onsubmit="nlSubmit(event, this)">
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 5px 5px 14px;display:flex;align-items:center;gap:8px;width:100%;overflow:hidden;">
-        <input name="entry.1829529202" type="email" placeholder="your@email.com" required style="background:none;border:none;outline:none;font-size:0.75rem;color:var(--white);flex:1;">
-        <button type="submit" style="background:var(--brand-orange);color:var(--white);border:none;border-radius:100px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
-      </div>
-    </form>
+    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 5px 5px 14px;display:flex;align-items:center;gap:8px;width:100%;overflow:hidden;">
+      <input id="nl-email" type="email" placeholder="your@email.com" style="background:none;border:none;outline:none;font-size:0.75rem;color:var(--white);flex:1;">
+      <button onclick="nlSubmit()" style="background:var(--brand-orange);color:var(--white);border:none;border-radius:100px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
   </div>
 
   <div id="nl-success" style="display:none;font-size:0.78rem;color:#22c55e;margin-top:10px;align-items:center;gap:6px;">
@@ -97,18 +95,19 @@
     </div>
   </div>
 <script>
-function nlSubmit(e, form) {
-  e.preventDefault();
-  const data = new FormData(form);
-  fetch(form.action, {
+function nlSubmit() {
+  var email = document.getElementById('nl-email').value;
+  if (!email) return;
+  var formData = new FormData();
+  formData.append('entry.1829529202', email);
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLSfa8U_1NQgykdUOcLKABOIlHMulFilp5tFA05XqqDT6jnPkIQ/formResponse', {
     method: 'POST',
-    body: data,
+    body: formData,
     mode: 'no-cors'
-  }).finally(function() {
-    document.getElementById('nl-wrap').style.display = 'none';
-    const success = document.getElementById('nl-success');
-    success.style.display = 'flex';
   });
+  document.getElementById('nl-email').value = '';
+  document.getElementById('nl-wrap').style.display = 'none';
+  document.getElementById('nl-success').style.display = 'block';
 }
 </script>
 </footer>
