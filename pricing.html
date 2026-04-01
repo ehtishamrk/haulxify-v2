@@ -765,12 +765,12 @@
             </div>
             <div class="svc-opt" data-svc="taxi" onclick="pickSvc('taxi')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h11l4 4h1a2 2 0 012 2v2m0 0a2 2 0 01-2 2H5"/><circle cx="7.5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg></div>
-              <div style="flex:1"><div class="svc-opt-name">Taxi Fleet Management</div><div class="svc-opt-type">Per agent line</div></div>
+              <div style="flex:1"><div class="svc-opt-name">Taxi Fleet Management & Support</div><div class="svc-opt-type">Per agent line</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
             <div class="svc-opt" data-svc="limo" onclick="pickSvc('limo')">
               <div class="svc-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="22" height="9" rx="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 8V6a2 2 0 012-2h10a2 2 0 012 2v2"/></svg></div>
-              <div style="flex:1"><div class="svc-opt-name">Limo &amp; Black Car</div><div class="svc-opt-type">Per agent line</div></div>
+              <div style="flex:1"><div class="svc-opt-name">Limo &amp; Black Car Taxi Fleet</div><div class="svc-opt-type">Per agent line</div></div>
               <div class="svc-opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             </div>
           </div>
@@ -1182,8 +1182,8 @@
                 <option value="moving">Moving Company Support</option>
                 <option value="afterhours">After-Hours Coverage</option>
                 <option value="nemt">NEMT Billing &amp; Dispatch</option>
-                <option value="taxi">Taxi Fleet Management</option>
-                <option value="limo">Limo &amp; Black Car</option>
+                <option value="taxi">Taxi Fleet Management & Support</option>
+                <option value="limo">Limo &amp; Black Car Management & Support</option>
               </select>
             </div>
             <div class="form-group">
@@ -1304,8 +1304,8 @@ const SVC = {
   moving:     { label:'Moving Company Support',   ul:'truck',   up:'trucks',    lb:false, broker:false },
   afterhours: { label:'After-Hours Coverage',     ul:'agent',   up:'agents',    lb:false, broker:false },
   nemt:       { label:'NEMT Billing & Dispatch',  ul:'vehicle', up:'vehicles',  lb:false, broker:false },
-  taxi:       { label:'Taxi Fleet Management',    ul:'agent',   up:'agents',    lb:false, broker:false },
-  limo:       { label:'Limo & Black Car',         ul:'agent',   up:'agents',    lb:false, broker:false },
+  taxi:       { label:'Taxi Fleet Management & Support',    ul:'agent',   up:'agents',    lb:false, broker:false },
+  limo:       { label:'Limo & Black Car Management & Support',         ul:'agent',   up:'agents',    lb:false, broker:false },
 };
 
 const SVC_ICONS = {
@@ -1553,7 +1553,40 @@ async function submitModal(e){
   btn.disabled=true;
   btn.innerHTML=`<svg class="p-spinning" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 11 16 11"/><path d="M20.49 15a9 9 0 11-.49-5"/></svg>Sending…`;
   const params=new URLSearchParams();
-  for(const[k,id]of Object.entries(GFIELDS)){params.append(id,fd.get(k)||'');}
+const svcLabels = {
+  trucking:'Trucking Back Office', broker:'Freight Broker Support',
+  tow:'Tow Truck Dispatch', carhauler:'Car Hauler Operations',
+  animal:'Animal Hauler Operations', dump:'Dump Truck Back Office',
+  sprinter:'Sprinter / Cargo Van', moving:'Moving Company Support',
+  afterhours:'After-Hours Coverage', nemt:'NEMT Billing & Dispatch',
+  taxi:'Taxi Fleet Management & Support', limo:'Limo & Black Car Management & Support',
+};
+const planLabels = {
+  weekly:'Weekly — Standard Rate', monthly:'Monthly — Save 15%',
+  quarterly:'Quarterly — Save 20%', custom:'Custom Bulk Pricing',
+};
+const referralLabels = {
+  google:'Google Search', referral:'Referral / Word of mouth',
+  social:'Social Media', linkedin:'LinkedIn', other:'Other',
+};
+const timeLabels = {
+  morning:'Morning (8am–12pm)', afternoon:'Afternoon (12pm–5pm)',
+  evening:'Evening (5pm–8pm)', anytime:'Any time',
+};
+const payLabels = {
+  payoneer:'Payoneer', elevate:'Elevate Pay', worldfirst:'WorldFirst',
+  westernunion:'Western Union', moneygram:'MoneyGram', wire:'Wire Transfer',
+};
+
+for(const[k,id] of Object.entries(GFIELDS)){
+  let val = fd.get(k) || '';
+  if(k==='serviceType') val = svcLabels[val] || val;
+  if(k==='billingPlan') val = planLabels[val] || val;
+  if(k==='referral')    val = referralLabels[val] || val;
+  if(k==='contactTime') val = timeLabels[val] || val;
+  if(k==='payMethod')   val = payLabels[val] || val;
+  params.append(id, val);
+}
   try{await fetch(GFORM_URL,{method:'POST',mode:'no-cors',body:params});}catch(_){}
   document.getElementById('px-form-wrap').style.display='none';
   document.getElementById('px-modal-success').classList.add('show');
