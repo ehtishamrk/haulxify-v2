@@ -1548,3 +1548,8 @@ padding: 100px 0 40px;
   padding: 40px;
 }
 @media (max-width: 768px) { .hero-pw-wrap { display: none; } }
+@supports (-webkit-hyphens: none) {
+  .pain-section {
+    background-attachment: scroll !important;
+  }
+}
