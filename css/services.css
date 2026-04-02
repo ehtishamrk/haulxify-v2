@@ -1648,3 +1648,6 @@ padding: 100px 0 40px;
   .about-values-grid { grid-template-columns: 1fr !important; }
   .about-stat-row { flex-direction: column; gap: 24px; }
 }
+@media (max-width: 600px) {
+  .comp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
