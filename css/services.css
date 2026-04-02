@@ -1626,3 +1626,19 @@ padding: 100px 0 40px;
     white-space: normal;
   }
 }
+/* ── Proof + FAQ Grid (trucking page) ── */
+@media (max-width: 900px) {
+  .hx-proof-wrap {
+    padding: 0 24px !important;
+  }
+  .hx-proof-grid {
+    grid-template-columns: 1fr !important;
+    gap: 56px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hx-proof-wrap {
+    padding: 0 16px !important;
+  }
+}
