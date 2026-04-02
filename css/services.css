@@ -1553,3 +1553,76 @@ padding: 100px 0 40px;
     background-attachment: scroll !important;
   }
 }
+/* ================================================================
+   SERVICES — RESPONSIVE BREAKPOINTS
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .pain-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .solution-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .solution-visual {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .handles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .process-steps-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+  .process-steps-list::before {
+    display: none; /* connector line breaks at 2-col */
+  }
+  .services-page-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pain-grid {
+    grid-template-columns: 1fr;
+  }
+  .handles-grid {
+    margin-bottom: 0 !important; /* removes the -110px overlap trick */
+  }
+  .process-section {
+    padding-top: 60px !important;
+    padding-bottom: 80px !important;
+  }
+  .faq-question {
+    font-size: 0.875rem;
+    padding: 16px 20px;
+  }
+  .faq-answer-inner {
+    padding: 0 20px 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .solution-section {
+    background-image: none !important;
+    background-color: #fff !important;
+  }
+  .handles-grid {
+    grid-template-columns: 1fr;
+  }
+  .process-steps-list {
+    grid-template-columns: 1fr;
+  }
+  .services-page-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pain-stat {
+    white-space: normal;
+  }
+}
