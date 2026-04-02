@@ -1642,3 +1642,9 @@ padding: 100px 0 40px;
     padding: 0 16px !important;
   }
 }
+/* About page mobile */
+@media (max-width: 600px) {
+  .about-team-grid,
+  .about-values-grid { grid-template-columns: 1fr !important; }
+  .about-stat-row { flex-direction: column; gap: 24px; }
+}
