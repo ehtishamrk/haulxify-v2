@@ -821,3 +821,14 @@ color: var(--white);
   .industries-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 600px) {
+  .why-floating-badge {
+    display: none;
+  }
+  .why-main-card {
+    padding: 32px 24px;
+  }
+  .why-card-number {
+    font-size: 3.5rem;
+  }
+}
