@@ -220,14 +220,25 @@ function initFAQ() {
       // Close all
       faqItems.forEach(i => {
         i.classList.remove('open');
+        const q = i.querySelector('.faq-question');
         const a = i.querySelector('.faq-answer');
         if (a) a.style.maxHeight = '0';
+        if (q) q.setAttribute('aria-expanded', 'false');  // ← added
       });
 
       // Open clicked if it wasn't open
       if (!isOpen) {
         item.classList.add('open');
         answer.style.maxHeight = answer.scrollHeight + 'px';
+        question.setAttribute('aria-expanded', 'true');   // ← added
+      }
+    });
+
+    // Keyboard support — Enter and Space trigger click  // ← added block
+    question.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        question.click();
       }
     });
   });
