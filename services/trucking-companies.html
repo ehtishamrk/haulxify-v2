@@ -40,7 +40,7 @@
   </section>
 
  <!-- PAIN POINTS -->
-  <section class="pain-section" style="background-image: linear-gradient(rgba(6,13,26,0.18), rgba(6,13,26,0.12)), url('../images/chaos-trucking.png'); background-size: cover; background-position: center; background-attachment: fixed;">
+    <section class="pain-section" style="padding-top: 40px; padding-bottom: 40px; background-image: linear-gradient(rgba(6,13,26,0.18), rgba(6,13,26,0.12)), url('../images/chaos-trucking.png'); background-size: cover; background-position: center; background-attachment: fixed;">
     <div class="container">
       <div class="section-header reveal" style="position: relative; z-index: 1;">
 <span class="eyebrow">Real Pain. Real Numbers.</span>
@@ -108,7 +108,7 @@
   </section>
 
   <!-- SOLUTION -->
-  <section class="solution-section" style="position: relative; background-image: linear-gradient(to right, #ffffff 30%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.15) 75%, rgba(255,255,255,0) 100%), url('../images/trucking-solution.png'); background-size: cover; background-position: right center; background-repeat: no-repeat;">
+<section class="solution-section" style="padding-top: 40px; padding-bottom: 40px; position: relative; background-image: linear-gradient(to right, #ffffff 30%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.15) 75%, rgba(255,255,255,0) 100%), url('../images/trucking-solution.png'); background-size: cover; background-position: right center; background-repeat: no-repeat;">
     <div class="container">
       <div class="solution-layout">
         <div class="reveal">
@@ -188,8 +188,8 @@
   </section>
 
 <!-- WHAT WE HANDLE -->
-<section class="handles-section" style="margin-bottom:0; padding-bottom:0;">
-  <div class="container">
+<section class="handles-section" style="padding-top: 40px; margin-bottom:0; padding-bottom:0;">
+    <div class="container">
       <div class="section-header centered reveal">
         <span class="eyebrow">Complete Coverage</span>
         <h2>Everything we handle for trucking companies</h2>
@@ -240,8 +240,8 @@
   </section>
 
   <!-- PROCESS -->
-<section class="process-section" style="margin-top:0; margin-bottom:0; padding-top:140px; padding-bottom:80px; background-image:linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,0) 15%, rgba(6,13,26,0) 45%, rgba(6,13,26,0.85) 72%, rgba(6,13,26,1) 100%), linear-gradient(rgba(6,13,26,0.35), rgba(6,13,26,0.35)), url('../images/what-we-handle.png'); background-size:cover; background-position:center;">
-  <div class="container">
+<section class="process-section" style="margin-top:0; margin-bottom:0; padding-top:40px; padding-bottom:40px; background-image:linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,0) 15%, rgba(6,13,26,0) 45%, rgba(6,13,26,0.85) 72%, rgba(6,13,26,1) 100%), linear-gradient(rgba(6,13,26,0.35), rgba(6,13,26,0.35)), url('../images/what-we-handle.png'); background-size:cover; background-position:center;">
+    <div class="container">
       <div class="section-header centered reveal">
         <span class="eyebrow">Simple Onboarding</span>
         <h2 style="color:white;">Up and running in 24 hours</h2>
@@ -272,103 +272,198 @@
     </div>
   </section>
 
-  <!-- TESTIMONIAL -->
-<section class="industry-testimonial" style="margin-top:-100px; position:relative; z-index:2; background-color:#060d1a;">
-  <div class="industry-testimonial-inner">
-      <blockquote>"I was spending 3 hours every morning doing paperwork before I could even touch the load board. Now my Haulxify team has everything ready before I wake up. I added two trucks in 4 months because I finally had the bandwidth to grow."</blockquote>
-      <cite>Marcus T. — Owner-Operator, Texas (7 trucks)</cite>
-    </div>
-  </section>
-  
-  <!-- FAQ -->
-  <section class="service-faq">
-    <div class="container">
-      <div class="section-header centered reveal">
-        <span class="eyebrow">Common Questions</span>
-        <h2>Trucking back office FAQ</h2>
+<!-- PROOF + FAQ -->
+<section style="background-color:#060d1a; margin-top:-100px; position:relative; z-index:2; padding:40px 0; overflow:hidden;">
+  <div style="position:absolute; top:0; left:0; width:500px; height:500px; background:radial-gradient(ellipse at top left, rgba(255,107,0,0.07) 0%, transparent 65%); pointer-events:none;"></div>
+
+  <div style="max-width:1200px; margin:0 auto; padding:0 40px;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:96px; align-items:start;">
+
+      <!-- ── TESTIMONIALS ── -->
+      <div>
+
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:52px;">
+          <span style="display:block; width:28px; height:1px; background:var(--brand-orange);"></span>
+          <span style="color:var(--brand-orange); font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;">What carriers say</span>
+        </div>
+
+        <div style="position:relative;">
+          <div style="position:absolute; top:-32px; left:-6px; font-size:130px; line-height:1; color:rgba(255,107,0,0.09); font-family:Georgia,serif; pointer-events:none; user-select:none;">"</div>
+
+          <!-- Slide 0 — position:relative so wrapper gets natural height -->
+          <div id="hx-t0" style="position:relative; transition:opacity 0.55s ease;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">I was spending 3 hours every morning doing paperwork before I could even touch the load board. Now my Haulxify team has everything ready before I wake up. I added two trucks in 4 months because I finally had the bandwidth to grow.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; background:var(--brand-orange); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#060d1a; flex-shrink:0; letter-spacing:0.06em;">MT</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">Marcus T.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Owner-Operator · Texas · 7 trucks</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 1 -->
+          <div id="hx-t1" style="position:absolute; top:0; left:0; width:100%; opacity:0; transition:opacity 0.55s ease; pointer-events:none;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">IFTA used to terrify me every quarter. I'd lose sleep knowing I probably missed something. Haulxify handles all of it now — I just drive and the filing gets done. Haven't had a single penalty since I signed up.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); flex-shrink:0;">DR</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">Darius R.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Fleet Manager · Georgia · 18 trucks</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div id="hx-t2" style="position:absolute; top:0; left:0; width:100%; opacity:0; transition:opacity 0.55s ease; pointer-events:none;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">As a single-truck operator I thought back office support was for big fleets only. Haulxify proved me wrong. Onboarded in less than a day. My invoices go out same-day, every time. Cash flow is night and day.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); flex-shrink:0;">SK</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">Sarah K.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Owner-Operator · Ohio · 3 trucks</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div id="hx-t3" style="position:absolute; top:0; left:0; width:100%; opacity:0; transition:opacity 0.55s ease; pointer-events:none;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">Haulxify caught a fraudulent rate confirmation before we ever loaded the truck. Saved us from a $4,200 loss on that one load alone. The protection it provides pays for the entire service ten times over.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); flex-shrink:0;">JW</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">James W.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Small Carrier · Illinois · 12 trucks</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Nav row -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:52px; padding-left:2px;">
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button onclick="hxSlide(0)" id="hx-d0" style="height:3px; width:28px; border-radius:2px; background:var(--brand-orange); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+            <button onclick="hxSlide(1)" id="hx-d1" style="height:3px; width:10px; border-radius:2px; background:rgba(255,255,255,0.16); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+            <button onclick="hxSlide(2)" id="hx-d2" style="height:3px; width:10px; border-radius:2px; background:rgba(255,255,255,0.16); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+            <button onclick="hxSlide(3)" id="hx-d3" style="height:3px; width:10px; border-radius:2px; background:rgba(255,255,255,0.16); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:var(--brand-orange); font-size:12px; letter-spacing:2px;">★★★★★</span>
+            <span style="color:rgba(255,255,255,0.28); font-size:0.75rem;">4.9 · 120+ carriers</span>
+          </div>
+        </div>
+
       </div>
-      <div class="faq-list">
-        <div class="faq-item">
-  <div class="faq-question"
-       role="button"
-       tabindex="0"
-       aria-expanded="false"
-       aria-controls="faq-answer-1">
-    Do you work with owner-operators or only fleets?
-    <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-  </div>
-  <div class="faq-answer"
-       id="faq-answer-1"
-       role="region">
-    <div class="faq-answer-inner">We work with both. Single truck owner-operators are actually our most common client because they have zero back office capacity and the most to gain. We scale with you from one truck to fifty.</div>
-  </div>
-</div>
+      <!-- ── END TESTIMONIALS ── -->
+
+      <!-- ── FAQ ── -->
+      <div>
+
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:52px;">
+          <span style="display:block; width:28px; height:1px; background:rgba(255,255,255,0.18);"></span>
+          <span style="color:rgba(255,255,255,0.38); font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;">Common questions</span>
+        </div>
+
+        <div class="faq-list">
+
           <div class="faq-item">
-  <div class="faq-question"
-       role="button"
-       tabindex="0"
-       aria-expanded="false"
-       aria-controls="faq-answer-2">
-    What TMS and load boards do you support?
-    <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-  </div>
-  <div class="faq-answer"
-       id="faq-answer-2"
-       role="region">
-    <div class="faq-answer-inner">We work with all major platforms including DAT, Truckstop, ITS Dispatch, TruckLogics, McLeod, and others. If you have a preferred system, we adapt to it. If you have no system, we can recommend and set up the right one.</div>
-  </div>
-</div>
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f1">
+              Do you work with owner-operators or only fleets?
+              <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f1" role="region">
+              <div class="faq-answer-inner" style="color:rgba(0,0,0,0.72); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">We work with both. Single truck owner-operators are actually our most common client — they have zero back office capacity and the most to gain. We scale with you from one truck to fifty.</div>
+            </div>
+          </div>
+
           <div class="faq-item">
-  <div class="faq-question"
-       role="button"
-       tabindex="0"
-       aria-expanded="false"
-       aria-controls="faq-answer-3">
-    How does IFTA filing work with Haulxify?
-    <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-  </div>
-  <div class="faq-answer"
-       id="faq-answer-3"
-       role="region">
-    <div class="faq-answer-inner">We track your state-by-state mileage throughout each quarter using your ELD data. Before each quarterly deadline, we calculate your fuel tax liability or credit, prepare the IFTA report, and file it on your behalf. We also flag any discrepancies before they become audit issues.</div>
-  </div>
-</div>
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f2">
+              What TMS and load boards do you support?
+              <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f2" role="region">
+              <div class="faq-answer-inner" style="color:rgba(0,0,0,0.72); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">All major platforms — DAT, Truckstop, ITS Dispatch, TruckLogics, McLeod, and others. If you have a preferred system we adapt to it. If you have none, we'll recommend and set up the right one.</div>
+            </div>
+          </div>
+
           <div class="faq-item">
-  <div class="faq-question"
-       role="button"
-       tabindex="0"
-       aria-expanded="false"
-       aria-controls="faq-answer-4">
-Can you help with factoring if I don't already have a factoring company?
-      <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-  </div>
-  <div class="faq-answer"
-       id="faq-answer-4"
-       role="region">
-    <div class="faq-answer-inner">Yes. We have relationships with several reputable factoring companies and can provide introductions based on your freight type, volume, and credit situation. We then coordinate all factoring submissions on your behalf as part of our billing service.</div>
-  </div>
-</div>
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f3">
+              How does IFTA filing work with Haulxify?
+              <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f3" role="region">
+              <div class="faq-answer-inner" style="color:rgba(0,0,0,0.72); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">We track your state-by-state mileage each quarter via your ELD data, calculate your fuel tax liability, prepare the report, and file on your behalf — every deadline, without fail. We also flag discrepancies before they become audit triggers.</div>
+            </div>
+          </div>
+
           <div class="faq-item">
-  <div class="faq-question"
-       role="button"
-       tabindex="0"
-       aria-expanded="false"
-       aria-controls="faq-answer-5">
-Is there a minimum fleet size to work with Haulxify?
-      <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-  </div>
-  <div class="faq-answer"
-       id="faq-answer-5"
-       role="region">
-    <div class="faq-answer-inner">No minimum. We start with single truck operators all the way up to fleets of 50+. Pricing scales by vehicle count, so you always pay proportionally to your size.</div>
-  </div>
-</div>
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f4">
+              Can you help if I don't have a factoring company yet?
+              <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f4" role="region">
+              <div class="faq-answer-inner" style="color:rgba(0,0,0,0.72); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">Yes. We have relationships with several reputable factoring companies and make introductions based on your freight type, volume, and credit. We then coordinate all submissions on your behalf as part of our billing service.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f5">
+              Is there a minimum fleet size?
+              <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f5" role="region">
+              <div class="faq-answer-inner" style="color:rgba(0,0,0,0.72); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">No minimum. We start with single truck operators all the way up to fleets of 50+. Pricing scales by vehicle count so you always pay proportionally to your size.</div>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f6">
+              Can Haulxify protect against broker fraud?
+              <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f6" role="region">
+              <div class="faq-answer-inner" style="color:rgba(0,0,0,0.72); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">Yes. We review every rate confirmation before you load, verify broker MC numbers and bond status, and flag terms that signal double-brokering or non-payment risk. We've caught fraudulent brokers for multiple clients before a single mile was turned.</div>
+            </div>
+          </div>
+
+        </div>
       </div>
+      <!-- ── END FAQ ── -->
+
     </div>
-  </section>
+  </div>
+</section>
+
+<script>
+(function(){
+  var cur = 0, n = 4, timer;
+  function hxSlide(to) {
+    document.getElementById('hx-t'+cur).style.opacity = '0';
+    document.getElementById('hx-t'+cur).style.pointerEvents = 'none';
+    document.getElementById('hx-d'+cur).style.width = '10px';
+    document.getElementById('hx-d'+cur).style.background = 'rgba(255,255,255,0.16)';
+    if(cur !== 0) document.getElementById('hx-t'+cur).style.position = 'absolute';
+    cur = to;
+    if(cur === 0) {
+      document.getElementById('hx-t0').style.position = 'relative';
+    } else {
+      document.getElementById('hx-t'+cur).style.position = 'absolute';
+    }
+    document.getElementById('hx-t'+cur).style.opacity = '1';
+    document.getElementById('hx-t'+cur).style.pointerEvents = 'auto';
+    document.getElementById('hx-d'+cur).style.width = '28px';
+    document.getElementById('hx-d'+cur).style.background = 'var(--brand-orange)';
+    clearInterval(timer);
+    timer = setInterval(function(){ hxSlide((cur+1)%n); }, 5500);
+  }
+  window.hxSlide = hxSlide;
+  timer = setInterval(function(){ hxSlide((cur+1)%n); }, 5500);
+})();
+</script>
 
   <!-- FINAL CTA -->
-  <section class="section" style="background-image: linear-gradient(rgba(6,13,26,0.72), rgba(6,13,26,0.72)), url('../images/Final-Cta-Trucking.png'); background-size: cover; background-position: center; padding: 80px 0;">
+<section class="section" style="background-image: linear-gradient(rgba(6,13,26,0.72), rgba(6,13,26,0.72)), url('../images/Final-Cta-Trucking.png'); background-size: cover; background-position: center; padding: 40px 0;">
     <div class="container" style="text-align: center; max-width: 640px; margin: 0 auto;">
       <h2 style="font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight:800; color:#ffffff; letter-spacing:-0.03em; margin-bottom:16px;">Stop losing money on paperwork you shouldn't be doing.</h2>
       <p style="color: rgba(255,255,255,0.78); line-height: 1.7; margin-bottom: 32px;">Talk to our team. We'll assess your current back office load and show you exactly how much time and money you're leaving on the table.</p>
