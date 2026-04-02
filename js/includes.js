@@ -43,5 +43,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   await loadInclude('nav-include', 'nav.html');
   await loadInclude('footer-include', 'footer.html');
   if (typeof initNav === 'function') initNav();
+  if (typeof initMobileMenu === 'function') initMobileMenu(); // ← add this line
   if (typeof initAnimations === 'function') initAnimations();
 });
