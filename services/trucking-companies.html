@@ -272,260 +272,201 @@
     </div>
   </section>
 
- <!-- PROOF + FAQ -->
-<section style="background-color:#060d1a; margin-top:-100px; position:relative; z-index:2; padding: 120px 0 100px;">
-  <div style="max-width:1200px; margin:0 auto; padding:0 32px;">
+<!-- PROOF + FAQ -->
+<section style="background-color:#060d1a; margin-top:-100px; position:relative; z-index:2; padding:120px 0 110px; overflow:hidden;">
 
-    <!-- Header -->
-    <div style="text-align:center; margin-bottom:72px;">
-      <span class="eyebrow">Proof & Answers</span>
-      <h2 style="color:#ffffff; font-size:clamp(1.75rem,3.5vw,2.5rem); font-weight:800; letter-spacing:-0.03em; line-height:1.15; margin-top:10px; margin-bottom:0;">Real operators. Real questions.</h2>
-    </div>
+  <div style="position:absolute; top:0; left:0; width:500px; height:500px; background:radial-gradient(ellipse at top left, rgba(255,107,0,0.07) 0%, transparent 65%); pointer-events:none;"></div>
 
-    <!-- Two-col grid -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 40px;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:96px; align-items:start;">
 
-      <!-- ── LEFT: TESTIMONIALS ── -->
+      <!-- ── TESTIMONIALS ── -->
       <div>
-        <p style="color:rgba(255,255,255,0.4); font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:32px;">What carriers say</p>
 
-        <!-- Card wrapper -->
-        <div style="position:relative; min-height:320px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:52px;">
+          <span style="display:block; width:28px; height:1px; background:var(--brand-orange);"></span>
+          <span style="color:var(--brand-orange); font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;">What carriers say</span>
+        </div>
 
-          <!-- T1 -->
-          <div class="t-slide" id="t0" style="opacity:1; transition:opacity 0.5s ease; position:absolute; width:100%;">
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:40px; position:relative; overflow:hidden;">
-              <span style="position:absolute; top:-10px; left:28px; font-size:96px; color:rgba(255,255,255,0.04); font-family:Georgia,serif; line-height:1; pointer-events:none;">"</span>
-              <div style="display:flex; gap:3px; margin-bottom:20px;">
-                <span style="color:var(--brand-orange); font-size:14px;">★★★★★</span>
-              </div>
-              <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.8; font-style:italic; margin:0 0 32px;">"I was spending 3 hours every morning doing paperwork before I could even touch the load board. Now my Haulxify team has everything ready before I wake up. I added two trucks in 4 months because I finally had the bandwidth to grow."</p>
-              <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:46px; height:46px; border-radius:50%; background:var(--brand-orange); display:flex; align-items:center; justify-content:center; font-weight:800; color:#060d1a; font-size:14px; flex-shrink:0;">MT</div>
-                <div>
-                  <div style="color:#ffffff; font-weight:700; font-size:0.92rem; line-height:1.3;">Marcus T.</div>
-                  <div style="color:rgba(255,255,255,0.4); font-size:0.78rem; margin-top:3px;">Owner-Operator · Texas · 7 trucks</div>
-                </div>
-                <div style="margin-left:auto; background:rgba(255,255,255,0.06); border-radius:20px; padding:4px 12px;">
-                  <span style="color:rgba(255,255,255,0.5); font-size:0.72rem; font-weight:600; letter-spacing:0.06em;">VERIFIED CLIENT</span>
-                </div>
+        <div style="position:relative;">
+          <div style="position:absolute; top:-32px; left:-6px; font-size:130px; line-height:1; color:rgba(255,107,0,0.09); font-family:Georgia,serif; pointer-events:none; user-select:none;">"</div>
+
+          <!-- Slide 0 — position:relative so wrapper gets natural height -->
+          <div id="hx-t0" style="position:relative; transition:opacity 0.55s ease;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">I was spending 3 hours every morning doing paperwork before I could even touch the load board. Now my Haulxify team has everything ready before I wake up. I added two trucks in 4 months because I finally had the bandwidth to grow.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; background:var(--brand-orange); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#060d1a; flex-shrink:0; letter-spacing:0.06em;">MT</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">Marcus T.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Owner-Operator · Texas · 7 trucks</div>
               </div>
             </div>
           </div>
 
-          <!-- T2 -->
-          <div class="t-slide" id="t1" style="opacity:0; transition:opacity 0.5s ease; position:absolute; width:100%;">
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:40px; position:relative; overflow:hidden;">
-              <span style="position:absolute; top:-10px; left:28px; font-size:96px; color:rgba(255,255,255,0.04); font-family:Georgia,serif; line-height:1; pointer-events:none;">"</span>
-              <div style="display:flex; gap:3px; margin-bottom:20px;">
-                <span style="color:var(--brand-orange); font-size:14px;">★★★★★</span>
-              </div>
-              <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.8; font-style:italic; margin:0 0 32px;">"IFTA used to terrify me every quarter. I'd lose sleep knowing I probably missed something. Haulxify handles all of it now — I just drive and the filing gets done. Haven't had a single penalty since I signed up."</p>
-              <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; font-weight:800; color:#ffffff; font-size:14px; flex-shrink:0;">DR</div>
-                <div>
-                  <div style="color:#ffffff; font-weight:700; font-size:0.92rem; line-height:1.3;">Darius R.</div>
-                  <div style="color:rgba(255,255,255,0.4); font-size:0.78rem; margin-top:3px;">Fleet Manager · Georgia · 18 trucks</div>
-                </div>
-                <div style="margin-left:auto; background:rgba(255,255,255,0.06); border-radius:20px; padding:4px 12px;">
-                  <span style="color:rgba(255,255,255,0.5); font-size:0.72rem; font-weight:600; letter-spacing:0.06em;">VERIFIED CLIENT</span>
-                </div>
+          <!-- Slide 1 -->
+          <div id="hx-t1" style="position:absolute; top:0; left:0; width:100%; opacity:0; transition:opacity 0.55s ease; pointer-events:none;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">IFTA used to terrify me every quarter. I'd lose sleep knowing I probably missed something. Haulxify handles all of it now — I just drive and the filing gets done. Haven't had a single penalty since I signed up.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); flex-shrink:0;">DR</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">Darius R.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Fleet Manager · Georgia · 18 trucks</div>
               </div>
             </div>
           </div>
 
-          <!-- T3 -->
-          <div class="t-slide" id="t2" style="opacity:0; transition:opacity 0.5s ease; position:absolute; width:100%;">
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:40px; position:relative; overflow:hidden;">
-              <span style="position:absolute; top:-10px; left:28px; font-size:96px; color:rgba(255,255,255,0.04); font-family:Georgia,serif; line-height:1; pointer-events:none;">"</span>
-              <div style="display:flex; gap:3px; margin-bottom:20px;">
-                <span style="color:var(--brand-orange); font-size:14px;">★★★★★</span>
-              </div>
-              <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.8; font-style:italic; margin:0 0 32px;">"As a single-truck operator I thought back office support was only for big fleets. Haulxify proved me wrong. They onboarded me in less than a day, and my invoices now go out same-day every time. Cash flow is night and day."</p>
-              <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; font-weight:800; color:#ffffff; font-size:14px; flex-shrink:0;">SK</div>
-                <div>
-                  <div style="color:#ffffff; font-weight:700; font-size:0.92rem; line-height:1.3;">Sarah K.</div>
-                  <div style="color:rgba(255,255,255,0.4); font-size:0.78rem; margin-top:3px;">Owner-Operator · Ohio · 3 trucks</div>
-                </div>
-                <div style="margin-left:auto; background:rgba(255,255,255,0.06); border-radius:20px; padding:4px 12px;">
-                  <span style="color:rgba(255,255,255,0.5); font-size:0.72rem; font-weight:600; letter-spacing:0.06em;">VERIFIED CLIENT</span>
-                </div>
+          <!-- Slide 2 -->
+          <div id="hx-t2" style="position:absolute; top:0; left:0; width:100%; opacity:0; transition:opacity 0.55s ease; pointer-events:none;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">As a single-truck operator I thought back office support was for big fleets only. Haulxify proved me wrong. Onboarded in less than a day. My invoices go out same-day, every time. Cash flow is night and day.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); flex-shrink:0;">SK</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">Sarah K.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Owner-Operator · Ohio · 3 trucks</div>
               </div>
             </div>
           </div>
 
-          <!-- T4 -->
-          <div class="t-slide" id="t3" style="opacity:0; transition:opacity 0.5s ease; position:absolute; width:100%;">
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:40px; position:relative; overflow:hidden;">
-              <span style="position:absolute; top:-10px; left:28px; font-size:96px; color:rgba(255,255,255,0.04); font-family:Georgia,serif; line-height:1; pointer-events:none;">"</span>
-              <div style="display:flex; gap:3px; margin-bottom:20px;">
-                <span style="color:var(--brand-orange); font-size:14px;">★★★★★</span>
-              </div>
-              <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.8; font-style:italic; margin:0 0 32px;">"We were drowning in double-brokering scares and chasing down payments. Haulxify flagged a fraudulent rate confirmation before we ever loaded. Saved us from a $4,200 loss on that load alone. Worth every penny."</p>
-              <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; font-weight:800; color:#ffffff; font-size:14px; flex-shrink:0;">JW</div>
-                <div>
-                  <div style="color:#ffffff; font-weight:700; font-size:0.92rem; line-height:1.3;">James W.</div>
-                  <div style="color:rgba(255,255,255,0.4); font-size:0.78rem; margin-top:3px;">Small Carrier · Illinois · 12 trucks</div>
-                </div>
-                <div style="margin-left:auto; background:rgba(255,255,255,0.06); border-radius:20px; padding:4px 12px;">
-                  <span style="color:rgba(255,255,255,0.5); font-size:0.72rem; font-weight:600; letter-spacing:0.06em;">VERIFIED CLIENT</span>
-                </div>
+          <!-- Slide 3 -->
+          <div id="hx-t3" style="position:absolute; top:0; left:0; width:100%; opacity:0; transition:opacity 0.55s ease; pointer-events:none;">
+            <p style="color:rgba(255,255,255,0.88); font-size:1.22rem; line-height:1.85; font-weight:300; letter-spacing:-0.015em; margin:0 0 40px; padding-left:2px;">Haulxify caught a fraudulent rate confirmation before we ever loaded the truck. Saved us from a $4,200 loss on that one load alone. The protection it provides pays for the entire service ten times over.</p>
+            <div style="display:flex; align-items:center; gap:14px; padding-left:2px;">
+              <div style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); flex-shrink:0;">JW</div>
+              <div>
+                <div style="color:#fff; font-size:0.9rem; font-weight:600; line-height:1.3;">James W.</div>
+                <div style="color:rgba(255,255,255,0.35); font-size:0.78rem; margin-top:3px;">Small Carrier · Illinois · 12 trucks</div>
               </div>
             </div>
           </div>
 
-        </div><!-- /card wrapper -->
+        </div>
 
-        <!-- Controls -->
-        <div style="display:flex; align-items:center; gap:20px; margin-top:340px;">
-          <div id="t-dots" style="display:flex; gap:8px; align-items:center;">
-            <button onclick="goToSlide(0)" id="dot0" style="width:28px; height:4px; border-radius:2px; background:var(--brand-orange); border:none; cursor:pointer; padding:0; transition:all 0.3s;"></button>
-            <button onclick="goToSlide(1)" id="dot1" style="width:8px; height:4px; border-radius:2px; background:rgba(255,255,255,0.2); border:none; cursor:pointer; padding:0; transition:all 0.3s;"></button>
-            <button onclick="goToSlide(2)" id="dot2" style="width:8px; height:4px; border-radius:2px; background:rgba(255,255,255,0.2); border:none; cursor:pointer; padding:0; transition:all 0.3s;"></button>
-            <button onclick="goToSlide(3)" id="dot3" style="width:8px; height:4px; border-radius:2px; background:rgba(255,255,255,0.2); border:none; cursor:pointer; padding:0; transition:all 0.3s;"></button>
+        <!-- Nav row -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:52px; padding-left:2px;">
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button onclick="hxSlide(0)" id="hx-d0" style="height:3px; width:28px; border-radius:2px; background:var(--brand-orange); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+            <button onclick="hxSlide(1)" id="hx-d1" style="height:3px; width:10px; border-radius:2px; background:rgba(255,255,255,0.16); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+            <button onclick="hxSlide(2)" id="hx-d2" style="height:3px; width:10px; border-radius:2px; background:rgba(255,255,255,0.16); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
+            <button onclick="hxSlide(3)" id="hx-d3" style="height:3px; width:10px; border-radius:2px; background:rgba(255,255,255,0.16); border:none; cursor:pointer; padding:0; transition:all 0.35s;"></button>
           </div>
-          <div style="display:flex; gap:8px; margin-left:auto;">
-            <button onclick="prevSlide()" style="width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,0.15); background:transparent; color:rgba(255,255,255,0.6); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s;">&#8592;</button>
-            <button onclick="nextSlide()" style="width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,0.15); background:transparent; color:rgba(255,255,255,0.6); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s;">&#8594;</button>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:var(--brand-orange); font-size:12px; letter-spacing:2px;">★★★★★</span>
+            <span style="color:rgba(255,255,255,0.28); font-size:0.75rem;">4.9 · 120+ carriers</span>
           </div>
         </div>
 
-        <!-- Aggregate rating bar -->
-        <div style="margin-top:40px; padding-top:32px; border-top:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:20px;">
-          <div style="text-align:center;">
-            <div style="font-size:2.2rem; font-weight:800; color:#ffffff; line-height:1;">4.9</div>
-            <div style="color:var(--brand-orange); font-size:13px; margin-top:4px;">★★★★★</div>
-          </div>
-          <div style="flex:1;">
-            <div style="color:rgba(255,255,255,0.5); font-size:0.78rem; margin-bottom:6px;">Based on 120+ verified carrier reviews</div>
-            <div style="display:flex; gap:6px; align-items:center; margin-bottom:5px;">
-              <span style="color:rgba(255,255,255,0.3); font-size:11px; width:16px;">5★</span>
-              <div style="flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px;"><div style="width:91%; height:100%; background:var(--brand-orange); border-radius:2px;"></div></div>
-              <span style="color:rgba(255,255,255,0.3); font-size:11px;">91%</span>
-            </div>
-            <div style="display:flex; gap:6px; align-items:center; margin-bottom:5px;">
-              <span style="color:rgba(255,255,255,0.3); font-size:11px; width:16px;">4★</span>
-              <div style="flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px;"><div style="width:7%; height:100%; background:rgba(255,255,255,0.2); border-radius:2px;"></div></div>
-              <span style="color:rgba(255,255,255,0.3); font-size:11px;">7%</span>
-            </div>
-            <div style="display:flex; gap:6px; align-items:center;">
-              <span style="color:rgba(255,255,255,0.3); font-size:11px; width:16px;">3★</span>
-              <div style="flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px;"><div style="width:2%; height:100%; background:rgba(255,255,255,0.1); border-radius:2px;"></div></div>
-              <span style="color:rgba(255,255,255,0.3); font-size:11px;">2%</span>
-            </div>
-          </div>
+      </div>
+      <!-- ── END TESTIMONIALS ── -->
+
+      <!-- ── FAQ ── -->
+      <div>
+
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:52px;">
+          <span style="display:block; width:28px; height:1px; background:rgba(255,255,255,0.18);"></span>
+          <span style="color:rgba(255,255,255,0.38); font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;">Common questions</span>
         </div>
 
-      </div><!-- /LEFT -->
+        <div class="faq-list">
 
-      <!-- ── RIGHT: FAQ ── -->
-      <div>
-        <p style="color:rgba(255,255,255,0.4); font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:32px;">Common questions</p>
-
-        <div class="faq-list" style="--faq-border: rgba(255,255,255,0.08); --faq-text: rgba(255,255,255,0.85); --faq-muted: rgba(255,255,255,0.45);">
-
-          <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-1" style="color:#ffffff; padding:20px 0;">
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f1" style="color:rgba(255,255,255,0.78); padding:20px 0; font-size:0.94rem; font-weight:400;">
               Do you work with owner-operators or only fleets?
-              <div class="faq-icon" style="color:var(--brand-orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <div class="faq-icon" style="color:rgba(255,255,255,0.28);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             </div>
-            <div class="faq-answer" id="faq-answer-1" role="region">
-              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.6); padding-bottom:20px;">We work with both. Single truck owner-operators are actually our most common client because they have zero back office capacity and the most to gain. We scale with you from one truck to fifty.</div>
+            <div class="faq-answer" id="hx-f1" role="region">
+              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.48); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">We work with both. Single truck owner-operators are actually our most common client — they have zero back office capacity and the most to gain. We scale with you from one truck to fifty.</div>
             </div>
           </div>
 
-          <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-2" style="color:#ffffff; padding:20px 0;">
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f2" style="color:rgba(255,255,255,0.78); padding:20px 0; font-size:0.94rem; font-weight:400;">
               What TMS and load boards do you support?
-              <div class="faq-icon" style="color:var(--brand-orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <div class="faq-icon" style="color:rgba(255,255,255,0.28);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             </div>
-            <div class="faq-answer" id="faq-answer-2" role="region">
-              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.6); padding-bottom:20px;">We work with all major platforms including DAT, Truckstop, ITS Dispatch, TruckLogics, McLeod, and others. If you have a preferred system, we adapt to it. If you have no system, we can recommend and set up the right one.</div>
+            <div class="faq-answer" id="hx-f2" role="region">
+              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.48); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">All major platforms — DAT, Truckstop, ITS Dispatch, TruckLogics, McLeod, and others. If you have a preferred system we adapt to it. If you have none, we'll recommend and set up the right one.</div>
             </div>
           </div>
 
-          <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-3" style="color:#ffffff; padding:20px 0;">
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f3" style="color:rgba(255,255,255,0.78); padding:20px 0; font-size:0.94rem; font-weight:400;">
               How does IFTA filing work with Haulxify?
-              <div class="faq-icon" style="color:var(--brand-orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <div class="faq-icon" style="color:rgba(255,255,255,0.28);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             </div>
-            <div class="faq-answer" id="faq-answer-3" role="region">
-              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.6); padding-bottom:20px;">We track your state-by-state mileage throughout each quarter using your ELD data. Before each quarterly deadline, we calculate your fuel tax liability or credit, prepare the IFTA report, and file it on your behalf. We also flag any discrepancies before they become audit issues.</div>
-            </div>
-          </div>
-
-          <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-4" style="color:#ffffff; padding:20px 0;">
-              Can you help with factoring if I don't already have one?
-              <div class="faq-icon" style="color:var(--brand-orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-            </div>
-            <div class="faq-answer" id="faq-answer-4" role="region">
-              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.6); padding-bottom:20px;">Yes. We have relationships with several reputable factoring companies and can provide introductions based on your freight type, volume, and credit situation. We then coordinate all factoring submissions on your behalf as part of our billing service.</div>
+            <div class="faq-answer" id="hx-f3" role="region">
+              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.48); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">We track your state-by-state mileage each quarter via your ELD data, calculate your fuel tax liability, prepare the report, and file on your behalf — every deadline, without fail. We also flag discrepancies before they become audit triggers.</div>
             </div>
           </div>
 
-          <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-5" style="color:#ffffff; padding:20px 0;">
-              Is there a minimum fleet size to work with Haulxify?
-              <div class="faq-icon" style="color:var(--brand-orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f4" style="color:rgba(255,255,255,0.78); padding:20px 0; font-size:0.94rem; font-weight:400;">
+              Can you help if I don't have a factoring company yet?
+              <div class="faq-icon" style="color:rgba(255,255,255,0.28);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             </div>
-            <div class="faq-answer" id="faq-answer-5" role="region">
-              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.6); padding-bottom:20px;">No minimum. We start with single truck operators all the way up to fleets of 50+. Pricing scales by vehicle count, so you always pay proportionally to your size.</div>
-            </div>
-          </div>
-
-          <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-6" style="color:#ffffff; padding:20px 0;">
-              Can Haulxify help protect against broker fraud?
-              <div class="faq-icon" style="color:var(--brand-orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-            </div>
-            <div class="faq-answer" id="faq-answer-6" role="region">
-              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.6); padding-bottom:20px;">Yes. We review every rate confirmation before you load, verify broker MC numbers and bond status, and flag any terms that indicate double-brokering or non-payment risk. We've caught fraudulent brokers for multiple clients before a single mile was turned.</div>
+            <div class="faq-answer" id="hx-f4" role="region">
+              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.48); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">Yes. We have relationships with several reputable factoring companies and make introductions based on your freight type, volume, and credit. We then coordinate all submissions on your behalf as part of our billing service.</div>
             </div>
           </div>
 
-        </div><!-- /faq-list -->
-
-        <!-- CTA nudge under FAQ -->
-        <div style="margin-top:40px; padding:28px 32px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
-          <div>
-            <div style="color:#ffffff; font-weight:700; font-size:0.95rem;">Still have questions?</div>
-            <div style="color:rgba(255,255,255,0.45); font-size:0.82rem; margin-top:4px;">Talk to our team — no sales pressure, just answers.</div>
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f5" style="color:rgba(255,255,255,0.78); padding:20px 0; font-size:0.94rem; font-weight:400;">
+              Is there a minimum fleet size?
+              <div class="faq-icon" style="color:rgba(255,255,255,0.28);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f5" role="region">
+              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.48); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">No minimum. We start with single truck operators all the way up to fleets of 50+. Pricing scales by vehicle count so you always pay proportionally to your size.</div>
+            </div>
           </div>
-          <a href="../contact.html" class="btn btn-primary" style="flex-shrink:0;">Get a Free Call</a>
+
+          <div class="faq-item" style="border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07);">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false" aria-controls="hx-f6" style="color:rgba(255,255,255,0.78); padding:20px 0; font-size:0.94rem; font-weight:400;">
+              Can Haulxify protect against broker fraud?
+              <div class="faq-icon" style="color:rgba(255,255,255,0.28);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            </div>
+            <div class="faq-answer" id="hx-f6" role="region">
+              <div class="faq-answer-inner" style="color:rgba(255,255,255,0.48); padding-bottom:22px; font-size:0.88rem; line-height:1.75;">Yes. We review every rate confirmation before you load, verify broker MC numbers and bond status, and flag terms that signal double-brokering or non-payment risk. We've caught fraudulent brokers for multiple clients before a single mile was turned.</div>
+            </div>
+          </div>
+
         </div>
 
-      </div><!-- /RIGHT -->
+        <div style="margin-top:36px; display:flex; align-items:center; justify-content:space-between;">
+          <span style="color:rgba(255,255,255,0.3); font-size:0.82rem;">Still have questions?</span>
+          <a href="../contact.html" style="color:var(--brand-orange); font-size:0.82rem; font-weight:600; text-decoration:none; letter-spacing:0.01em; display:flex; align-items:center; gap:6px;">Talk to our team &nbsp;&#8594;</a>
+        </div>
 
-    </div><!-- /grid -->
+      </div>
+      <!-- ── END FAQ ── -->
+
+    </div>
   </div>
 </section>
 
 <script>
-  var currentSlide = 0;
-  var totalSlides = 4;
-  var autoTimer;
-
-  function goToSlide(n) {
-    document.getElementById('t' + currentSlide).style.opacity = '0';
-    document.getElementById('t' + currentSlide).style.pointerEvents = 'none';
-    document.getElementById('dot' + currentSlide).style.width = '8px';
-    document.getElementById('dot' + currentSlide).style.background = 'rgba(255,255,255,0.2)';
-    currentSlide = n;
-    document.getElementById('t' + currentSlide).style.opacity = '1';
-    document.getElementById('t' + currentSlide).style.pointerEvents = 'auto';
-    document.getElementById('dot' + currentSlide).style.width = '28px';
-    document.getElementById('dot' + currentSlide).style.background = 'var(--brand-orange)';
-    clearInterval(autoTimer);
-    autoTimer = setInterval(function(){ nextSlide(); }, 5000);
+(function(){
+  var cur = 0, n = 4, timer;
+  function hxSlide(to) {
+    document.getElementById('hx-t'+cur).style.opacity = '0';
+    document.getElementById('hx-t'+cur).style.pointerEvents = 'none';
+    document.getElementById('hx-d'+cur).style.width = '10px';
+    document.getElementById('hx-d'+cur).style.background = 'rgba(255,255,255,0.16)';
+    if(cur !== 0) document.getElementById('hx-t'+cur).style.position = 'absolute';
+    cur = to;
+    if(cur === 0) {
+      document.getElementById('hx-t0').style.position = 'relative';
+    } else {
+      document.getElementById('hx-t'+cur).style.position = 'absolute';
+    }
+    document.getElementById('hx-t'+cur).style.opacity = '1';
+    document.getElementById('hx-t'+cur).style.pointerEvents = 'auto';
+    document.getElementById('hx-d'+cur).style.width = '28px';
+    document.getElementById('hx-d'+cur).style.background = 'var(--brand-orange)';
+    clearInterval(timer);
+    timer = setInterval(function(){ hxSlide((cur+1)%n); }, 5500);
   }
-
-  function nextSlide() { goToSlide((currentSlide + 1) % totalSlides); }
-  function prevSlide() { goToSlide((currentSlide + totalSlides - 1) % totalSlides); }
-
-  autoTimer = setInterval(function(){ nextSlide(); }, 5000);
+  window.hxSlide = hxSlide;
+  timer = setInterval(function(){ hxSlide((cur+1)%n); }, 5500);
+})();
 </script>
 
   <!-- FINAL CTA -->
