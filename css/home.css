@@ -289,60 +289,114 @@ color: var(--white);
 }
 
 /* =================================================================
-   2. CLIENTS MARQUEE / TRUST STRIP
+   2. INDUSTRIES TICKER
    ================================================================= */
-.clients-strip {
+.ind-ticker {
   background: var(--off-white);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 40px 0;
+  padding: 28px 0;
   overflow: hidden;
+  position: relative;
 }
 
-.clients-strip-label {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-align: center;
-  margin-bottom: 28px;
+/* Edge fades */
+.ind-ticker::before,
+.ind-ticker::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 160px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ind-ticker::before {
+  left: 0;
+  background: linear-gradient(to right, var(--off-white) 0%, transparent 100%);
+}
+.ind-ticker::after {
+  right: 0;
+  background: linear-gradient(to left, var(--off-white) 0%, transparent 100%);
 }
 
-.marquee-track {
+.ind-ticker-inner {
   display: flex;
-  gap: 64px;
-  animation: marquee 30s linear infinite;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ind-track {
+  display: flex;
+  gap: 10px;
   width: max-content;
 }
 
-.marquee-item {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--text-muted);
-  white-space: nowrap;
-  opacity: 0.45;
-  transition: opacity 0.2s;
-  flex-shrink: 0;
-}
+.ind-track-fwd { animation: tickerFwd 38s linear infinite; }
+.ind-track-rev { animation: tickerRev 30s linear infinite; }
 
-.marquee-item:hover {
-  opacity: 0.8;
-}
+.ind-ticker:hover .ind-track { animation-play-state: paused; }
 
-.marquee-dot {
-  color: var(--brand-orange);
-  font-size: 0.5rem;
-  vertical-align: middle;
-  opacity: 0.6;
-}
-
-@keyframes marquee {
+@keyframes tickerFwd {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes tickerRev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Pill */
+.ind-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 8px;
+  border-radius: var(--radius-full);
+  background: var(--white);
+  border: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+  transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
+  box-shadow: 0 1px 3px rgba(13,25,41,0.05);
+}
+
+.ind-pill:hover {
+  border-color: var(--brand-orange);
+  box-shadow: 0 0 0 3px rgba(232,119,34,0.1), 0 4px 12px rgba(13,25,41,0.08);
+  color: var(--brand-orange);
+}
+
+.ind-pill-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 100px;
+  background: var(--orange-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.ind-pill:hover .ind-pill-icon {
+  background: rgba(232,119,34,0.2);
+}
+
+.ind-pill-icon svg {
+  width: 13px;
+  height: 13px;
+  color: var(--brand-orange);
+}
+
+@media (max-width: 768px) {
+  .ind-ticker::before,
+  .ind-ticker::after { width: 60px; }
 }
 
 /* =================================================================
