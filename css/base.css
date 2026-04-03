@@ -459,3 +459,12 @@ p {
   .blog-grid { grid-template-columns: 1fr !important; }
   .blog-featured { flex-direction: column !important; }
 }
+@media (max-width: 1024px) {
+  :root { --section-padding: 80px; }
+}
+@media (max-width: 768px) {
+  :root { --section-padding: 60px; }
+}
+@media (max-width: 480px) {
+  :root { --section-padding: 48px; }
+}
