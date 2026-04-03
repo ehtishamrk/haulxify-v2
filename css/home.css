@@ -777,17 +777,187 @@ font-size: clamp(2rem, 5vw, 3.5rem);
 /* =================================================================
    7. TESTIMONIALS SECTION
    ================================================================= */
-.testimonials-section {
-  background: var(--off-white);
+.tm-section {
+  background: var(--brand-navy);
   padding: var(--section-padding) 0;
 }
 
-.testimonials-grid {
+/* Grid — featured (col-span-2) + 1, then 3 */
+.tm-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 14px;
 }
 
+/* Base card */
+.tm-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.tm-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(232,119,34,0.22);
+  transform: translateY(-3px);
+}
+
+/* Featured — spans 2 columns */
+.tm-card-featured {
+  grid-column: span 2;
+  border-top: 2px solid var(--brand-orange);
+  background: rgba(232,119,34,0.05);
+  border-color: rgba(232,119,34,0.18);
+}
+
+/* Stars */
+.tm-stars {
+  color: var(--brand-orange);
+  font-size: 0.875rem;
+  letter-spacing: 3px;
+}
+
+/* Decorative quote mark */
+.tm-quote-mark {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 6rem;
+  line-height: 0.6;
+  color: var(--brand-orange);
+  opacity: 0.25;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Quote text */
+.tm-quote {
+  font-size: 0.9375rem;
+  line-height: 1.78;
+  color: rgba(255,255,255,0.7);
+  flex: 1;
+  max-width: none;
+}
+
+.tm-card-featured .tm-quote {
+  font-size: 1.0625rem;
+}
+
+/* Metric callout */
+.tm-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 14px 18px;
+  background: rgba(232,119,34,0.08);
+  border: 1px solid rgba(232,119,34,0.15);
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+}
+
+.tm-metric-sm {
+  padding: 10px 14px;
+}
+
+.tm-metric-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--brand-orange);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.tm-metric-sm .tm-metric-val {
+  font-size: 1.5rem;
+}
+
+.tm-metric-label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+}
+
+/* Author row */
+.tm-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.tm-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(232,119,34,0.12);
+  border: 1.5px solid rgba(232,119,34,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--brand-orange);
+  flex-shrink: 0;
+}
+
+.tm-author-info { flex: 1; min-width: 0; }
+
+.tm-name {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+
+.tm-role {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 2px;
+}
+
+/* Verified badge */
+.tm-verified {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+
+.tm-verified svg {
+  width: 13px;
+  height: 13px;
+  color: var(--brand-orange);
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .tm-grid { grid-template-columns: repeat(2, 1fr); }
+  .tm-card-featured { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .tm-grid { grid-template-columns: 1fr; }
+  .tm-card-featured { grid-column: span 1; }
+  .tm-card { padding: 24px 20px; }
+  .tm-quote-mark { font-size: 4rem; }
+  .tm-metric-val { font-size: 1.75rem; }
+}
 /* =================================================================
    8. PRICING TEASER
    ================================================================= */
