@@ -444,14 +444,30 @@ function nlSubmit() {
   ];
 
   /* Slot positions on the ring: index 0 = front */
-  var SLOTS = [
-    { x:0,    z:200,  ry:0,    s:1,    o:1,    zi:10 },
-    { x:190,  z:66,   ry:-32,  s:0.78, o:0.65, zi:7  },
-    { x:310,  z:-72,  ry:-58,  s:0.55, o:0.3,  zi:4  },
-    { x:0,    z:-200, ry:180,  s:0.28, o:0,    zi:1  },
-    { x:-310, z:-72,  ry:58,   s:0.55, o:0.3,  zi:4  },
-    { x:-190, z:66,   ry:32,   s:0.78, o:0.65, zi:7  }
-  ];
+var SLOTS_DESKTOP = [
+  { x:0,    z:200,  ry:0,    s:1,    o:1,    zi:10 },
+  { x:190,  z:66,   ry:-32,  s:0.78, o:0.65, zi:7  },
+  { x:310,  z:-72,  ry:-58,  s:0.55, o:0.3,  zi:4  },
+  { x:0,    z:-200, ry:180,  s:0.28, o:0,    zi:1  },
+  { x:-310, z:-72,  ry:58,   s:0.55, o:0.3,  zi:4  },
+  { x:-190, z:66,   ry:32,   s:0.78, o:0.65, zi:7  }
+];
+
+var SLOTS_MOBILE = [
+  { x:0,    z:145,  ry:0,    s:1,    o:1,    zi:10 },
+  { x:108,  z:44,   ry:-30,  s:0.72, o:0.58, zi:7  },
+  { x:165,  z:-48,  ry:-55,  s:0.48, o:0.2,  zi:4  },
+  { x:0,    z:-145, ry:180,  s:0.22, o:0,    zi:1  },
+  { x:-165, z:-48,  ry:55,   s:0.48, o:0.2,  zi:4  },
+  { x:-108, z:44,   ry:30,   s:0.72, o:0.58, zi:7  }
+];
+
+var SLOTS = window.innerWidth <= 640 ? SLOTS_MOBILE : SLOTS_DESKTOP;
+
+window.addEventListener('resize', function () {
+  SLOTS = window.innerWidth <= 640 ? SLOTS_MOBILE : SLOTS_DESKTOP;
+  render();
+});
 
   var N = DATA.length;
   var active = 0;
