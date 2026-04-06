@@ -730,6 +730,22 @@ color: var(--white);
 .stats-bar {
   background: var(--brand-navy);
   padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../images/home-industries-section.webp') center/cover no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.stats-bar .container {
+  position: relative;
+  z-index: 1;
 }
 
 .stats-grid {
@@ -757,12 +773,13 @@ color: var(--white);
 
 .stat-big-num {
   font-family: var(--font-display);
-font-size: clamp(2rem, 5vw, 3.5rem);
-   font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
   color: var(--white);
   line-height: 1;
   letter-spacing: -0.04em;
   margin-bottom: 8px;
+  text-align: center;
 }
 
 .stat-big-num span {
@@ -773,8 +790,8 @@ font-size: clamp(2rem, 5vw, 3.5rem);
   font-size: 0.9rem;
   color: rgba(255,255,255,0.5);
   line-height: 1.5;
+  text-align: center;
 }
-
 /* =================================================================
    7. TESTIMONIALS — 3D RING CAROUSEL
    ================================================================= */
