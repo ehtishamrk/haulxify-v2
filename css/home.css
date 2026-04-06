@@ -781,7 +781,6 @@ font-size: clamp(2rem, 5vw, 3.5rem);
   background: #0a1520;
   padding: var(--section-padding) 0;
   position: relative;
-  overflow: hidden;
 }
 
 .testimonials-section::before {
