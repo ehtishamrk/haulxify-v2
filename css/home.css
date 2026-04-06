@@ -508,6 +508,7 @@ color: var(--white);
 .why-section {
   background: var(--off-white);
   padding: var(--section-padding) 0;
+  overflow: hidden;
 }
 
 .why-layout {
@@ -1072,6 +1073,7 @@ font-size: clamp(2rem, 5vw, 3.5rem);
 .pricing-teaser {
   background: var(--white);
   padding: var(--section-padding) 0;
+  overflow: hidden;
 }
 
 .pricing-teaser-inner {
