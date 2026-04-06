@@ -427,3 +427,125 @@ function nlSubmit() {
   document.getElementById('nl-wrap').style.display = 'none';
   document.getElementById('nl-success').style.display = 'block';
 }
+/* =================================================================
+   TESTIMONIALS — 3D RING CAROUSEL
+   ================================================================= */
+(function () {
+  var stage = document.getElementById('tring-stage');
+  if (!stage) return;
+
+  var DATA = [
+    { av:'TR', name:'Tyler R.',  role:'Fleet Owner · 22 trucks · Texas',       stat:'$7,200 saved / month',    q:'Haulxify cut our back office costs by $7,200 every month. Dispatching, BOL, driver HR — everything runs better. It genuinely transformed how we operate.' },
+    { av:'JK', name:'James K.',  role:'Owner-Operator · 5 trucks · Ohio',       stat:'+31% revenue in Q1',      q:'Revenue went up 31% in Q1 because we stopped missing loads. I used to dispatch myself at 2am — now I sleep through the night.' },
+    { av:'MD', name:'Mark D.',   role:'Freight Broker · Ontario, Canada',       stat:'Onboarded in 48 hours',   q:'BOL processing, carrier outreach, invoicing — all running in 48 hours. Professional, fluent, absolutely reliable. Recommended to three other brokers.' },
+    { av:'RT', name:'Rachel T.', role:'Tow Operator · 14 trucks · Atlanta',     stat:'12 days → 3 days billing',q:'Billing turnaround dropped from 12 days to 3. Insurance claims, impound paperwork, city contracts — all handled. That alone covers the cost ten times over.' },
+    { av:'SP', name:'Sarah P.',  role:'NEMT Operator · Florida',                stat:'24/7 dispatch coverage',  q:'Medicaid billing understood from day one — faster than any local hire I could have trained in three months. These people genuinely know logistics.' },
+    { av:'DL', name:'Diana L.',  role:'Logistics Manager · Melbourne, AU',      stat:'75% less than local staff',q:'Three months in and my after-hours coverage is better than anything local in Melbourne. Response times, professionalism, freight knowledge — outstanding.' }
+  ];
+
+  /* Slot positions on the ring: index 0 = front */
+  var SLOTS = [
+    { x:0,    z:200,  ry:0,    s:1,    o:1,    zi:10 },
+    { x:190,  z:66,   ry:-32,  s:0.78, o:0.65, zi:7  },
+    { x:310,  z:-72,  ry:-58,  s:0.55, o:0.3,  zi:4  },
+    { x:0,    z:-200, ry:180,  s:0.28, o:0,    zi:1  },
+    { x:-310, z:-72,  ry:58,   s:0.55, o:0.3,  zi:4  },
+    { x:-190, z:66,   ry:32,   s:0.78, o:0.65, zi:7  }
+  ];
+
+  var N = DATA.length;
+  var active = 0;
+  var timer = null;
+  var paused = false;
+
+  var ring  = document.getElementById('tring-ring');
+  var dotsW = document.getElementById('tring-dots');
+  var iName = document.getElementById('tring-iname');
+  var iRole = document.getElementById('tring-irole');
+  var iStat = document.getElementById('tring-istat');
+
+  /* Build cards */
+  var cards = DATA.map(function (t, i) {
+    var d = document.createElement('div');
+    d.className = 'tring-card';
+    d.innerHTML =
+      '<div class="tring-card-top">' +
+        '<span class="tring-stars">★★★★★</span>' +
+        '<span class="tring-qmark">\u201C</span>' +
+      '</div>' +
+      '<div class="tring-quote">' + t.q + '</div>' +
+      '<div class="tring-div"></div>' +
+      '<div class="tring-foot">' +
+        '<div class="tring-av">' + t.av + '</div>' +
+        '<div>' +
+          '<div class="tring-name">' + t.name + '</div>' +
+          '<div class="tring-role">' + t.role + '</div>' +
+        '</div>' +
+      '</div>';
+    d.addEventListener('click', function () { goTo(i); });
+    ring.appendChild(d);
+    return d;
+  });
+
+  /* Build dots */
+  var dots = DATA.map(function (_, i) {
+    var b = document.createElement('button');
+    b.className = 'tring-dot';
+    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    b.addEventListener('click', function () { goTo(i); });
+    dotsW.appendChild(b);
+    return b;
+  });
+
+  function render(instant) {
+    if (instant) {
+      cards.forEach(function (c) { c.style.transition = 'none'; });
+      requestAnimationFrame(function () {
+        cards.forEach(function (c) { c.style.transition = ''; });
+      });
+    }
+
+    cards.forEach(function (c, i) {
+      var si = ((i - active) % N + N) % N;
+      var sl = SLOTS[si];
+      c.style.transform = 'translateX(' + sl.x + 'px) translateZ(' + sl.z + 'px) rotateY(' + sl.ry + 'deg) scale(' + sl.s + ')';
+      c.style.opacity   = sl.o;
+      c.style.zIndex    = sl.zi;
+      c.classList.toggle('is-front', si === 0);
+    });
+
+    dots.forEach(function (d, i) { d.classList.toggle('is-active', i === active); });
+
+    var t = DATA[active];
+    iName.textContent = t.name;
+    iRole.textContent = t.role;
+    iStat.textContent = t.stat;
+  }
+
+  function goTo(i) { active = i; render(); }
+  function next()  { active = (active + 1) % N; render(); }
+  function prev()  { active = (active - 1 + N) % N; render(); }
+
+  document.getElementById('tring-next').addEventListener('click', next);
+  document.getElementById('tring-prev').addEventListener('click', prev);
+
+  /* Auto-rotate */
+  function startTimer() { timer = setInterval(next, 2800); }
+  function stopTimer()  { clearInterval(timer); }
+
+  stage.addEventListener('mouseenter', function () { paused = true;  stopTimer(); });
+  stage.addEventListener('mouseleave', function () { paused = false; startTimer(); });
+
+  /* Touch swipe on stage */
+  var txStart = null;
+  stage.addEventListener('touchstart', function (e) { txStart = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (txStart === null) return;
+    var dx = e.changedTouches[0].clientX - txStart;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    txStart = null;
+  });
+
+  render(true);
+  startTimer();
+})();
