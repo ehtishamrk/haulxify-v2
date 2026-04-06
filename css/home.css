@@ -1014,89 +1014,57 @@ font-size: clamp(2rem, 5vw, 3.5rem);
 .tring-mobile {
   display: none;
 }
-
 @media (max-width: 640px) {
-  .tring-stage, .tring-info, .tring-dots, .tring-nav { display: none; }
-  .tring-mobile { display: block; }
 
-  .tring-mobile-track {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 8px 4px 16px;
-    scrollbar-width: none;
-  }
-  .tring-mobile-track::-webkit-scrollbar { display: none; }
-
-  .tring-mobile-card {
-    min-width: 80vw;
-    max-width: 320px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 18px;
-    padding: 24px 22px 18px;
-    scroll-snap-align: center;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
+  .tring-stage {
+    height: 220px;
   }
 
-  .tring-mobile-stars { font-size: 11px; color: var(--brand-orange); letter-spacing: 2px; margin-bottom: 12px; }
-
-  .tring-mobile-quote {
-    font-size: 0.875rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.75);
-    font-style: italic;
-    flex: 1;
-    margin-bottom: 18px;
+  .tring-card {
+    width: 160px;
+    height: 160px;
+    left: -80px;
+    top: -80px;
+    padding: 14px 14px 11px;
+    border-radius: 15px;
   }
 
-  .tring-mobile-div {
-    height: 1px;
-    background: rgba(255,255,255,0.07);
-    margin-bottom: 14px;
+  .tring-qmark {
+    font-size: 30px;
   }
 
-  .tring-mobile-foot { display: flex; align-items: center; gap: 10px; }
-
-  .tring-mobile-av {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #E87722, #b85510);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: #fff;
-    flex-shrink: 0;
-    font-family: var(--font-display);
+  .tring-quote {
+    font-size: 0.67rem;
+    line-height: 1.6;
   }
 
-  .tring-mobile-name {
+  .tring-av {
+    width: 22px;
+    height: 22px;
+    font-size: 0.48rem;
+  }
+
+  .tring-name {
+    font-size: 0.62rem;
+  }
+
+  .tring-role {
+    font-size: 0.54rem;
+  }
+
+  .tring-info-name {
     font-size: 0.82rem;
-    font-weight: 700;
-    color: #fff;
-    font-family: var(--font-display);
   }
 
-  .tring-mobile-role { font-size: 0.7rem; color: #5a7a9a; margin-top: 2px; }
-
-  .tring-mobile-stat {
-    display: inline-block;
-    margin-top: 6px;
-    background: rgba(232,119,34,0.1);
-    border: 1px solid rgba(232,119,34,0.2);
-    border-radius: 99px;
-    padding: 3px 11px;
+  .tring-info-role {
     font-size: 0.68rem;
-    color: var(--brand-orange);
-    font-weight: 600;
   }
+
+  .tring-info-stat {
+    font-size: 0.65rem;
+    padding: 3px 12px;
+  }
+
 }
 /* =================================================================
    8. PRICING TEASER
