@@ -775,17 +775,329 @@ font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
 /* =================================================================
-   7. TESTIMONIALS — MARQUEE
+   7. TESTIMONIALS — 3D RING CAROUSEL
    ================================================================= */
 .testimonials-section {
-  background: var(--off-white);
+  background: #0a1520;
   padding: var(--section-padding) 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+.testimonials-section::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 320px;
+  background: radial-gradient(ellipse, rgba(232,119,34,0.07) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.testimonials-section .eyebrow { color: var(--brand-orange); }
+.testimonials-section .section-header h2 { color: var(--white); }
+.testimonials-section .section-header p { color: #5a7a98; }
+
+/* Stage */
+.tring-stage {
+  position: relative;
+  height: 300px;
+  perspective: 900px;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+.tring-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* Cards */
+.tring-card {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: -110px;
+  top: -110px;
+  border-radius: 20px;
+  padding: 22px 22px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  backface-visibility: hidden;
+  transition: transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94),
+              opacity 0.75s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+  will-change: transform, opacity;
+}
+
+.tring-card.is-front {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(232,119,34,0.38);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(232,119,34,0.12);
+}
+
+.tring-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.tring-stars { font-size: 9px; color: var(--brand-orange); letter-spacing: 1.5px; }
+
+.tring-qmark {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  color: rgba(232,119,34,0.18);
+  line-height: 0.7;
+  font-weight: 900;
+  user-select: none;
+}
+
+.tring-quote {
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.72);
+  font-style: italic;
+  flex: 1;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.tring-div {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 10px 0 9px;
+  flex-shrink: 0;
+}
+
+.tring-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.tring-av {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E87722, #b85510);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+}
+
+.tring-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-display);
+  line-height: 1.3;
+}
+
+.tring-role {
+  font-size: 0.6rem;
+  color: #5a7a9a;
+  margin-top: 1px;
+  line-height: 1.3;
+}
+
+/* Info strip below stage */
+.tring-info {
+  text-align: center;
+  margin-top: 28px;
+  min-height: 52px;
+}
+
+.tring-info-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  transition: opacity 0.3s;
+}
+
+.tring-info-role {
+  font-size: 0.75rem;
+  color: #5a7a98;
+  margin-top: 4px;
+  transition: opacity 0.3s;
+}
+
+.tring-info-stat {
+  display: inline-block;
+  margin-top: 9px;
+  background: rgba(232,119,34,0.1);
+  border: 1px solid rgba(232,119,34,0.22);
+  border-radius: 99px;
+  padding: 4px 15px;
+  font-size: 0.7rem;
+  color: var(--brand-orange);
+  font-weight: 600;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  transition: opacity 0.3s;
+}
+
+/* Dots */
+.tring-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.tring-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.16);
+  transition: all 0.35s;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: none;
+  padding: 0;
+}
+
+.tring-dot.is-active {
+  background: var(--brand-orange);
+  width: 22px;
+  border-radius: 3px;
+}
+
+/* Nav arrows */
+.tring-nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.tring-arr {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.tring-arr:hover {
+  border-color: rgba(232,119,34,0.5);
+  color: var(--brand-orange);
+  background: rgba(232,119,34,0.06);
+}
+
+/* Mobile: flat swipe fallback */
+.tring-mobile {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .tring-stage, .tring-info, .tring-dots, .tring-nav { display: none; }
+  .tring-mobile { display: block; }
+
+  .tring-mobile-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 4px 16px;
+    scrollbar-width: none;
+  }
+  .tring-mobile-track::-webkit-scrollbar { display: none; }
+
+  .tring-mobile-card {
+    min-width: 80vw;
+    max-width: 320px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 18px;
+    padding: 24px 22px 18px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tring-mobile-stars { font-size: 11px; color: var(--brand-orange); letter-spacing: 2px; margin-bottom: 12px; }
+
+  .tring-mobile-quote {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    font-style: italic;
+    flex: 1;
+    margin-bottom: 18px;
+  }
+
+  .tring-mobile-div {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin-bottom: 14px;
+  }
+
+  .tring-mobile-foot { display: flex; align-items: center; gap: 10px; }
+
+  .tring-mobile-av {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E87722, #b85510);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+  }
+
+  .tring-mobile-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: var(--font-display);
+  }
+
+  .tring-mobile-role { font-size: 0.7rem; color: #5a7a9a; margin-top: 2px; }
+
+  .tring-mobile-stat {
+    display: inline-block;
+    margin-top: 6px;
+    background: rgba(232,119,34,0.1);
+    border: 1px solid rgba(232,119,34,0.2);
+    border-radius: 99px;
+    padding: 3px 11px;
+    font-size: 0.68rem;
+    color: var(--brand-orange);
+    font-weight: 600;
+  }
 }
 /* =================================================================
    8. PRICING TEASER
@@ -856,7 +1168,6 @@ font-size: clamp(2rem, 5vw, 3.5rem);
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid .stat-item::after { display: none; }
-  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
   .pricing-teaser-inner { grid-template-columns: 1fr; gap: 48px; }
 }
 
@@ -864,7 +1175,6 @@ font-size: clamp(2rem, 5vw, 3.5rem);
   .hero { padding-top: 96px; padding-bottom: 48px; }
   .services-grid { grid-template-columns: 1fr; }
   .industries-grid { grid-template-columns: repeat(2, 1fr); }
-  .testimonials-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
    .hero-card { padding: 28px 22px; }
   .service-card { padding: 24px 20px; }
