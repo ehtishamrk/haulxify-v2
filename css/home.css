@@ -403,10 +403,30 @@ color: var(--white);
    3. SERVICES GRID
    ================================================================= */
 .services-overview {
-  padding: var(--section-padding) 0;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  position: relative;   /* Required to contain the background image */
+  padding-top: 60px;    /* Your reduced top padding */
+  padding-bottom: 40px; /* Your reduced bottom padding */
   background: var(--white);
+  z-index: 1;           /* Ensures content stays above the background */
+  overflow: hidden;     /* Keeps the faded image cleanly inside the section */
+}
+
+/* Premium High-End Background Treatment */
+.services-overview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../images/hero-pain-points.webp');
+  background-position: center top; 
+  background-size: contain; /* Prevents ANY zooming or quality degradation */
+  background-repeat: no-repeat;
+  opacity: 0.06; /* Keeps it subtle so your text and cards remain the focus */
+  mix-blend-mode: multiply; /* Blends the image naturally into the white background */
+  z-index: -1; /* Pushes the image behind your cards */
+  
+  /* The "Top 1%" Secret: Fades the image out beautifully at the edges */
+  mask-image: radial-gradient(ellipse at center top, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center top, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
 }
 
 .services-grid {
