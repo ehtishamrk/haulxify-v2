@@ -805,7 +805,7 @@ color: var(--white);
 
 .stat-big-num {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 4vw, 3.75rem);
+  font-size: clamp(1rem, 3.8vw, 3.75rem);
   font-weight: 800;
   color: var(--white);
   line-height: 1;
@@ -821,11 +821,12 @@ color: var(--white);
 }
 
 .stat-desc {
-  font-size: 0.875rem;
+  font-size: clamp(0.5rem, 1.45vw, 0.875rem);
   color: rgba(255,255,255,0.78);
-  line-height: 1.55;
+  line-height: 1.4;
   text-align: center;
-  max-width: 18ch;
+  max-width: none;
+  white-space: nowrap;
   text-shadow: 0 1px 10px rgba(6,13,26,0.65);
   font-weight: 500;
 }
