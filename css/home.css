@@ -730,6 +730,8 @@ color: var(--white);
 .stats-bar {
   background: var(--brand-navy);
   padding: 80px 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .stats-grid {
