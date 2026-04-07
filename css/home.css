@@ -416,18 +416,18 @@ color: var(--white);
   z-index: 0;
   pointer-events: none;
   background: url('../images/hero-pain-points.webp') center / cover no-repeat;
-  opacity: 0.18;
+  opacity: 0.45;
   -webkit-mask-image: radial-gradient(
-    ellipse 75% 60% at 50% 50%,
+    ellipse 90% 80% at 50% 50%,
     black 0%,
-    black 35%,
-    transparent 75%
+    black 55%,
+    transparent 100%
   );
   mask-image: radial-gradient(
-    ellipse 75% 60% at 50% 50%,
+    ellipse 90% 80% at 50% 50%,
     black 0%,
-    black 35%,
-    transparent 75%
+    black 55%,
+    transparent 100%
   );
 }
 
