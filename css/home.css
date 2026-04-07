@@ -1194,8 +1194,7 @@ font-size: clamp(2rem, 5vw, 3.5rem);
 .stats-bar-overlay {
   position: absolute;
   inset: 0;
-  background: var(--brand-navy);
-  opacity: 0.82;
+  background: rgba(6, 13, 26, 0.78);
   z-index: 0;
 }
 
