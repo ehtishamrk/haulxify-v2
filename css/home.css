@@ -759,12 +759,16 @@ color: var(--white);
 .stat-item {
   text-align: center;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-item::after {
   content: '';
   position: absolute;
-  right: 0;
+  right: -24px;
   top: 20%;
   height: 60%;
   width: 1px;
