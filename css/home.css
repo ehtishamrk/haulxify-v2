@@ -730,44 +730,34 @@ color: var(--white);
    6. STATS BAR
    ================================================================= */
 .stats-bar {
-  background: var(--brand-navy);
-  padding: 100px 0;
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  padding: 0;
 }
 
-/* Full-bleed background image */
+/* Full-bleed image — vivid, no zoom, no saturation kill */
 .stats-bar::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('../images/home-industries-section.webp') center/cover no-repeat;
-  opacity: 0.22;
+  background: url('../images/home-industries-section.webp') center 35% / cover no-repeat;
   z-index: -2;
-  transform: scale(1.04);
-  filter: saturate(0.6) brightness(0.85);
-  will-change: transform;
 }
 
-/* Premium layered gradient over image */
+/* Edge-only vignette — keeps image alive in the middle */
 .stats-bar::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(to bottom,
-      rgba(6,13,26,0.72) 0%,
-      rgba(6,13,26,0.42) 40%,
-      rgba(6,13,26,0.42) 60%,
-      rgba(6,13,26,0.72) 100%
-    ),
-    linear-gradient(to right,
-      rgba(6,13,26,0.55) 0%,
-      transparent 40%,
-      transparent 60%,
-      rgba(6,13,26,0.55) 100%
+    linear-gradient(
+      to bottom,
+      rgba(6,13,26,0.78) 0%,
+      rgba(6,13,26,0.18) 28%,
+      rgba(6,13,26,0.18) 72%,
+      rgba(6,13,26,0.78) 100%
     );
 }
 
@@ -776,136 +766,155 @@ color: var(--white);
   z-index: 1;
 }
 
+/* Grid wrapper */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
+  padding: 80px 0;
 }
 
 .stat-item {
-  text-align: center;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
+  text-align: center;
+  padding: 0 36px;
+  position: relative;
 }
 
-/* Vertical divider centered between columns */
+/* Gradient divider */
 .stat-item::after {
   content: '';
   position: absolute;
   right: 0;
-  top: 15%;
-  height: 70%;
+  top: 10%;
+  height: 80%;
   width: 1px;
   background: linear-gradient(
     to bottom,
-    transparent 0%,
-    rgba(255,255,255,0.12) 30%,
-    rgba(255,255,255,0.12) 70%,
-    transparent 100%
+    transparent,
+    rgba(255,255,255,0.25) 30%,
+    rgba(255,255,255,0.25) 70%,
+    transparent
   );
 }
-
 .stat-item:last-child::after { display: none; }
 
 .stat-big-num {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-size: clamp(3rem, 5vw, 4.25rem);
   font-weight: 800;
   color: var(--white);
   line-height: 1;
   letter-spacing: -0.04em;
   margin-bottom: 10px;
-  text-align: center;
+  /* Subtle text shadow so number pops over bright image areas */
+  text-shadow: 0 2px 24px rgba(6,13,26,0.55);
 }
 
 .stat-big-num span {
   color: var(--brand-orange);
+  text-shadow: 0 2px 24px rgba(6,13,26,0.4);
 }
 
 .stat-desc {
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.52);
+  color: rgba(255,255,255,0.82);
   line-height: 1.55;
   text-align: center;
-  max-width: 16ch;
+  max-width: 18ch;
+  text-shadow: 0 1px 12px rgba(6,13,26,0.7);
+  font-weight: 500;
 }
 
-/* Tablet — 2x2 */
+/* ── Tablet: 2×2 ── */
 @media (max-width: 1024px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0;
+    padding: 0;
   }
 
   .stat-item {
-    padding: 40px 32px;
+    padding: 56px 32px;
   }
 
-  /* Right divider only on col 1 */
-  .stat-item:nth-child(odd)::after {
-    display: block;
-    top: 20%;
-    height: 60%;
+  .stat-item::after {
+    top: 15%;
+    height: 70%;
   }
 
-  .stat-item:nth-child(even)::after {
-    display: none;
-  }
+  /* Kill right divider on even items (right column) */
+  .stat-item:nth-child(2n)::after { display: none; }
 
-  /* Bottom border on top row */
+  /* Horizontal rule between rows */
   .stat-item:nth-child(1),
   .stat-item:nth-child(2) {
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
   }
 }
 
-/* Mobile — single column, each stat full width */
-@media (max-width: 600px) {
+/* ── Mobile: 2×2 compact cards floating over image ── */
+@media (max-width: 640px) {
   .stats-bar {
-    padding: 64px 0;
+    padding: 0;
+  }
+
+  /* Taller section so image shows above the cards */
+  .stats-bar::before {
+    background-position: center 20%;
+  }
+
+  /* Stronger gradient at bottom on mobile for card readability */
+  .stats-bar::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(6,13,26,0.45) 0%,
+      rgba(6,13,26,0.15) 30%,
+      rgba(6,13,26,0.72) 58%,
+      rgba(6,13,26,0.95) 100%
+    );
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 160px 0 0;
     gap: 0;
   }
 
   .stat-item {
-    padding: 28px 24px;
-    flex-direction: row;
-    text-align: left;
-    align-items: center;
-    gap: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 28px 20px 32px;
+    /* Glassmorphism card feel */
+    background: rgba(6,13,26,0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
 
-  .stat-item:last-child {
-    border-bottom: none;
+  /* Right border between the two columns */
+  .stat-item:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.08);
   }
 
-  /* Kill vertical divider on mobile */
+  /* Kill the ::after pseudo divider on mobile */
   .stat-item::after,
-  .stat-item:nth-child(odd)::after {
-    display: none;
+  .stat-item:nth-child(odd)::after { display: none; }
+
+  /* Reset row borders from tablet */
+  .stat-item:nth-child(1),
+  .stat-item:nth-child(2) {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
   .stat-big-num {
     font-size: 2.75rem;
-    min-width: 110px;
-    text-align: right;
-    flex-shrink: 0;
-    margin-bottom: 0;
   }
 
   .stat-desc {
-    font-size: 0.8125rem;
-    text-align: left;
+    font-size: 0.8rem;
     max-width: none;
-    color: rgba(255,255,255,0.48);
+    color: rgba(255,255,255,0.72);
   }
 }
 /* =================================================================
