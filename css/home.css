@@ -409,31 +409,95 @@ color: var(--white);
   overflow: hidden;
 }
 
+/* ── Layer 0: The photo, right-anchored with Ken Burns ── */
 .services-overview::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0; right: 0; bottom: 0;
+  width: 54%;
+  background: url('../images/hero-pain-points.webp') center / cover no-repeat;
+  filter: grayscale(30%) contrast(1.08) brightness(0.86) saturate(0.78);
+  animation: svcKenBurns 28s ease-in-out infinite alternate;
   z-index: 0;
   pointer-events: none;
-  background: url('../images/hero-pain-points.webp') center / cover no-repeat;
-  opacity: 0.45;
-  -webkit-mask-image: radial-gradient(
-    ellipse 90% 80% at 50% 50%,
-    black 0%,
-    black 55%,
-    transparent 100%
+  /* Top + bottom dissolve cleanly into white */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%, black 8%, black 92%, transparent 100%
   );
-  mask-image: radial-gradient(
-    ellipse 90% 80% at 50% 50%,
-    black 0%,
-    black 55%,
-    transparent 100%
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%, black 8%, black 92%, transparent 100%
   );
 }
 
+/* ── Layer 1: White diagonal sweep — left stays pure, photo bleeds right ── */
+.services-overview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #ffffff  0%,
+    #ffffff  30%,
+    rgba(255,255,255,0.96) 37%,
+    rgba(255,255,255,0.78) 44%,
+    rgba(255,255,255,0.42) 53%,
+    rgba(255,255,255,0.14) 63%,
+    transparent 74%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Layer 2: Orange accent hairline at the photo/white boundary ── */
+.svc-accent-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 46%;
+  width: 1.5px;
+  background: linear-gradient(
+    to bottom,
+    transparent       0%,
+    transparent       5%,
+    rgba(232,119,34,0.0)  6%,
+    rgba(232,119,34,0.5) 20%,
+    rgba(232,119,34,0.75) 50%,
+    rgba(232,119,34,0.5) 80%,
+    rgba(232,119,34,0.0) 94%,
+    transparent       95%,
+    transparent       100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Container sits above all layers ── */
 .services-overview .container {
   position: relative;
-  z-index: 1;
+  z-index: 3;
+}
+
+@keyframes svcKenBurns {
+  0%   { transform: scale(1.0)  translate(0%,    0%);   }
+  100% { transform: scale(1.08) translate(-2%, -1.5%);  }
+}
+
+/* ── Mobile: image becomes a full-width watermark ── */
+@media (max-width: 768px) {
+  .services-overview::before {
+    width: 100%;
+    filter: grayscale(60%) brightness(0.92);
+    opacity: 0.07;
+    animation: none;
+    -webkit-mask-image: radial-gradient(ellipse 85% 70% at 60% 50%, black 0%, transparent 75%);
+    mask-image: radial-gradient(ellipse 85% 70% at 60% 50%, black 0%, transparent 75%);
+  }
+  .services-overview::after {
+    background: rgba(255,255,255,0.55);
+  }
+  .svc-accent-line { display: none; }
 }
 .services-grid {
   display: grid;
