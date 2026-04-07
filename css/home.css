@@ -404,18 +404,33 @@ color: var(--white);
    ================================================================= */
 .services-overview {
   padding: var(--section-padding) 0;
+  background: #ffffff;
   position: relative;
-  background:
-    linear-gradient(
-      to bottom,
-      #ffffff 0%,
-      #ffffff 10%,
-      transparent 28%,
-      transparent 72%,
-      #ffffff 90%,
-      #ffffff 100%
-    ),
-    url('../images/hero-pain-points.webp') center / cover no-repeat;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.services-overview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../images/hero-pain-points.webp') center / cover no-repeat;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  z-index: -1;
 }
 
 .services-overview .container {
