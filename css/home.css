@@ -800,6 +800,8 @@ color: var(--white);
   );
 }
 .stat-item:last-child::after { display: none; }
+.stat-item:first-child { padding-left: 0; }
+.stat-item:last-child { padding-right: 0; }
 
 .stat-big-num {
   font-family: var(--font-display);
@@ -828,31 +830,45 @@ color: var(--white);
   font-weight: 500;
 }
 
-/* ── Tablet 1024px: 2×2 ── */
+/* ── All screen sizes: always horizontal, fluid ── */
 @media (max-width: 1024px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 60px 0;
+    gap: 0;
   }
+
   .stat-item {
-    padding: 52px 28px;
+    padding: 0 16px;
+    overflow: visible;
   }
-  .stat-item:nth-child(2n)::after { display: none; }
+
   .stat-item:nth-child(1),
   .stat-item:nth-child(2) {
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: none;
+  }
+
+  .stat-item:nth-child(2n)::after {
+    display: block;
+  }
+
+  .stat-item:last-child::after { display: none; }
+
+  .stat-big-num {
+    font-size: clamp(1.25rem, 4.5vw, 3.75rem);
+    white-space: nowrap;
+  }
+
+  .stat-desc {
+    font-size: clamp(0.55rem, 1.6vw, 0.875rem);
+    max-width: none;
   }
 }
 
-/* ── Mobile ── */
 @media (max-width: 640px) {
-
-  /* Kill backdrop-filter entirely — that's what blurs the image */
   .stats-bar::before {
-    background-attachment: scroll;
     background-position: center center;
-    background-size: cover;
-    /* No filter, no opacity reduction, no blur */
+    background-attachment: scroll;
   }
 
   .stats-bar::after {
@@ -864,49 +880,46 @@ color: var(--white);
   }
 
   .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1px;
-    padding: 0;
-    background: rgba(255,255,255,0.08);
-    /* 1px gaps between cells act as dividers */
+    grid-template-columns: repeat(4, 1fr);
+    padding: 48px 0;
+    gap: 0;
+    background: none;
   }
 
   .stat-item {
-    padding: 36px 20px;
-    background: rgba(6,13,26,0.52);
+    padding: 0 10px;
+    background: none;
     overflow: visible;
-    /* No backdrop-filter — prevents image degradation */
   }
 
-  /* Reset all pseudo dividers */
-  .stat-item::after,
-  .stat-item:nth-child(odd)::after,
-  .stat-item:nth-child(even)::after { display: none; }
+  .stat-item::after {
+    display: block;
+  }
 
-  /* Reset tablet borders */
+  .stat-item:last-child::after { display: none; }
+
   .stat-item:nth-child(1),
   .stat-item:nth-child(2) {
     border-bottom: none;
   }
 
   .stat-big-num {
-    font-size: 2.4rem;
+    font-size: clamp(1.1rem, 4.2vw, 1.6rem);
     white-space: nowrap;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .stat-desc {
-    font-size: 0.78rem;
+    font-size: clamp(0.5rem, 1.45vw, 0.75rem);
     max-width: none;
     color: rgba(255,255,255,0.68);
   }
 }
 
 @media (max-width: 360px) {
-  .stat-big-num { font-size: 2rem; }
-  .stat-desc { font-size: 0.72rem; }
+  .stats-grid { padding: 40px 0; }
+  .stat-big-num { font-size: clamp(1rem, 4vw, 1.3rem); }
+  .stat-desc { font-size: clamp(0.48rem, 1.35vw, 0.65rem); }
 }
 /* =================================================================
    7. TESTIMONIALS — 3D RING CAROUSEL
