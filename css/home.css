@@ -413,7 +413,30 @@ color: var(--white);
   background-size: auto;
   position: relative;
 }
+.services-overview::before,
+.services-overview::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 180px;
+  pointer-events: none;
+  z-index: 1;
+}
 
+.services-overview::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--white) 0%, transparent 100%);
+}
+
+.services-overview::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--white) 0%, transparent 100%);
+}
+.services-overview .container {
+  position: relative;
+  z-index: 2;
+}
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
