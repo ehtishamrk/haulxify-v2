@@ -523,6 +523,8 @@ color: var(--white);
 
 .why-visual {
   position: relative;
+   padding-top: 56px;
+  padding-bottom: 56px;
 }
 
 .why-main-card {
@@ -600,10 +602,10 @@ color: var(--white);
 
 .why-badge-top {
   position: absolute;
-  top: -20px;
-  right: -20px;
+  top: 0;
+  left: -20px;
   bottom: auto;
-  left: auto;
+  right: auto;
 }
 
 .why-points {
