@@ -598,6 +598,14 @@ color: var(--white);
   text-transform: none;
 }
 
+.why-badge-top {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  bottom: auto;
+  left: auto;
+}
+
 .why-points {
   display: flex;
   flex-direction: column;
