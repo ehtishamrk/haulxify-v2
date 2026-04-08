@@ -404,9 +404,14 @@ color: var(--white);
    ================================================================= */
 .services-overview {
   padding: var(--section-padding) 0;
-   padding-top: 40px;
-   padding-bottom: 40px;
-  background: var(--white);
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: var(--white);
+  background-image: url('../images/hero-pain-points.webp');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto;
+  position: relative;
 }
 
 .services-grid {
