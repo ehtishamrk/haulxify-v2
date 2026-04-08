@@ -659,6 +659,8 @@ color: var(--white);
 .industries-section {
   background: var(--white);
   padding: var(--section-padding) 0;
+      padding-top: 40px;
+   padding-bottom: 40px;
 }
 
 .industries-grid {
@@ -933,6 +935,8 @@ color: var(--white);
 .testimonials-section {
   background: #0a1520;
   padding: var(--section-padding) 0;
+      padding-top: 40px;
+   padding-bottom: 40px;
   position: relative;
 }
 
@@ -1225,6 +1229,8 @@ color: var(--white);
 .pricing-teaser {
   background: var(--white);
   padding: var(--section-padding) 0;
+      padding-top: 40px;
+   padding-bottom: 40px;
   overflow: hidden;
 }
 
