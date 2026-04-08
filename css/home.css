@@ -403,35 +403,10 @@ color: var(--white);
    3. SERVICES GRID
    ================================================================= */
 .services-overview {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  position: relative;
-  overflow: hidden;
-  background: #060d1a;
-}
-
-.services-overview::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('../images/hero-pain-points.webp') center center / cover no-repeat;
-  opacity: 0.28;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.services-overview::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(6,13,26,0.72) 100%);
-}
-
-.services-overview .container {
-  position: relative;
-  z-index: 2;
+  padding: var(--section-padding) 0;
+   padding-top: 40px;
+   padding-bottom: 40px;
+  background: var(--white);
 }
 
 .services-grid {
@@ -528,50 +503,6 @@ color: var(--white);
 .service-card:hover .service-card-link svg {
   transform: translateX(3px);
 }
-
-.services-overview .section-header h2 {
-  color: var(--white);
-}
-
-.services-overview .section-header p {
-  color: rgba(255,255,255,0.6);
-}
-
-.services-overview .eyebrow {
-  color: var(--brand-orange);
-}
-
-.service-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-lg);
-  padding: 36px 32px;
-  transition: background 0.35s, box-shadow 0.35s, transform 0.35s, border-color 0.35s;
-  cursor: default;
-}
-
-.service-card:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(232,119,34,0.35);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  transform: translateY(-4px);
-}
-
-.service-card h3 {
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 10px;
-  letter-spacing: -0.01em;
-}
-
-.service-card p {
-  font-size: 0.875rem;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.65;
-  max-width: none;
-}
-
 /* =================================================================
    4. WHY HAULXIFY — SPLIT SECTION
    ================================================================= */
