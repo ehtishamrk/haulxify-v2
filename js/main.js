@@ -565,3 +565,18 @@ window.addEventListener('resize', function () {
   render(true);
   startTimer();
 })();
+(function () {
+  var target = document.querySelector('.why-stmt-left');
+  if (!target) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        target.classList.add('is-alive');
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.15 });
+
+  observer.observe(target);
+})();
