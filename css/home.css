@@ -525,7 +525,20 @@ color: var(--white);
 .why-stmt-left {
   display: flex;
   flex-direction: column;
-  padding-top: 4px;
+  align-items: center;
+  text-align: center;
+  padding: 48px 40px 52px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      158deg,
+      rgba(6, 13, 26, 0.82) 0%,
+      rgba(6, 13, 26, 0.48) 52%,
+      rgba(6, 13, 26, 0.78) 100%
+    ),
+    url('../images/hero-pain-points.webp') center / cover no-repeat;
 }
 
 .why-stmt-left .eyebrow {
@@ -535,13 +548,15 @@ color: var(--white);
 .why-stmt-left h2 {
   color: var(--white);
   margin-bottom: 20px;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.55);
 }
 
 .why-stmt-intro {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.58);
   line-height: 1.78;
-  max-width: 44ch;
+  max-width: 42ch;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 
 /* Big number right */
