@@ -908,6 +908,11 @@ color: var(--white);
     white-space: nowrap;
     margin-bottom: 4px;
   }
+  .stat-big-num span {
+    display: block;
+    font-size: clamp(0.6rem, 2.4vw, 1rem);
+    white-space: nowrap;
+  }
   .stat-desc {
     font-size: clamp(0.38rem, 1.1vw, 0.65rem);
     max-width: none;
