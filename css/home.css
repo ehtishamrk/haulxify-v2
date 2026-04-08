@@ -731,7 +731,7 @@ color: var(--white);
    ================================================================= */
 .stats-bar {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
   padding: 0;
 }
@@ -867,11 +867,13 @@ color: var(--white);
 }
 
 @media (max-width: 640px) {
+  .stats-bar {
+    overflow: hidden;
+  }
   .stats-bar::before {
     background-position: center center;
     background-attachment: scroll;
   }
-
   .stats-bar::after {
     background: linear-gradient(
       to bottom,
@@ -879,41 +881,38 @@ color: var(--white);
       rgba(6,13,26,0.55) 100%
     );
   }
-
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
     padding: 48px 0;
     gap: 0;
     background: none;
+    width: 100%;
+    box-sizing: border-box;
   }
-
   .stat-item {
-    padding: 0 10px;
+    padding: 0 6px;
     background: none;
     overflow: visible;
+    min-width: 0;
   }
-
   .stat-item::after {
     display: block;
   }
-
   .stat-item:last-child::after { display: none; }
-
   .stat-item:nth-child(1),
   .stat-item:nth-child(2) {
     border-bottom: none;
   }
-
   .stat-big-num {
-    font-size: clamp(1.1rem, 4.2vw, 1.6rem);
+    font-size: clamp(0.9rem, 3.8vw, 1.6rem);
     white-space: nowrap;
     margin-bottom: 6px;
   }
-
   .stat-desc {
-    font-size: clamp(0.5rem, 1.45vw, 0.75rem);
+    font-size: clamp(0.42rem, 1.3vw, 0.75rem);
     max-width: none;
     color: rgba(255,255,255,0.68);
+    white-space: nowrap;
   }
 }
 
