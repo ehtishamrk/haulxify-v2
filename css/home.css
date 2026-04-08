@@ -801,7 +801,7 @@ color: var(--white);
 }
 .stat-item:last-child::after { display: none; }
 .stat-item:first-child { padding-left: 0; }
-.stat-item:last-child { padding-right: 0; }
+.stat-item:last-child { padding-right: 8px; }
 
 .stat-big-num {
   font-family: var(--font-display);
