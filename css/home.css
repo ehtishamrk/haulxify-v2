@@ -509,6 +509,8 @@ color: var(--white);
 .why-section {
   background: var(--off-white);
   padding: var(--section-padding) 0;
+      padding-top: 40px;
+   padding-bottom: 40px;
   overflow: hidden;
 }
 
