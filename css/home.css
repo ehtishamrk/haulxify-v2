@@ -890,7 +890,7 @@ color: var(--white);
     box-sizing: border-box;
   }
   .stat-item {
-    padding: 0 6px;
+    padding: 0 4px;
     background: none;
     overflow: visible;
     min-width: 0;
@@ -903,13 +903,13 @@ color: var(--white);
   .stat-item:nth-child(2) {
     border-bottom: none;
   }
-  .stat-big-num {
-    font-size: clamp(0.9rem, 3.8vw, 1.6rem);
+.stat-big-num {
+    font-size: clamp(0.75rem, 3.2vw, 1.4rem);
     white-space: nowrap;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .stat-desc {
-    font-size: clamp(0.42rem, 1.3vw, 0.75rem);
+    font-size: clamp(0.38rem, 1.1vw, 0.65rem);
     max-width: none;
     color: rgba(255,255,255,0.68);
     white-space: nowrap;
