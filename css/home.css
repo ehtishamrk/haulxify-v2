@@ -508,8 +508,8 @@ color: var(--white);
    ================================================================= */
 .why-section {
   background: var(--brand-navy);
-  padding-top: 56px;
-  padding-bottom: 0;
+  padding-top: 40px;
+  padding-bottom: 40;
   overflow: hidden;
 }
 
