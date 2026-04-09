@@ -1616,25 +1616,3 @@ color: var(--white);
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
 }
-
-/* =================================================================
-   LEARN MORE — Fixed bottom-left
-   ================================================================= */
-.service-card-link {
-  position: absolute;
-  bottom: 28px;
-  left: 32px;
-  margin-top: 0;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.service-card:hover .service-card-link {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.service-card:hover .service-card-link svg {
-  transform: translateX(3px);
-}
