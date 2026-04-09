@@ -419,7 +419,7 @@ color: var(--white);
   background: var(--off-white);
   border: 1px solid transparent;
   border-radius: var(--radius-lg);
-  padding: 36px 32px;
+  padding: 36px 32px 72px;
   transition: background 0.35s, box-shadow 0.35s, transform 0.35s, border-color 0.35s;
   cursor: default;
 }
@@ -1531,14 +1531,13 @@ color: var(--white);
   }
 }
 /* =================================================================
-   SERVICE CARDS — Background Image on Hover
+   SERVICE CARDS — Always-on Background Image + Hover Zoom Pan
    ================================================================= */
 .service-card {
   position: relative;
   overflow: hidden;
 }
 
-/* The bg image element */
 .service-card-bg {
   position: absolute;
   inset: 0;
@@ -1547,51 +1546,95 @@ color: var(--white);
   object-fit: cover;
   object-position: center;
   z-index: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  transform: scale(1.05);
+  transform: scale(1.08);
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
-/* Dark overlay on top of image */
+/* Always-on dark overlay for readability */
 .service-card::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    150deg,
-    rgba(6, 13, 26, 0.82) 0%,
-    rgba(6, 13, 26, 0.65) 100%
+    160deg,
+    rgba(6, 13, 26, 0.78) 0%,
+    rgba(6, 13, 26, 0.58) 50%,
+    rgba(6, 13, 26, 0.72) 100%
   );
   z-index: 1;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: background 0.8s ease;
 }
 
-/* Show image + overlay on hover */
+/* Luxury zoom-pan on hover */
 .service-card:hover .service-card-bg {
-  opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translate(1.5%, -1%);
+  transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Slightly lift overlay on hover for a brighter reveal feel */
 .service-card:hover::before {
-  opacity: 1;
+  background: linear-gradient(
+    160deg,
+    rgba(6, 13, 26, 0.70) 0%,
+    rgba(6, 13, 26, 0.44) 50%,
+    rgba(6, 13, 26, 0.65) 100%
+  );
 }
 
-/* Push all card content above the image */
+/* Push all card content above image layers */
 .service-card > *:not(.service-card-bg) {
   position: relative;
   z-index: 2;
 }
 
-/* Text color overrides on hover for readability */
-.service-card:hover h3 {
+/* Text always white since image is always showing */
+.service-card h3 {
   color: var(--white);
 }
 
-.service-card:hover p {
-  color: rgba(255, 255, 255, 0.72);
+.service-card p {
+  color: rgba(255, 255, 255, 0.65);
 }
 
-.service-card:hover .service-card-icon {
-  background: rgba(232, 119, 34, 0.25);
+.service-card .service-card-icon {
+  background: rgba(232, 119, 34, 0.18);
+}
+
+.service-card .service-card-icon svg {
+  color: var(--brand-orange);
+}
+
+/* Override the default off-white bg since image takes over */
+.service-card {
+  background: var(--brand-navy);
+  border-color: transparent;
+}
+
+.service-card:hover {
+  border-color: rgba(232, 119, 34, 0.3);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* =================================================================
+   LEARN MORE — Fixed bottom-left
+   ================================================================= */
+.service-card-link {
+  position: absolute;
+  bottom: 28px;
+  left: 32px;
+  margin-top: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.service-card:hover .service-card-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card:hover .service-card-link svg {
+  transform: translateX(3px);
 }
