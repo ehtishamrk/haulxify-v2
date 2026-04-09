@@ -1619,3 +1619,82 @@ color: var(--white);
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
 }
+/* =================================================================
+   INDUSTRIES CARDS — Background Image + Icon Image
+   ================================================================= */
+.industry-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--brand-navy);
+  border-color: transparent;
+}
+
+.industry-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  transform: scale(1.08);
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.industry-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(6, 13, 26, 0.78) 0%,
+    rgba(6, 13, 26, 0.58) 50%,
+    rgba(6, 13, 26, 0.72) 100%
+  );
+  z-index: 1;
+  transition: background 0.8s ease;
+}
+
+.industry-card:hover .industry-card-bg {
+  transform: scale(1) translate(1.5%, -1%);
+  transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.industry-card:hover::before {
+  background: linear-gradient(
+    160deg,
+    rgba(6, 13, 26, 0.70) 0%,
+    rgba(6, 13, 26, 0.44) 50%,
+    rgba(6, 13, 26, 0.65) 100%
+  );
+}
+
+.industry-card > *:not(.industry-card-bg) {
+  position: relative;
+  z-index: 2;
+}
+
+.industry-card .industry-name { color: var(--white); }
+.industry-card .industry-desc { color: rgba(255, 255, 255, 0.55); }
+
+.industry-card .industry-icon {
+  background: rgba(232, 119, 34, 0.18);
+}
+
+.industry-icon img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+}
+
+.industry-card:hover {
+  border-color: rgba(232, 119, 34, 0.3);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.industry-card:hover .industry-name { color: var(--white); }
+.industry-card:hover .industry-desc { color: rgba(255, 255, 255, 0.6); }
+.industry-card:hover .industry-icon { background: rgba(232, 119, 34, 0.28); }
