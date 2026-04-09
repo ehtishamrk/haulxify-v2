@@ -419,11 +419,12 @@ color: var(--white);
   background: var(--off-white);
   border: 1px solid transparent;
   border-radius: var(--radius-lg);
-  padding: 36px 32px 72px;
+  padding: 36px 32px;
   transition: background 0.35s, box-shadow 0.35s, transform 0.35s, border-color 0.35s;
   cursor: default;
+  display: flex;
+  flex-direction: column;
 }
-
 .service-card:hover {
   background: var(--white);
   border-color: var(--border);
@@ -471,6 +472,8 @@ color: var(--white);
   color: var(--text-body);
   line-height: 1.65;
   max-width: none;
+  margin-top: auto;
+  padding-top: 32px;
 }
 
 .service-card-link {
