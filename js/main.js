@@ -628,23 +628,31 @@ function handleSignIn() {
   if (btn) { btn.textContent = 'Signing in…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed'; }
   if (errorBox) errorBox.style.display = 'none';
 
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function(userCredential) {
-      var user = userCredential.user;
-      sessionStorage.setItem('hx_user', JSON.stringify({ email: user.email, uid: user.uid }));
-      if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
-      setTimeout(function() {
-        window.open('https://app.haulxify.com', '_blank');
-        closeSignIn();
-      }, 900);
-    })
-    .catch(function(error) {
-      if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; btn.style.background = 'var(--brand-navy)'; }
-      if (errorMsg) errorMsg.textContent = 'Incorrect email or password. Please try again.';
-      if (errorBox) errorBox.style.display = 'flex';
-      var pw = document.getElementById('signin-password');
-      if (pw) { pw.value = ''; pw.focus(); }
-    });
+  function attemptSignIn() {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(function(userCredential) {
+        var user = userCredential.user;
+        sessionStorage.setItem('hx_user', JSON.stringify({ email: user.email, uid: user.uid }));
+        if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
+        setTimeout(function() {
+          window.open('https://app.haulxify.com', '_blank');
+          closeSignIn();
+        }, 900);
+      })
+      .catch(function(error) {
+        if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; btn.style.background = 'var(--brand-navy)'; }
+        if (errorMsg) errorMsg.textContent = 'Incorrect email or password. Please try again.';
+        if (errorBox) errorBox.style.display = 'flex';
+        var pw = document.getElementById('signin-password');
+        if (pw) { pw.value = ''; pw.focus(); }
+      });
+  }
+
+  if (window.__firebaseReady) {
+    attemptSignIn();
+  } else {
+    document.addEventListener('firebaseReady', attemptSignIn, { once: true });
+  }
 }
 
 document.addEventListener('keydown', function(e) {
