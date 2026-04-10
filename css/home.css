@@ -1627,6 +1627,8 @@ color: var(--white);
   overflow: hidden;
   background: var(--brand-navy);
   border-color: transparent;
+  display: flex;
+  flex-direction: column;
 }
 
 .industry-card-bg {
@@ -1680,6 +1682,7 @@ color: var(--white);
 
 .industry-card .industry-icon {
   background: rgba(232, 119, 34, 0.18);
+  transition: background 0.3s;
 }
 
 .industry-icon img {
@@ -1697,4 +1700,39 @@ color: var(--white);
 
 .industry-card:hover .industry-name { color: var(--white); }
 .industry-card:hover .industry-desc { color: rgba(255, 255, 255, 0.6); }
-.industry-card:hover .industry-icon { background: rgba(232, 119, 34, 0.28); }
+.industry-card:hover .industry-icon { background: var(--brand-orange); }
+
+/* Learn more link */
+.industry-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  align-self: flex-end;
+  padding-top: 16px;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--brand-orange);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.industry-card:hover .industry-card-link {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.industry-card-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.industry-card:hover .industry-card-link svg {
+  transform: translateX(3px);
+}
