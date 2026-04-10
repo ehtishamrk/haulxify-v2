@@ -1735,3 +1735,8 @@ color: var(--white);
 .industry-card:hover .industry-card-link svg {
   transform: translateX(3px);
 }
+/* CTA Banner section padding fix */
+.cta-banner-section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
