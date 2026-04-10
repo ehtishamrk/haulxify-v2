@@ -27,7 +27,21 @@ function initPreloader() {
     }
   }, 3500);
 }
+// Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBaRMQBLfDyufJkC4E8XCvzOIMEawOQObw",
+  authDomain: "haulxify-app.firebaseapp.com",
+  projectId: "haulxify-app",
+  storageBucket: "haulxify-app.firebasestorage.app",
+  messagingSenderId: "453228026261",
+  appId: "1:453228026261:web:1d66ab1d47418906807e9c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 // =================================================================
 // NAVIGATION — SCROLL BEHAVIOR
 // =================================================================
@@ -629,34 +643,23 @@ function handleSignIn() {
   if (btn) { btn.textContent = 'Signing in…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed'; }
   if (errorBox) errorBox.style.display = 'none';
 
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbybExNFOh3fDA3QfqJwaTvy1yi5yB5QO0rpKq-VGRVDBTscyhzynyjZwMlLHw0Y55Od/exec';
-
-  fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify({ email: email, password: password })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      sessionStorage.setItem('hx_user', JSON.stringify({ name: data.name, email: data.email }));
+  signInWithEmailAndPassword(auth, email, password)
+    .then(function(userCredential) {
+      const user = userCredential.user;
+      sessionStorage.setItem('hx_user', JSON.stringify({ email: user.email, uid: user.uid }));
       if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
       setTimeout(function() {
         window.open('https://app.haulxify.com', '_blank');
         closeSignIn();
       }, 900);
-    } else {
+    })
+    .catch(function(error) {
       if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; btn.style.background = 'var(--brand-navy)'; }
       if (errorMsg) errorMsg.textContent = 'Incorrect email or password. Please try again.';
       if (errorBox) errorBox.style.display = 'flex';
       var pw = document.getElementById('signin-password');
       if (pw) { pw.value = ''; pw.focus(); }
-    }
-  })
-  .catch(function() {
-    if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; }
-    if (errorMsg) errorMsg.textContent = 'Connection error. Please try again.';
-    if (errorBox) errorBox.style.display = 'flex';
-  });
+    });
 }
 
 document.addEventListener('keydown', function(e) {
