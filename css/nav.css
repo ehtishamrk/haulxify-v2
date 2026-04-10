@@ -246,7 +246,7 @@
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav { padding: 0 20px; }
-.nav-signin { display: none; 
+.nav-signin { display: none; }
 }
 
 @media (max-width: 480px) {
