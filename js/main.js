@@ -629,12 +629,34 @@ function handleSignIn() {
   if (btn) { btn.textContent = 'Signing in…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed'; }
   if (errorBox) errorBox.style.display = 'none';
 
-  // 🔒 Google Sheets auth coming in Step 2
-  setTimeout(function() {
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbybExNFOh3fDA3QfqJwaTvy1yi5yB5QO0rpKq-VGRVDBTscyhzynyjZwMlLHw0Y55Od/exec';
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ email: email, password: password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      sessionStorage.setItem('hx_user', JSON.stringify({ name: data.name, email: data.email }));
+      if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
+      setTimeout(function() {
+        window.open('https://app.haulxify.com', '_blank');
+        closeSignIn();
+      }, 900);
+    } else {
+      if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; btn.style.background = 'var(--brand-navy)'; }
+      if (errorMsg) errorMsg.textContent = 'Incorrect email or password. Please try again.';
+      if (errorBox) errorBox.style.display = 'flex';
+      var pw = document.getElementById('signin-password');
+      if (pw) { pw.value = ''; pw.focus(); }
+    }
+  })
+  .catch(function() {
     if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; }
-    if (errorMsg) errorMsg.textContent = 'Login system coming soon. Contact support@haulxify.com';
+    if (errorMsg) errorMsg.textContent = 'Connection error. Please try again.';
     if (errorBox) errorBox.style.display = 'flex';
-  }, 900);
+  });
 }
 
 document.addEventListener('keydown', function(e) {
