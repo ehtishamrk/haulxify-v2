@@ -33,7 +33,26 @@ async function loadInclude(id, file) {
     if (!res.ok) return;
     var html = await res.text();
     var el = document.getElementById(id);
-    if (el) el.outerHTML = html;
+    if (!el) return;
+
+    // Wrap in a temp container so we can query it before replacing
+    var temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    // Re-create every <script> tag so the browser actually executes them
+    // (innerHTML-injected scripts are silently ignored by all browsers)
+    temp.querySelectorAll('script').forEach(function(oldScript) {
+      var newScript = document.createElement('script');
+      oldScript.getAttributeNames().forEach(function(attr) {
+        newScript.setAttribute(attr, oldScript.getAttribute(attr));
+      });
+      newScript.textContent = oldScript.textContent;
+      oldScript.replaceWith(newScript);
+    });
+
+    // Now replace the placeholder element with the processed HTML
+    el.replaceWith(temp.firstElementChild || temp);
+
   } catch(e) {
     console.warn('Include failed:', file, e);
   }
