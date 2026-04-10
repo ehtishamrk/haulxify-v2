@@ -89,7 +89,9 @@ function showToast(msg) {
 function signOut() {
   showToast('Signing out…');
   setTimeout(() => {
-    window.location.href = 'https://haulxify.com';
+    localStorage.removeItem('hx_logged_in');
+    sessionStorage.removeItem('hx_logged_in');
+    window.location.href = 'login.html';
   }, 1200);
 }
 
