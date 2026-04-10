@@ -1737,6 +1737,6 @@ color: var(--white);
 }
 /* CTA Banner section padding fix */
 .cta-banner-section {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
 }
