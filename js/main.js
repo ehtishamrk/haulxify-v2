@@ -565,3 +565,90 @@ window.addEventListener('resize', function () {
   render(true);
   startTimer();
 })();
+// =================================================================
+// CUSTOMER PORTAL — SIGN IN MODAL
+// =================================================================
+function openSignIn(e) {
+  if (e) e.preventDefault();
+  var overlay = document.getElementById('signin-overlay');
+  if (!overlay) return;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  setTimeout(function() {
+    var f = document.getElementById('signin-email');
+    if (f) f.focus();
+  }, 150);
+}
+
+function closeSignIn() {
+  var overlay = document.getElementById('signin-overlay');
+  if (!overlay) return;
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+  var err = document.getElementById('signin-error');
+  if (err) err.style.display = 'none';
+  var em = document.getElementById('signin-email');
+  if (em) em.value = '';
+  var pw = document.getElementById('signin-password');
+  if (pw) pw.value = '';
+  var btn = document.getElementById('signin-btn');
+  if (btn) {
+    btn.textContent = 'Sign In to Customer Portal';
+    btn.style.background = 'var(--brand-navy)';
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+}
+
+function togglePassword() {
+  var pw = document.getElementById('signin-password');
+  if (!pw) return;
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+}
+
+function handleSignIn() {
+  var email    = (document.getElementById('signin-email')?.value || '').trim();
+  var password = document.getElementById('signin-password')?.value || '';
+  var btn      = document.getElementById('signin-btn');
+  var errorBox = document.getElementById('signin-error');
+  var errorMsg = document.getElementById('signin-error-msg');
+
+  if (!email) {
+    if (errorMsg) errorMsg.textContent = 'Please enter your email address.';
+    if (errorBox) errorBox.style.display = 'flex';
+    document.getElementById('signin-email')?.focus();
+    return;
+  }
+  if (!password) {
+    if (errorMsg) errorMsg.textContent = 'Please enter your password.';
+    if (errorBox) errorBox.style.display = 'flex';
+    document.getElementById('signin-password')?.focus();
+    return;
+  }
+
+  if (btn) { btn.textContent = 'Signing in…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed'; }
+  if (errorBox) errorBox.style.display = 'none';
+
+  setTimeout(function() {
+    var validEmail = email.toLowerCase() === 'demo@haulxify.com';
+    var validPass  = password === 'demo1234';
+
+    if (validEmail && validPass) {
+      if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
+      setTimeout(function() {
+        window.open('https://app.haulxify.com', '_blank');
+        closeSignIn();
+      }, 900);
+    } else {
+      if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; }
+      if (errorMsg) errorMsg.textContent = 'Incorrect email or password. Please try again.';
+      if (errorBox) errorBox.style.display = 'flex';
+      var pw = document.getElementById('signin-password');
+      if (pw) { pw.value = ''; pw.focus(); }
+    }
+  }, 900);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeSignIn();
+});
