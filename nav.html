@@ -32,7 +32,7 @@
     <li><a href="/about.html" class="nav-link">About</a></li>
     <li><a href="/contact.html" class="nav-link">Contact</a></li>
   </ul>
-<div style="display:flex;align-items:center;gap:12px;">
+  <div style="display:flex;align-items:center;gap:12px;">
     <a href="#" class="nav-signin" id="nav-signin-btn" onclick="openSignIn(event)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="flex-shrink:0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Sign In
@@ -71,7 +71,7 @@
     <li><a href="/faq.html" class="mobile-menu-link">FAQ</a></li>
     <li><a href="/contact.html" class="mobile-menu-link">Contact</a></li>
   </ul>
-<div class="mobile-menu-cta">
+  <div class="mobile-menu-cta">
     <a href="#" class="btn btn-secondary" onclick="openSignIn(event)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right:6px;vertical-align:middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Customer Sign In
@@ -79,3 +79,202 @@
     <a href="/contact.html" class="btn btn-primary">Get Started</a>
   </div>
 </div>
+
+<!-- ============================================================
+     CUSTOMER PORTAL — SIGN IN MODAL
+     Included via nav.html, auto-available on every page
+     ============================================================ -->
+<div id="signin-overlay" style="display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
+
+  <!-- Backdrop -->
+  <div onclick="closeSignIn()" style="position:absolute;inset:0;background:rgba(10,18,30,0.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);"></div>
+
+  <!-- Modal Card -->
+  <div style="position:relative;width:100%;max-width:420px;background:#fff;border-radius:20px;padding:40px 36px 36px;box-shadow:0 32px 80px rgba(10,18,30,0.28);animation:modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both;box-sizing:border-box;">
+
+    <!-- Close Button -->
+    <button onclick="closeSignIn()" style="position:absolute;top:16px;right:16px;background:rgba(13,25,41,0.06);border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(13,25,41,0.12)'" onmouseout="this.style.background='rgba(13,25,41,0.06)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- Header -->
+    <div style="margin-bottom:28px;">
+      <a href="/index.html" style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--brand-navy);text-decoration:none;letter-spacing:-0.03em;">Haul<span style="color:var(--brand-orange);">xify</span></a>
+      <p style="margin:8px 0 0;font-size:0.875rem;color:rgba(13,25,41,0.5);font-family:var(--font-body);">Customer Portal — Sign in to your account</p>
+    </div>
+
+    <!-- Error Box -->
+    <div id="signin-error" style="display:none;background:#fff1f0;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:0.8125rem;color:#dc2626;font-family:var(--font-body);align-items:center;gap:8px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="signin-error-msg">Invalid email or password.</span>
+    </div>
+
+    <!-- Form Fields -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
+      <!-- Email -->
+      <div>
+        <label style="display:block;font-size:0.78rem;font-weight:600;color:var(--brand-navy);font-family:var(--font-display);margin-bottom:6px;letter-spacing:0.02em;text-transform:uppercase;">Email Address</label>
+        <div style="position:relative;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(13,25,41,0.35)" stroke-width="2" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <input id="signin-email" type="email" placeholder="you@company.com" autocomplete="email"
+            style="width:100%;padding:12px 14px 12px 42px;border:1.5px solid rgba(13,25,41,0.12);border-radius:10px;font-size:0.875rem;font-family:var(--font-body);color:var(--brand-navy);outline:none;background:#f9fafb;box-sizing:border-box;transition:border-color 0.2s,background 0.2s;"
+            onfocus="this.style.borderColor='var(--brand-orange)';this.style.background='#fff';"
+            onblur="this.style.borderColor='rgba(13,25,41,0.12)';this.style.background='#f9fafb';"
+            onkeydown="if(event.key==='Enter')document.getElementById('signin-password').focus()">
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <label style="font-size:0.78rem;font-weight:600;color:var(--brand-navy);font-family:var(--font-display);letter-spacing:0.02em;text-transform:uppercase;">Password</label>
+          <a href="#" style="font-size:0.78rem;color:var(--brand-orange);text-decoration:none;font-family:var(--font-body);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Forgot password?</a>
+        </div>
+        <div style="position:relative;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(13,25,41,0.35)" stroke-width="2" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input id="signin-password" type="password" placeholder="••••••••" autocomplete="current-password"
+            style="width:100%;padding:12px 42px 12px 42px;border:1.5px solid rgba(13,25,41,0.12);border-radius:10px;font-size:0.875rem;font-family:var(--font-body);color:var(--brand-navy);outline:none;background:#f9fafb;box-sizing:border-box;transition:border-color 0.2s,background 0.2s;"
+            onfocus="this.style.borderColor='var(--brand-orange)';this.style.background='#fff';"
+            onblur="this.style.borderColor='rgba(13,25,41,0.12)';this.style.background='#f9fafb';"
+            onkeydown="if(event.key==='Enter')handleSignIn()">
+          <button type="button" onclick="togglePassword()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:rgba(13,25,41,0.35);display:flex;align-items:center;">
+            <svg id="pw-eye" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Remember me -->
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.8125rem;color:rgba(13,25,41,0.5);font-family:var(--font-body);margin-top:-4px;">
+        <input type="checkbox" id="signin-remember" style="width:15px;height:15px;accent-color:var(--brand-orange);cursor:pointer;flex-shrink:0;">
+        Keep me signed in
+      </label>
+
+      <!-- Submit -->
+      <button onclick="handleSignIn()" id="signin-btn"
+        style="width:100%;padding:14px;background:var(--brand-navy);color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:700;font-family:var(--font-display);letter-spacing:0.02em;cursor:pointer;transition:background 0.25s,transform 0.2s;margin-top:2px;"
+        onmouseover="this.style.background='#1a3358';this.style.transform='translateY(-1px)'"
+        onmouseout="this.style.background='var(--brand-navy)';this.style.transform='translateY(0)'">
+        Sign In to Customer Portal
+      </button>
+
+    </div>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:12px;margin:22px 0 18px;">
+      <div style="flex:1;height:1px;background:rgba(13,25,41,0.08);"></div>
+      <span style="font-size:0.75rem;color:rgba(13,25,41,0.35);font-family:var(--font-body);white-space:nowrap;">Not a customer yet?</span>
+      <div style="flex:1;height:1px;background:rgba(13,25,41,0.08);"></div>
+    </div>
+
+    <a href="/contact.html" onclick="closeSignIn()" style="display:block;text-align:center;padding:12px;border:1.5px solid rgba(13,25,41,0.12);border-radius:10px;font-size:0.875rem;font-weight:600;font-family:var(--font-display);color:var(--brand-navy);text-decoration:none;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--brand-orange)';this.style.color='var(--brand-orange)'" onmouseout="this.style.borderColor='rgba(13,25,41,0.12)';this.style.color='var(--brand-navy)'">
+      Get Started — Contact Us →
+    </a>
+
+  </div>
+</div>
+
+<!-- Modal Styles & Scripts -->
+<style>
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.93) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+/* Mobile adjustments for modal */
+@media (max-width: 480px) {
+  #signin-overlay > div:last-of-type {
+    padding: 32px 22px 28px !important;
+    border-radius: 16px !important;
+  }
+}
+</style>
+
+<script>
+  function openSignIn(e) {
+    if (e) e.preventDefault();
+    const overlay = document.getElementById('signin-overlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('signin-email').focus(), 150);
+  }
+
+  function closeSignIn() {
+    document.getElementById('signin-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('signin-error').style.display = 'none';
+    document.getElementById('signin-email').value = '';
+    document.getElementById('signin-password').value = '';
+    // Reset button state
+    const btn = document.getElementById('signin-btn');
+    btn.textContent = 'Sign In to Customer Portal';
+    btn.style.background = 'var(--brand-navy)';
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+
+  function togglePassword() {
+    const pw = document.getElementById('signin-password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSignIn();
+  });
+
+  function handleSignIn() {
+    const email    = document.getElementById('signin-email').value.trim();
+    const password = document.getElementById('signin-password').value;
+    const btn      = document.getElementById('signin-btn');
+    const errorBox = document.getElementById('signin-error');
+    const errorMsg = document.getElementById('signin-error-msg');
+
+    // Validation
+    if (!email) {
+      errorMsg.textContent = 'Please enter your email address.';
+      errorBox.style.display = 'flex';
+      document.getElementById('signin-email').focus();
+      return;
+    }
+    if (!password) {
+      errorMsg.textContent = 'Please enter your password.';
+      errorBox.style.display = 'flex';
+      document.getElementById('signin-password').focus();
+      return;
+    }
+
+    // Loading state
+    btn.textContent = 'Signing in…';
+    btn.style.opacity = '0.7';
+    btn.style.cursor = 'not-allowed';
+    errorBox.style.display = 'none';
+
+    // ------------------------------------------------------------------
+    // DUMMY AUTH — replace with real API call in Step 3
+    // Test: demo@haulxify.com / demo1234
+    // ------------------------------------------------------------------
+    setTimeout(() => {
+      const validEmail = email.toLowerCase() === 'demo@haulxify.com';
+      const validPass  = password === 'demo1234';
+
+      if (validEmail && validPass) {
+        btn.textContent = '✓ Redirecting to portal…';
+        btn.style.background = '#16a34a';
+        btn.style.opacity = '1';
+        setTimeout(() => {
+          window.open('https://app.haulxify.com', '_blank');
+          closeSignIn();
+        }, 900);
+      } else {
+        btn.textContent = 'Sign In to Customer Portal';
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        errorMsg.textContent = 'Incorrect email or password. Please try again.';
+        errorBox.style.display = 'flex';
+        document.getElementById('signin-password').value = '';
+        document.getElementById('signin-password').focus();
+      }
+    }, 900);
+  }
+</script>
