@@ -27,21 +27,6 @@ function initPreloader() {
     }
   }, 3500);
 }
-// Firebase SDK
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBaRMQBLfDyufJkC4E8XCvzOIMEawOQObw",
-  authDomain: "haulxify-app.firebaseapp.com",
-  projectId: "haulxify-app",
-  storageBucket: "haulxify-app.firebasestorage.app",
-  messagingSenderId: "453228026261",
-  appId: "1:453228026261:web:1d66ab1d47418906807e9c"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 // =================================================================
 // NAVIGATION — SCROLL BEHAVIOR
 // =================================================================
