@@ -643,9 +643,9 @@ function handleSignIn() {
   if (btn) { btn.textContent = 'Signing in…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed'; }
   if (errorBox) errorBox.style.display = 'none';
 
-  signInWithEmailAndPassword(auth, email, password)
+  firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function(userCredential) {
-      const user = userCredential.user;
+      var user = userCredential.user;
       sessionStorage.setItem('hx_user', JSON.stringify({ email: user.email, uid: user.uid }));
       if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
       setTimeout(function() {
