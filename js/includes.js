@@ -50,8 +50,12 @@ async function loadInclude(id, file) {
       oldScript.replaceWith(newScript);
     });
 
-    // Now replace the placeholder element with the processed HTML
-    el.replaceWith(temp.firstElementChild || temp);
+// Insert ALL top-level elements (nav has several: nav, mobile-menu, overlay, style)
+    var fragment = document.createDocumentFragment();
+    while (temp.firstChild) {
+      fragment.appendChild(temp.firstChild);
+    }
+    el.replaceWith(fragment);
 
   } catch(e) {
     console.warn('Include failed:', file, e);
