@@ -95,28 +95,30 @@
 }
 
 /* =================================================================
-   HAULER APP CTA
+   SIGN IN BUTTON (NAV)
    ================================================================= */
-.nav-hauler {
+.nav-signin {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-family: var(--font-display);
   font-size: 0.8125rem;
   font-weight: 700;
-  letter-spacing: 0.03em;
-  color: var(--white);
-  background: var(--brand-navy);
-  padding: 9px 18px;
+  letter-spacing: 0.02em;
+  color: var(--brand-navy);
+  background: transparent;
+  border: 1.5px solid var(--brand-navy);
+  padding: 8px 18px;
   border-radius: 10px;
   text-decoration: none;
-  transition: background 0.25s, transform 0.2s;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
   white-space: nowrap;
   margin-left: 8px;
 }
 
-.nav-hauler:hover {
-  background: var(--mid-navy);
+.nav-signin:hover {
+  background: var(--brand-navy);
+  color: var(--white);
   transform: translateY(-1px);
 }
 
@@ -133,7 +135,6 @@
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.6; transform: scale(0.7); }
 }
-
 /* =================================================================
    HAMBURGER (mobile)
    ================================================================= */
@@ -245,7 +246,7 @@
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav { padding: 0 20px; }
-  .nav-hauler { display: none; }
+.nav-signin { display: none; 
 }
 
 @media (max-width: 480px) {
@@ -253,13 +254,9 @@
     width: calc(100% - 24px);
     top: 12px;
   }
-  .nav-hauler {
+.nav-signin {
     font-size: 0.7rem;
     padding: 7px 12px;
-  }
-  .nav-hauler-dot {
-    width: 5px;
-    height: 5px;
   }
 }
 
