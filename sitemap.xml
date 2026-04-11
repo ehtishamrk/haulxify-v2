@@ -119,5 +119,35 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
+<!-- Blog Articles -->
+  <url>
+    <loc>https://www.haulxify.com/blog/ifta-filing-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.haulxify.com/blog/trucking-invoices-cash-flow.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.haulxify.com/blog/nemt-medicaid-billing-denials.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.haulxify.com/blog/tow-truck-after-hours-revenue.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.haulxify.com/blog/outsource-trucking-back-office.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.haulxify.com/blog/load-board-strategy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
