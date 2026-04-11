@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block internal include files (not useful pages for Google to index)
+Disallow: /nav.html
+Disallow: /footer.html
+
+# Sitemap location
+Sitemap: https://www.haulxify.com/sitemap.xml
