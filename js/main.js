@@ -633,11 +633,10 @@ function handleSignIn() {
       .then(function(userCredential) {
         var user = userCredential.user;
         sessionStorage.setItem('hx_user', JSON.stringify({ email: user.email, uid: user.uid }));
-        if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
-        setTimeout(function() {
-          window.open('https://app.haulxify.com', '_blank');
-          closeSignIn();
-        }, 900);
+if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
+setTimeout(function() {
+  window.location.href = 'https://app.haulxify.com';
+}, 900);
       })
       .catch(function(error) {
         if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; btn.style.background = 'var(--brand-navy)'; }
