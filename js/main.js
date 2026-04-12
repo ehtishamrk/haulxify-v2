@@ -564,51 +564,6 @@ window.addEventListener('resize', function () {
   render(true);
   startTimer();
 })();
-// =================================================================
-// CUSTOMER PORTAL — SIGN IN MODAL
-// =================================================================
-function openSignIn(e) {
-  if (e) e.preventDefault();
-  var overlay = document.getElementById('signin-overlay');
-  if (!overlay) return;
-  overlay.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  setTimeout(function() {
-    var f = document.getElementById('signin-email');
-    if (f) f.focus();
-  }, 150);
-}
-
-function closeSignIn() {
-  var overlay = document.getElementById('signin-overlay');
-  if (!overlay) return;
-  overlay.style.display = 'none';
-  document.body.style.overflow = '';
-  var err = document.getElementById('signin-error');
-  if (err) err.style.display = 'none';
-  var em = document.getElementById('signin-email');
-  if (em) em.value = '';
-  var pw = document.getElementById('signin-password');
-  if (pw) pw.value = '';
-  var btn = document.getElementById('signin-btn');
-  if (btn) {
-    btn.textContent = 'Sign In to Customer Portal';
-    btn.style.background = 'var(--brand-navy)';
-    btn.style.opacity = '1';
-    btn.style.cursor = 'pointer';
-  }
-}
-
-function togglePassword() {
-  var pw = document.getElementById('signin-password');
-  if (!pw) return;
-  pw.type = pw.type === 'password' ? 'text' : 'password';
-}
-
 function handleSignIn() {
   window.location.href = 'https://app.haulxify.com/login.html';
 }
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeSignIn();
-});
