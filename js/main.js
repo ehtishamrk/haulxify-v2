@@ -606,52 +606,7 @@ function togglePassword() {
 }
 
 function handleSignIn() {
-  var email    = (document.getElementById('signin-email')?.value || '').trim();
-  var password = document.getElementById('signin-password')?.value || '';
-  var btn      = document.getElementById('signin-btn');
-  var errorBox = document.getElementById('signin-error');
-  var errorMsg = document.getElementById('signin-error-msg');
-
-  if (!email) {
-    if (errorMsg) errorMsg.textContent = 'Please enter your email address.';
-    if (errorBox) errorBox.style.display = 'flex';
-    document.getElementById('signin-email')?.focus();
-    return;
-  }
-  if (!password) {
-    if (errorMsg) errorMsg.textContent = 'Please enter your password.';
-    if (errorBox) errorBox.style.display = 'flex';
-    document.getElementById('signin-password')?.focus();
-    return;
-  }
-
-  if (btn) { btn.textContent = 'Signing in…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed'; }
-  if (errorBox) errorBox.style.display = 'none';
-
-  function attemptSignIn() {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(function(userCredential) {
-        var user = userCredential.user;
-        sessionStorage.setItem('hx_user', JSON.stringify({ email: user.email, uid: user.uid }));
-if (btn) { btn.textContent = '✓ Redirecting…'; btn.style.background = '#16a34a'; btn.style.opacity = '1'; }
-setTimeout(function() {
-  window.location.href = 'https://app.haulxify.com';
-}, 900);
-      })
-      .catch(function(error) {
-        if (btn) { btn.textContent = 'Sign In to Customer Portal'; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; btn.style.background = 'var(--brand-navy)'; }
-        if (errorMsg) errorMsg.textContent = 'Incorrect email or password. Please try again.';
-        if (errorBox) errorBox.style.display = 'flex';
-        var pw = document.getElementById('signin-password');
-        if (pw) { pw.value = ''; pw.focus(); }
-      });
-  }
-
-  if (window.__firebaseReady) {
-    attemptSignIn();
-  } else {
-    document.addEventListener('firebaseReady', attemptSignIn, { once: true });
-  }
+  window.location.href = 'https://app.haulxify.com/login.html';
 }
 
 document.addEventListener('keydown', function(e) {
