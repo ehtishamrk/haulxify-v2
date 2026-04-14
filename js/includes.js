@@ -1,5 +1,5 @@
 // ── DETECT SUBFOLDER ─────────────────────────────
-var base = window.location.pathname.includes('/services/') ? '../' : '';
+var base = (window.location.pathname.includes('/services/') || window.location.pathname.includes('/blog/')) ? '../' : '';
 
 // ── FAVICON ───────────────────────────────────────
 (function() {
