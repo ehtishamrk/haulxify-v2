@@ -34,8 +34,12 @@
     gtag('config', 'G-1L4N4G5E4B');
   </script>
 
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
   <style>
-    /* ── BLOG LIST VIEW ── */
+    /* ── BLOG HERO ── */
     .blog-hero { background: var(--brand-navy); padding: 130px 0 72px; text-align: center; }
     .blog-hero h1 { font-size: clamp(2.25rem,4.5vw,3.25rem); font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; }
     .blog-hero h1 span { color: var(--brand-orange); }
@@ -44,21 +48,24 @@
     .blog-search { width: 100%; padding: 14px 48px 14px 20px; border-radius: var(--radius-full); border: none; font-family: var(--font-body); font-size: 0.9375rem; outline: none; }
     .blog-search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--text-muted); pointer-events: none; }
 
+    /* ── CONTROLS ── */
     .blog-section { padding: 72px 0 100px; }
     .blog-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
     .blog-filters { display: flex; gap: 8px; flex-wrap: wrap; }
-    .blog-filter { font-size: 0.8125rem; font-weight: 600; padding: 7px 18px; border-radius: var(--radius-full); border: 1px solid var(--border); color: var(--text-body); background: var(--white); cursor: pointer; transition: all 0.2s; text-decoration: none; white-space: nowrap; }
+    .blog-filter { font-size: 0.8125rem; font-weight: 600; padding: 7px 18px; border-radius: var(--radius-full); border: 1px solid var(--border); color: var(--text-body); background: var(--white); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
     .blog-filter:hover, .blog-filter.active { background: var(--brand-navy); color: var(--white); border-color: var(--brand-navy); }
     .blog-sort { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: var(--text-muted); }
     .blog-sort select { font-family: var(--font-body); font-size: 0.8125rem; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; background: var(--white); color: var(--brand-navy); cursor: pointer; outline: none; }
 
-    /* FEATURED ARTICLE */
-    .blog-featured { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; margin-bottom: 40px; transition: box-shadow 0.3s; cursor: pointer; text-decoration: none; }
+    /* ── FEATURED CARD ── */
+    .blog-featured { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; margin-bottom: 40px; transition: box-shadow 0.3s; text-decoration: none; }
     .blog-featured:hover { box-shadow: var(--shadow-xl); }
-    .blog-featured-visual { background: var(--brand-navy); display: flex; align-items: center; justify-content: center; padding: 56px; position: relative; min-height: 280px; }
-    .blog-featured-icon { width: 80px; height: 80px; background: rgba(232,119,34,0.15); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+    .blog-featured-visual { background: var(--brand-navy); display: flex; align-items: center; justify-content: center; min-height: 280px; position: relative; overflow: hidden; }
+    .blog-featured-visual img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .blog-featured-visual .blog-featured-overlay { position: absolute; inset: 0; background: rgba(13,25,41,0.45); }
+    .blog-featured-icon { width: 80px; height: 80px; background: rgba(232,119,34,0.15); border-radius: 20px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
     .blog-featured-icon svg { width: 36px; height: 36px; color: var(--brand-orange); }
-    .blog-featured-badge { position: absolute; top: 24px; left: 24px; background: var(--brand-orange); color: var(--white); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: var(--radius-full); }
+    .blog-featured-badge { position: absolute; top: 24px; left: 24px; background: var(--brand-orange); color: var(--white); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: var(--radius-full); z-index: 2; }
     .blog-featured-body { padding: 48px 44px; display: flex; flex-direction: column; }
     .blog-featured-cat { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-orange); margin-bottom: 12px; }
     .blog-featured-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--brand-navy); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; }
@@ -69,14 +76,16 @@
     .blog-read-btn svg { width: 16px; height: 16px; transition: transform 0.2s; }
     .blog-featured:hover .blog-read-btn svg { transform: translateX(4px); }
 
-    /* GRID CARDS */
+    /* ── GRID CARDS ── */
     .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-    .blog-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; display: flex; flex-direction: column; cursor: pointer; text-decoration: none; }
+    .blog-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; display: flex; flex-direction: column; text-decoration: none; }
     .blog-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
-    .blog-card-img { height: 160px; background: var(--brand-navy); display: flex; align-items: center; justify-content: center; position: relative; }
-    .blog-card-img-icon { width: 52px; height: 52px; background: rgba(232,119,34,0.12); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .blog-card-img { height: 180px; background: var(--brand-navy); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .blog-card-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .blog-card-img .blog-card-overlay { position: absolute; inset: 0; background: rgba(13,25,41,0.3); }
+    .blog-card-img-icon { width: 52px; height: 52px; background: rgba(232,119,34,0.12); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
     .blog-card-img-icon svg { width: 24px; height: 24px; color: var(--brand-orange); }
-    .blog-trending-badge { position: absolute; top: 12px; right: 12px; background: var(--brand-orange); color: var(--white); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+    .blog-trending-badge { position: absolute; top: 12px; right: 12px; background: var(--brand-orange); color: var(--white); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; z-index: 2; }
     .blog-card-body { padding: 22px 24px 28px; flex: 1; display: flex; flex-direction: column; }
     .blog-card-cat { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--brand-orange); margin-bottom: 8px; }
     .blog-card-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--brand-navy); line-height: 1.4; margin-bottom: 10px; letter-spacing: -0.01em; }
@@ -85,18 +94,21 @@
     .blog-card-meta { font-size: 0.75rem; color: var(--text-muted); }
     .blog-card-views { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
 
-    /* LOADING / EMPTY */
+    /* ── STATES ── */
     .blog-loading { text-align: center; padding: 80px 0; color: var(--text-muted); }
     .blog-spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--brand-orange); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .blog-empty { text-align: center; padding: 80px 0; }
+    .blog-empty { text-align: center; padding: 80px 0; display: none; }
     .blog-empty h3 { font-size: 1.25rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 8px; }
     .blog-empty p { color: var(--text-muted); }
+    .blog-error { text-align: center; padding: 40px 0; display: none; }
+    .blog-error p { color: var(--text-muted); font-size: 0.9375rem; }
 
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 800px) {
       .blog-featured { grid-template-columns: 1fr; }
-      .blog-featured-visual { min-height: 180px; }
+      .blog-featured-visual { min-height: 200px; }
     }
     @media (max-width: 640px) {
       .blog-grid { grid-template-columns: 1fr; }
@@ -107,6 +119,7 @@
 <body>
 <div id="nav-include"></div>
 
+<!-- ── Hero ── -->
 <section class="blog-hero">
   <div class="container">
     <span class="eyebrow eyebrow-white" style="margin-bottom:20px;display:inline-flex;">Blog &amp; Resources</span>
@@ -119,6 +132,7 @@
   </div>
 </section>
 
+<!-- ── Blog Section ── -->
 <section class="blog-section">
   <div class="container">
     <div class="blog-controls">
@@ -143,14 +157,21 @@
     </div>
 
     <div id="featured-slot"></div>
-    <div id="blog-grid" class="blog-grid"></div>
-    <div id="blog-loading" class="blog-loading" style="display:none;">
+
+    <div id="blog-loading" class="blog-loading">
       <div class="blog-spinner"></div>
       <p>Loading articles…</p>
     </div>
-    <div id="blog-empty" class="blog-empty" style="display:none;">
+
+    <div id="blog-grid" class="blog-grid"></div>
+
+    <div id="blog-empty" class="blog-empty">
       <h3>No articles found</h3>
       <p>Try a different search or category.</p>
+    </div>
+
+    <div id="blog-error" class="blog-error">
+      <p>Could not load articles. Please refresh the page.</p>
     </div>
   </div>
 </section>
@@ -158,121 +179,33 @@
 <div id="footer-include"></div>
 <script src="js/includes.js" defer></script>
 <script src="js/main.js" defer></script>
+
 <script>
 /* =============================================================
-   HAULXIFY BLOG ENGINE — CLEAN SINGLE SYSTEM
-   Each article card links directly to its static HTML file.
-   No inline article reader. No Google Sheets. No dual system.
+   HAULXIFY BLOG — FIREBASE EDITION
+   Reads articles from Firestore automatically.
+   Ranking, trending, view counts all driven by real data.
 
-   HOW TO ADD A NEW ARTICLE:
-   1. Ask Claude to generate the static HTML file → upload to /blog/
-   2. Add the article's metadata entry to ARTICLES array below
-   3. Add its slug mapping to SLUGS object below
-   4. Done. The card appears automatically ranked by the algorithm.
-
-   HOW TO UPDATE VIEW COUNTS (monthly, ~5 min):
-   1. Open Google Analytics → Reports → Pages and screens
-   2. Find each article's page views for the past 30 days
-   3. Update the `views` number in each article entry below
+   TO PUBLISH A NEW ARTICLE:
+   1. Write it in blog-admin.html — click Publish
+   2. Download the generated HTML file
+   3. Upload it to /blog/ folder on GitHub
+   4. Request indexing in Google Search Console
+   No code changes needed here ever.
    ============================================================= */
 
-/* ── Slug map: article id → static HTML filename (no extension) ── */
-const SLUGS = {
-  'ifta-filing-guide-2025':         'ifta-filing-guide',
-  'invoicing-cash-flow-trucking':   'trucking-invoices-cash-flow',
-  'nemt-medicaid-denials':          'nemt-medicaid-billing-denials',
-  'tow-truck-after-hours-revenue':  'tow-truck-after-hours-revenue',
-  'outsource-trucking-back-office': 'outsource-trucking-back-office',
-  'load-board-strategy-2025':       'load-board-strategy',
-};
-
-/* ── Returns the URL for an article, or null if no static file yet ── */
-function articleUrl(id) {
-  const slug = SLUGS[id];
-  return slug ? 'blog/' + slug + '.html' : null;
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey:            "AIzaSyBaRMQBLfDyufJkC4E8XCvzOIMEawOQObw",
+    authDomain:        "haulxify-app.firebaseapp.com",
+    projectId:         "haulxify-app",
+    storageBucket:     "haulxify-app.firebasestorage.app",
+    messagingSenderId: "453228026261",
+    appId:             "1:453228026261:web:1d66ab1d47418906807e9c"
+  });
 }
+const db = firebase.firestore();
 
-/* ── Article metadata only — NO content field needed here ──
-   Views: update monthly from Google Analytics.
-   trending: set true for articles you want to highlight.
-   featured: set true on ONE article to always pin it at top
-             regardless of algorithm score.                   ── */
-const ARTICLES = [
-  {
-    id: 'ifta-filing-guide-2025',
-    title: 'IFTA Filing: The Complete Guide for Owner-Operators and Small Fleets',
-    category: 'compliance',
-    categoryLabel: 'Compliance',
-    date: '2025-01-14',
-    readTime: '9 min read',
-    views: 1840,
-    trending: true,
-    featured: false,
-    excerpt: 'Every quarter, thousands of trucking operations pay IFTA penalties they didn\'t have to. Here\'s exactly how to file correctly, what mileage records you actually need, and how to avoid the most expensive mistakes.',
-  },
-  {
-    id: 'invoicing-cash-flow-trucking',
-    title: 'Why Trucking Invoices Get Paid Late — And the Exact System to Fix It',
-    category: 'billing',
-    categoryLabel: 'Billing & Cash Flow',
-    date: '2025-01-21',
-    readTime: '7 min read',
-    views: 2310,
-    trending: true,
-    featured: false,
-    excerpt: 'Cash flow is the #1 killer of viable trucking operations. The root cause isn\'t the freight market — it\'s the invoice cycle. Here\'s the system that collapses payment time from 45 days to under 10.',
-  },
-  {
-    id: 'nemt-medicaid-denials',
-    title: 'The 6 NEMT Medicaid Billing Denials Killing Your Cash Flow (And How to Prevent Every One)',
-    category: 'nemt',
-    categoryLabel: 'NEMT',
-    date: '2025-01-28',
-    readTime: '8 min read',
-    views: 1650,
-    trending: true,
-    featured: false,
-    excerpt: 'Medicaid denials are the primary revenue leak for NEMT operators — and most of them are preventable. We break down the six most common denial codes, what triggers each one, and the workflow changes that eliminate them.',
-  },
-  {
-    id: 'tow-truck-after-hours-revenue',
-    title: 'The After-Hours Revenue Problem Every Tow Truck Operator Has But Won\'t Admit',
-    category: 'tow-truck',
-    categoryLabel: 'Tow Truck',
-    date: '2025-02-04',
-    readTime: '6 min read',
-    views: 3120,
-    trending: true,
-    featured: false,
-    excerpt: 'Roadside assistance doesn\'t stop at 6pm. Your competitors\' phones don\'t either. Here\'s the exact revenue model showing what unanswered after-hours calls cost the average tow truck operation every year.',
-  },
-  {
-    id: 'outsource-trucking-back-office',
-    title: 'Should You Outsource Your Trucking Back Office? The Honest Cost-Benefit Analysis',
-    category: 'operations',
-    categoryLabel: 'Operations',
-    date: '2025-02-11',
-    readTime: '7 min read',
-    views: 2780,
-    trending: false,
-    featured: false,
-    excerpt: 'Outsourcing your back office sounds like a cost-cutting move. It\'s actually a strategic one. Here\'s the full financial model, what you actually give up, and what the break-even point looks like for different fleet sizes.',
-  },
-  {
-    id: 'load-board-strategy-2025',
-    title: 'Load Board Strategy: How Small Fleets Find Better Freight Than Big Carriers',
-    category: 'dispatching',
-    categoryLabel: 'Dispatching',
-    date: '2025-02-18',
-    readTime: '8 min read',
-    views: 1920,
-    trending: false,
-    featured: false,
-    excerpt: 'Most owner-operators take the first load they see. Carriers that consistently outperform the market don\'t — they work load boards like a system. Here\'s the strategy, the tools, and the specific moves that improve rate per mile.',
-  },
-];
-
-/* ── Icons by category ── */
 const ICONS = {
   compliance:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
   billing:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
@@ -284,57 +217,79 @@ const ICONS = {
   default:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
 };
 
-/* ── Helpers ── */
 function formatDate(d) {
   return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
 }
 function formatViews(n) {
+  if (!n) return '0';
   return n >= 1000 ? (n/1000).toFixed(1)+'k' : String(n);
 }
-function getIcon(a) {
-  return ICONS[a.category] || ICONS.default;
-}
+function getIcon(a) { return ICONS[a.category] || ICONS.default; }
+function articleUrl(slug) { return 'blog/' + slug + '.html'; }
 
-/* ── Ranking algorithm (unchanged from original)
-   Score = (views × 0.35) + (recency × 0.35) + (trending × 200 × 0.30)
-   Recency score decays over 90 days (most recent = 100, 90 days old = 0) ── */
+/* ── Smart ranking algorithm ── */
 function rankArticles(articles) {
   const now = Date.now();
   const MS_90_DAYS = 90 * 24 * 60 * 60 * 1000;
   return articles.map(a => {
-    const ageMs  = now - new Date(a.date).getTime();
+    const ageMs        = now - new Date(a.date).getTime();
     const recencyScore = Math.max(0, 100 - (ageMs / MS_90_DAYS) * 100);
     const viewScore    = Math.min(a.views || 0, 5000) / 50;
-    const trendingBoost = a.trending ? 100 : 0;
-    a._score = (viewScore * 0.35) + (recencyScore * 0.35) + (trendingBoost * 0.30);
+    const weeklyScore  = Math.min(a.weeklyViews || 0, 1000) / 10;
+    a._score = (viewScore * 0.35) + (recencyScore * 0.35) + (weeklyScore * 0.30);
     return a;
   }).sort((a, b) => b._score - a._score);
 }
 
 function sortArticles(articles, method) {
-  // A manually featured article always goes to the top slot
-  const pinned = articles.find(a => a.featured);
+  const pinned = articles.filter(a => a.featured);
   const rest   = articles.filter(a => !a.featured);
   let sorted;
-  if (method === 'newest')  sorted = [...rest].sort((a,b) => new Date(b.date) - new Date(a.date));
+  if (method === 'newest')       sorted = [...rest].sort((a,b) => new Date(b.date) - new Date(a.date));
   else if (method === 'popular') sorted = [...rest].sort((a,b) => (b.views||0) - (a.views||0));
-  else sorted = rankArticles([...rest]);
-  return pinned ? [pinned, ...sorted] : sorted;
+  else                           sorted = rankArticles([...rest]);
+  return [...pinned, ...sorted];
+}
+
+/* ── Auto-detect trending (top 3 by weeklyViews) ── */
+function markTrending(articles) {
+  const sorted = [...articles].sort((a,b) => (b.weeklyViews||0) - (a.weeklyViews||0));
+  const topIds = new Set(sorted.slice(0,3).map(a => a.id));
+  return articles.map(a => ({ ...a, isTrending: topIds.has(a.id) || a.trending }));
+}
+
+/* ── Weekly views auto-reset ── */
+async function checkWeeklyReset(articles) {
+  const today     = new Date().toISOString().split('T')[0];
+  const batch     = db.batch();
+  let   needsWrite = false;
+  articles.forEach(a => {
+    if (!a.weeklyViewsReset) return;
+    const diffDays = (Date.now() - new Date(a.weeklyViewsReset).getTime()) / (1000*60*60*24);
+    if (diffDays >= 7) {
+      batch.update(db.collection('articles').doc(a.id), { weeklyViews: 0, weeklyViewsReset: today });
+      a.weeklyViews = 0;
+      a.weeklyViewsReset = today;
+      needsWrite = true;
+    }
+  });
+  if (needsWrite) { try { await batch.commit(); } catch(e) {} }
+  return articles;
 }
 
 /* ── State ── */
-let allArticles   = [...ARTICLES];
+let allArticles    = [];
 let activeCategory = 'all';
-let searchQuery   = '';
-let sortMethod    = 'smart';
+let searchQuery    = '';
+let sortMethod     = 'smart';
 
-/* ── Render featured slot ── */
+/* ── Render featured ── */
 function renderFeatured(article) {
-  const url  = articleUrl(article.id) || '#';
-  const slot = document.getElementById('featured-slot');
-  slot.innerHTML = `
-    <a class="blog-featured" href="${url}">
+  const hasThumb = article.thumbnail && article.thumbnail.trim() !== '';
+  document.getElementById('featured-slot').innerHTML = `
+    <a class="blog-featured" href="${articleUrl(article.slug)}">
       <div class="blog-featured-visual">
+        ${hasThumb ? `<img src="${article.thumbnail}" alt="${article.title}" loading="lazy"><div class="blog-featured-overlay"></div>` : ''}
         <div class="blog-featured-badge">Editor's Pick</div>
         <div class="blog-featured-icon">${getIcon(article)}</div>
       </div>
@@ -351,21 +306,21 @@ function renderFeatured(article) {
           <div class="blog-read-btn">Read Article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </div>
       </div>
-    </a>
-  `;
+    </a>`;
 }
 
-/* ── Render card grid ── */
+/* ── Render grid ── */
 function renderGrid(articles) {
   const grid = document.getElementById('blog-grid');
   if (!articles.length) { grid.innerHTML = ''; return; }
   grid.innerHTML = articles.map(a => {
-    const url = articleUrl(a.id) || '#';
+    const hasThumb = a.thumbnail && a.thumbnail.trim() !== '';
     return `
-    <a class="blog-card" href="${url}">
+    <a class="blog-card" href="${articleUrl(a.slug)}">
       <div class="blog-card-img">
+        ${hasThumb ? `<img src="${a.thumbnail}" alt="${a.title}" loading="lazy"><div class="blog-card-overlay"></div>` : ''}
         <div class="blog-card-img-icon">${getIcon(a)}</div>
-        ${a.trending ? '<div class="blog-trending-badge">Trending</div>' : ''}
+        ${a.isTrending ? '<div class="blog-trending-badge">Trending</div>' : ''}
       </div>
       <div class="blog-card-body">
         <div class="blog-card-cat">${a.categoryLabel || a.category}</div>
@@ -383,21 +338,20 @@ function renderGrid(articles) {
   }).join('');
 }
 
-/* ── Render all (filter + sort + display) ── */
+/* ── Render all ── */
 function renderAll() {
-  let filtered = allArticles;
+  let filtered = allArticles.filter(a => a.status === 'published');
   if (activeCategory !== 'all') filtered = filtered.filter(a => a.category === activeCategory);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     filtered = filtered.filter(a =>
       a.title.toLowerCase().includes(q) ||
       a.excerpt.toLowerCase().includes(q) ||
-      (a.categoryLabel || '').toLowerCase().includes(q)
+      (a.categoryLabel||'').toLowerCase().includes(q)
     );
   }
   const sorted = sortArticles(filtered, sortMethod);
   const empty  = document.getElementById('blog-empty');
-
   if (!sorted.length) {
     document.getElementById('featured-slot').innerHTML = '';
     renderGrid([]);
@@ -410,6 +364,27 @@ function renderAll() {
   renderGrid(rest);
 }
 
+/* ── Load from Firestore ── */
+async function loadArticles() {
+  const loading = document.getElementById('blog-loading');
+  const error   = document.getElementById('blog-error');
+  loading.style.display = 'block';
+  error.style.display   = 'none';
+  try {
+    const snap = await db.collection('articles').where('status','==','published').get();
+    let articles = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    articles = await checkWeeklyReset(articles);
+    articles = markTrending(articles);
+    allArticles = articles;
+    loading.style.display = 'none';
+    renderAll();
+  } catch(err) {
+    console.error('Failed to load articles:', err);
+    loading.style.display = 'none';
+    error.style.display   = 'block';
+  }
+}
+
 /* ── Controls ── */
 document.getElementById('filter-bar').addEventListener('click', e => {
   const btn = e.target.closest('.blog-filter');
@@ -419,23 +394,17 @@ document.getElementById('filter-bar').addEventListener('click', e => {
   activeCategory = btn.dataset.cat;
   renderAll();
 });
-
 document.getElementById('sort-select').addEventListener('change', e => {
   sortMethod = e.target.value;
   renderAll();
 });
-
 let searchTimeout;
 document.getElementById('search-input').addEventListener('input', e => {
   clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    searchQuery = e.target.value.trim();
-    renderAll();
-  }, 250);
+  searchTimeout = setTimeout(() => { searchQuery = e.target.value.trim(); renderAll(); }, 250);
 });
 
-/* ── Init ── */
-renderAll();
+loadArticles();
 </script>
 </body>
 </html>
