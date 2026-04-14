@@ -251,6 +251,32 @@
       .blog-stat { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
+
+  <!-- Firebase view counter — auto-increments on every real visit -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    (function() {
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp({
+            apiKey:            "AIzaSyBaRMQBLfDyufJkC4E8XCvzOIMEawOQObw",
+            authDomain:        "haulxify-app.firebaseapp.com",
+            projectId:         "haulxify-app",
+            storageBucket:     "haulxify-app.firebasestorage.app",
+            messagingSenderId: "453228026261",
+            appId:             "1:453228026261:web:1d66ab1d47418906807e9c"
+          });
+        }
+        var db  = firebase.firestore();
+        var ref = db.collection('articles').doc('nemt-medicaid-denials');
+        // Use FieldValue.increment so multiple simultaneous visitors
+        // never overwrite each other — each one just adds 1 safely
+        var inc = firebase.firestore.FieldValue.increment(1);
+        ref.update({ views: inc, weeklyViews: inc });
+      } catch(e) { /* silent — never interrupt the reader */ }
+    })();
+  </script>
 </head>
 
 <body>
