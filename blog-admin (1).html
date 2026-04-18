@@ -43,6 +43,15 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { font-size: 16px; }
     body { font-family: var(--font-body); background: var(--off-white); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    /* Hide everything until Firebase auth resolves */
+    body.auth-loading #login-screen,
+    body.auth-loading #admin-screen { display: none !important; }
+    /* Auth resolved — show login */
+    body.show-login #login-screen { display: flex; }
+    body.show-login #admin-screen { display: none; }
+    /* Auth resolved — show admin */
+    body.show-admin #login-screen { display: none; }
+    body.show-admin #admin-screen { display: block; }
 
     /* ── LOGIN SCREEN ── */
     #login-screen {
@@ -810,7 +819,7 @@
     }
   </style>
 </head>
-<body>
+<body class="auth-loading">
 
 <!-- ════════════════════════════════════════════
      LOGIN SCREEN
@@ -1102,22 +1111,24 @@ const db   = firebase.firestore();
    AUTH
 ════════════════════════════════════════════════════════ */
 auth.onAuthStateChanged(async user => {
+  document.body.classList.remove('auth-loading');
   if (user) {
-    // Verify they are in blogAdmins collection
     try {
       const doc = await db.collection('blogAdmins').doc(user.uid).get();
       if (doc.exists) {
         showAdmin(user);
       } else {
         await auth.signOut();
+        document.body.classList.add('show-login');
         showLoginError('You do not have blog admin access.');
       }
     } catch(e) {
+      document.body.classList.add('show-login');
       showLoginError('Could not verify access. Please try again.');
     }
   } else {
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('admin-screen').style.display = 'none';
+    document.body.classList.remove('show-admin');
+    document.body.classList.add('show-login');
   }
 });
 
@@ -1152,20 +1163,23 @@ function showLoginError(msg) {
 }
 
 function handleSignOut() {
-  auth.signOut();
+  auth.signOut().then(() => {
+    document.body.classList.remove('show-admin');
+    document.body.classList.add('show-login');
+  });
 }
 
 // Enter key submits login
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+  if (e.key === 'Enter' && document.body.classList.contains('show-login')) {
     handleLogin();
   }
 });
 
 function showAdmin(user) {
-  document.getElementById('login-screen').style.display  = 'none';
-  document.getElementById('admin-screen').style.display  = 'block';
-  document.getElementById('topbar-email').textContent    = user.email;
+  document.body.classList.remove('show-login');
+  document.body.classList.add('show-admin');
+  document.getElementById('topbar-email').textContent = user.email;
   loadArticles();
 }
 
