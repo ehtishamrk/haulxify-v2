@@ -824,7 +824,7 @@
     <input type="email" id="login-email" class="login-input" placeholder="admin@haulxify.com" autocomplete="email" />
     <label class="login-label">Password</label>
     <input type="password" id="login-password" class="login-input" placeholder="••••••••••" autocomplete="current-password" />
-    <button class="login-btn" id="login-btn" onclick="handleLogin()">Sign In</button>
+    <button class="login-btn" id="login-btn">Sign In</button>
   </div>
 </div>
 
@@ -1362,11 +1362,16 @@ function insertImageInline() {
 
 // Auto-generate slug from title
 document.addEventListener('DOMContentLoaded', () => {
+  // Wire up login button
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) loginBtn.addEventListener('click', handleLogin);
+
+  // Wire up title → slug auto-generator
   const titleInput = document.getElementById('editor-title');
   const slugInput  = document.getElementById('editor-slug');
   if (titleInput) {
     titleInput.addEventListener('input', () => {
-      if (!currentArticleId) { // Only auto-generate for new articles
+      if (!currentArticleId) {
         slugInput.value = titleInput.value
           .toLowerCase()
           .replace(/[^a-z0-9\s-]/g, '')
