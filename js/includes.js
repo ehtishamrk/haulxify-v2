@@ -1,3 +1,8 @@
+// ── SKIP ADMIN & STANDALONE PAGES ───────────────
+if (window.location.pathname.includes('blog-admin')) { /* do nothing */ }
+else {
+// ─────────────────────────────────────────────────
+
 // ── DETECT SUBFOLDER ─────────────────────────────
 var base = (window.location.pathname.includes('/services/') || window.location.pathname.includes('/blog/')) ? '../' : '';
 
@@ -46,3 +51,5 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (typeof initMobileMenu === 'function') initMobileMenu();
   if (typeof initAnimations === 'function') initAnimations();
 });
+
+} // end page guard
