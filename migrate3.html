@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Haulxify — Article Migration 3</title>
+  <style>
+    body { font-family: monospace; background: #0D1929; color: #fff; padding: 40px; }
+    h2 { color: #E87722; }
+    #log { margin-top: 24px; line-height: 2; font-size: 14px; }
+    .ok   { color: #4ade80; }
+    .err  { color: #f87171; }
+    .info { color: #93c5fd; }
+    button { margin-top: 24px; background: #E87722; color: white; border: none; padding: 14px 32px; font-size: 16px; font-family: monospace; border-radius: 8px; cursor: pointer; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <h2>Haulxify — Article Migration 3</h2>
+  <p style="color:rgba(255,255,255,0.6);">Adds 4 new articles to Firestore. Click Run, then delete this file from GitHub.</p>
+  <button id="btn" onclick="runMigration()">Run Migration</button>
+  <div id="log"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey:            "AIzaSyBaRMQBLfDyufJkC4E8XCvzOIMEawOQObw",
+      authDomain:        "haulxify-app.firebaseapp.com",
+      projectId:         "haulxify-app",
+      storageBucket:     "haulxify-app.firebasestorage.app",
+      messagingSenderId: "453228026261",
+      appId:             "1:453228026261:web:1d66ab1d47418906807e9c"
+    });
+    const db = firebase.firestore();
+
+    function log(msg, type='info') {
+      const d = document.createElement('div');
+      d.className = type;
+      d.textContent = msg;
+      document.getElementById('log').appendChild(d);
+    }
+
+    async function runMigration() {
+      const btn = document.getElementById('btn');
+      btn.disabled = true;
+      btn.textContent = 'Running…';
+
+      const articles = [
+        {
+          id: 'nemt-trip-documentation-guide',
+          slug: 'nemt-trip-documentation-guide',
+          title: 'NEMT Trip Documentation Guide — What Every Record Must Contain',
+          category: 'nemt',
+          categoryLabel: 'NEMT',
+          date: '2025-04-01',
+          readTime: '9 min read',
+          views: 0, weeklyViews: 0, weeklyViewsReset: '2026-04-20',
+          trending: false, featured: false,
+          excerpt: 'Trip documentation is the biggest source of Medicaid claim denials for NEMT providers. This guide covers every required field, patient signature rules, mileage documentation and audit retention standards.',
+          thumbnail: '', status: 'published'
+        },
+        {
+          id: 'freight-broker-pod-management',
+          slug: 'freight-broker-pod-management',
+          title: 'Freight Broker POD Management — A System That Collects Every Proof of Delivery',
+          category: 'dispatching',
+          categoryLabel: 'Dispatching',
+          date: '2025-04-08',
+          readTime: '8 min read',
+          views: 0, weeklyViews: 0, weeklyViewsReset: '2026-04-20',
+          trending: false, featured: false,
+          excerpt: 'Missing PODs cost freight brokers weeks on every payment cycle. This guide covers a practical POD collection system — requirements, collection triggers, follow-up process and exception handling.',
+          thumbnail: '', status: 'published'
+        },
+        {
+          id: 'owner-operator-bookkeeping-guide',
+          slug: 'owner-operator-bookkeeping-guide',
+          title: 'Owner-Operator Bookkeeping Guide — A Simple System That Takes 20 Minutes a Week',
+          category: 'billing',
+          categoryLabel: 'Billing & Cash Flow',
+          date: '2025-04-15',
+          readTime: '10 min read',
+          views: 0, weeklyViews: 0, weeklyViewsReset: '2026-04-20',
+          trending: false, featured: false,
+          excerpt: 'Most owner-operators overpay taxes by $12,000 per year due to poor record keeping. This guide covers a 20-minute weekly bookkeeping routine, the deductions you are missing, and quarterly estimated taxes.',
+          thumbnail: '', status: 'published'
+        },
+        {
+          id: 'limo-corporate-account-management',
+          slug: 'limo-corporate-account-management',
+          title: 'Limo Corporate Account Management — How to Win and Keep Business Clients',
+          category: 'operations',
+          categoryLabel: 'Operations',
+          date: '2025-04-22',
+          readTime: '9 min read',
+          views: 0, weeklyViews: 0, weeklyViewsReset: '2026-04-20',
+          trending: false, featured: false,
+          excerpt: 'Corporate accounts can represent 40% of a limo operation\'s revenue — and be lost in a single bad experience. This guide covers account setup, invoice requirements, wait time billing and keeping clients long-term.',
+          thumbnail: '', status: 'published'
+        }
+      ];
+
+      log('🚀 Starting migration of ' + articles.length + ' articles...', 'info');
+      let success = 0, failed = 0;
+
+      for (const article of articles) {
+        try {
+          const { id, ...data } = article;
+          await db.collection('articles').doc(id).set(data);
+          log('✅  Added: ' + article.title, 'ok');
+          success++;
+        } catch (err) {
+          log('❌  Failed: ' + article.title + ' — ' + err.message, 'err');
+          failed++;
+        }
+      }
+
+      if (failed === 0) {
+        log('', 'info');
+        log('🎉  All ' + success + ' articles added successfully!', 'ok');
+        log('✅  Delete migrate3.html from GitHub now.', 'info');
+        btn.textContent = '✓ Done';
+        btn.style.background = '#16a34a';
+      } else {
+        log('⚠️  ' + failed + ' error(s) — check above.', 'err');
+        btn.textContent = 'Had errors';
+        btn.style.background = '#dc2626';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
