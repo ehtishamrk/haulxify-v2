@@ -646,31 +646,79 @@
     if (e.target === this) closeApplyModal();
   });
 
-  document.getElementById('applyForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('formMsg');
-    btn.disabled = true;
-    msg.textContent = 'Submitting...';
-    msg.className = 'form-msg';
+document.getElementById('applyForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('formMsg');
+  btn.disabled = true;
+  msg.textContent = 'Checking...';
+  msg.className = 'form-msg';
 
-    const form = e.target;
-    const answers = {};
-    (selectedJob.form_schema || []).forEach(field => {
-      if (field.type === 'radio' || field.type === 'yesno') {
-        const checked = form.querySelector(`input[name="${field.id}"]:checked`);
-        answers[field.id] = checked ? checked.value : null;
-      } else {
-        const el = form.elements[field.id];
-        answers[field.id] = el ? String(el.value || '').trim() : null;
+  const form = e.target;
+  const answers = {};
+  (selectedJob.form_schema || []).forEach(field => {
+    if (field.type === 'radio' || field.type === 'yesno') {
+      const checked = form.querySelector(`input[name="${field.id}"]:checked`);
+      answers[field.id] = checked ? checked.value : null;
+    } else {
+      const el = form.elements[field.id];
+      answers[field.id] = el ? String(el.value || '').trim() : null;
+    }
+  });
+
+  const fullName = answers.full_name || null;
+  const primaryPhone = answers.primary_phone || null;
+  const secondaryPhone = answers.secondary_phone || null;
+  const email = answers.email || null;
+
+  // Normalize for matching
+  const phoneDigits = String(primaryPhone || '').replace(/\D/g, '');
+  const emailNorm = String(email || '').trim().toLowerCase();
+
+  try {
+    // ---- Duplicate check (same job) ----
+    if (selectedJob.id && (phoneDigits.length >= 10 || emailNorm)) {
+      let query = supabaseClient
+        .from('applications')
+        .select('id, created_at, full_name, primary_phone, email, status')
+        .eq('job_id', selectedJob.id)
+        .order('created_at', { ascending: false });
+
+      const { data: existing, error: checkError } = await query;
+      if (checkError) throw checkError;
+
+      const duplicates = (existing || []).filter(row => {
+        const rowPhone = String(row.primary_phone || '').replace(/\D/g, '');
+        const rowEmail = String(row.email || '').trim().toLowerCase();
+        const phoneMatch = phoneDigits.length >= 10 && rowPhone && rowPhone === phoneDigits;
+        const emailMatch = emailNorm && rowEmail && rowEmail === emailNorm;
+        return phoneMatch || emailMatch;
+      });
+
+      if (duplicates.length > 0) {
+        const first = duplicates[0];
+        const when = new Date(first.created_at).toLocaleString('en-PK', {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+        const count = duplicates.length;
+        msg.innerHTML = count === 1
+          ? `You already applied for this job on <strong>${when}</strong>.`
+          : `You already applied for this job <strong>${count} times</strong>. Last application: <strong>${when}</strong>.`;
+        msg.className = 'form-msg error';
+        btn.disabled = false;
+        return;
       }
-    });
+    }
+
+    // ---- Insert new application ----
+    msg.textContent = 'Submitting...';
 
     const data = {
-      full_name: answers.full_name || null,
-      primary_phone: answers.primary_phone || null,
-      secondary_phone: answers.secondary_phone || null,
-      email: answers.email || null,
+      full_name: fullName,
+      primary_phone: primaryPhone,
+      secondary_phone: secondaryPhone,
+      email: email,
       education: answers.education || null,
       experience: answers.experience || null,
       has_laptop: answers.has_laptop === 'true' ? true : answers.has_laptop === 'false' ? false : null,
@@ -681,21 +729,21 @@
       answers
     };
 
-    try {
-      const { error } = await supabaseClient.from('applications').insert([data]);
-      if (error) throw error;
-      msg.textContent = 'Application submitted! We will contact you soon.';
-      msg.className = 'form-msg success';
-      form.reset();
-      setTimeout(closeApplyModal, 2000);
-    } catch (err) {
-      console.error(err);
-      msg.textContent = 'Something went wrong. Please try again.';
-      msg.className = 'form-msg error';
-    } finally {
-      btn.disabled = false;
-    }
-  });
+    const { error } = await supabaseClient.from('applications').insert([data]);
+    if (error) throw error;
+
+    msg.textContent = 'Application submitted! We will contact you soon.';
+    msg.className = 'form-msg success';
+    form.reset();
+    setTimeout(closeApplyModal, 2000);
+  } catch (err) {
+    console.error(err);
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.className = 'form-msg error';
+  } finally {
+    btn.disabled = false;
+  }
+});
 
   loadJobs();
   setupRealtime();
