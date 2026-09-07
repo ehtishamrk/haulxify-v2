@@ -308,14 +308,71 @@
 <!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ========== SUPABASE CONFIG ==========
   const SUPABASE_URL = 'https://mvqvknxvfhbrzigieqpi.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12cXZrbnh2ZmhicnppZ2llcXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3ODgzNjMsImV4cCI6MjEwNDM2NDM2M30.jPVWDK1JzSx2o2NV-DNsX75APNzLdMlZdacVsjNJ0n8';
-  // ====================================
 
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { createClient } = supabase;
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  function openApplyModal() {
+  let selectedJob = { id: null, title: '' };
+
+  // ---------- Load active jobs ----------
+  async function loadJobs() {
+    const { data, error } = await supabaseClient
+      .from('jobs')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order', { ascending: true })
+      .order('created_at', { ascending: false });
+
+    const container = document.getElementById('jobsList');
+
+    if (error) {
+      container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs. Please refresh.</p>`;
+      console.error(error);
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;color:#666;">No open positions at the moment. Check back soon.</p>`;
+      return;
+    }
+
+    container.innerHTML = data.map(job => {
+      const tagsHtml = (job.tags || []).map(tag => {
+        const isOrange = ['Full Time', 'Intern', 'Full Time / Part Time'].includes(tag);
+        return `<span class="role-tag ${isOrange ? 'orange' : ''}">${tag}</span>`;
+      }).join('');
+
+      return `
+        <div class="role-card reveal">
+          <div class="role-info">
+            <h3>${escapeHtml(job.title)}</h3>
+            <p>${escapeHtml(job.description)}</p>
+            <div class="role-tags">${tagsHtml}</div>
+          </div>
+          <button type="button" class="btn btn-primary" style="flex-shrink:0;"
+            onclick="openApplyModal('${job.id}', '${escapeHtml(job.title).replace(/'/g, "\\'")}')">
+            Apply
+          </button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ---------- Modal ----------
+  function openApplyModal(jobId, jobTitle) {
+    selectedJob = { id: jobId, title: jobTitle };
+    document.querySelector('#applyModal h2').textContent = `Apply — ${jobTitle}`;
     document.getElementById('applyModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -325,14 +382,14 @@
     document.body.style.overflow = '';
     document.getElementById('formMsg').textContent = '';
     document.getElementById('applyForm').reset();
+    selectedJob = { id: null, title: '' };
   }
 
-  // Close on overlay click
-  document.getElementById('applyModal').addEventListener('click', function(e) {
+  document.getElementById('applyModal').addEventListener('click', function (e) {
     if (e.target === this) closeApplyModal();
   });
 
-  document.getElementById('applyForm').addEventListener('submit', async function(e) {
+  document.getElementById('applyForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const msg = document.getElementById('formMsg');
@@ -349,7 +406,9 @@
       experience: form.experience.value,
       has_laptop: form.hasLaptop.value === 'true',
       available_night: form.availableNight.value === 'true',
-      availability: form.availability.value
+      availability: form.availability.value,
+      job_title: selectedJob.title,
+      job_id: selectedJob.id
     };
 
     try {
@@ -368,6 +427,9 @@
       btn.disabled = false;
     }
   });
+
+  // Load jobs when page opens
+  loadJobs();
 </script>
 </body>
 </html>
