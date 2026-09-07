@@ -323,7 +323,7 @@
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12cXZrbnh2ZmhicnppZ2llcXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3ODgzNjMsImV4cCI6MjEwNDM2NDM2M30.jPVWDK1JzSx2o2NV-DNsX75APNzLdMlZdacVsjNJ0n8';
   // ====================================
 
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   function openApplyModal() {
     document.getElementById('applyModal').classList.add('open');
@@ -363,7 +363,7 @@
     };
 
     try {
-      const { error } = await supabase.from('applications').insert([data]);
+      const { error } = await supabaseClient.from('applications').insert([data]);
       if (error) throw error;
 
       msg.textContent = 'Application submitted successfully! We will contact you soon.';
