@@ -315,6 +315,7 @@
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   let selectedJob = { id: null, title: '' };
+  let realtimeConnected = false;
 
   function escapeHtml(str) {
     if (!str) return '';
@@ -325,7 +326,6 @@
       .replace(/"/g, '&quot;');
   }
 
-  // Tags that should use the orange pill style
   const ORANGE_TAGS = [
     'Full Time', 'Part Time', 'Intern', 'Full Time / Part Time',
     'Night Shift', 'Remote'
@@ -353,24 +353,22 @@
       return;
     }
 
+    // Avoid unnecessary re-render if nothing changed
+    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.is_active, j.tags]));
+    if (container.dataset.hash === newHash) return;
+    container.dataset.hash = newHash;
+
     container.innerHTML = '';
 
     data.forEach(job => {
       const card = document.createElement('div');
       card.className = 'role-card';
 
-      // Build the pills
-      let tagsHtml = '';
       const tags = job.tags || [];
-
-      if (tags.length > 0) {
-        tagsHtml = tags.map(tag => {
-          const isOrange = ORANGE_TAGS.some(t => 
-            t.toLowerCase() === String(tag).toLowerCase()
-          );
-          return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
-        }).join('');
-      }
+      const tagsHtml = tags.map(tag => {
+        const isOrange = ORANGE_TAGS.some(t => t.toLowerCase() === String(tag).toLowerCase());
+        return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
+      }).join('');
 
       card.innerHTML = `
         <div class="role-info">
@@ -391,23 +389,40 @@
     });
   }
 
-  // ---------- Real-time subscription ----------
+  // ---------- Realtime ----------
   function setupRealtime() {
-    supabaseClient
-      .channel('public:jobs')
+    const channel = supabaseClient
+      .channel('jobs-realtime')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'jobs' },
+        {
+          event: '*',
+          schema: 'public',
+          table: 'jobs'
+        },
         (payload) => {
-          console.log('Jobs changed → refreshing list', payload.eventType);
+          console.log('Realtime event:', payload.eventType);
           loadJobs();
         }
       )
       .subscribe((status) => {
+        console.log('Realtime status:', status);
         if (status === 'SUBSCRIBED') {
-          console.log('Realtime connected – jobs will update automatically');
+          realtimeConnected = true;
+          console.log('Realtime connected successfully');
+        }
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          realtimeConnected = false;
+          console.warn('Realtime failed – falling back to polling');
         }
       });
+  }
+
+  // ---------- Fallback polling (every 20 seconds) ----------
+  function setupPolling() {
+    setInterval(() => {
+      loadJobs();
+    }, 20000); // 20 seconds
   }
 
   // ---------- Modal ----------
@@ -472,9 +487,10 @@
     }
   });
 
-  // Start
+  // Start everything
   loadJobs();
   setupRealtime();
+  setupPolling();
 </script>
 </body>
 </html>
