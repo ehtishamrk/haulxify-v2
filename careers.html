@@ -317,48 +317,61 @@
   let selectedJob = { id: null, title: '' };
 
   // ---------- Load active jobs ----------
-  async function loadJobs() {
-    const { data, error } = await supabaseClient
-      .from('jobs')
-      .select('*')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true })
-      .order('created_at', { ascending: false });
+async function loadJobs() {
+  const { data, error } = await supabaseClient
+    .from('jobs')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: false });
 
-    const container = document.getElementById('jobsList');
+  const container = document.getElementById('jobsList');
 
-    if (error) {
-      container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs. Please refresh.</p>`;
-      console.error(error);
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      container.innerHTML = `<p style="text-align:center;color:#666;">No open positions at the moment. Check back soon.</p>`;
-      return;
-    }
-
-    container.innerHTML = data.map(job => {
-      const tagsHtml = (job.tags || []).map(tag => {
-        const isOrange = ['Full Time', 'Intern', 'Full Time / Part Time'].includes(tag);
-        return `<span class="role-tag ${isOrange ? 'orange' : ''}">${tag}</span>`;
-      }).join('');
-
-      return `
-        <div class="role-card reveal">
-          <div class="role-info">
-            <h3>${escapeHtml(job.title)}</h3>
-            <p>${escapeHtml(job.description)}</p>
-            <div class="role-tags">${tagsHtml}</div>
-          </div>
-          <button type="button" class="btn btn-primary" style="flex-shrink:0;"
-            onclick="openApplyModal('${job.id}', '${escapeHtml(job.title).replace(/'/g, "\\'")}')">
-            Apply
-          </button>
-        </div>
-      `;
-    }).join('');
+  if (!container) {
+    console.error('Element #jobsList not found');
+    return;
   }
+
+  if (error) {
+    container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs. Please refresh.</p>`;
+    console.error(error);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = `<p style="text-align:center;color:#666;">No open positions at the moment. Check back soon.</p>`;
+    return;
+  }
+
+  container.innerHTML = '';
+
+  data.forEach(job => {
+    const card = document.createElement('div');
+    card.className = 'role-card';   // ← no "reveal" class
+
+    const tagsHtml = (job.tags || []).map(tag => {
+      const isOrange = ['Full Time', 'Intern', 'Full Time / Part Time'].includes(tag);
+      return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="role-info">
+        <h3>${escapeHtml(job.title)}</h3>
+        <p>${escapeHtml(job.description)}</p>
+        <div class="role-tags">${tagsHtml}</div>
+      </div>
+      <button type="button" class="btn btn-primary apply-btn" style="flex-shrink:0;">
+        Apply
+      </button>
+    `;
+
+    card.querySelector('.apply-btn').addEventListener('click', () => {
+      openApplyModal(job.id, job.title);
+    });
+
+    container.appendChild(card);
+  });
+}
 
   function escapeHtml(str) {
     if (!str) return '';
