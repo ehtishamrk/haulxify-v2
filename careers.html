@@ -316,63 +316,6 @@
 
   let selectedJob = { id: null, title: '' };
 
-  // ---------- Load active jobs ----------
-async function loadJobs() {
-  const { data, error } = await supabaseClient
-    .from('jobs')
-    .select('*')
-    .eq('is_active', true)
-    .order('sort_order', { ascending: true })
-    .order('created_at', { ascending: false });
-
-  const container = document.getElementById('jobsList');
-
-  if (!container) {
-    console.error('Element #jobsList not found');
-    return;
-  }
-
-  if (error) {
-    container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs. Please refresh.</p>`;
-    console.error(error);
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    container.innerHTML = `<p style="text-align:center;color:#666;">No open positions at the moment. Check back soon.</p>`;
-    return;
-  }
-
-  container.innerHTML = '';
-
-  data.forEach(job => {
-    const card = document.createElement('div');
-    card.className = 'role-card';   // ← no "reveal" class
-
-    const tagsHtml = (job.tags || []).map(tag => {
-      const isOrange = ['Full Time', 'Intern', 'Full Time / Part Time'].includes(tag);
-      return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
-    }).join('');
-
-    card.innerHTML = `
-      <div class="role-info">
-        <h3>${escapeHtml(job.title)}</h3>
-        <p>${escapeHtml(job.description)}</p>
-        <div class="role-tags">${tagsHtml}</div>
-      </div>
-      <button type="button" class="btn btn-primary apply-btn" style="flex-shrink:0;">
-        Apply
-      </button>
-    `;
-
-    card.querySelector('.apply-btn').addEventListener('click', () => {
-      openApplyModal(job.id, job.title);
-    });
-
-    container.appendChild(card);
-  });
-}
-
   function escapeHtml(str) {
     if (!str) return '';
     return String(str)
@@ -382,10 +325,96 @@ async function loadJobs() {
       .replace(/"/g, '&quot;');
   }
 
+  // Tags that should use the orange pill style
+  const ORANGE_TAGS = [
+    'Full Time', 'Part Time', 'Intern', 'Full Time / Part Time',
+    'Night Shift', 'Remote'
+  ];
+
+  async function loadJobs() {
+    const { data, error } = await supabaseClient
+      .from('jobs')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order', { ascending: true })
+      .order('created_at', { ascending: false });
+
+    const container = document.getElementById('jobsList');
+    if (!container) return;
+
+    if (error) {
+      container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs. Please refresh.</p>`;
+      console.error(error);
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;color:#666;padding:40px 0;">No open positions at the moment. Check back soon.</p>`;
+      return;
+    }
+
+    container.innerHTML = '';
+
+    data.forEach(job => {
+      const card = document.createElement('div');
+      card.className = 'role-card';
+
+      // Build the pills
+      let tagsHtml = '';
+      const tags = job.tags || [];
+
+      if (tags.length > 0) {
+        tagsHtml = tags.map(tag => {
+          const isOrange = ORANGE_TAGS.some(t => 
+            t.toLowerCase() === String(tag).toLowerCase()
+          );
+          return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
+        }).join('');
+      }
+
+      card.innerHTML = `
+        <div class="role-info">
+          <h3>${escapeHtml(job.title)}</h3>
+          <p>${escapeHtml(job.description)}</p>
+          <div class="role-tags">${tagsHtml}</div>
+        </div>
+        <button type="button" class="btn btn-primary apply-btn" style="flex-shrink:0;">
+          Apply
+        </button>
+      `;
+
+      card.querySelector('.apply-btn').addEventListener('click', () => {
+        openApplyModal(job.id, job.title);
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  // ---------- Real-time subscription ----------
+  function setupRealtime() {
+    supabaseClient
+      .channel('public:jobs')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'jobs' },
+        (payload) => {
+          console.log('Jobs changed → refreshing list', payload.eventType);
+          loadJobs();
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('Realtime connected – jobs will update automatically');
+        }
+      });
+  }
+
   // ---------- Modal ----------
   function openApplyModal(jobId, jobTitle) {
     selectedJob = { id: jobId, title: jobTitle };
-    document.querySelector('#applyModal h2').textContent = `Apply — ${jobTitle}`;
+    const heading = document.querySelector('#applyModal h2');
+    if (heading) heading.textContent = `Apply — ${jobTitle}`;
     document.getElementById('applyModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -393,8 +422,10 @@ async function loadJobs() {
   function closeApplyModal() {
     document.getElementById('applyModal').classList.remove('open');
     document.body.style.overflow = '';
-    document.getElementById('formMsg').textContent = '';
-    document.getElementById('applyForm').reset();
+    const msg = document.getElementById('formMsg');
+    if (msg) msg.textContent = '';
+    const form = document.getElementById('applyForm');
+    if (form) form.reset();
     selectedJob = { id: null, title: '' };
   }
 
@@ -441,8 +472,9 @@ async function loadJobs() {
     }
   });
 
-  // Load jobs when page opens
+  // Start
   loadJobs();
+  setupRealtime();
 </script>
 </body>
 </html>
