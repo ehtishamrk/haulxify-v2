@@ -2,98 +2,330 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Careers at Haulxify — Out Reach Officer (Intern)</title>
-  <meta name="description" content="Apply for Out Reach Officer (Intern) at Haulxify. Remote night-shift role based in Pakistan. Join Pakistan's logistics back office team.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Careers at Haulxify — Open Positions</title>
+  <meta name="description" content="Apply to open roles at Haulxify. Remote logistics back office jobs based in Pakistan. Night shift options available.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap">
   </noscript>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/services.css">
-  <style>
-    .careers-hero { background: var(--brand-navy); padding: 140px 0 96px; text-align: center; }
-    .careers-hero h1 { font-size: clamp(2.25rem,4.5vw,3.5rem); font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 20px; max-width: 720px; margin-left: auto; margin-right: auto; }
-    .careers-hero h1 span { color: var(--brand-orange); }
-    .careers-hero p { color: rgba(255,255,255,0.6); font-size: 1.0625rem; max-width: 540px; margin: 0 auto; line-height: 1.75; }
-    .perks-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
-    .perk-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px 28px; }
-    .perk-icon { width: 48px; height: 48px; background: var(--orange-glow); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-    .perk-icon svg { width: 22px; height: 22px; color: var(--brand-orange); }
-    .perk-card h3 { font-size: 1rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 8px; }
-    .perk-card p { font-size: 0.875rem; color: var(--text-body); line-height: 1.7; margin: 0; }
-    .roles-section { padding: 80px 0 100px; background: var(--off-white); }
-    .role-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px 36px; margin-bottom: 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; transition: box-shadow 0.3s; }
-    .role-card:hover { box-shadow: var(--shadow-lg); }
-    .role-info h3 { font-size: 1.125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 8px; }
-    .role-info p { font-size: 0.875rem; color: var(--text-body); line-height: 1.6; margin: 0 0 12px; }
-    .role-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .role-tag { font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: var(--radius-full); background: var(--off-white); color: var(--text-muted); border: 1px solid var(--border); }
-    .role-tag.orange { background: var(--orange-glow); color: var(--brand-orange); border-color: transparent; }
-    .apply-note { background: var(--brand-navy); border-radius: var(--radius-xl); padding: 64px; text-align: center; margin-top: 48px; }
-    .apply-note h2 { font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 16px; }
-    .apply-note p { color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto 32px; line-height: 1.75; }
 
-    /* Modal */
+  <style>
+    .careers-hero {
+      background: var(--brand-navy);
+      padding: 120px 0 56px;
+      text-align: center;
+    }
+    .careers-hero h1 {
+      font-size: clamp(1.85rem, 5vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1.12;
+      margin-bottom: 14px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .careers-hero h1 span { color: var(--brand-orange); }
+    .careers-hero p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Jobs first — conversion section */
+    .jobs-first {
+      padding: 48px 0 64px;
+      background: var(--off-white);
+    }
+    .jobs-first .section-header { margin-bottom: 28px; }
+    #jobsList { display: flex; flex-direction: column; gap: 14px; }
+    .role-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .role-card:hover { box-shadow: var(--shadow-lg); }
+    .role-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brand-navy);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .role-info p {
+      font-size: 0.875rem;
+      color: var(--text-body);
+      line-height: 1.55;
+      margin: 0 0 12px;
+    }
+    .role-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .role-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: var(--off-white);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .role-tag.orange {
+      background: var(--orange-glow);
+      color: var(--brand-orange);
+      border-color: transparent;
+    }
+    .role-card .btn { flex-shrink: 0; min-height: 44px; padding: 10px 18px; }
+
+    .perks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+    .perk-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px;
+    }
+    .perk-icon {
+      width: 44px; height: 44px;
+      background: var(--orange-glow);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .perk-icon svg { width: 20px; height: 20px; color: var(--brand-orange); }
+    .perk-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 6px; }
+    .perk-card p { font-size: 0.85rem; color: var(--text-body); line-height: 1.65; margin: 0; }
+
+    .apply-note {
+      background: var(--brand-navy);
+      border-radius: var(--radius-xl);
+      padding: 48px 28px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .apply-note h2 {
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .apply-note p {
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    /* ===== MOBILE-FIRST APPLY MODAL ===== */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999;
-      display: none; align-items: center; justify-content: center; padding: 20px;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 28, 0.62);
+      z-index: 9999;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      -webkit-overflow-scrolling: touch;
     }
     .modal-overlay.open { display: flex; }
+
     .modal {
-      background: var(--white); border-radius: var(--radius-xl); width: 100%; max-width: 560px;
-      max-height: 90vh; overflow-y: auto; padding: 36px 32px; position: relative;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      background: #fff;
+      width: 100%;
+      max-width: 560px;
+      max-height: min(92vh, 900px);
+      overflow-y: auto;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 18px 28px;
+      position: relative;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+      animation: sheetUp 0.28s ease-out;
     }
-    .modal h2 { font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 6px; }
-    .modal .sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 28px; }
+    @keyframes sheetUp {
+      from { transform: translateY(24px); opacity: 0.6; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: #d1d5db;
+      border-radius: 99px;
+      margin: 0 auto 14px;
+    }
     .modal-close {
-      position: absolute; top: 18px; right: 18px; background: none; border: none;
-      font-size: 1.5rem; cursor: pointer; color: var(--text-muted); line-height: 1;
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 36px; height: 36px;
+      border: none;
+      background: #f3f4f6;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+      color: #4b5563;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--brand-navy); margin-bottom: 6px; }
+    .modal h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      margin: 0 36px 6px 0;
+      line-height: 1.3;
+    }
+    .modal .sub {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--brand-navy);
+      margin-bottom: 7px;
+    }
     .form-group input[type="text"],
-    .form-group input[type="tel"] {
-      width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px;
-      font-size: 0.9375rem; font-family: inherit; outline: none; transition: border-color 0.2s;
+    .form-group input[type="tel"],
+    .form-group input[type="email"],
+    .form-group select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 16px; /* prevents iOS zoom */
+      font-family: inherit;
+      outline: none;
+      background: #fafafa;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
     }
-    .form-group input:focus { border-color: var(--brand-orange); }
-    .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
-    .checkbox-group label {
-      display: flex; align-items: center; gap: 10px; font-weight: 400; font-size: 0.9rem;
-      cursor: pointer; color: var(--text-body);
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--brand-orange);
+      background: #fff;
     }
-    .checkbox-group input { width: 16px; height: 16px; accent-color: var(--brand-orange); }
-    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checkbox-group label,
     .radio-group label {
-      display: flex; align-items: center; gap: 10px; font-weight: 400; font-size: 0.9rem;
-      cursor: pointer; color: var(--text-body);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      font-size: 0.92rem;
+      color: #374151;
+      cursor: pointer;
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fafafa;
+      margin: 0;
+      min-height: 48px;
+      transition: border-color 0.15s, background 0.15s;
     }
-    .radio-group input { accent-color: var(--brand-orange); }
-    .form-actions { display: flex; gap: 12px; margin-top: 28px; }
-    .form-actions .btn { flex: 1; }
-    .form-msg { font-size: 0.875rem; margin-top: 12px; text-align: center; }
+    .checkbox-group label:has(input:checked),
+    .radio-group label:has(input:checked) {
+      border-color: var(--brand-orange);
+      background: var(--orange-glow, #fff7ed);
+    }
+    .checkbox-group input,
+    .radio-group input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--brand-orange);
+      flex-shrink: 0;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 10px;
+      margin-top: 22px;
+      position: sticky;
+      bottom: 0;
+      background: linear-gradient(to top, #fff 70%, rgba(255,255,255,0));
+      padding-top: 12px;
+    }
+    .form-actions .btn {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .form-msg {
+      font-size: 0.875rem;
+      margin-top: 12px;
+      text-align: center;
+      line-height: 1.4;
+    }
     .form-msg.success { color: #16a34a; }
     .form-msg.error { color: #dc2626; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
+    @media (min-width: 640px) {
+      .modal-overlay {
+        align-items: center;
+        padding: 20px;
+      }
+      .modal {
+        border-radius: 18px;
+        padding: 28px 26px 30px;
+        max-height: 90vh;
+        animation: none;
+      }
+      .modal-handle { display: none; }
+      .form-actions {
+        flex-direction: row;
+        position: static;
+        background: none;
+        padding-top: 0;
+      }
+      .form-actions .btn { flex: 1; }
+    }
+
     @media (max-width: 900px) {
       .perks-grid { grid-template-columns: 1fr 1fr; }
       .role-card { flex-direction: column; }
-      .apply-note { padding: 40px 24px; }
+      .role-card .btn { width: 100%; }
     }
     @media (max-width: 600px) {
+      .careers-hero { padding: 100px 0 40px; }
+      .jobs-first { padding: 36px 0 48px; }
       .perks-grid { grid-template-columns: 1fr; }
-      .modal { padding: 28px 20px; }
+      .apply-note { padding: 36px 20px; border-radius: 16px; }
     }
   </style>
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1L4N4G5E4B"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -105,18 +337,17 @@
   <link rel="canonical" href="https://www.haulxify.com/careers.html" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.haulxify.com/careers.html" />
-  <meta property="og:title" content="Careers at Haulxify — Out Reach Officer (Intern)" />
-  <meta property="og:description" content="Apply for Out Reach Officer (Intern) at Haulxify. Remote night-shift role based in Pakistan." />
+  <meta property="og:title" content="Careers at Haulxify — Open Positions" />
+  <meta property="og:description" content="Apply to open remote logistics roles at Haulxify. Based in Pakistan." />
   <meta property="og:image" content="https://www.haulxify.com/images/og-image.jpg" />
 
-  <!-- Google Jobs structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "JobPosting",
-    "title": "Out Reach Officer (Intern)",
-    "description": "Haulxify is hiring an Out Reach Officer (Intern) for remote night-shift work based in Pakistan. Responsibilities include outreach and support for logistics and transport clients. Full-time (6 PM – 3 AM) or part-time (4 hours 30 minutes) options available. Applicants should have their own laptop and be available during night hours.",
-    "datePosted": "2026-09-07",
+    "title": "Open Positions at Haulxify",
+    "description": "Haulxify is hiring for remote logistics and transport back office roles based in Pakistan.",
+    "datePosted": "2026-09-08",
     "validThrough": "2026-12-31",
     "employmentType": ["FULL_TIME", "PART_TIME", "INTERN"],
     "hiringOrganization": {
@@ -127,171 +358,100 @@
     },
     "jobLocation": {
       "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "PK",
-        "addressLocality": "Pakistan"
-      }
+      "address": { "@type": "PostalAddress", "addressCountry": "PK" }
     },
     "jobLocationType": "TELECOMMUTE",
-    "applicantLocationRequirements": {
-      "@type": "Country",
-      "name": "Pakistan"
-    },
-    "baseSalary": {
-      "@type": "MonetaryAmount",
-      "currency": "PKR",
-      "value": {
-        "@type": "QuantitativeValue",
-        "value": 0,
-        "unitText": "MONTH"
-      }
-    }
+    "applicantLocationRequirements": { "@type": "Country", "name": "Pakistan" }
   }
   </script>
 </head>
 <body>
 <div id="nav-include"></div>
 
-<!-- HERO -->
+<!-- HERO (short — ads land here, then jobs) -->
 <section class="careers-hero">
   <div class="container">
-    <span class="eyebrow eyebrow-white" style="margin-bottom:20px;display:inline-flex;">Careers at Haulxify</span>
-    <h1>Work with the team that<br><span>runs global transport operations.</span></h1>
-    <p>We're building Pakistan's best logistics back office team. If you're detail-oriented, fluent in English, and want to build a career in international transport operations — we want to hear from you.</p>
+    <span class="eyebrow eyebrow-white" style="margin-bottom:14px;display:inline-flex;">Careers at Haulxify</span>
+    <h1>Join the team that<br><span>runs global transport ops.</span></h1>
+    <p>Remote roles · Pakistan-based · Night-shift options · Real training</p>
   </div>
 </section>
 
-<!-- PERKS -->
-<section style="padding: 80px 0; background: var(--off-white);">
+<!-- JOBS FIRST -->
+<section class="jobs-first" id="open-roles">
   <div class="container">
-    <div class="section-header centered reveal">
+    <div class="section-header centered">
+      <span class="eyebrow">Open Positions</span>
+      <h2>Apply in minutes</h2>
+      <p style="max-width:480px;margin:8px auto 0;color:var(--text-body);font-size:0.95rem;line-height:1.6;">
+        All roles are remote from Pakistan. Shifts align with North American business hours.
+      </p>
+    </div>
+
+    <div id="jobsList">
+      <p style="text-align:center;color:#666;padding:24px 0;">Loading open positions…</p>
+    </div>
+  </div>
+</section>
+
+<!-- PERKS (below the fold) -->
+<section style="padding: 64px 0; background: var(--white);">
+  <div class="container">
+    <div class="section-header centered">
       <span class="eyebrow">Why Haulxify</span>
       <h2>What working here looks like</h2>
     </div>
     <div class="perks-grid">
-      <div class="perk-card reveal delay-1">
+      <div class="perk-card">
         <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
         <h3>Above-Market Compensation</h3>
-        <p>We pay above local market rates. Period. Talented people deserve to be paid well, and we don't cut corners on compensation.</p>
+        <p>We pay above local market rates. Talented people deserve to be paid well.</p>
       </div>
-      <div class="perk-card reveal delay-2">
+      <div class="perk-card">
         <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
         <h3>Real Training, Real Skills</h3>
-        <p>Before you touch a client account, you receive structured training on US transport regulations, TMS platforms, load boards, and logistics workflows. Knowledge that travels with you.</p>
+        <p>Structured training on US transport workflows, TMS platforms, and logistics ops.</p>
       </div>
-      <div class="perk-card reveal delay-3">
+      <div class="perk-card">
         <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
         <h3>Small Team, Big Ownership</h3>
-        <p>You won't be a cog in a machine. You'll own client relationships and be trusted with real responsibility from day one.</p>
+        <p>Own real responsibility from day one — not a cog in a large machine.</p>
       </div>
-      <div class="perk-card reveal delay-1">
+      <div class="perk-card">
         <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
         <h3>International Exposure</h3>
-        <p>Work directly with clients in the US, Canada, UK, and beyond. Build professional experience and references in international business.</p>
+        <p>Work with clients in the US, Canada, UK, and beyond.</p>
       </div>
-      <div class="perk-card reveal delay-2">
+      <div class="perk-card">
         <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
         <h3>Career Growth Path</h3>
-        <p>Clear progression from junior roles to senior operations, team lead, and account management positions as we grow.</p>
+        <p>Clear progression from junior roles to senior ops and account management.</p>
       </div>
-      <div class="perk-card reveal delay-3">
+      <div class="perk-card">
         <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Stable, Long-Term Work</h3>
-        <p>We build long-term relationships with clients — which means stable, ongoing work for our team. No project-by-project uncertainty.</p>
+        <p>Long-term client relationships mean stable ongoing work for the team.</p>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- OPEN ROLES -->
-<section class="roles-section">
-  <div class="container">
-    <div class="section-header centered reveal">
-      <span class="eyebrow">Open Positions</span>
-      <h2>Current openings</h2>
-      <p>All roles are based in Pakistan and conducted remotely. Shifts are aligned to North American business hours.</p>
-    </div>
-
-    <!-- Jobs will be injected here by JavaScript -->
-    <div id="jobsList">
-      <p style="text-align:center;color:#666;">Loading open positions…</p>
-    </div>
-
-    <div class="apply-note reveal">
+    <div class="apply-note">
       <h2>Don't see your role listed?</h2>
-      <p>We're growing fast. If you have a background in logistics operations, transport administration, or related fields, send us your CV anyway — we review all applications.</p>
-      <a href="mailto:careers@haulxify.com" class="btn btn-ghost-white btn-lg">Send Your CV</a>
+      <p>We're growing fast. Send your CV anyway — we review all applications.</p>
+      <a href="mailto:haulxify@gmail.com" class="btn btn-ghost-white btn-lg">Send Your CV</a>
     </div>
   </div>
 </section>
 
 <!-- APPLY MODAL -->
 <div class="modal-overlay" id="applyModal">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+    <div class="modal-handle" aria-hidden="true"></div>
     <button class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
-    <h2>Apply — Out Reach Officer (Intern)</h2>
-    <p class="sub">Fill in the details below. We’ll get back to you soon.</p>
+    <h2 id="applyModalTitle">Apply</h2>
+    <p class="sub">Takes about 2 minutes. We’ll contact you on phone or email.</p>
 
-    <form id="applyForm">
-      <div class="form-group">
-        <label for="fullName">Full Name *</label>
-        <input type="text" id="fullName" name="fullName" required placeholder="Your full name">
-      </div>
-
-      <div class="form-group">
-        <label for="primaryPhone">Primary Phone Number *</label>
-        <input type="tel" id="primaryPhone" name="primaryPhone" required placeholder="03XX-XXXXXXX">
-      </div>
-
-      <div class="form-group">
-        <label for="secondaryPhone">Secondary Phone Number</label>
-        <input type="tel" id="secondaryPhone" name="secondaryPhone" placeholder="Optional">
-      </div>
-
-      <div class="form-group">
-        <label>Highest Education *</label>
-        <div class="checkbox-group" id="educationGroup">
-          <label><input type="radio" name="education" value="Matric/O Level" required> Matric / O Level</label>
-          <label><input type="radio" name="education" value="Intermediate/A Level"> Intermediate / A Level</label>
-          <label><input type="radio" name="education" value="BS/BA/Adp"> BS / BA / ADP</label>
-          <label><input type="radio" name="education" value="MS/MA"> MS / MA</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Experience *</label>
-        <div class="checkbox-group" id="experienceGroup">
-          <label><input type="radio" name="experience" value="Fresh" required> Fresh</label>
-          <label><input type="radio" name="experience" value="Less than 1 year"> Less than 1 year</label>
-          <label><input type="radio" name="experience" value="Greater than 1 year"> Greater than 1 year</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Do you have your own laptop? *</label>
-        <div class="radio-group">
-          <label><input type="radio" name="hasLaptop" value="true" required> Yes</label>
-          <label><input type="radio" name="hasLaptop" value="false"> No</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>This is a night shift job. Are you available during night? *</label>
-        <div class="radio-group">
-          <label><input type="radio" name="availableNight" value="true" required> Yes</label>
-          <label><input type="radio" name="availableNight" value="false"> No</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Are you willing to join as Full Time or Part Time? *</label>
-        <div class="radio-group">
-          <label><input type="radio" name="availability" value="Full Time 6 Pm - 3 Am" required> Full Time (6 PM – 3 AM)</label>
-          <label><input type="radio" name="availability" value="Part time (4 Hours 30 minutes shift)"> Part Time (4 Hours 30 minutes shift)</label>
-        </div>
-      </div>
-
+    <form id="applyForm" novalidate>
+      <div id="dynamicFields"></div>
       <div class="form-actions">
         <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
         <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
@@ -305,7 +465,6 @@
 <script src="js/includes.js" defer></script>
 <script src="js/main.js" defer></script>
 
-<!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = 'https://mvqvknxvfhbrzigieqpi.supabase.co';
@@ -314,8 +473,12 @@
   const { createClient } = supabase;
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  let selectedJob = { id: null, title: '' };
-  let realtimeConnected = false;
+  let selectedJob = { id: null, title: '', form_schema: [] };
+
+  const ORANGE_TAGS = [
+    'Full Time', 'Part Time', 'Intern', 'Full Time / Part Time',
+    'Night Shift', 'Remote'
+  ];
 
   function escapeHtml(str) {
     if (!str) return '';
@@ -326,10 +489,19 @@
       .replace(/"/g, '&quot;');
   }
 
-  const ORANGE_TAGS = [
-    'Full Time', 'Part Time', 'Intern', 'Full Time / Part Time',
-    'Night Shift', 'Remote'
-  ];
+  function getDefaultSchema() {
+    return [
+      { id: 'full_name', label: 'Full Name', type: 'text', required: true },
+      { id: 'primary_phone', label: 'Primary Phone Number', type: 'tel', required: true },
+      { id: 'secondary_phone', label: 'Secondary Phone Number', type: 'tel', required: false },
+      { id: 'email', label: 'Email Address', type: 'email', required: true },
+      { id: 'education', label: 'Highest Education', type: 'radio', options: ['Matric/O Level', 'Intermediate/A Level', 'BS/BA/Adp', 'MS/MA'], required: true },
+      { id: 'experience', label: 'Experience', type: 'radio', options: ['Fresh', 'Less than 1 year', 'Greater than 1 year'], required: true },
+      { id: 'has_laptop', label: 'Do you have your own laptop?', type: 'yesno', required: true },
+      { id: 'available_night', label: 'This is a night shift job. Are you available during night?', type: 'yesno', required: true },
+      { id: 'availability', label: 'Are you willing to join as Full Time or Part Time?', type: 'radio', options: ['Full Time 6 Pm - 3 Am', 'Part time (4 Hours 30 minutes shift)'], required: true }
+    ];
+  }
 
   async function loadJobs() {
     const { data, error } = await supabaseClient
@@ -343,29 +515,25 @@
     if (!container) return;
 
     if (error) {
-      container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs. Please refresh.</p>`;
-      console.error(error);
+      container.innerHTML = `<p style="text-align:center;color:#dc2626;">Could not load jobs.</p>`;
       return;
     }
 
-    if (!data || data.length === 0) {
-      container.innerHTML = `<p style="text-align:center;color:#666;padding:40px 0;">No open positions at the moment. Check back soon.</p>`;
+    if (!data || !data.length) {
+      container.innerHTML = `<p style="text-align:center;color:#666;padding:28px 0;">No open positions right now. Check back soon.</p>`;
       return;
     }
 
-    // Avoid unnecessary re-render if nothing changed
-    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.is_active, j.tags]));
+    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.tags, j.description]));
     if (container.dataset.hash === newHash) return;
     container.dataset.hash = newHash;
 
     container.innerHTML = '';
-
     data.forEach(job => {
       const card = document.createElement('div');
       card.className = 'role-card';
 
-      const tags = job.tags || [];
-      const tagsHtml = tags.map(tag => {
+      const tagsHtml = (job.tags || []).map(tag => {
         const isOrange = ORANGE_TAGS.some(t => t.toLowerCase() === String(tag).toLowerCase());
         return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
       }).join('');
@@ -376,60 +544,91 @@
           <p>${escapeHtml(job.description)}</p>
           <div class="role-tags">${tagsHtml}</div>
         </div>
-        <button type="button" class="btn btn-primary apply-btn" style="flex-shrink:0;">
-          Apply
-        </button>
+        <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
       `;
-
-      card.querySelector('.apply-btn').addEventListener('click', () => {
-        openApplyModal(job.id, job.title);
-      });
-
+      card.querySelector('.apply-btn').addEventListener('click', () => openApplyModal(job));
       container.appendChild(card);
     });
   }
 
-  // ---------- Realtime ----------
   function setupRealtime() {
-    const channel = supabaseClient
+    supabaseClient
       .channel('jobs-realtime')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'jobs'
-        },
-        (payload) => {
-          console.log('Realtime event:', payload.eventType);
-          loadJobs();
-        }
-      )
-      .subscribe((status) => {
-        console.log('Realtime status:', status);
-        if (status === 'SUBSCRIBED') {
-          realtimeConnected = true;
-          console.log('Realtime connected successfully');
-        }
-        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
-          realtimeConnected = false;
-          console.warn('Realtime failed – falling back to polling');
-        }
-      });
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'jobs' }, () => loadJobs())
+      .subscribe();
+  }
+  function setupPolling() { setInterval(loadJobs, 20000); }
+
+  function renderFormFields(schema) {
+    const wrap = document.getElementById('dynamicFields');
+    wrap.innerHTML = '';
+
+    (schema || []).forEach(field => {
+      const group = document.createElement('div');
+      group.className = 'form-group';
+
+      const label = document.createElement('label');
+      label.textContent = field.label + (field.required ? ' *' : '');
+      if (field.id) label.setAttribute('for', field.id);
+      group.appendChild(label);
+
+      const type = field.type === 'email' ? 'email' : field.type;
+
+      if (type === 'text' || type === 'tel' || type === 'email') {
+        const input = document.createElement('input');
+        input.type = type === 'tel' ? 'tel' : type === 'email' ? 'email' : 'text';
+        input.name = field.id;
+        input.id = field.id;
+        input.autocomplete = type === 'email' ? 'email' : type === 'tel' ? 'tel' : field.id === 'full_name' ? 'name' : 'on';
+        input.inputMode = type === 'tel' ? 'tel' : type === 'email' ? 'email' : 'text';
+        if (field.required) input.required = true;
+        input.placeholder = field.placeholder || (
+          type === 'email' ? 'name@example.com' :
+          type === 'tel' ? '03XX-XXXXXXX' : ''
+        );
+        group.appendChild(input);
+      } else if (type === 'radio' || type === 'yesno') {
+        const box = document.createElement('div');
+        box.className = type === 'yesno' ? 'radio-group' : 'checkbox-group';
+        const options = type === 'yesno'
+          ? [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }]
+          : (field.options || []).map(o => ({ value: o, label: o }));
+
+        options.forEach((opt, i) => {
+          const lab = document.createElement('label');
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = field.id;
+          input.value = opt.value;
+          if (field.required && i === 0) input.required = true;
+          lab.appendChild(input);
+          lab.appendChild(document.createTextNode(opt.label));
+          box.appendChild(lab);
+        });
+        group.appendChild(box);
+      } else if (type === 'select') {
+        const select = document.createElement('select');
+        select.name = field.id;
+        select.id = field.id;
+        if (field.required) select.required = true;
+        select.innerHTML = `<option value="">Select...</option>` +
+          (field.options || []).map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+        group.appendChild(select);
+      }
+
+      wrap.appendChild(group);
+    });
   }
 
-  // ---------- Fallback polling (every 20 seconds) ----------
-  function setupPolling() {
-    setInterval(() => {
-      loadJobs();
-    }, 20000); // 20 seconds
-  }
-
-  // ---------- Modal ----------
-  function openApplyModal(jobId, jobTitle) {
-    selectedJob = { id: jobId, title: jobTitle };
-    const heading = document.querySelector('#applyModal h2');
-    if (heading) heading.textContent = `Apply — ${jobTitle}`;
+  function openApplyModal(job) {
+    selectedJob = {
+      id: job.id,
+      title: job.title,
+      form_schema: (job.form_schema && job.form_schema.length) ? job.form_schema : getDefaultSchema()
+    };
+    document.getElementById('applyModalTitle').textContent = `Apply — ${job.title}`;
+    renderFormFields(selectedJob.form_schema);
+    document.getElementById('formMsg').textContent = '';
     document.getElementById('applyModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -437,11 +636,10 @@
   function closeApplyModal() {
     document.getElementById('applyModal').classList.remove('open');
     document.body.style.overflow = '';
-    const msg = document.getElementById('formMsg');
-    if (msg) msg.textContent = '';
-    const form = document.getElementById('applyForm');
-    if (form) form.reset();
-    selectedJob = { id: null, title: '' };
+    document.getElementById('formMsg').textContent = '';
+    document.getElementById('applyForm').reset();
+    document.getElementById('dynamicFields').innerHTML = '';
+    selectedJob = { id: null, title: '', form_schema: [] };
   }
 
   document.getElementById('applyModal').addEventListener('click', function (e) {
@@ -457,37 +655,48 @@
     msg.className = 'form-msg';
 
     const form = e.target;
+    const answers = {};
+    (selectedJob.form_schema || []).forEach(field => {
+      if (field.type === 'radio' || field.type === 'yesno') {
+        const checked = form.querySelector(`input[name="${field.id}"]:checked`);
+        answers[field.id] = checked ? checked.value : null;
+      } else {
+        const el = form.elements[field.id];
+        answers[field.id] = el ? String(el.value || '').trim() : null;
+      }
+    });
+
     const data = {
-      full_name: form.fullName.value.trim(),
-      primary_phone: form.primaryPhone.value.trim(),
-      secondary_phone: form.secondaryPhone.value.trim() || null,
-      education: form.education.value,
-      experience: form.experience.value,
-      has_laptop: form.hasLaptop.value === 'true',
-      available_night: form.availableNight.value === 'true',
-      availability: form.availability.value,
+      full_name: answers.full_name || null,
+      primary_phone: answers.primary_phone || null,
+      secondary_phone: answers.secondary_phone || null,
+      email: answers.email || null,
+      education: answers.education || null,
+      experience: answers.experience || null,
+      has_laptop: answers.has_laptop === 'true' ? true : answers.has_laptop === 'false' ? false : null,
+      available_night: answers.available_night === 'true' ? true : answers.available_night === 'false' ? false : null,
+      availability: answers.availability || null,
       job_title: selectedJob.title,
-      job_id: selectedJob.id
+      job_id: selectedJob.id,
+      answers
     };
 
     try {
       const { error } = await supabaseClient.from('applications').insert([data]);
       if (error) throw error;
-
-      msg.textContent = 'Application submitted successfully! We will contact you soon.';
+      msg.textContent = 'Application submitted! We will contact you soon.';
       msg.className = 'form-msg success';
       form.reset();
-      setTimeout(closeApplyModal, 2200);
+      setTimeout(closeApplyModal, 2000);
     } catch (err) {
       console.error(err);
-      msg.textContent = 'Something went wrong. Please try again or email us.';
+      msg.textContent = 'Something went wrong. Please try again.';
       msg.className = 'form-msg error';
     } finally {
       btn.disabled = false;
     }
   });
 
-  // Start everything
   loadJobs();
   setupRealtime();
   setupPolling();
