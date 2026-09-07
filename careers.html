@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Careers at Haulxify — Join Pakistan's Logistics Back Office Team</title>
-  <meta name="description" content="Work with a fast-growing logistics back office company serving transport businesses globally. Join Haulxify's team in Pakistan.">
+  <title>Careers at Haulxify — Out Reach Officer (Intern)</title>
+  <meta name="description" content="Apply for Out Reach Officer (Intern) at Haulxify. Remote night-shift role based in Pakistan. Join Pakistan's logistics back office team.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap">
-</noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap">
+  </noscript>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/components.css">
@@ -37,6 +37,51 @@
     .apply-note { background: var(--brand-navy); border-radius: var(--radius-xl); padding: 64px; text-align: center; margin-top: 48px; }
     .apply-note h2 { font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 16px; }
     .apply-note p { color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto 32px; line-height: 1.75; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999;
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: var(--radius-xl); width: 100%; max-width: 560px;
+      max-height: 90vh; overflow-y: auto; padding: 36px 32px; position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+    .modal h2 { font-size: 1.375rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 6px; }
+    .modal .sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 28px; }
+    .modal-close {
+      position: absolute; top: 18px; right: 18px; background: none; border: none;
+      font-size: 1.5rem; cursor: pointer; color: var(--text-muted); line-height: 1;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--brand-navy); margin-bottom: 6px; }
+    .form-group input[type="text"],
+    .form-group input[type="tel"] {
+      width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 0.9375rem; font-family: inherit; outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus { border-color: var(--brand-orange); }
+    .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-group label {
+      display: flex; align-items: center; gap: 10px; font-weight: 400; font-size: 0.9rem;
+      cursor: pointer; color: var(--text-body);
+    }
+    .checkbox-group input { width: 16px; height: 16px; accent-color: var(--brand-orange); }
+    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-group label {
+      display: flex; align-items: center; gap: 10px; font-weight: 400; font-size: 0.9rem;
+      cursor: pointer; color: var(--text-body);
+    }
+    .radio-group input { accent-color: var(--brand-orange); }
+    .form-actions { display: flex; gap: 12px; margin-top: 28px; }
+    .form-actions .btn { flex: 1; }
+    .form-msg { font-size: 0.875rem; margin-top: 12px; text-align: center; }
+    .form-msg.success { color: #16a34a; }
+    .form-msg.error { color: #dc2626; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
     @media (max-width: 900px) {
       .perks-grid { grid-template-columns: 1fr 1fr; }
       .role-card { flex-direction: column; }
@@ -44,9 +89,11 @@
     }
     @media (max-width: 600px) {
       .perks-grid { grid-template-columns: 1fr; }
+      .modal { padding: 28px 20px; }
     }
   </style>
-    <!-- Google tag (gtag.js) -->
+
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1L4N4G5E4B"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -54,33 +101,56 @@
     gtag('js', new Date());
     gtag('config', 'G-1L4N4G5E4B');
   </script>
-<link rel="canonical" href="https://www.haulxify.com/careers.html" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.haulxify.com/careers.html" />
-<meta property="og:title" content="Careers at Haulxify — Join Our Logistics Back Office Team" />
-<meta property="og:description" content="Work with a fast-growing logistics back office company serving US transport businesses. View open positions at Haulxify." />
-<meta property="og:image" content="https://www.haulxify.com/images/og-image.jpg" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "JobPosting",
-  "title": "Back Office Support Specialist — Transport & Logistics",
-  "description": "Haulxify is hiring back office support specialists to serve US trucking, NEMT, tow truck and freight broker clients. Remote position based in Pakistan.",
-  "hiringOrganization": {
-    "@type": "Organization",
-    "name": "Haulxify",
-    "url": "https://www.haulxify.com"
-  },
-  "jobLocation": {
-    "@type": "Place",
-    "address": {"@type": "PostalAddress", "addressCountry": "PK"}
-  },
-  "employmentType": "FULL_TIME"
-}
-</script>
+
+  <link rel="canonical" href="https://www.haulxify.com/careers.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.haulxify.com/careers.html" />
+  <meta property="og:title" content="Careers at Haulxify — Out Reach Officer (Intern)" />
+  <meta property="og:description" content="Apply for Out Reach Officer (Intern) at Haulxify. Remote night-shift role based in Pakistan." />
+  <meta property="og:image" content="https://www.haulxify.com/images/og-image.jpg" />
+
+  <!-- Google Jobs structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": "Out Reach Officer (Intern)",
+    "description": "Haulxify is hiring an Out Reach Officer (Intern) for remote night-shift work based in Pakistan. Responsibilities include outreach and support for logistics and transport clients. Full-time (6 PM – 3 AM) or part-time (4 hours 30 minutes) options available. Applicants should have their own laptop and be available during night hours.",
+    "datePosted": "2026-09-07",
+    "validThrough": "2026-12-31",
+    "employmentType": ["FULL_TIME", "PART_TIME", "INTERN"],
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "Haulxify",
+      "sameAs": "https://www.haulxify.com",
+      "logo": "https://www.haulxify.com/images/logo.png"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PK",
+        "addressLocality": "Pakistan"
+      }
+    },
+    "jobLocationType": "TELECOMMUTE",
+    "applicantLocationRequirements": {
+      "@type": "Country",
+      "name": "Pakistan"
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "PKR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": 0,
+        "unitText": "MONTH"
+      }
+    }
+  }
+  </script>
 </head>
 <body>
-
 <div id="nav-include"></div>
 
 <!-- HERO -->
@@ -145,85 +215,169 @@
 
     <div class="role-card reveal">
       <div class="role-info">
-        <h3>Freight Dispatcher</h3>
-        <p>Find loads, negotiate rates, coordinate pickups and deliveries for trucking and freight clients. Requires strong English communication and load board familiarity.</p>
+        <h3>Out Reach Officer (Intern)</h3>
+        <p>Support outreach and client communication for logistics and transport operations. Night-shift role. Requires strong English, own laptop, and availability during night hours. Full-time or part-time options available.</p>
         <div class="role-tags">
-          <span class="role-tag orange">Full Time</span>
-          <span class="role-tag">Remote</span>
-          <span class="role-tag">Pakistan</span>
-          <span class="role-tag">Transport Ops</span>
-        </div>
-      </div>
-      <a href="/cdn-cgi/l/email-protection#3a595b485f5f48497a525b4f5642535c431459555705494f58505f594e077b4a4a5653595b4e535554001a7c485f535d524e1a7e53494a5b4e59525f48" class="btn btn-primary" style="flex-shrink:0;">Apply</a>
-    </div>
-
-    <div class="role-card reveal">
-      <div class="role-info">
-        <h3>Document Processing Specialist</h3>
-        <p>BOL, POD, rate confirmation, and invoice processing for trucking and freight clients. Must be highly detail-oriented with strong accuracy under volume.</p>
-        <div class="role-tags">
-          <span class="role-tag orange">Full Time</span>
-          <span class="role-tag">Remote</span>
-          <span class="role-tag">Pakistan</span>
-          <span class="role-tag">Documentation</span>
-        </div>
-      </div>
-      <a href="/cdn-cgi/l/email-protection#6102001304041312210900140d190807184f020e0c5e1214030b0402155c2011110d08020015080e0f5b41250e02140c040f154131130e02041212080f06413211040208000d081215" class="btn btn-primary" style="flex-shrink:0;">Apply</a>
-    </div>
-
-    <div class="role-card reveal">
-      <div class="role-info">
-        <h3>NEMT Billing Coordinator</h3>
-        <p>Handle Medicaid and broker portal billing for NEMT clients. Experience with medical transportation billing or healthcare claims is a strong advantage.</p>
-        <div class="role-tags">
-          <span class="role-tag orange">Full Time</span>
-          <span class="role-tag">Remote</span>
-          <span class="role-tag">Pakistan</span>
-          <span class="role-tag">NEMT / Medical</span>
-        </div>
-      </div>
-      <a href="/cdn-cgi/l/email-protection#1271736077776061527a73677e6a7b746b3c717d7f2d616770787771662f5362627e7b7173667b7d7c28325c575f4632507b7e7e7b7c7532517d7d60767b7c73667d60" class="btn btn-primary" style="flex-shrink:0;">Apply</a>
-    </div>
-
-    <div class="role-card reveal">
-      <div class="role-info">
-        <h3>After-Hours Dispatch Operator</h3>
-        <p>Night shift dispatch for tow truck and roadside assistance clients. Fast response, calm under pressure, strong English communication required.</p>
-        <div class="role-tags">
-          <span class="role-tag orange">Full Time</span>
+          <span class="role-tag orange">Intern</span>
+          <span class="role-tag">Full Time / Part Time</span>
           <span class="role-tag">Night Shift</span>
-          <span class="role-tag">Pakistan</span>
-          <span class="role-tag">Dispatch</span>
-        </div>
-      </div>
-      <a href="/cdn-cgi/l/email-protection#c1a2a0b3a4a4b3b281a9a0b4adb9a8a7b8efa2aeacfeb2b4a3aba4a2b5fc80b1b1ada8a2a0b5a8aeaffbe180a7b5a4b3ec89aeb4b3b2e185a8b2b1a0b5a2a9e18eb1a4b3a0b5aeb3" class="btn btn-primary" style="flex-shrink:0;">Apply</a>
-    </div>
-
-    <div class="role-card reveal">
-      <div class="role-info">
-        <h3>Logistics Bookkeeper</h3>
-        <p>Monthly reconciliation, expense categorisation, and P&L reporting for transport clients. QuickBooks proficiency required. Logistics bookkeeping experience preferred.</p>
-        <div class="role-tags">
-          <span class="role-tag orange">Full Time</span>
           <span class="role-tag">Remote</span>
           <span class="role-tag">Pakistan</span>
-          <span class="role-tag">Finance</span>
         </div>
       </div>
-      <a href="/cdn-cgi/l/email-protection#fd9e9c8f98988f8ebd959c889185949b84d39e9290c28e889f97989e89c0bc8d8d91949e9c89949293c7ddb1929a948e89949e8eddbf9292969698988d988f" class="btn btn-primary" style="flex-shrink:0;">Apply</a>
+      <button type="button" class="btn btn-primary" style="flex-shrink:0;" onclick="openApplyModal()">Apply</button>
     </div>
 
     <div class="apply-note reveal">
       <h2>Don't see your role listed?</h2>
       <p>We're growing fast. If you have a background in logistics operations, transport administration, or related fields, send us your CV anyway — we review all applications.</p>
-      <a href="/cdn-cgi/l/email-protection#2645475443435455664e47534a5e4f405f0845494b195553444c4345521b6143484354474a066756564a4f4547524f4948" class="btn btn-ghost-white btn-lg">Send Your CV</a>
+      <a href="mailto:careers@haulxify.com" class="btn btn-ghost-white btn-lg">Send Your CV</a>
     </div>
-
   </div>
 </section>
 
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
+    <h2>Apply — Out Reach Officer (Intern)</h2>
+    <p class="sub">Fill in the details below. We’ll get back to you soon.</p>
+
+    <form id="applyForm">
+      <div class="form-group">
+        <label for="fullName">Full Name *</label>
+        <input type="text" id="fullName" name="fullName" required placeholder="Your full name">
+      </div>
+
+      <div class="form-group">
+        <label for="primaryPhone">Primary Phone Number *</label>
+        <input type="tel" id="primaryPhone" name="primaryPhone" required placeholder="03XX-XXXXXXX">
+      </div>
+
+      <div class="form-group">
+        <label for="secondaryPhone">Secondary Phone Number</label>
+        <input type="tel" id="secondaryPhone" name="secondaryPhone" placeholder="Optional">
+      </div>
+
+      <div class="form-group">
+        <label>Highest Education *</label>
+        <div class="checkbox-group" id="educationGroup">
+          <label><input type="radio" name="education" value="Matric/O Level" required> Matric / O Level</label>
+          <label><input type="radio" name="education" value="Intermediate/A Level"> Intermediate / A Level</label>
+          <label><input type="radio" name="education" value="BS/BA/Adp"> BS / BA / ADP</label>
+          <label><input type="radio" name="education" value="MS/MA"> MS / MA</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Experience *</label>
+        <div class="checkbox-group" id="experienceGroup">
+          <label><input type="radio" name="experience" value="Fresh" required> Fresh</label>
+          <label><input type="radio" name="experience" value="Less than 1 year"> Less than 1 year</label>
+          <label><input type="radio" name="experience" value="Greater than 1 year"> Greater than 1 year</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Do you have your own laptop? *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="hasLaptop" value="true" required> Yes</label>
+          <label><input type="radio" name="hasLaptop" value="false"> No</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>This is a night shift job. Are you available during night? *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="availableNight" value="true" required> Yes</label>
+          <label><input type="radio" name="availableNight" value="false"> No</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Are you willing to join as Full Time or Part Time? *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="availability" value="Full Time 6 Pm - 3 Am" required> Full Time (6 PM – 3 AM)</label>
+          <label><input type="radio" name="availability" value="Part time (4 Hours 30 minutes shift)"> Part Time (4 Hours 30 minutes shift)</label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeApplyModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
+      </div>
+      <div class="form-msg" id="formMsg"></div>
+    </form>
+  </div>
+</div>
+
 <div id="footer-include"></div>
-  <script src="js/includes.js" defer></script>
+<script src="js/includes.js" defer></script>
 <script src="js/main.js" defer></script>
+
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // ========== SUPABASE CONFIG ==========
+  const SUPABASE_URL = 'https://mvqvknxvfhbrzigieqpi.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12cXZrbnh2ZmhicnppZ2llcXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3ODgzNjMsImV4cCI6MjEwNDM2NDM2M30.jPVWDK1JzSx2o2NV-DNsX75APNzLdMlZdacVsjNJ0n8';
+  // ====================================
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function openApplyModal() {
+    document.getElementById('applyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeApplyModal() {
+    document.getElementById('applyModal').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('formMsg').textContent = '';
+    document.getElementById('applyForm').reset();
+  }
+
+  // Close on overlay click
+  document.getElementById('applyModal').addEventListener('click', function(e) {
+    if (e.target === this) closeApplyModal();
+  });
+
+  document.getElementById('applyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('formMsg');
+    btn.disabled = true;
+    msg.textContent = 'Submitting...';
+    msg.className = 'form-msg';
+
+    const form = e.target;
+    const data = {
+      full_name: form.fullName.value.trim(),
+      primary_phone: form.primaryPhone.value.trim(),
+      secondary_phone: form.secondaryPhone.value.trim() || null,
+      education: form.education.value,
+      experience: form.experience.value,
+      has_laptop: form.hasLaptop.value === 'true',
+      available_night: form.availableNight.value === 'true',
+      availability: form.availability.value
+    };
+
+    try {
+      const { error } = await supabase.from('applications').insert([data]);
+      if (error) throw error;
+
+      msg.textContent = 'Application submitted successfully! We will contact you soon.';
+      msg.className = 'form-msg success';
+      form.reset();
+      setTimeout(closeApplyModal, 2200);
+    } catch (err) {
+      console.error(err);
+      msg.textContent = 'Something went wrong. Please try again or email us.';
+      msg.className = 'form-msg error';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
