@@ -55,10 +55,13 @@
       border-radius: var(--radius-lg);
       padding: 22px 20px;
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
+      flex-direction: column;
+      gap: 14px;
       transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .role-card-footer {
+      display: flex;
+      justify-content: flex-end;
     }
     .role-card:hover { box-shadow: var(--shadow-lg); }
     .role-info h3 {
@@ -316,7 +319,6 @@
 
     @media (max-width: 900px) {
       .perks-grid { grid-template-columns: 1fr 1fr; }
-      .role-card { flex-direction: column; }
       .role-card .btn { width: 100%; }
     }
     @media (max-width: 600px) {
@@ -545,7 +547,9 @@
           <p>${escapeHtml(job.description)}</p>
           <div class="role-tags">${tagsHtml}</div>
         </div>
-        <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
+        <div class="role-card-footer">
+          <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
+        </div>
       `;
       card.querySelector('.apply-btn').addEventListener('click', () => openApplyModal(job));
       container.appendChild(card);
