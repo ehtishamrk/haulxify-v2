@@ -93,6 +93,17 @@
       color: var(--brand-orange);
       border-color: transparent;
     }
+        .role-gender {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: var(--brand-navy);
+      color: #fff;
+      margin-bottom: 10px;
+    }
     .role-card .btn { flex-shrink: 0; min-height: 44px; padding: 10px 18px; }
 
     .perks-grid {
@@ -541,9 +552,13 @@
         return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
       }).join('');
 
+      const genderLabel = job.gender === 'male' ? 'Male Candidates Only'
+        : job.gender === 'female' ? 'Female Candidates Only'
+        : 'Both Male & Female Can Apply';
       card.innerHTML = `
         <div class="role-info">
           <h3>${escapeHtml(job.title)}</h3>
+          <span class="role-gender">${genderLabel}</span>
           <p>${job.description}</p>
           <div class="role-tags">${tagsHtml}</div>
         </div>
