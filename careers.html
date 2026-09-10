@@ -104,6 +104,18 @@
       color: #fff;
       margin-bottom: 10px;
     }
+        .role-shift {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: var(--orange-glow);
+      color: var(--brand-orange);
+      margin-bottom: 10px;
+      margin-left: 6px;
+    }
     .role-card .btn { flex-shrink: 0; min-height: 44px; padding: 10px 18px; }
 
     .perks-grid {
@@ -551,14 +563,14 @@
         const isOrange = ORANGE_TAGS.some(t => t.toLowerCase() === String(tag).toLowerCase());
         return `<span class="role-tag ${isOrange ? 'orange' : ''}">${escapeHtml(tag)}</span>`;
       }).join('');
-
       const genderLabel = job.gender === 'male' ? 'Male Candidates Only'
         : job.gender === 'female' ? 'Female Candidates Only'
         : 'Both Male & Female Can Apply';
+      const shiftLabel = job.shift_type === 'night' ? 'Night Shift' : 'Day Shift';
       card.innerHTML = `
         <div class="role-info">
           <h3>${escapeHtml(job.title)}</h3>
-          <span class="role-gender">${genderLabel}</span>
+          <span class="role-gender">${genderLabel}</span><span class="role-shift">${shiftLabel}</span>
           <p>${job.description}</p>
           <div class="role-tags">${tagsHtml}</div>
         </div>
