@@ -83,13 +83,15 @@
       margin-bottom: 6px;
       line-height: 1.3;
     }
-.role-info p {
+.role-info p,
+.role-desc {
   font-size: 0.875rem;
   color: var(--text-body);
   line-height: 1.55;
   margin: 0 0 12px;
-  white-space: pre-line;
 }
+.role-desc ul { padding-left: 20px; margin: 6px 0 12px; }
+.role-desc b, .role-desc strong { color: var(--brand-navy); }
         .role-location {
       display: flex;
       align-items: center;
@@ -572,7 +574,7 @@
       return;
     }
 
-    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.tags, j.description]));
+    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.tags, j.description, j.gender, j.shift_type, j.openings, j.location, j.sort_order]));
     if (container.dataset.hash === newHash) return;
     container.dataset.hash = newHash;
 
@@ -593,7 +595,7 @@
         <div class="role-info">
           <h3>${escapeHtml(job.title)}</h3>
           <span class="role-gender">${genderLabel}</span><span class="role-shift">${shiftLabel}</span>
-          <p>${job.description}</p>
+          <div class="role-desc">${job.description}</div>
           <div class="role-location">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             ${escapeHtml(job.location || 'Remote (Pakistan)')}
