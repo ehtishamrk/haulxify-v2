@@ -575,7 +575,7 @@
       return;
     }
 
-    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.tags, j.description, j.gender, j.shift_type, j.openings, j.location, j.sort_order]));
+    const newHash = JSON.stringify(data.map(j => [j.id, j.title, j.tags, j.description, j.gender, j.shift_types, j.openings, j.location, j.is_remote, j.sort_order]));
     if (container.dataset.hash === newHash) return;
     container.dataset.hash = newHash;
 
@@ -591,7 +591,10 @@
       const genderLabel = job.gender === 'male' ? 'Male Candidates Only'
         : job.gender === 'female' ? 'Female Candidates Only'
         : 'Both Male & Female Can Apply';
-      const shiftLabel = job.shift_type === 'night' ? 'Night Shift' : 'Day Shift';
+      const shiftTypes = Array.isArray(job.shift_types) && job.shift_types.length ? job.shift_types : ['day'];
+      const shiftLabel = shiftTypes.includes('day') && shiftTypes.includes('night')
+        ? 'Both Day & Night Shifts Available'
+        : shiftTypes.includes('night') ? 'Night Shift' : 'Day Shift';
       card.innerHTML = `
         <div class="role-info">
           <h3>${escapeHtml(job.title)}</h3>
@@ -599,7 +602,7 @@
           <div class="role-desc">${DOMPurify.sanitize(job.description)}</div>
           <div class="role-location">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            ${escapeHtml(job.location || 'Remote (Pakistan)')}
+            ${job.is_remote === false && job.location ? escapeHtml(job.location) : 'Remote (Pakistan)'}
           </div>
           <div class="role-tags">${tagsHtml}</div>
         </div>
