@@ -90,6 +90,16 @@
   margin: 0 0 12px;
   white-space: pre-line;
 }
+        .role-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .role-location svg { width: 14px; height: 14px; flex-shrink: 0; }
     .role-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .role-tag {
       font-size: 0.7rem;
@@ -584,6 +594,10 @@
           <h3>${escapeHtml(job.title)}</h3>
           <span class="role-gender">${genderLabel}</span><span class="role-shift">${shiftLabel}</span>
           <p>${job.description}</p>
+          <div class="role-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${escapeHtml(job.location || 'Remote (Pakistan)')}
+          </div>
           <div class="role-tags">${tagsHtml}</div>
         </div>
         <div class="role-card-footer">
