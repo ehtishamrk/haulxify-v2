@@ -61,7 +61,19 @@
     }
     .role-card-footer {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .role-openings {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brand-navy);
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
     }
     .role-card:hover { box-shadow: var(--shadow-lg); }
     .role-info h3 {
@@ -575,6 +587,7 @@
           <div class="role-tags">${tagsHtml}</div>
         </div>
         <div class="role-card-footer">
+          <span class="role-openings">${job.openings || 1} Position${(job.openings || 1) > 1 ? 's' : ''} Open</span>
           <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
         </div>
       `;
