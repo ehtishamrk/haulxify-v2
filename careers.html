@@ -11,6 +11,7 @@
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap">
   </noscript>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/components.css">
@@ -595,7 +596,7 @@
         <div class="role-info">
           <h3>${escapeHtml(job.title)}</h3>
           <span class="role-gender">${genderLabel}</span><span class="role-shift">${shiftLabel}</span>
-          <div class="role-desc">${job.description}</div>
+          <div class="role-desc">${DOMPurify.sanitize(job.description)}</div>
           <div class="role-location">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             ${escapeHtml(job.location || 'Remote (Pakistan)')}
