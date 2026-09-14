@@ -800,6 +800,15 @@ document.getElementById('applyForm').addEventListener('submit', async function (
     };
 
     const { error } = await supabaseClient.from('applications').insert([data]);
+    if (error) {
+      if (error.code === '23505') {
+        msg.textContent = 'You have already applied for this job.';
+        msg.className = 'form-msg error';
+        btn.disabled = false;
+        return;
+      }
+      throw error;
+    }
     if (error) throw error;
 
     msg.textContent = 'Application submitted! We will contact you soon.';
