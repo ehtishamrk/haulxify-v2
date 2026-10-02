@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Job Opening | Haulxify</title>
+  <meta name="description" content="View job details and apply for opportunities at Haulxify.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; background: var(--off-white, #f6f7f9); color: var(--brand-navy, #0b1b33); -webkit-font-smoothing: antialiased; }
+    body.modal-open { overflow: hidden; }
+    .job-container { width: min(100% - 40px, 1020px); margin: 0 auto; }
+
+    .job-hero {
+      background: radial-gradient(circle at 85% 10%, rgba(255,107,0,.18), transparent 32%), linear-gradient(145deg, #0b1b33 0%, #132844 100%);
+      padding: 128px 0 64px;
+      color: #fff;
+    }
+    .job-hero-content { max-width: 820px; }
+    .job-title { font-family: "Syne", sans-serif; font-weight: 800; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.06; letter-spacing: -0.045em; color: #fff; margin: 0 0 24px; }
+
+    .hero-apply, .about-apply, .side-apply-btn, .mobile-apply-bar button {
+      border: 0; background: #ff6b00; color: #fff; font: inherit; font-weight: 700; cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .hero-apply { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 14px 28px; border-radius: 12px; font-size: 1rem; box-shadow: 0 12px 30px rgba(255,107,0,.28); }
+    .hero-apply:hover, .about-apply:hover, .side-apply-btn:hover { transform: translateY(-1px); background: #eb6300; }
+
+    .job-main { padding: 42px 0 86px; }
+    .job-layout { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 24px; align-items: start; }
+    .job-left { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+
+    .content-card, .position-card { background: #fff; border: 1px solid #e5eaf0; border-radius: 20px; box-shadow: 0 12px 35px rgba(11,27,51,.06); }
+    .content-card { padding: 30px; }
+    .content-card h2, .position-card h2 { font-family: "Syne", sans-serif; color: #0b1b33; font-size: 1.3rem; font-weight: 800; letter-spacing: -.025em; margin: 0 0 17px; }
+
+    .job-rich-text { color: #475569; line-height: 1.75; font-size: .97rem; overflow-wrap: anywhere; }
+    .job-rich-text p { margin: 0 0 13px; }
+    .job-rich-text p:last-child { margin-bottom: 0; }
+    .job-rich-text ul, .job-rich-text ol { padding-left: 22px; margin: 10px 0 16px; }
+    .job-rich-text li { margin-bottom: 7px; }
+    .job-rich-text strong, .job-rich-text b { color: #0b1b33; }
+
+    .about-action { margin-top: 24px; padding-top: 22px; border-top: 1px solid #edf0f4; }
+    .about-apply { min-height: 48px; padding: 12px 22px; border-radius: 11px; box-shadow: 0 8px 20px rgba(255,107,0,.18); }
+
+    .job-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
+    .job-tag { display: inline-flex; padding: 6px 11px; border-radius: 999px; background: #fff3e9; color: #ff6b00; font-size: .74rem; font-weight: 700; }
+
+    .position-card { padding: 24px; position: sticky; top: 95px; }
+    .side-detail { padding: 14px 0; border-bottom: 1px solid #edf0f4; }
+    .side-detail span { display: block; color: #8491a3; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+    .side-detail strong { display: block; color: #0b1b33; font-size: .92rem; line-height: 1.4; }
+    .side-apply-btn { width: 100%; min-height: 48px; margin-top: 20px; border-radius: 11px; }
+
+    .modal-overlay { position: fixed; inset: 0; z-index: 99999; display: none; align-items: flex-end; justify-content: center; background: rgba(8,16,30,.68); padding: 0; -webkit-overflow-scrolling: touch; }
+    .modal-overlay.open { display: flex; }
+    .apply-modal { position: relative; width: 100%; max-width: 570px; max-height: 92vh; overflow-y: auto; background: #fff; border-radius: 22px 22px 0 0; padding: 20px 18px 30px; box-shadow: 0 -15px 50px rgba(0,0,0,.22); animation: sheetUp .25s ease-out; }
+    @keyframes sheetUp { from { opacity: .6; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-handle { width: 42px; height: 4px; border-radius: 999px; background: #d1d5db; margin: 0 auto 17px; }
+    .modal-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: #f3f4f6; color: #475569; font-size: 1.3rem; cursor: pointer; }
+    .apply-modal h2 { font-family: "Syne", sans-serif; color: #0b1b33; font-size: 1.3rem; line-height: 1.3; letter-spacing: -.025em; margin: 0 45px 6px 0; }
+    .modal-subtitle { color: #6b7280; font-size: .86rem; line-height: 1.5; margin-bottom: 24px; }
+
+    .form-group { margin-bottom: 17px; }
+    .form-group > label { display: block; color: #0b1b33; font-size: .8rem; font-weight: 700; margin-bottom: 7px; }
+    .form-group input[type="text"], .form-group input[type="tel"], .form-group input[type="email"], .form-group select {
+      width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid #e2e7ed; border-radius: 12px; background: #fafafa; color: #0b1b33; font: inherit; font-size: 16px; outline: none; transition: border-color .18s, box-shadow .18s, background .18s; -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: #ff6b00; background: #fff; box-shadow: 0 0 0 3px rgba(255,107,0,.10); }
+    .radio-group, .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-group label, .checkbox-group label { display: flex; align-items: center; gap: 11px; min-height: 48px; padding: 11px 13px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fafafa; color: #374151; font-size: .9rem; font-weight: 500; cursor: pointer; }
+    .radio-group label:has(input:checked), .checkbox-group label:has(input:checked) { border-color: #ff6b00; background: #fff7ed; }
+    .radio-group input, .checkbox-group input { flex-shrink: 0; width: 18px; height: 18px; accent-color: #ff6b00; }
+
+    .form-actions { position: sticky; bottom: 0; display: flex; flex-direction: column-reverse; gap: 9px; margin-top: 23px; padding-top: 16px; background: linear-gradient(to top, #fff 78%, rgba(255,255,255,0)); }
+    .form-actions button { width: 100%; min-height: 49px; border-radius: 12px; font: inherit; font-size: .93rem; font-weight: 700; cursor: pointer; }
+    .cancel-btn { border: 1px solid #e5e7eb; background: #fff; color: #475569; }
+    .submit-btn { border: 0; background: #ff6b00; color: #fff; }
+    .submit-btn:disabled { opacity: .58; cursor: not-allowed; }
+    .form-msg { margin-top: 13px; text-align: center; font-size: .86rem; line-height: 1.45; }
+    .form-msg.success { color: #15803d; }
+    .form-msg.error { color: #dc2626; }
+
+    .page-state { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 25px; text-align: center; }
+    .page-state h1 { font-family: "Syne", sans-serif; color: #0b1b33; margin: 0 0 10px; }
+    .page-state p { max-width: 500px; color: #64748b; line-height: 1.6; }
+    .mobile-apply-bar { display: none; }
+
+    @media (min-width: 640px) {
+      .modal-overlay { align-items: center; padding: 20px; }
+      .apply-modal { border-radius: 20px; padding: 30px 28px; max-height: 90vh; animation: none; }
+      .modal-handle { display: none; }
+      .form-actions { position: static; flex-direction: row; padding-top: 0; background: none; }
+      .form-actions button { flex: 1; }
+    }
+
+    @media (max-width: 860px) {
+      .job-layout { grid-template-columns: minmax(0, 1fr) 280px; gap: 18px; }
+      .content-card { padding: 26px; }
+      .position-card { padding: 21px; }
+    }
+
+    @media (max-width: 700px) {
+      body { padding-bottom: 76px; }
+      .job-container { width: min(100% - 28px, 1020px); }
+      .job-hero { padding: 102px 0 42px; }
+      .job-title { font-size: clamp(2rem, 10vw, 2.8rem); margin-bottom: 20px; }
+      .hero-apply { width: 100%; }
+      .job-main { padding: 24px 0 38px; }
+      .job-layout { grid-template-columns: 1fr; gap: 18px; }
+      .job-left { gap: 18px; }
+      .content-card, .position-card { border-radius: 16px; }
+      .content-card { padding: 21px 18px; }
+      .position-card { position: static; padding: 21px 18px; }
+      .content-card h2, .position-card h2 { font-size: 1.15rem; margin-bottom: 14px; }
+      .job-rich-text { font-size: .93rem; line-height: 1.7; }
+      .about-apply, .side-apply-btn { width: 100%; }
+      .side-detail { padding: 12px 0; }
+      .mobile-apply-bar { position: fixed; display: block; left: 0; right: 0; bottom: 0; z-index: 9000; padding: 11px 14px; background: rgba(255,255,255,.96); border-top: 1px solid #e5e7eb; backdrop-filter: blur(10px); box-shadow: 0 -8px 24px rgba(11,27,51,.08); }
+      .mobile-apply-bar button { width: 100%; min-height: 49px; border-radius: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="nav-include"></div>
+
+  <div id="loadingState" class="page-state">
+    <h1>Loading position…</h1>
+    <p>Please wait while we load the job details.</p>
+  </div>
+
+  <div id="errorState" class="page-state" style="display:none;">
+    <h1>Position not found</h1>
+    <p>This job may have been closed, removed, or the link may be incorrect.</p>
+    <a href="careers.html" style="margin-top:16px;color:#ff6b00;font-weight:700;">View current openings</a>
+  </div>
+
+  <div id="jobPage" style="display:none;">
+    <section class="job-hero">
+      <div class="job-container">
+        <div class="job-hero-content">
+          <h1 class="job-title" id="jobTitle"></h1>
+          <button type="button" class="hero-apply" onclick="openApplyModal()">Apply Now</button>
+        </div>
+      </div>
+    </section>
+
+    <main class="job-main">
+      <div class="job-container">
+        <div class="job-layout">
+
+          <div class="job-left">
+            <section class="content-card">
+              <h2>About the Role</h2>
+              <div id="jobDescription" class="job-rich-text"></div>
+              <div id="jobTags" class="job-tags"></div>
+              <div class="about-action">
+                <button type="button" class="about-apply" onclick="openApplyModal()">Apply Now</button>
+              </div>
+            </section>
+
+            <section class="content-card" id="qualificationsSection">
+              <h2>Qualifications</h2>
+              <div id="jobQualifications" class="job-rich-text"></div>
+            </section>
+          </div>
+
+          <aside class="position-card">
+            <h2>Position Details</h2>
+
+            <div class="side-detail">
+              <span>Location</span>
+              <strong id="positionLocation">—</strong>
+            </div>
+
+            <div class="side-detail">
+              <span>Shift</span>
+              <strong id="positionShift">—</strong>
+            </div>
+
+            <div class="side-detail">
+              <span>Eligibility</span>
+              <strong id="positionGender">—</strong>
+            </div>
+
+            <div class="side-detail">
+              <span>Openings</span>
+              <strong id="positionOpenings">—</strong>
+            </div>
+
+            <button type="button" class="side-apply-btn" onclick="openApplyModal()">Apply Now</button>
+          </aside>
+
+        </div>
+      </div>
+    </main>
+
+    <div class="mobile-apply-bar">
+      <button type="button" onclick="openApplyModal()">Apply Now</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="applyModal">
+    <div class="apply-modal" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <button type="button" class="modal-close" onclick="closeApplyModal()" aria-label="Close">×</button>
+      <h2 id="applyModalTitle">Apply</h2>
+      <p class="modal-subtitle">Takes about 2 minutes. We'll contact you by phone or email.</p>
+
+      <form id="applyForm" novalidate>
+        <div id="dynamicFields"></div>
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" onclick="closeApplyModal()">Cancel</button>
+          <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+        </div>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="footer-include"></div>
+
+  <script src="js/includes.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://mvqvknxvfhbrzigieqpi.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12cXZrbnh2ZmhicnppZ2llcXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3ODgzNjMsImV4cCI6MjEwNDM2NDM2M30.jPVWDK1JzSx2o2NV-DNsX75APNzLdMlZdacVsjNJ0n8';
+
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let selectedJob = null;
+
+    function escapeHtml(value) {
+      if (!value) return '';
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function getDefaultSchema() {
+      return [
+        { id: 'full_name', label: 'Full Name', type: 'text', required: true },
+        { id: 'primary_phone', label: 'Primary Phone Number', type: 'tel', required: true },
+        { id: 'secondary_phone', label: 'Secondary Phone Number', type: 'tel', required: false },
+        { id: 'email', label: 'Email Address', type: 'email', required: true },
+        { id: 'education', label: 'Highest Education', type: 'radio', options: ['Matric/O Level', 'Intermediate/A Level', 'BS/BA/Adp', 'MS/MA'], required: true },
+        { id: 'experience', label: 'Experience', type: 'radio', options: ['Fresh', 'Less than 1 year', 'Greater than 1 year'], required: true },
+        { id: 'has_laptop', label: 'Do you have your own laptop?', type: 'yesno', required: true },
+        { id: 'available_night', label: 'This is a night shift job. Are you available during night?', type: 'yesno', required: true },
+        { id: 'availability', label: 'Are you willing to join as Full Time or Part Time?', type: 'radio', options: ['Full Time 6 Pm - 3 Am', 'Part time (4 Hours 30 minutes shift)'], required: true }
+      ];
+    }
+
+    function getLocation(job) {
+      if (job.is_remote === false && job.location) return job.location;
+      return 'Remote (Pakistan)';
+    }
+
+    function getShift(job) {
+      const shiftTypes = Array.isArray(job.shift_types) && job.shift_types.length ? job.shift_types : ['day'];
+      if (shiftTypes.includes('day') && shiftTypes.includes('night')) return 'Day & Night Shifts';
+      if (shiftTypes.includes('night')) return 'Night Shift';
+      return 'Day Shift';
+    }
+
+    function getGender(job) {
+      if (job.gender === 'male') return 'Male Candidates Only';
+      if (job.gender === 'female') return 'Female Candidates Only';
+      return 'Male & Female Candidates';
+    }
+
+    function renderJob(job) {
+      selectedJob = {
+        ...job,
+        form_schema: job.form_schema && job.form_schema.length ? job.form_schema : getDefaultSchema()
+      };
+
+      const location = getLocation(job);
+      const shift = getShift(job);
+      const gender = getGender(job);
+      const openings = job.openings || 1;
+
+      document.title = `${job.title} | Careers at Haulxify`;
+      document.getElementById('jobTitle').textContent = job.title;
+      document.getElementById('jobDescription').innerHTML = DOMPurify.sanitize(job.description || '');
+
+      const qualificationHtml = DOMPurify.sanitize(job.qualifications || '');
+      const qualificationSection = document.getElementById('qualificationsSection');
+
+      if (qualificationHtml.trim()) {
+        document.getElementById('jobQualifications').innerHTML = qualificationHtml;
+        qualificationSection.style.display = 'block';
+      } else {
+        qualificationSection.style.display = 'none';
+      }
+
+      document.getElementById('positionLocation').textContent = location;
+      document.getElementById('positionShift').textContent = shift;
+      document.getElementById('positionGender').textContent = gender;
+      document.getElementById('positionOpenings').textContent = `${openings} Position${openings > 1 ? 's' : ''}`;
+
+      document.getElementById('jobTags').innerHTML = (job.tags || [])
+        .map(tag => `<span class="job-tag">${escapeHtml(tag)}</span>`)
+        .join('');
+
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('jobPage').style.display = 'block';
+    }
+
+    async function loadJob() {
+      const params = new URLSearchParams(window.location.search);
+      const jobId = params.get('id');
+      if (!jobId) return showError();
+
+      const { data, error } = await supabaseClient
+        .from('jobs')
+        .select('*')
+        .eq('id', jobId)
+        .eq('is_active', true)
+        .single();
+
+      if (error || !data) {
+        console.error('Job loading error:', error);
+        return showError();
+      }
+
+      renderJob(data);
+    }
+
+    function showError() {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('jobPage').style.display = 'none';
+      document.getElementById('errorState').style.display = 'flex';
+    }
+
+    function renderFormFields(schema) {
+      const wrap = document.getElementById('dynamicFields');
+      wrap.innerHTML = '';
+
+      (schema || []).forEach(field => {
+        const group = document.createElement('div');
+        group.className = 'form-group';
+
+        const label = document.createElement('label');
+        label.textContent = field.label + (field.required ? ' *' : '');
+        group.appendChild(label);
+
+        const type = field.type === 'email' ? 'email' : field.type;
+
+        if (type === 'text' || type === 'tel' || type === 'email') {
+          const input = document.createElement('input');
+          input.type = type;
+          input.name = field.id;
+          input.id = field.id;
+          if (field.required) input.required = true;
+
+          if (type === 'email') {
+            input.autocomplete = 'email';
+            input.placeholder = 'name@example.com';
+          }
+          if (type === 'tel') {
+            input.autocomplete = 'tel';
+            input.inputMode = 'tel';
+            input.placeholder = '03XX-XXXXXXX';
+          }
+          if (field.id === 'full_name') input.autocomplete = 'name';
+          if (field.placeholder) input.placeholder = field.placeholder;
+          group.appendChild(input);
+        }
+
+        else if (type === 'radio' || type === 'yesno') {
+          const box = document.createElement('div');
+          box.className = type === 'yesno' ? 'radio-group' : 'checkbox-group';
+
+          const options = type === 'yesno'
+            ? [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }]
+            : (field.options || []).map(value => ({ value, label: value }));
+
+          options.forEach((option, index) => {
+            const optionLabel = document.createElement('label');
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = field.id;
+            input.value = option.value;
+            if (field.required && index === 0) input.required = true;
+            optionLabel.appendChild(input);
+            optionLabel.appendChild(document.createTextNode(option.label));
+            box.appendChild(optionLabel);
+          });
+
+          group.appendChild(box);
+        }
+
+        else if (type === 'select') {
+          const select = document.createElement('select');
+          select.name = field.id;
+          select.id = field.id;
+          if (field.required) select.required = true;
+
+          const empty = document.createElement('option');
+          empty.value = '';
+          empty.textContent = 'Select...';
+          select.appendChild(empty);
+
+          (field.options || []).forEach(value => {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+          });
+
+          group.appendChild(select);
+        }
+
+        wrap.appendChild(group);
+      });
+    }
+
+    function openApplyModal() {
+      if (!selectedJob) return;
+      document.getElementById('applyModalTitle').textContent = `Apply — ${selectedJob.title}`;
+      renderFormFields(selectedJob.form_schema);
+      document.getElementById('formMsg').textContent = '';
+      document.getElementById('applyModal').classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeApplyModal() {
+      document.getElementById('applyModal').classList.remove('open');
+      document.body.classList.remove('modal-open');
+      document.getElementById('formMsg').textContent = '';
+      document.getElementById('applyForm').reset();
+      document.getElementById('dynamicFields').innerHTML = '';
+    }
+
+    document.getElementById('applyModal').addEventListener('click', function(event) {
+      if (event.target === this) closeApplyModal();
+    });
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && document.getElementById('applyModal').classList.contains('open')) {
+        closeApplyModal();
+      }
+    });
+
+    document.getElementById('applyForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      if (!selectedJob) return;
+
+      const form = event.target;
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('formMsg');
+      btn.disabled = true;
+      msg.textContent = 'Checking...';
+      msg.className = 'form-msg';
+
+      const answers = {};
+      (selectedJob.form_schema || []).forEach(field => {
+        if (field.type === 'radio' || field.type === 'yesno') {
+          const checked = form.querySelector(`input[name="${field.id}"]:checked`);
+          answers[field.id] = checked ? checked.value : null;
+        } else {
+          const element = form.elements[field.id];
+          answers[field.id] = element ? String(element.value || '').trim() : null;
+        }
+      });
+
+      const fullName = answers.full_name || null;
+      const primaryPhone = answers.primary_phone || null;
+      const secondaryPhone = answers.secondary_phone || null;
+      const email = answers.email || null;
+      const phoneDigits = String(primaryPhone || '').replace(/\D/g, '');
+      const emailNormalized = String(email || '').trim().toLowerCase();
+
+      try {
+        if (selectedJob.id && (phoneDigits.length >= 10 || emailNormalized)) {
+          const { data: existing, error: checkError } = await supabaseClient
+            .from('applications')
+            .select('id, created_at, primary_phone, email')
+            .eq('job_id', selectedJob.id)
+            .order('created_at', { ascending: false });
+
+          if (checkError) throw checkError;
+
+          const duplicates = (existing || []).filter(row => {
+            const rowPhone = String(row.primary_phone || '').replace(/\D/g, '');
+            const rowEmail = String(row.email || '').trim().toLowerCase();
+            const phoneMatch = phoneDigits.length >= 10 && rowPhone && rowPhone === phoneDigits;
+            const emailMatch = emailNormalized && rowEmail && rowEmail === emailNormalized;
+            return phoneMatch || emailMatch;
+          });
+
+          if (duplicates.length) {
+            const latest = duplicates[0];
+            const when = new Date(latest.created_at).toLocaleString('en-PK', { dateStyle: 'medium', timeStyle: 'short' });
+            msg.innerHTML = `You already applied for this job on <strong>${when}</strong>.`;
+            msg.className = 'form-msg error';
+            btn.disabled = false;
+            return;
+          }
+        }
+
+        msg.textContent = 'Submitting...';
+
+        const application = {
+          full_name: fullName,
+          primary_phone: primaryPhone,
+          secondary_phone: secondaryPhone,
+          email: email,
+          education: answers.education || null,
+          experience: answers.experience || null,
+          has_laptop: answers.has_laptop === 'true' ? true : answers.has_laptop === 'false' ? false : null,
+          available_night: answers.available_night === 'true' ? true : answers.available_night === 'false' ? false : null,
+          availability: answers.availability || null,
+          job_title: selectedJob.title,
+          job_id: selectedJob.id,
+          answers: answers
+        };
+
+        const { error } = await supabaseClient.from('applications').insert([application]);
+
+        if (error) {
+          if (error.code === '23505') {
+            msg.textContent = 'You have already applied for this job.';
+            msg.className = 'form-msg error';
+            return;
+          }
+          throw error;
+        }
+
+        msg.textContent = 'Application submitted successfully! We will contact you soon.';
+        msg.className = 'form-msg success';
+        form.reset();
+        setTimeout(() => closeApplyModal(), 1800);
+      }
+
+      catch (error) {
+        console.error('Application error:', error);
+        msg.textContent = 'Something went wrong. Please try again.';
+        msg.className = 'form-msg error';
+      }
+
+      finally {
+        btn.disabled = false;
+      }
+    });
+
+    loadJob();
+  </script>
+</body>
+</html>
