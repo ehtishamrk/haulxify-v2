@@ -147,7 +147,28 @@
       margin-left: 6px;
     }
     .role-card .btn { flex-shrink: 0; min-height: 44px; padding: 10px 18px; }
+.role-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
+.details-btn {
+  background: transparent;
+  color: var(--brand-navy);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-btn:hover {
+  border-color: var(--brand-orange);
+  color: var(--brand-orange);
+  background: var(--orange-glow);
+}
     .perks-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -611,10 +632,27 @@
           </div>
           <div class="role-tags">${tagsHtml}</div>
         </div>
-        <div class="role-card-footer">
-          <span class="role-openings">${job.openings || 1} Position${(job.openings || 1) > 1 ? 's' : ''} Open</span>
-          <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
-        </div>
+<div class="role-card-footer">
+  <span class="role-openings">
+    ${job.openings || 1} Position${(job.openings || 1) > 1 ? 's' : ''} Open
+  </span>
+
+  <div class="role-actions">
+    <a
+      href="job.html?id=${encodeURIComponent(job.id)}"
+      class="btn details-btn"
+    >
+      View Details
+    </a>
+
+    <button
+      type="button"
+      class="btn btn-primary apply-btn"
+    >
+      Apply Now
+    </button>
+  </div>
+</div>
       `;
       card.querySelector('.apply-btn').addEventListener('click', () => openApplyModal(job));
       container.appendChild(card);
