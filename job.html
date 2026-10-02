@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Job Opening | Haulxify</title>
+  <meta
+    name="description"
+    content="View job details and apply for opportunities at Haulxify."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/services.css">
+
+  <style>
+    body {
+      background: var(--off-white, #f7f8fa);
+      color: var(--brand-navy, #0b1b33);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .job-page-hero {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255,107,0,.18), transparent 30%),
+        linear-gradient(145deg, #0b1b33, #132844);
+      padding: 125px 0 70px;
+      color: #fff;
+    }
+
+    .job-page-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,.7);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    .job-eyebrow {
+      display: inline-block;
+      color: #ff6b00;
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+
+    #jobTitle {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2rem, 6vw, 3.7rem);
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin: 0 0 20px;
+      color: #fff;
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 28px;
+    }
+
+    .job-meta-item {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.88);
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    .hero-apply-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ff6b00;
+      color: white;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      min-height: 50px;
+      box-shadow: 0 10px 30px rgba(255,107,0,.3);
+    }
+
+    .hero-apply-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .job-main {
+      padding: 50px 0 80px;
+    }
+
+    .job-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .job-card {
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 35px rgba(11,27,51,.06);
+    }
+
+    .job-card h2 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.4rem;
+      color: #0b1b33;
+      margin: 0 0 18px;
+    }
+
+    .job-description {
+      color: #475569;
+      line-height: 1.75;
+      font-size: .97rem;
+    }
+
+    .job-description p {
+      margin-bottom: 14px;
+    }
+
+    .job-description ul,
+    .job-description ol {
+      padding-left: 22px;
+      margin: 10px 0 18px;
+    }
+
+    .job-description li {
+      margin-bottom: 7px;
+    }
+
+    .job-description strong,
+    .job-description b {
+      color: #0b1b33;
+    }
+
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 25px;
+    }
+
+    .job-tag {
+      background: #fff3e9;
+      color: #ff6b00;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .side-card {
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 18px;
+      padding: 22px;
+      position: sticky;
+      top: 95px;
+      box-shadow: 0 10px 30px rgba(11,27,51,.05);
+    }
+
+    .side-card h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .side-detail {
+      padding: 12px 0;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .side-detail:last-of-type {
+      border-bottom: 0;
+    }
+
+    .side-detail span {
+      display: block;
+      color: #94a3b8;
+      font-size: .72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: .04em;
+      margin-bottom: 3px;
+    }
+
+    .side-detail strong {
+      color: #0b1b33;
+      font-size: .9rem;
+    }
+
+    .side-apply-btn {
+      width: 100%;
+      border: 0;
+      background: #ff6b00;
+      color: white;
+      padding: 13px;
+      margin-top: 18px;
+      border-radius: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .application-section {
+      margin-top: 28px;
+    }
+
+    .application-intro {
+      margin-bottom: 25px;
+    }
+
+    .application-intro p {
+      color: #64748b;
+      margin-top: 7px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group > label {
+      display: block;
+      color: #0b1b33;
+      font-weight: 700;
+      font-size: .85rem;
+      margin-bottom: 7px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group input[type="email"],
+    .form-group select {
+      width: 100%;
+      border: 1px solid #dfe5ec;
+      background: #fafbfc;
+      border-radius: 11px;
+      padding: 13px 14px;
+      font-family: inherit;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      background: white;
+      border-color: #ff6b00;
+      box-shadow: 0 0 0 3px rgba(255,107,0,.1);
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fafbfc;
+      border: 1px solid #e5e7eb;
+      padding: 12px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .radio-group input,
+    .checkbox-group input {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff6b00;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: #ff6b00;
+      color: white;
+      border: 0;
+      border-radius: 12px;
+      padding: 15px;
+      min-height: 50px;
+      font-size: .96rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .submit-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .form-msg {
+      text-align: center;
+      margin-top: 13px;
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .form-msg.success {
+      color: #15803d;
+    }
+
+    .form-msg.error {
+      color: #dc2626;
+    }
+
+    .page-state {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .page-state h1 {
+      font-family: "Syne", sans-serif;
+      color: #0b1b33;
+      margin-bottom: 10px;
+    }
+
+    .page-state p {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .mobile-sticky {
+      display: none;
+    }
+
+    @media (max-width: 800px) {
+      .job-page-hero {
+        padding: 105px 0 50px;
+      }
+
+      .job-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-card {
+        position: static;
+      }
+
+      .job-card {
+        padding: 22px 18px;
+      }
+
+      .mobile-sticky {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 12px 16px;
+        background: rgba(255,255,255,.96);
+        border-top: 1px solid #e5e7eb;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+      }
+
+      .mobile-sticky button {
+        width: 100%;
+        background: #ff6b00;
+        color: white;
+        border: 0;
+        border-radius: 11px;
+        padding: 13px;
+        font-weight: 700;
+        min-height: 48px;
+      }
+
+      body {
+        padding-bottom: 74px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="nav-include"></div>
+
+<div id="loadingState" class="page-state">
+  <h1>Loading position…</h1>
+  <p>Please wait while we load the job details.</p>
+</div>
+
+<div id="errorState" class="page-state" style="display:none;">
+  <h1>Position not found</h1>
+  <p>This job may have been closed, removed, or the link may be incorrect.</p>
+  <p style="margin-top:18px;">
+    <a href="careers.html" class="hero-apply-btn">View Open Positions</a>
+  </p>
+</div>
+
+<div id="jobPage" style="display:none;">
+
+  <section class="job-page-hero">
+    <div class="job-page-wrap">
+
+      <a href="careers.html" class="back-link">
+        ← Back to all positions
+      </a>
+
+      <span class="job-eyebrow">We're Hiring</span>
+
+      <h1 id="jobTitle"></h1>
+
+      <div class="job-meta" id="jobMeta"></div>
+
+      <button class="hero-apply-btn" type="button" onclick="scrollToApplication()">
+        Apply Now
+      </button>
+
+    </div>
+  </section>
+
+  <main class="job-main">
+    <div class="job-page-wrap">
+
+      <div class="job-layout">
+
+        <div>
+
+          <div class="job-card">
+            <h2>About the Role</h2>
+
+            <div id="jobDescription" class="job-description"></div>
+
+            <div id="jobTags" class="tags-wrap"></div>
+          </div>
+
+          <div class="job-card application-section" id="applicationSection">
+
+            <div class="application-intro">
+              <h2>Apply for this position</h2>
+              <p>
+                Complete the form below. It should only take a couple of minutes.
+              </p>
+            </div>
+
+            <form id="applyForm">
+
+              <div id="dynamicFields"></div>
+
+              <button
+                id="submitBtn"
+                type="submit"
+                class="submit-btn"
+              >
+                Submit Application
+              </button>
+
+              <div id="formMsg" class="form-msg"></div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+        <aside class="side-card">
+
+          <h3>Position Details</h3>
+
+          <div class="side-detail">
+            <span>Location</span>
+            <strong id="sideLocation">—</strong>
+          </div>
+
+          <div class="side-detail">
+            <span>Shift</span>
+            <strong id="sideShift">—</strong>
+          </div>
+
+          <div class="side-detail">
+            <span>Eligibility</span>
+            <strong id="sideGender">—</strong>
+          </div>
+
+          <div class="side-detail">
+            <span>Openings</span>
+            <strong id="sideOpenings">—</strong>
+          </div>
+
+          <button
+            type="button"
+            class="side-apply-btn"
+            onclick="scrollToApplication()"
+          >
+            Apply Now
+          </button>
+
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div class="mobile-sticky">
+    <button type="button" onclick="scrollToApplication()">
+      Apply Now
+    </button>
+  </div>
+
+</div>
+
+<div id="footer-include"></div>
+
+<script src="js/includes.js" defer></script>
+<script src="js/main.js" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL =
+    'https://mvqvknxvfhbrzigieqpi.supabase.co';
+
+  const SUPABASE_ANON_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12cXZrbnh2ZmhicnppZ2llcXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3ODgzNjMsImV4cCI6MjEwNDM2NDM2M30.jPVWDK1JzSx2o2NV-DNsX75APNzLdMlZdacVsjNJ0n8';
+
+  const { createClient } = supabase;
+
+  const supabaseClient = createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  let selectedJob = null;
+
+  function escapeHtml(str) {
+    if (!str) return '';
+
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+
+  function getDefaultSchema() {
+    return [
+      {
+        id: 'full_name',
+        label: 'Full Name',
+        type: 'text',
+        required: true
+      },
+      {
+        id: 'primary_phone',
+        label: 'Primary Phone Number',
+        type: 'tel',
+        required: true
+      },
+      {
+        id: 'secondary_phone',
+        label: 'Secondary Phone Number',
+        type: 'tel',
+        required: false
+      },
+      {
+        id: 'email',
+        label: 'Email Address',
+        type: 'email',
+        required: true
+      },
+      {
+        id: 'education',
+        label: 'Highest Education',
+        type: 'radio',
+        options: [
+          'Matric/O Level',
+          'Intermediate/A Level',
+          'BS/BA/Adp',
+          'MS/MA'
+        ],
+        required: true
+      },
+      {
+        id: 'experience',
+        label: 'Experience',
+        type: 'radio',
+        options: [
+          'Fresh',
+          'Less than 1 year',
+          'Greater than 1 year'
+        ],
+        required: true
+      },
+      {
+        id: 'has_laptop',
+        label: 'Do you have your own laptop?',
+        type: 'yesno',
+        required: true
+      },
+      {
+        id: 'available_night',
+        label: 'This is a night shift job. Are you available during night?',
+        type: 'yesno',
+        required: true
+      },
+      {
+        id: 'availability',
+        label: 'Are you willing to join as Full Time or Part Time?',
+        type: 'radio',
+        options: [
+          'Full Time 6 Pm - 3 Am',
+          'Part time (4 Hours 30 minutes shift)'
+        ],
+        required: true
+      }
+    ];
+  }
+
+
+  function scrollToApplication() {
+    document
+      .getElementById('applicationSection')
+      .scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+    setTimeout(() => {
+      const firstInput =
+        document.querySelector('#dynamicFields input');
+
+      if (firstInput) firstInput.focus();
+    }, 600);
+  }
+
+
+  function getGenderLabel(job) {
+    if (job.gender === 'male') {
+      return 'Male Candidates Only';
+    }
+
+    if (job.gender === 'female') {
+      return 'Female Candidates Only';
+    }
+
+    return 'Male & Female Candidates';
+  }
+
+
+  function getShiftLabel(job) {
+    const shifts =
+      Array.isArray(job.shift_types) &&
+      job.shift_types.length
+        ? job.shift_types
+        : ['day'];
+
+    if (
+      shifts.includes('day') &&
+      shifts.includes('night')
+    ) {
+      return 'Day & Night Shifts';
+    }
+
+    if (shifts.includes('night')) {
+      return 'Night Shift';
+    }
+
+    return 'Day Shift';
+  }
+
+
+  function getLocationLabel(job) {
+    if (
+      job.is_remote === false &&
+      job.location
+    ) {
+      return job.location;
+    }
+
+    return 'Remote (Pakistan)';
+  }
+
+
+  function renderFormFields(schema) {
+    const wrap =
+      document.getElementById('dynamicFields');
+
+    wrap.innerHTML = '';
+
+    (schema || []).forEach(field => {
+
+      const group =
+        document.createElement('div');
+
+      group.className = 'form-group';
+
+      const label =
+        document.createElement('label');
+
+      label.textContent =
+        field.label +
+        (field.required ? ' *' : '');
+
+      group.appendChild(label);
+
+      const type =
+        field.type === 'email'
+          ? 'email'
+          : field.type;
+
+
+      if (
+        type === 'text' ||
+        type === 'tel' ||
+        type === 'email'
+      ) {
+
+        const input =
+          document.createElement('input');
+
+        input.type = type;
+        input.name = field.id;
+        input.id = field.id;
+
+        if (field.required) {
+          input.required = true;
+        }
+
+        if (type === 'email') {
+          input.autocomplete = 'email';
+          input.placeholder = 'name@example.com';
+        }
+
+        if (type === 'tel') {
+          input.autocomplete = 'tel';
+          input.inputMode = 'tel';
+          input.placeholder = '03XX-XXXXXXX';
+        }
+
+        if (field.id === 'full_name') {
+          input.autocomplete = 'name';
+        }
+
+        if (field.placeholder) {
+          input.placeholder =
+            field.placeholder;
+        }
+
+        group.appendChild(input);
+
+      }
+
+      else if (
+        type === 'radio' ||
+        type === 'yesno'
+      ) {
+
+        const box =
+          document.createElement('div');
+
+        box.className = 'radio-group';
+
+        const options =
+          type === 'yesno'
+            ? [
+                {
+                  value: 'true',
+                  label: 'Yes'
+                },
+                {
+                  value: 'false',
+                  label: 'No'
+                }
+              ]
+            : (field.options || []).map(
+                option => ({
+                  value: option,
+                  label: option
+                })
+              );
+
+
+        options.forEach((option, index) => {
+
+          const optionLabel =
+            document.createElement('label');
+
+          const input =
+            document.createElement('input');
+
+          input.type = 'radio';
+          input.name = field.id;
+          input.value = option.value;
+
+          if (
+            field.required &&
+            index === 0
+          ) {
+            input.required = true;
+          }
+
+          optionLabel.appendChild(input);
+
+          optionLabel.appendChild(
+            document.createTextNode(
+              option.label
+            )
+          );
+
+          box.appendChild(optionLabel);
+
+        });
+
+        group.appendChild(box);
+
+      }
+
+      else if (type === 'select') {
+
+        const select =
+          document.createElement('select');
+
+        select.name = field.id;
+        select.id = field.id;
+
+        if (field.required) {
+          select.required = true;
+        }
+
+        const emptyOption =
+          document.createElement('option');
+
+        emptyOption.value = '';
+        emptyOption.textContent =
+          'Select...';
+
+        select.appendChild(emptyOption);
+
+        (field.options || []).forEach(
+          option => {
+
+            const el =
+              document.createElement('option');
+
+            el.value = option;
+            el.textContent = option;
+
+            select.appendChild(el);
+
+          }
+        );
+
+        group.appendChild(select);
+
+      }
+
+      wrap.appendChild(group);
+
+    });
+  }
+
+
+  function renderJob(job) {
+
+    selectedJob = {
+      ...job,
+      form_schema:
+        job.form_schema &&
+        job.form_schema.length
+          ? job.form_schema
+          : getDefaultSchema()
+    };
+
+
+    const gender =
+      getGenderLabel(job);
+
+    const shift =
+      getShiftLabel(job);
+
+    const location =
+      getLocationLabel(job);
+
+    const openings =
+      job.openings || 1;
+
+
+    document.title =
+      `${job.title} | Careers at Haulxify`;
+
+
+    document.getElementById(
+      'jobTitle'
+    ).textContent =
+      job.title;
+
+
+    document.getElementById(
+      'jobDescription'
+    ).innerHTML =
+      DOMPurify.sanitize(
+        job.description || ''
+      );
+
+
+    const meta =
+      document.getElementById(
+        'jobMeta'
+      );
+
+    meta.innerHTML = `
+      <span class="job-meta-item">
+        ${escapeHtml(location)}
+      </span>
+
+      <span class="job-meta-item">
+        ${escapeHtml(shift)}
+      </span>
+
+      <span class="job-meta-item">
+        ${escapeHtml(gender)}
+      </span>
+
+      <span class="job-meta-item">
+        ${openings}
+        Position${openings > 1 ? 's' : ''}
+      </span>
+    `;
+
+
+    document.getElementById(
+      'sideLocation'
+    ).textContent =
+      location;
+
+    document.getElementById(
+      'sideShift'
+    ).textContent =
+      shift;
+
+    document.getElementById(
+      'sideGender'
+    ).textContent =
+      gender;
+
+    document.getElementById(
+      'sideOpenings'
+    ).textContent =
+      `${openings} Position${
+        openings > 1 ? 's' : ''
+      }`;
+
+
+    const tagsWrap =
+      document.getElementById(
+        'jobTags'
+      );
+
+    tagsWrap.innerHTML =
+      (job.tags || [])
+        .map(
+          tag =>
+            `<span class="job-tag">${escapeHtml(tag)}</span>`
+        )
+        .join('');
+
+
+    renderFormFields(
+      selectedJob.form_schema
+    );
+
+
+    document.getElementById(
+      'loadingState'
+    ).style.display = 'none';
+
+    document.getElementById(
+      'jobPage'
+    ).style.display = 'block';
+
+  }
+
+
+  async function loadJob() {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const jobId =
+      params.get('id');
+
+
+    if (!jobId) {
+      showError();
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from('jobs')
+        .select('*')
+        .eq('id', jobId)
+        .eq('is_active', true)
+        .single();
+
+
+    if (
+      error ||
+      !data
+    ) {
+
+      console.error(
+        'Job loading error:',
+        error
+      );
+
+      showError();
+      return;
+
+    }
+
+
+    renderJob(data);
+
+  }
+
+
+  function showError() {
+
+    document.getElementById(
+      'loadingState'
+    ).style.display = 'none';
+
+    document.getElementById(
+      'jobPage'
+    ).style.display = 'none';
+
+    document.getElementById(
+      'errorState'
+    ).style.display = 'block';
+
+  }
+
+
+  document.getElementById(
+    'applyForm'
+  ).addEventListener(
+    'submit',
+    async function(event) {
+
+      event.preventDefault();
+
+      if (!selectedJob) {
+        return;
+      }
+
+
+      const form =
+        event.target;
+
+      const submitBtn =
+        document.getElementById(
+          'submitBtn'
+        );
+
+      const msg =
+        document.getElementById(
+          'formMsg'
+        );
+
+
+      submitBtn.disabled = true;
+
+      msg.textContent =
+        'Checking application...';
+
+      msg.className =
+        'form-msg';
+
+
+      const answers = {};
+
+
+      (
+        selectedJob.form_schema || []
+      ).forEach(field => {
+
+        if (
+          field.type === 'radio' ||
+          field.type === 'yesno'
+        ) {
+
+          const checked =
+            form.querySelector(
+              `input[name="${field.id}"]:checked`
+            );
+
+          answers[field.id] =
+            checked
+              ? checked.value
+              : null;
+
+        }
+
+        else {
+
+          const input =
+            form.elements[field.id];
+
+          answers[field.id] =
+            input
+              ? String(
+                  input.value || ''
+                ).trim()
+              : null;
+
+        }
+
+      });
+
+
+      const fullName =
+        answers.full_name || null;
+
+      const primaryPhone =
+        answers.primary_phone || null;
+
+      const secondaryPhone =
+        answers.secondary_phone || null;
+
+      const email =
+        answers.email || null;
+
+
+      const phoneDigits =
+        String(
+          primaryPhone || ''
+        ).replace(/\D/g, '');
+
+      const emailNormalized =
+        String(
+          email || ''
+        )
+          .trim()
+          .toLowerCase();
+
+
+      try {
+
+        if (
+          selectedJob.id &&
+          (
+            phoneDigits.length >= 10 ||
+            emailNormalized
+          )
+        ) {
+
+          const {
+            data: existing,
+            error: checkError
+          } =
+            await supabaseClient
+              .from('applications')
+              .select(
+                'id, created_at, primary_phone, email'
+              )
+              .eq(
+                'job_id',
+                selectedJob.id
+              )
+              .order(
+                'created_at',
+                {
+                  ascending: false
+                }
+              );
+
+
+          if (checkError) {
+            throw checkError;
+          }
+
+
+          const duplicates =
+            (existing || []).filter(
+              row => {
+
+                const rowPhone =
+                  String(
+                    row.primary_phone || ''
+                  ).replace(/\D/g, '');
+
+                const rowEmail =
+                  String(
+                    row.email || ''
+                  )
+                    .trim()
+                    .toLowerCase();
+
+
+                const phoneMatch =
+                  phoneDigits.length >= 10 &&
+                  rowPhone &&
+                  rowPhone ===
+                    phoneDigits;
+
+
+                const emailMatch =
+                  emailNormalized &&
+                  rowEmail &&
+                  rowEmail ===
+                    emailNormalized;
+
+
+                return (
+                  phoneMatch ||
+                  emailMatch
+                );
+
+              }
+            );
+
+
+          if (duplicates.length) {
+
+            const last =
+              duplicates[0];
+
+            const when =
+              new Date(
+                last.created_at
+              ).toLocaleString(
+                'en-PK',
+                {
+                  dateStyle: 'medium',
+                  timeStyle: 'short'
+                }
+              );
+
+
+            msg.innerHTML =
+              `You already applied for this position on <strong>${when}</strong>.`;
+
+            msg.className =
+              'form-msg error';
+
+            submitBtn.disabled =
+              false;
+
+            return;
+
+          }
+
+        }
+
+
+        msg.textContent =
+          'Submitting application...';
+
+
+        const application = {
+
+          full_name:
+            fullName,
+
+          primary_phone:
+            primaryPhone,
+
+          secondary_phone:
+            secondaryPhone,
+
+          email:
+            email,
+
+          education:
+            answers.education || null,
+
+          experience:
+            answers.experience || null,
+
+          has_laptop:
+            answers.has_laptop === 'true'
+              ? true
+              : answers.has_laptop === 'false'
+                ? false
+                : null,
+
+          available_night:
+            answers.available_night === 'true'
+              ? true
+              : answers.available_night === 'false'
+                ? false
+                : null,
+
+          availability:
+            answers.availability || null,
+
+          job_title:
+            selectedJob.title,
+
+          job_id:
+            selectedJob.id,
+
+          answers:
+            answers
+        };
+
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from('applications')
+            .insert([
+              application
+            ]);
+
+
+        if (error) {
+
+          if (
+            error.code === '23505'
+          ) {
+
+            msg.textContent =
+              'You have already applied for this position.';
+
+            msg.className =
+              'form-msg error';
+
+            return;
+
+          }
+
+          throw error;
+
+        }
+
+
+        msg.textContent =
+          'Application submitted successfully! We will contact you soon.';
+
+        msg.className =
+          'form-msg success';
+
+
+        form.reset();
+
+
+      }
+
+      catch (error) {
+
+        console.error(
+          'Application error:',
+          error
+        );
+
+        msg.textContent =
+          'Something went wrong. Please try again.';
+
+        msg.className =
+          'form-msg error';
+
+      }
+
+      finally {
+
+        submitBtn.disabled =
+          false;
+
+      }
+
+    }
+  );
+
+
+  loadJob();
+</script>
+
+</body>
+</html>
