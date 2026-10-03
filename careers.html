@@ -86,10 +86,14 @@
     }
 .role-info p,
 .role-desc {
+  --hx-rich-default-size: 0.875rem;
   font-size: 0.875rem;
   color: var(--text-body);
   line-height: 1.55;
   margin: 0 0 12px;
+}
+.role-desc .hx-font-default {
+  font-size: var(--hx-rich-default-size) !important;
 }
 .role-desc ul,
 .role-desc ol {
@@ -671,7 +675,9 @@
           <div class="role-tags">${tagsHtml}</div>
         </div>
         <div class="role-card-footer">
-          <span class="role-openings">${job.openings || 1} Position${(job.openings || 1) > 1 ? 's' : ''} Open</span>
+          ${job.openings != null && Number(job.openings) > 0
+            ? `<span class="role-openings">${Number(job.openings)} Position${Number(job.openings) > 1 ? 's' : ''} Open</span>`
+            : '<span></span>'}
           <div class="role-actions">
             <a class="btn details-btn" href="job.html?id=${encodeURIComponent(job.id)}">View Details</a>
             <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
