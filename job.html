@@ -191,9 +191,9 @@
               <div id="jobQualifications" class="job-rich-text position-qualifications-text"></div>
             </div>
 
-            <div class="side-detail">
+            <div class="side-detail" id="positionLocationRow">
               <span>Location</span>
-              <strong id="positionLocation">—</strong>
+              <strong id="positionLocation"></strong>
             </div>
 
             <div class="side-detail">
@@ -206,9 +206,24 @@
               <strong id="positionShift">—</strong>
             </div>
 
-            <div class="side-detail">
-              <span>Eligibility</span>
-              <strong id="positionGender">—</strong>
+            <div class="side-detail" id="positionGenderRow">
+              <span>Gender</span>
+              <strong id="positionGender"></strong>
+            </div>
+
+            <div class="side-detail" id="positionAgeRow">
+              <span>Age Limit</span>
+              <strong id="positionAge"></strong>
+            </div>
+
+            <div class="side-detail" id="positionExperienceRow">
+              <span>Experience Required</span>
+              <strong id="positionExperience"></strong>
+            </div>
+
+            <div class="side-detail" id="positionWorkArrangementRow">
+              <span>Work Arrangement</span>
+              <strong id="positionWorkArrangement"></strong>
             </div>
 
             <div class="side-detail">
@@ -311,8 +326,7 @@
     }
 
     function getLocation(job) {
-      if (job.is_remote === false && job.location) return job.location;
-      return 'Remote (Pakistan)';
+      return String(job.location || '').trim() || null;
     }
 
     function getShift(job) {
@@ -323,9 +337,39 @@
     }
 
     function getGender(job) {
-      if (job.gender === 'male') return 'Male Candidates Only';
-      if (job.gender === 'female') return 'Female Candidates Only';
-      return 'Male & Female Candidates';
+      if (job.gender === 'male') return 'Male';
+      if (job.gender === 'female') return 'Female';
+      if (job.gender === 'both') return 'Male & Female';
+      return null;
+    }
+
+    function getAgeLimit(job) {
+      const min = Number.isFinite(Number(job.min_age)) && job.min_age !== null ? Number(job.min_age) : null;
+      const max = Number.isFinite(Number(job.max_age)) && job.max_age !== null ? Number(job.max_age) : null;
+      if (min !== null && max !== null) return `${min}–${max} years`;
+      if (min !== null) return `${min}+ years`;
+      if (max !== null) return `Up to ${max} years`;
+      return null;
+    }
+
+    function getWorkArrangement(job) {
+      if (job.work_arrangement === 'remote') return 'Remote';
+      if (job.work_arrangement === 'onsite') return 'On-site';
+      if (job.work_arrangement === 'hybrid') return 'Hybrid';
+      return null;
+    }
+
+    function setOptionalDetail(rowId, valueId, value) {
+      const row = document.getElementById(rowId);
+      const valueEl = document.getElementById(valueId);
+      const clean = value == null ? '' : String(value).trim();
+      if (clean) {
+        valueEl.textContent = clean;
+        row.style.display = 'block';
+      } else {
+        valueEl.textContent = '';
+        row.style.display = 'none';
+      }
     }
 
     function getEmploymentType(job) {
@@ -345,7 +389,11 @@
         'full time',
         'part time',
         'night shift',
-        'day shift'
+        'day shift',
+        'remote',
+        'on site',
+        'onsite',
+        'hybrid'
       ].includes(normalized);
     }
 
@@ -358,6 +406,9 @@
       const location = getLocation(job);
       const shift = getShift(job);
       const gender = getGender(job);
+      const ageLimit = getAgeLimit(job);
+      const experienceRequired = String(job.experience_required || '').trim() || null;
+      const workArrangement = getWorkArrangement(job);
       const employmentType = getEmploymentType(job);
       const openings = job.openings || 1;
 
@@ -375,10 +426,13 @@
         qualificationSection.style.display = 'none';
       }
 
-      document.getElementById('positionLocation').textContent = location;
+      setOptionalDetail('positionLocationRow', 'positionLocation', location);
       document.getElementById('positionEmploymentType').textContent = employmentType;
       document.getElementById('positionShift').textContent = shift;
-      document.getElementById('positionGender').textContent = gender;
+      setOptionalDetail('positionGenderRow', 'positionGender', gender);
+      setOptionalDetail('positionAgeRow', 'positionAge', ageLimit);
+      setOptionalDetail('positionExperienceRow', 'positionExperience', experienceRequired);
+      setOptionalDetail('positionWorkArrangementRow', 'positionWorkArrangement', workArrangement);
       document.getElementById('positionOpenings').textContent = `${openings} Position${openings > 1 ? 's' : ''}`;
 
       const visibleTags = (job.tags || []).filter(tag => !isStructuredTag(tag));
