@@ -60,6 +60,11 @@
     .job-tag { display: inline-flex; padding: 6px 11px; border-radius: 999px; background: #fff3e9; color: #ff6b00; font-size: .74rem; font-weight: 700; }
 
     .position-card { padding: 24px; position: sticky; top: 95px; }
+    .position-qualifications { padding: 0 0 16px; margin-bottom: 2px; border-bottom: 1px solid #edf0f4; }
+    .position-detail-label { display: block; color: #8491a3; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .position-qualifications-text { font-size: .9rem; line-height: 1.6; color: #475569; }
+    .position-qualifications-text ul, .position-qualifications-text ol { padding-left: 18px; margin: 6px 0 0; }
+    .position-qualifications-text li { margin-bottom: 5px; }
     .side-detail { padding: 14px 0; border-bottom: 1px solid #edf0f4; }
     .side-detail span { display: block; color: #8491a3; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
     .side-detail strong { display: block; color: #0b1b33; font-size: .92rem; line-height: 1.4; }
@@ -128,6 +133,8 @@
       .content-card h2, .position-card h2 { font-size: 1.15rem; margin-bottom: 14px; }
       .job-rich-text { font-size: .93rem; line-height: 1.7; }
       .about-apply, .side-apply-btn { width: 100%; }
+      .position-qualifications { padding-bottom: 14px; }
+      .position-qualifications-text { font-size: .9rem; }
       .side-detail { padding: 12px 0; }
       .mobile-apply-bar { position: fixed; display: block; left: 0; right: 0; bottom: 0; z-index: 9000; padding: 11px 14px; background: rgba(255,255,255,.96); border-top: 1px solid #e5e7eb; backdrop-filter: blur(10px); box-shadow: 0 -8px 24px rgba(11,27,51,.08); }
       .mobile-apply-bar button { width: 100%; min-height: 49px; border-radius: 11px; }
@@ -173,14 +180,15 @@
               </div>
             </section>
 
-            <section class="content-card" id="qualificationsSection">
-              <h2>Qualifications</h2>
-              <div id="jobQualifications" class="job-rich-text"></div>
-            </section>
           </div>
 
           <aside class="position-card">
             <h2>Position Details</h2>
+
+            <div class="position-qualifications" id="qualificationsSection">
+              <span class="position-detail-label">Qualifications</span>
+              <div id="jobQualifications" class="job-rich-text position-qualifications-text"></div>
+            </div>
 
             <div class="side-detail">
               <span>Location</span>
