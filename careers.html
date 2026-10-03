@@ -147,28 +147,14 @@
       margin-left: 6px;
     }
     .role-card .btn { flex-shrink: 0; min-height: 44px; padding: 10px 18px; }
-.role-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+    .role-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .role-actions .details-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      text-decoration: none; background: var(--white); color: var(--brand-navy);
+      border: 1px solid var(--border);
+    }
+    .role-actions .details-btn:hover { border-color: var(--brand-orange); color: var(--brand-orange); }
 
-.details-btn {
-  background: transparent;
-  color: var(--brand-navy);
-  border: 1px solid var(--border);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.details-btn:hover {
-  border-color: var(--brand-orange);
-  color: var(--brand-orange);
-  background: var(--orange-glow);
-}
     .perks-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -394,6 +380,8 @@
     @media (max-width: 900px) {
       .perks-grid { grid-template-columns: 1fr 1fr; }
       .role-card .btn { width: 100%; }
+      .role-actions { width: 100%; }
+      .role-actions .btn { flex: 1 1 160px; }
     }
     @media (max-width: 600px) {
       .careers-hero { padding: 100px 0 40px; }
@@ -632,27 +620,13 @@
           </div>
           <div class="role-tags">${tagsHtml}</div>
         </div>
-<div class="role-card-footer">
-  <span class="role-openings">
-    ${job.openings || 1} Position${(job.openings || 1) > 1 ? 's' : ''} Open
-  </span>
-
-  <div class="role-actions">
-    <a
-      href="job.html?id=${encodeURIComponent(job.id)}"
-      class="btn details-btn"
-    >
-      View Details
-    </a>
-
-    <button
-      type="button"
-      class="btn btn-primary apply-btn"
-    >
-      Apply Now
-    </button>
-  </div>
-</div>
+        <div class="role-card-footer">
+          <span class="role-openings">${job.openings || 1} Position${(job.openings || 1) > 1 ? 's' : ''} Open</span>
+          <div class="role-actions">
+            <a class="btn details-btn" href="job.html?id=${encodeURIComponent(job.id)}">View Details</a>
+            <button type="button" class="btn btn-primary apply-btn">Apply Now</button>
+          </div>
+        </div>
       `;
       card.querySelector('.apply-btn').addEventListener('click', () => openApplyModal(job));
       container.appendChild(card);
@@ -759,7 +733,7 @@ document.getElementById('applyForm').addEventListener('submit', async function (
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('formMsg');
   btn.disabled = true;
-  msg.textContent = 'Checking...';
+  msg.textContent = 'Submitting...';
   msg.className = 'form-msg';
 
   const form = e.target;
@@ -779,47 +753,9 @@ document.getElementById('applyForm').addEventListener('submit', async function (
   const secondaryPhone = answers.secondary_phone || null;
   const email = answers.email || null;
 
-  // Normalize for matching
-  const phoneDigits = String(primaryPhone || '').replace(/\D/g, '');
-  const emailNorm = String(email || '').trim().toLowerCase();
-
   try {
-    // ---- Duplicate check (same job) ----
-    if (selectedJob.id && (phoneDigits.length >= 10 || emailNorm)) {
-      let query = supabaseClient
-        .from('applications')
-        .select('id, created_at, full_name, primary_phone, email, status')
-        .eq('job_id', selectedJob.id)
-        .order('created_at', { ascending: false });
-
-      const { data: existing, error: checkError } = await query;
-      if (checkError) throw checkError;
-
-      const duplicates = (existing || []).filter(row => {
-        const rowPhone = String(row.primary_phone || '').replace(/\D/g, '');
-        const rowEmail = String(row.email || '').trim().toLowerCase();
-        const phoneMatch = phoneDigits.length >= 10 && rowPhone && rowPhone === phoneDigits;
-        const emailMatch = emailNorm && rowEmail && rowEmail === emailNorm;
-        return phoneMatch || emailMatch;
-      });
-
-      if (duplicates.length > 0) {
-        const first = duplicates[0];
-        const when = new Date(first.created_at).toLocaleString('en-PK', {
-          dateStyle: 'medium',
-          timeStyle: 'short'
-        });
-        const count = duplicates.length;
-        msg.innerHTML = count === 1
-          ? `You already applied for this job on <strong>${when}</strong>.`
-          : `You already applied for this job <strong>${count} times</strong>. Last application: <strong>${when}</strong>.`;
-        msg.className = 'form-msg error';
-        btn.disabled = false;
-        return;
-      }
-    }
-
-    // ---- Insert new application ----
+    // Duplicate protection is enforced by database unique indexes.
+    // The public browser no longer reads candidate application records.
     msg.textContent = 'Submitting...';
 
     const data = {
