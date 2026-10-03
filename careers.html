@@ -91,12 +91,25 @@
   line-height: 1.55;
   margin: 0 0 12px;
 }
-.role-desc ul {
-  list-style: disc outside;
-  padding-left: 20px;
+.role-desc ul,
+.role-desc ol {
+  padding-left: 22px;
   margin: 6px 0 12px;
 }
-.role-desc li { margin-bottom: 4px; }
+
+.role-desc ul > li {
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 4px;
+}
+
+.role-desc ol > li {
+  display: list-item;
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-bottom: 4px;
+}
 .role-desc b, .role-desc strong { color: var(--brand-navy); }
         .role-location {
       display: flex;
