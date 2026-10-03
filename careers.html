@@ -538,7 +538,7 @@
   const { createClient } = supabase;
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  let selectedJob = { id: null, title: '', form_schema: [] };
+  let selectedJob = { id: null, title: '', hiring_round: 1, form_schema: [] };
 
   const ORANGE_TAGS = [
     'Full Time', 'Part Time', 'Intern', 'Full Time / Part Time',
@@ -559,12 +559,12 @@
       { id: 'full_name', label: 'Full Name', type: 'text', required: true },
       { id: 'primary_phone', label: 'Primary Phone Number', type: 'tel', required: true },
       { id: 'secondary_phone', label: 'Secondary Phone Number', type: 'tel', required: false },
-      { id: 'email', label: 'Email Address', type: 'email', required: true },
-      { id: 'education', label: 'Highest Education', type: 'radio', options: ['Matric/O Level', 'Intermediate/A Level', 'BS/BA/Adp', 'MS/MA'], required: true },
-      { id: 'experience', label: 'Experience', type: 'radio', options: ['Fresh', 'Less than 1 year', 'Greater than 1 year'], required: true },
-      { id: 'has_laptop', label: 'Do you have your own laptop?', type: 'yesno', required: true },
-      { id: 'available_night', label: 'This is a night shift job. Are you available during night?', type: 'yesno', required: true },
-      { id: 'availability', label: 'Are you willing to join as Full Time or Part Time?', type: 'radio', options: ['Full Time 6 Pm - 3 Am', 'Part time (4 Hours 30 minutes shift)'], required: true }
+      { id: 'email', label: 'Email Address', type: 'email', required: false },
+      { id: 'education', label: 'Highest Education', type: 'radio', options: ['Matric/O Level', 'Intermediate/A Level', 'BS/BA/Adp', 'MS/MA'], required: false },
+      { id: 'experience', label: 'Experience', type: 'radio', options: ['Fresh', 'Less than 1 year', 'Greater than 1 year'], required: false },
+      { id: 'has_laptop', label: 'Do you have your own laptop?', type: 'yesno', required: false },
+      { id: 'available_night', label: 'Are you available during the required shift?', type: 'yesno', required: false },
+      { id: 'availability', label: 'Employment availability', type: 'radio', options: ['Full Time', 'Part Time', 'Both'], required: false }
     ];
   }
 
@@ -706,6 +706,7 @@
     selectedJob = {
       id: job.id,
       title: job.title,
+      hiring_round: Number(job.hiring_round || 1),
       form_schema: (job.form_schema && job.form_schema.length) ? job.form_schema : getDefaultSchema()
     };
     document.getElementById('applyModalTitle').textContent = `Apply — ${job.title}`;
@@ -721,7 +722,7 @@
     document.getElementById('formMsg').textContent = '';
     document.getElementById('applyForm').reset();
     document.getElementById('dynamicFields').innerHTML = '';
-    selectedJob = { id: null, title: '', form_schema: [] };
+    selectedJob = { id: null, title: '', hiring_round: 1, form_schema: [] };
   }
 
   document.getElementById('applyModal').addEventListener('click', function (e) {
@@ -770,13 +771,14 @@ document.getElementById('applyForm').addEventListener('submit', async function (
       availability: answers.availability || null,
       job_title: selectedJob.title,
       job_id: selectedJob.id,
+      hiring_round: Number(selectedJob.hiring_round || 1),
       answers
     };
 
     const { error } = await supabaseClient.from('applications').insert([data]);
     if (error) {
       if (error.code === '23505') {
-        msg.textContent = 'You have already applied for this job.';
+        msg.textContent = 'You have already applied for this job in the current hiring round.';
         msg.className = 'form-msg error';
         btn.disabled = false;
         return;
