@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +63,8 @@
     .position-card { padding: 24px; position: sticky; top: 95px; }
     .position-qualifications { padding: 0 0 16px; margin-bottom: 2px; border-bottom: 1px solid #edf0f4; }
     .position-detail-label { display: block; color: #8491a3; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
-    .position-qualifications-text { font-size: .9rem; line-height: 1.6; color: #475569; }
+    .position-qualifications-text { font-size: .9rem; line-height: 1.6; color: #0b1b33; font-weight: 700; }
+    .position-qualifications-text * { color: #0b1b33; font-weight: 700; }
     .position-qualifications-text ul, .position-qualifications-text ol { padding-left: 18px; margin: 6px 0 0; }
     .position-qualifications-text li { margin-bottom: 5px; }
     .side-detail { padding: 14px 0; border-bottom: 1px solid #edf0f4; }
@@ -196,6 +198,11 @@
             </div>
 
             <div class="side-detail">
+              <span>Employment Type</span>
+              <strong id="positionEmploymentType">—</strong>
+            </div>
+
+            <div class="side-detail">
               <span>Shift</span>
               <strong id="positionShift">—</strong>
             </div>
@@ -296,6 +303,27 @@
       return 'Male & Female Candidates';
     }
 
+    function getEmploymentType(job) {
+      if (job.employment_type === 'part_time') return 'Part Time';
+      if (job.employment_type === 'both') return 'Full Time & Part Time';
+      return 'Full Time';
+    }
+
+    function isStructuredTag(tag) {
+      const normalized = String(tag || '')
+        .trim()
+        .toLowerCase()
+        .replace(/-/g, ' ')
+        .replace(/\s+/g, ' ');
+
+      return [
+        'full time',
+        'part time',
+        'night shift',
+        'day shift'
+      ].includes(normalized);
+    }
+
     function renderJob(job) {
       selectedJob = {
         ...job,
@@ -305,6 +333,7 @@
       const location = getLocation(job);
       const shift = getShift(job);
       const gender = getGender(job);
+      const employmentType = getEmploymentType(job);
       const openings = job.openings || 1;
 
       document.title = `${job.title} | Careers at Haulxify`;
@@ -322,13 +351,17 @@
       }
 
       document.getElementById('positionLocation').textContent = location;
+      document.getElementById('positionEmploymentType').textContent = employmentType;
       document.getElementById('positionShift').textContent = shift;
       document.getElementById('positionGender').textContent = gender;
       document.getElementById('positionOpenings').textContent = `${openings} Position${openings > 1 ? 's' : ''}`;
 
-      document.getElementById('jobTags').innerHTML = (job.tags || [])
+      const visibleTags = (job.tags || []).filter(tag => !isStructuredTag(tag));
+      const jobTagsEl = document.getElementById('jobTags');
+      jobTagsEl.innerHTML = visibleTags
         .map(tag => `<span class="job-tag">${escapeHtml(tag)}</span>`)
         .join('');
+      jobTagsEl.style.display = visibleTags.length ? 'flex' : 'none';
 
       document.getElementById('loadingState').style.display = 'none';
       document.getElementById('jobPage').style.display = 'block';
