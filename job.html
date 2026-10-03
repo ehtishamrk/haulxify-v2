@@ -260,6 +260,32 @@
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     let selectedJob = null;
 
+    function getCurrentJobId() {
+      return new URLSearchParams(window.location.search).get('id');
+    }
+
+    async function fetchCurrentJobState(includeSchema = false) {
+      const jobId = getCurrentJobId();
+      if (!jobId) return null;
+
+      const columns = includeSchema
+        ? 'id,title,hiring_round,is_active,form_schema'
+        : 'id,title,hiring_round,is_active';
+
+      const { data, error } = await supabaseClient
+        .from('jobs')
+        .select(columns)
+        .eq('id', jobId)
+        .single();
+
+      if (error || !data) {
+        console.error('Could not refresh job state:', error);
+        return null;
+      }
+
+      return data;
+    }
+
     function escapeHtml(value) {
       if (!value) return '';
       return String(value)
@@ -363,12 +389,12 @@
       jobTagsEl.style.display = visibleTags.length ? 'flex' : 'none';
 
       document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display = 'none';
       document.getElementById('jobPage').style.display = 'block';
     }
 
     async function loadJob() {
-      const params = new URLSearchParams(window.location.search);
-      const jobId = params.get('id');
+      const jobId = getCurrentJobId();
       if (!jobId) return showError();
 
       const { data, error } = await supabaseClient
@@ -475,8 +501,24 @@
       });
     }
 
-    function openApplyModal() {
+    async function openApplyModal() {
       if (!selectedJob) return;
+
+      const latest = await fetchCurrentJobState(true);
+      if (!latest || latest.is_active !== true) {
+        showError();
+        return;
+      }
+
+      selectedJob = {
+        ...selectedJob,
+        ...latest,
+        hiring_round: Number(latest.hiring_round || 1),
+        form_schema: (latest.form_schema && latest.form_schema.length)
+          ? latest.form_schema
+          : getDefaultSchema()
+      };
+
       document.getElementById('applyModalTitle').textContent = `Apply — ${selectedJob.title}`;
       renderFormFields(selectedJob.form_schema);
       document.getElementById('formMsg').textContent = '';
@@ -512,6 +554,19 @@
       btn.disabled = true;
       msg.textContent = 'Submitting...';
       msg.className = 'form-msg';
+
+      // Final freshness check in case a new hiring round started while
+      // the application modal was already open.
+      const latestState = await fetchCurrentJobState(false);
+      if (!latestState || latestState.is_active !== true) {
+        btn.disabled = false;
+        msg.textContent = 'This position is no longer accepting applications.';
+        msg.className = 'form-msg error';
+        return;
+      }
+
+      selectedJob.title = latestState.title;
+      selectedJob.hiring_round = Number(latestState.hiring_round || 1);
 
       const answers = {};
       (selectedJob.form_schema || []).forEach(field => {
@@ -577,7 +632,33 @@
       }
     });
 
+    function setupJobRealtime() {
+      const jobId = getCurrentJobId();
+      if (!jobId) return;
+
+      supabaseClient
+        .channel(`job-detail-${jobId}`)
+        .on(
+          'postgres_changes',
+          { event: 'UPDATE', schema: 'public', table: 'jobs', filter: `id=eq.${jobId}` },
+          () => loadJob()
+        )
+        .subscribe();
+    }
+
+    // Realtime is primary; this fallback catches missed websocket events.
+    function setupJobPolling() {
+      setInterval(loadJob, 5000);
+    }
+
     loadJob();
+    setupJobRealtime();
+    setupJobPolling();
+
+    window.addEventListener('focus', loadJob);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') loadJob();
+    });
   </script>
 </body>
 </html>
