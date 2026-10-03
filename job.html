@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -511,7 +510,7 @@
       const btn = document.getElementById('submitBtn');
       const msg = document.getElementById('formMsg');
       btn.disabled = true;
-      msg.textContent = 'Checking...';
+      msg.textContent = 'Submitting...';
       msg.className = 'form-msg';
 
       const answers = {};
@@ -529,37 +528,9 @@
       const primaryPhone = answers.primary_phone || null;
       const secondaryPhone = answers.secondary_phone || null;
       const email = answers.email || null;
-      const phoneDigits = String(primaryPhone || '').replace(/\D/g, '');
-      const emailNormalized = String(email || '').trim().toLowerCase();
-
       try {
-        if (selectedJob.id && (phoneDigits.length >= 10 || emailNormalized)) {
-          const { data: existing, error: checkError } = await supabaseClient
-            .from('applications')
-            .select('id, created_at, primary_phone, email')
-            .eq('job_id', selectedJob.id)
-            .order('created_at', { ascending: false });
-
-          if (checkError) throw checkError;
-
-          const duplicates = (existing || []).filter(row => {
-            const rowPhone = String(row.primary_phone || '').replace(/\D/g, '');
-            const rowEmail = String(row.email || '').trim().toLowerCase();
-            const phoneMatch = phoneDigits.length >= 10 && rowPhone && rowPhone === phoneDigits;
-            const emailMatch = emailNormalized && rowEmail && rowEmail === emailNormalized;
-            return phoneMatch || emailMatch;
-          });
-
-          if (duplicates.length) {
-            const latest = duplicates[0];
-            const when = new Date(latest.created_at).toLocaleString('en-PK', { dateStyle: 'medium', timeStyle: 'short' });
-            msg.innerHTML = `You already applied for this job on <strong>${when}</strong>.`;
-            msg.className = 'form-msg error';
-            btn.disabled = false;
-            return;
-          }
-        }
-
+        // Duplicate protection is enforced by database unique indexes.
+        // The public browser no longer reads candidate application records.
         msg.textContent = 'Submitting...';
 
         const application = {
