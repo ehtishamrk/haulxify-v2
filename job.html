@@ -46,7 +46,8 @@
     .content-card { padding: 30px; }
     .content-card h2, .position-card h2 { font-family: "Syne", sans-serif; color: #0b1b33; font-size: 1.3rem; font-weight: 800; letter-spacing: -.025em; margin: 0 0 17px; }
 
-    .job-rich-text { color: #475569; line-height: 1.75; font-size: .97rem; overflow-wrap: anywhere; }
+    .job-rich-text { --hx-rich-default-size: .97rem; color: #475569; line-height: 1.75; font-size: .97rem; overflow-wrap: anywhere; }
+    .job-rich-text .hx-font-default { font-size: var(--hx-rich-default-size) !important; }
     .job-rich-text p { margin: 0 0 13px; }
     .job-rich-text p:last-child { margin-bottom: 0; }
     .job-rich-text ul, .job-rich-text ol { padding-left: 22px; margin: 10px 0 16px; }
@@ -155,7 +156,7 @@
       }
 
       .content-card h2, .position-card h2 { font-size: 1.15rem; margin-bottom: 14px; }
-      .job-rich-text { font-size: .93rem; line-height: 1.7; }
+      .job-rich-text { --hx-rich-default-size: .93rem; font-size: .93rem; line-height: 1.7; }
 
       /* The sticky mobile Apply bar is already present, so remove the two
          in-card Apply buttons to keep the single-card reading flow clean. */
@@ -255,9 +256,9 @@
               <strong id="positionWorkArrangement"></strong>
             </div>
 
-            <div class="side-detail">
+            <div class="side-detail" id="positionOpeningsRow">
               <span>Openings</span>
-              <strong id="positionOpenings">—</strong>
+              <strong id="positionOpenings"></strong>
             </div>
 
             <button type="button" class="side-apply-btn" onclick="openApplyModal()">Apply Now</button>
@@ -439,7 +440,7 @@
       const experienceRequired = String(job.experience_required || '').trim() || null;
       const workArrangement = getWorkArrangement(job);
       const employmentType = getEmploymentType(job);
-      const openings = job.openings || 1;
+      const openings = job.openings != null && Number(job.openings) > 0 ? Number(job.openings) : null;
 
       document.title = `${job.title} | Careers at Haulxify`;
       document.getElementById('jobTitle').textContent = job.title;
@@ -462,7 +463,7 @@
       setOptionalDetail('positionAgeRow', 'positionAge', ageLimit);
       setOptionalDetail('positionExperienceRow', 'positionExperience', experienceRequired);
       setOptionalDetail('positionWorkArrangementRow', 'positionWorkArrangement', workArrangement);
-      document.getElementById('positionOpenings').textContent = `${openings} Position${openings > 1 ? 's' : ''}`;
+      setOptionalDetail('positionOpeningsRow', 'positionOpenings', openings !== null ? `${openings} Position${openings > 1 ? 's' : ''}` : null);
 
       const visibleTags = (job.tags || []).filter(tag => !isStructuredTag(tag));
       const jobTagsEl = document.getElementById('jobTags');
