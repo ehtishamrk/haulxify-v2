@@ -126,17 +126,44 @@
       .job-title { font-size: clamp(2rem, 10vw, 2.8rem); margin-bottom: 20px; }
       .hero-apply { width: 100%; }
       .job-main { padding: 24px 0 38px; }
-      .job-layout { grid-template-columns: 1fr; gap: 18px; }
-      .job-left { gap: 18px; }
-      .content-card, .position-card { border-radius: 16px; }
-      .content-card { padding: 21px 18px; }
-      .position-card { position: static; padding: 21px 18px; }
+
+      /* Mobile only: visually merge About the Role + Position Details
+         into one continuous card. Desktop/tablet layout remains unchanged. */
+      .job-layout {
+        display: block;
+        background: #fff;
+        border: 1px solid #e5eaf0;
+        border-radius: 16px;
+        box-shadow: 0 12px 35px rgba(11,27,51,.06);
+        overflow: hidden;
+      }
+      .job-left { display: block; }
+      .content-card,
+      .position-card {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .content-card { padding: 21px 18px 18px; }
+      .position-card {
+        position: static;
+        padding: 20px 18px 21px;
+        border-top: 1px solid #edf0f4;
+      }
+
       .content-card h2, .position-card h2 { font-size: 1.15rem; margin-bottom: 14px; }
       .job-rich-text { font-size: .93rem; line-height: 1.7; }
-      .about-apply, .side-apply-btn { width: 100%; }
+
+      /* The sticky mobile Apply bar is already present, so remove the two
+         in-card Apply buttons to keep the single-card reading flow clean. */
+      .about-action,
+      .side-apply-btn { display: none; }
+
       .position-qualifications { padding-bottom: 14px; }
       .position-qualifications-text { font-size: .9rem; }
       .side-detail { padding: 12px 0; }
+
       .mobile-apply-bar { position: fixed; display: block; left: 0; right: 0; bottom: 0; z-index: 9000; padding: 11px 14px; background: rgba(255,255,255,.96); border-top: 1px solid #e5e7eb; backdrop-filter: blur(10px); box-shadow: 0 -8px 24px rgba(11,27,51,.08); }
       .mobile-apply-bar button { width: 100%; min-height: 49px; border-radius: 11px; }
     }
