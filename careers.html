@@ -437,8 +437,28 @@
     "applicantLocationRequirements": { "@type": "Country", "name": "Pakistan" }
   }
   </script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  // Use explicit events; do not automatically collect form/page metadata.
+  fbq('set', 'autoConfig', false, '28768305619429973');
+  fbq('init', '28768305619429973');
+  fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
+  <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=28768305619429973&amp;ev=PageView&amp;noscript=1"
+  /></noscript>
+
 <div id="nav-include"></div>
 
 <!-- HERO (short — ads land here, then jobs) -->
@@ -895,6 +915,20 @@ document.getElementById('applyForm').addEventListener('submit', async function (
 
     msg.textContent = 'Application submitted! We will contact you soon.';
     msg.className = 'form-msg success';
+    // Count only a confirmed saved application, never a click or failed insert.
+    // Tracking is optional and must never interrupt application completion.
+    try {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', {
+          content_name: data.job_title,
+          content_ids: [String(data.job_id)],
+          content_category: 'Job Application'
+        });
+      }
+    } catch (trackingError) {
+      // The application is already saved; continue showing success.
+    }
+
     form.reset();
     setTimeout(closeApplyModal, 2000);
   } catch (err) {
